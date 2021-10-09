@@ -6,12 +6,17 @@
         xmlns:local="clr-namespace:EzHRMApp"
         xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
         xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
+        xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+        xmlns:view="clr-namespace:EzHRMApp.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="610" Width="1000"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True" 
         Background="Transparent">
+    <windows:BlankWindow.DataContext>
+        <viewModel:MainViewModel/>
+    </windows:BlankWindow.DataContext>
     <Grid>
         <Grid Margin="4">
             <Grid.ColumnDefinitions>
@@ -28,11 +33,36 @@
                 Grid.Column="1"
                 Background="{DynamicResource Accent}"
                 MouseDown="OnTopMouseDown">
-                <StackPanel Orientation="Horizontal" Width="Auto" HorizontalAlignment="Right">
-                    <Button x:Name="minimizeBtn" Style="{StaticResource SysBtnStyle}" Padding="0, 0, 0, 6" Click="OnMinimizeClicked" Content="_"/>
-                    <Button x:Name="maximizeBtn" Style="{StaticResource SysBtnStyle}" Click="OnMaximizeClicked" Content="□"/>
-                    <Button x:Name="closeBtn" Style="{StaticResource SysCancelStyle}" Click="OnCloseClicked" Content="×"/>
-                </StackPanel>
+                <Grid>
+                    <Label VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           FontFamily="Tahoma"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource BackColor}"
+                           Content="{Binding CurrentViewModel.ViewName}"/>
+
+                    <controls:ButtonEx x:Name="homeBtn" 
+                                       HorizontalAlignment="Left"
+                                       Height="60"
+                                       Width="0"
+                                       Margin="-20, 0, 0, 0"
+                                       Click="HomeButtonClicked"
+                                       Background="{DynamicResource Accent}"
+                                       HoverColor="{DynamicResource AccentBright}"
+                                       PressedColor="{DynamicResource AccentReallyBright}"
+                                       Command="{Binding ToHomeView}"
+                                       IconPad="95"
+                                       IconSize="24"
+                                       CornerRadius="25"
+                                       Path="{StaticResource homeIcon}"/>
+
+                    <StackPanel Orientation="Horizontal" Width="Auto" HorizontalAlignment="Right">
+                        <Button x:Name="minimizeBtn" Style="{StaticResource SysBtnStyle}" Padding="0, 0, 0, 6" Click="OnMinimizeClicked" Content="_"/>
+                        <Button x:Name="maximizeBtn" Style="{StaticResource SysBtnStyle}" Click="OnMaximizeClicked" Content="□"/>
+                        <Button x:Name="closeBtn" Style="{StaticResource SysCancelStyle}" Click="OnCloseClicked" Content="×"/>
+                    </StackPanel>
+                </Grid>
             </Border>
 
             <Border Grid.Row="0"
@@ -45,24 +75,86 @@
             <Grid Grid.Row="1" Background="{DynamicResource Panel}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
+                <StackPanel Grid.Row="1" 
+                            Orientation="Vertical"
+                            Height="Auto">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:ButtonEx">
+                            <Setter Property="Margin" Value="0, 5, 0, 0"/>
+                            <Setter Property="Height" Value="35"/>
+                            <Setter Property="IconPad" Value="40"/>
+                            <Setter Property="Background" Value="{DynamicResource AccentDark}"/>
+                            <Setter Property="HoverColor" Value="{DynamicResource Accent}"/>
+                            <Setter Property="PressedColor" Value="{DynamicResource AccentBright}"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <controls:ButtonEx GroupName="TabButtons" 
+                                            x:Name="helpBtn"      
+                                            Path="{StaticResource questionIcon}" 
+                                            Content="Help"/>
+                    <controls:ButtonEx GroupName="TabButtons" 
+                                            x:Name="settingBtn"      
+                                            Path="{StaticResource settingIcon}" 
+                                            Content="Setting"/>
+                </StackPanel>
+                
                 <StackPanel Orientation="Vertical">
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="dashboardBtn"    Path="{StaticResource dashboardIcon}" Margin="0, 50, 0, 0" Content="Dashboard"/>
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="settingBtn"      Path="{StaticResource settingIcon}" Content="Setting"/>
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="payRollBtn"      Path="{StaticResource moneyIcon}" Content="Payroll"/>
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="checkInBtn"      Path="{StaticResource clockIcon}" Content="CheckIn"/>
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="staffs"          Path="{StaticResource staffsIcon}" Content="Staffs"/>
-                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="schedule"        Path="{StaticResource calendarIcon}" Content="Schedule"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="dashboardBtn"    
+                                            Path="{StaticResource dashboardIcon}" 
+                                            Margin="0, 50, 0, 0"
+                                            Content="Dashboard"
+                                            Click="TabButtonClicked"
+                                            Command="{Binding ToDashboard}"/>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="payRollBtn"      
+                                            Path="{StaticResource moneyIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Payroll"/>
+                    
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="checkInBtn"      
+                                            Path="{StaticResource clockIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="CheckIn"/>
+                    
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="staffsBtn"          
+                                            Path="{StaticResource staffsIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Staffs Management"
+                                            Command="{Binding ToStaffsManagementView}"/>
+                    
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="schedule"        
+                                            Path="{StaticResource calendarIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Schedule"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
 
                 </StackPanel>
             </Grid>
-
+            
             <DockPanel x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
+                <ContentControl Content="{Binding CurrentViewModel}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+                            <view:HomeView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+                            <view:DashboardView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
+                            <view:StaffsManagement/>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
             </DockPanel>
 
             <Rectangle HorizontalAlignment="Right" 

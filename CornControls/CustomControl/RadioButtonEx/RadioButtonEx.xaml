@@ -17,34 +17,52 @@
         <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
         <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}"/>
         <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}"/>
+        <Setter Property="OutterColor" Value="{DynamicResource Accent}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RadioButtonEx">
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=HoverColor}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=PressedColor}"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource Self}, Path=SelectedPadding}"/>
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=SelectedColor}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                    <Border Background="{DynamicResource Accent}" Padding="{TemplateBinding Padding}">
-                        <Border Background="{TemplateBinding Background}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{TemplateBinding IconPad}"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Border Background="{TemplateBinding OutterColor}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalPadding}"/>
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OutterColor}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked}" Value="True">
+                                            <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPadding}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True">
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked}" Value="True">
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{TemplateBinding IconPad}"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
-                                <ContentPresenter Grid.Column="1"
+                                    <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
+                                    <ContentPresenter Grid.Column="1"
                                                   Content="{TemplateBinding Content}"
                                                   TextBlock.TextAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
+                                </Grid>
+                            </Border>
                         </Border>
                     </Border>
                 </ControlTemplate>

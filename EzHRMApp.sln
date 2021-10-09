@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio Version 16
+# Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzHRMApp", "EzHRMApp\EzHRMApp.csproj", "{FF0D0C75-F3CF-4D63-BC1F-006C165E1FB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornControls", "CornControls\CornControls.csproj", "{0215E483-01B4-4544-8F46-573447CF2DED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CornControls", "CornControls\CornControls.csproj", "{0215E483-01B4-4544-8F46-573447CF2DED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{7A66C8F6-D068-4577-A514-3363076E162E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{ACA22F09-61EE-481C-BC17-2795B8F0E41C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,22 @@ Global
 		{0215E483-01B4-4544-8F46-573447CF2DED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0215E483-01B4-4544-8F46-573447CF2DED}.Release|x64.ActiveCfg = Release|Any CPU
 		{0215E483-01B4-4544-8F46-573447CF2DED}.Release|x64.Build.0 = Release|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Release|x64.ActiveCfg = Release|Any CPU
+		{7A66C8F6-D068-4577-A514-3363076E162E}.Release|x64.Build.0 = Release|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Debug|x64.Build.0 = Debug|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Release|x64.ActiveCfg = Release|Any CPU
+		{ACA22F09-61EE-481C-BC17-2795B8F0E41C}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

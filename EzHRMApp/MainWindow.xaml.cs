@@ -25,9 +25,27 @@ namespace EzHRMApp
     /// </summary>
     public partial class MainWindow : BlankWindow
     {
+        private RadioButton  _previousTabButton = null;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected void HomeButtonClicked(object sender, EventArgs e)
+        {
+            if (_previousTabButton != null)
+            {
+                _previousTabButton.IsChecked = false;
+                _previousTabButton = null;
+            }
+            homeBtn.Width = 0;
+        }
+
+        protected void TabButtonClicked(object sender, EventArgs e)
+        {
+            homeBtn.Width = 75;
+            _previousTabButton = sender as RadioButton;
         }
 
         protected override void OnWindowStateChanged(RoutedPropertyChangedEventArgs<WindowState> e)
