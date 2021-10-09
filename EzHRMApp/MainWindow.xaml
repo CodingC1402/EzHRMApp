@@ -1,0 +1,160 @@
+﻿<windows:BlankWindow x:Class="EzHRMApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EzHRMApp"
+        xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+        xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="610" Width="1000"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True" 
+        Background="Transparent">
+    <Grid>
+        <Grid Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="225"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" 
+                Grid.Column="1"
+                Background="{DynamicResource Accent}"
+                MouseDown="OnTopMouseDown">
+                <StackPanel Orientation="Horizontal" Width="Auto" HorizontalAlignment="Right">
+                    <Button x:Name="minimizeBtn" Style="{StaticResource SysBtnStyle}" Padding="0, 0, 0, 6" Click="OnMinimizeClicked" Content="_"/>
+                    <Button x:Name="maximizeBtn" Style="{StaticResource SysBtnStyle}" Click="OnMaximizeClicked" Content="□"/>
+                    <Button x:Name="closeBtn" Style="{StaticResource SysCancelStyle}" Click="OnCloseClicked" Content="×"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Background="{DynamicResource AccentDark}"
+                    MouseDown="OnTopMouseDown">
+                <Image Source="{DynamicResource Logo}"/>
+            </Border>
+
+            <Grid Grid.Row="1" Background="{DynamicResource Panel}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical">
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="dashboardBtn"    Path="{StaticResource dashboardIcon}" Margin="0, 50, 0, 0" Content="Dashboard"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="settingBtn"      Path="{StaticResource settingIcon}" Content="Setting"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="payRollBtn"      Path="{StaticResource moneyIcon}" Content="Payroll"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="checkInBtn"      Path="{StaticResource clockIcon}" Content="CheckIn"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="staffs"          Path="{StaticResource staffsIcon}" Content="Staffs"/>
+                    <controls:RadioButtonEx GroupName="TabButtons" x:Name="schedule"        Path="{StaticResource calendarIcon}" Content="Schedule"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+
+                </StackPanel>
+            </Grid>
+
+            <DockPanel x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
+            </DockPanel>
+
+            <Rectangle HorizontalAlignment="Right" 
+                       VerticalAlignment="Bottom" 
+                       Margin="0, 0, -10, -10"
+                       Width="20" 
+                       Height="20"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Fill="{DynamicResource DarkerPanel}" RenderTransformOrigin="0.5,0.5">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="45"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Grid>
+        
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="{DynamicResource DarkerPanel}"/>
+                </Style>
+            </Grid.Resources>
+            <Rectangle Name="WindowResizeTop"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Top"
+                   Margin="4, 0, 4, 0"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeBottom"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Bottom"
+                   Margin="4, 0, 4, 0"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeLeft"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Stretch"
+                   Margin="0, 4, 0, 4"
+                   Width="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeRight"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Stretch"
+                   Margin="0, 4, 0, 4"
+                   Width="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+
+            <Rectangle Name="WindowResizeTopLeft"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Width="4"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeBottomLeft"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Width="4"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeTopRight"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Width="4"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+            <Rectangle Name="WindowResizeBottomRight"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Width="4"
+                   Height="4"
+                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                   MouseEnter="WindowResize_OnMouseEnter"
+                   MouseLeave="WindowResize_OnMouseLeave"/>
+        </Grid>
+    </Grid>
+</windows:BlankWindow>
