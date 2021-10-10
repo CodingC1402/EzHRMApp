@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:CornControls.CustomControl">
     <!-- Used in main window for tabs -->
     <Style x:Key="{x:Type controls:ButtonEx}" TargetType="{x:Type controls:ButtonEx}">
-        <Setter Property="Height" Value="50"/>
         <Setter Property="Margin" Value="0, 3, 0, 0"/>
         <Setter Property="FontFamily" Value="Tahoma"/>
         <Setter Property="FontSize" Value="14"/>

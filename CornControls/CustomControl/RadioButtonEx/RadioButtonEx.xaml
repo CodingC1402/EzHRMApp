@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:CornControls.CustomControl">
     <!-- Used in main window for tabs -->
     <Style x:Key="{x:Type controls:RadioButtonEx}" TargetType="{x:Type controls:RadioButtonEx}">
-        <Setter Property="Height" Value="50"/>
         <Setter Property="Margin" Value="0, 3, 0, 0"/>
         <Setter Property="FontFamily" Value="Tahoma"/>
         <Setter Property="FontSize" Value="14"/>
@@ -18,11 +17,12 @@
         <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}"/>
         <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}"/>
         <Setter Property="OutterColor" Value="{DynamicResource Accent}"/>
+        <Setter Property="SelectedColor" Value="{DynamicResource Accent}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RadioButtonEx">
                     <Border Padding="{TemplateBinding Padding}">
-                        <Border Background="{TemplateBinding OutterColor}">
+                        <Border x:Name="outterBorder">
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalPadding}"/>
@@ -30,11 +30,12 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked}" Value="True">
                                             <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPadding}"/>
+                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOutterColor}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <Border>
+                            <Border x:Name="innerBordder">
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
@@ -51,16 +52,20 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
-                                <Grid>
+                                <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      Width="Auto"
+                                      Height="Auto">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{TemplateBinding IconPad}"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
                                     <ContentPresenter Grid.Column="1"
                                                   Content="{TemplateBinding Content}"
-                                                  TextBlock.TextAlignment="Left" VerticalAlignment="Center"/>
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
                                 </Grid>
                             </Border>
                         </Border>

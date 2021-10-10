@@ -11,7 +11,7 @@ using System.Windows.Media;
 namespace CornControls.CustomControl
 {
     [AddINotifyPropertyChangedInterface]
-    public class ButtonEx : RadioButton
+    public class ButtonEx : Button
     {
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(ButtonEx));
 

@@ -17,7 +17,7 @@
     <windows:BlankWindow.DataContext>
         <viewModel:MainViewModel/>
     </windows:BlankWindow.DataContext>
-    <Grid>
+    <Grid SnapsToDevicePixels="True">
         <Grid Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="225"/>
@@ -29,10 +29,95 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="1" 
+                  Background="{DynamicResource Panel}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" 
+                            Orientation="Vertical"
+                            Height="Auto">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:ButtonEx">
+                            <Setter Property="Margin" Value="0, 7, 0, 0"/>
+                            <Setter Property="Height" Value="35"/>
+                            <Setter Property="IconPad" Value="40"/>
+                            <Setter Property="Background" Value="{DynamicResource AccentDark}"/>
+                            <Setter Property="HoverColor" Value="{DynamicResource Accent}"/>
+                            <Setter Property="PressedColor" Value="{DynamicResource AccentBright}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Direction="270" 
+                                                      Color="{DynamicResource ColorDarkerPanel}" 
+                                                      ShadowDepth="4"
+                                                      BlurRadius="7"
+                                                      Opacity="0.4"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <controls:ButtonEx x:Name="helpBtn"      
+                                       Path="{StaticResource questionIcon}" 
+                                       Content="Help"/>
+                    <controls:ButtonEx x:Name="settingBtn"      
+                                       Path="{StaticResource settingIcon}" 
+                                       Content="Setting"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:RadioButtonEx">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Height" Value="50"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
+                            <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="dashboardBtn"    
+                                            Path="{StaticResource dashboardIcon}" 
+                                            Margin="0, 50, 0, 0"
+                                            Content="Dashboard"
+                                            Click="TabButtonClicked"
+                                            Command="{Binding ToDashboard}"/>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="payRollBtn"      
+                                            Path="{StaticResource moneyIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Payroll"/>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="checkInBtn"      
+                                            Path="{StaticResource clockIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="CheckIn"/>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="staffsBtn"          
+                                            Path="{StaticResource staffsIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Staffs Management"
+                                            Command="{Binding ToStaffsManagementView}"/>
+
+                    <controls:RadioButtonEx GroupName="TabButtons" 
+                                            x:Name="schedule"        
+                                            Path="{StaticResource calendarIcon}" 
+                                            Click="TabButtonClicked"
+                                            Content="Schedule"/>
+                </StackPanel>
+            </Grid>
+
             <Border Grid.Row="0" 
-                Grid.Column="1"
-                Background="{DynamicResource Accent}"
-                MouseDown="OnTopMouseDown">
+                    Grid.Column="1"
+                    Background="{DynamicResource Accent}"
+                    MouseDown="OnTopMouseDown"
+                    BorderThickness="0"
+                    RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Grid>
                     <Label VerticalAlignment="Center" 
                            HorizontalAlignment="Center"
@@ -65,82 +150,19 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Row="0"
-                    Grid.Column="0"
-                    Background="{DynamicResource AccentDark}"
-                    MouseDown="OnTopMouseDown">
-                <Image Source="{DynamicResource Logo}"/>
+            <Border Background="{DynamicResource AccentDark}"
+                    MouseDown="OnTopMouseDown"
+                    RenderOptions.BitmapScalingMode="NearestNeighbor">
+                <Border.Effect>
+                    <DropShadowEffect Direction="225" 
+                                      Color="{DynamicResource ColorDarkerPanel}" 
+                                      ShadowDepth="4" 
+                                      Opacity="0.4"
+                                      BlurRadius="7"/>
+                </Border.Effect>
+                <Image Source="{DynamicResource Logo}" RenderOptions.BitmapScalingMode="Fant"/>
             </Border>
 
-            <Grid Grid.Row="1" Background="{DynamicResource Panel}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="1" 
-                            Orientation="Vertical"
-                            Height="Auto">
-                    <StackPanel.Resources>
-                        <Style TargetType="controls:ButtonEx">
-                            <Setter Property="Margin" Value="0, 5, 0, 0"/>
-                            <Setter Property="Height" Value="35"/>
-                            <Setter Property="IconPad" Value="40"/>
-                            <Setter Property="Background" Value="{DynamicResource AccentDark}"/>
-                            <Setter Property="HoverColor" Value="{DynamicResource Accent}"/>
-                            <Setter Property="PressedColor" Value="{DynamicResource AccentBright}"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <controls:ButtonEx GroupName="TabButtons" 
-                                            x:Name="helpBtn"      
-                                            Path="{StaticResource questionIcon}" 
-                                            Content="Help"/>
-                    <controls:ButtonEx GroupName="TabButtons" 
-                                            x:Name="settingBtn"      
-                                            Path="{StaticResource settingIcon}" 
-                                            Content="Setting"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Vertical">
-                    <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="dashboardBtn"    
-                                            Path="{StaticResource dashboardIcon}" 
-                                            Margin="0, 50, 0, 0"
-                                            Content="Dashboard"
-                                            Click="TabButtonClicked"
-                                            Command="{Binding ToDashboard}"/>
-
-                    <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="payRollBtn"      
-                                            Path="{StaticResource moneyIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Payroll"/>
-                    
-                    <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="checkInBtn"      
-                                            Path="{StaticResource clockIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="CheckIn"/>
-                    
-                    <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="staffsBtn"          
-                                            Path="{StaticResource staffsIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Staffs Management"
-                                            Command="{Binding ToStaffsManagementView}"/>
-                    
-                    <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="schedule"        
-                                            Path="{StaticResource calendarIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Schedule"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-
-                </StackPanel>
-            </Grid>
-            
             <DockPanel x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
                 <ContentControl Content="{Binding CurrentViewModel}">
                     <ContentControl.Resources>

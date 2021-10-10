@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/ColorScheme.xaml"/>
+                <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml"/>
                 <ResourceDictionary Source="Themes/Geometry.xaml"/>
                 <ResourceDictionary Source="Icons/IconsDictionary.xaml"/>
                 <ResourceDictionary Source="Core/ControlsStyle/Controls.xaml"/>
