@@ -29,7 +29,7 @@ namespace EzHRMApp.Windows
 
         protected void CloseWindow(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
         }
     }
 }

@@ -5,8 +5,8 @@
     <Color x:Key="LightForegroundColor">#E2E2EC</Color>
     
     <Color x:Key="ColorBackColor">#E2E2EC</Color>
-    <Color x:Key="ColorDarkerBackColor">#C2C2CC</Color>
-    <Color x:Key="ColorDarkestBackColor">#B2B2BC</Color>
+    <Color x:Key="ColorDarkerBackColor">#D2D2DC</Color>
+    <Color x:Key="ColorDarkestBackColor">#C2C2CC</Color>
 
     <Color x:Key="ColorCancleHover">#FF91B6</Color>
     <Color x:Key="ColorCancleMouseDown">#FF5596</Color>

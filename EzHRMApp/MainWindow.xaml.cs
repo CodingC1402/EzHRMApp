@@ -69,6 +69,8 @@ namespace EzHRMApp
             if (_loginWindow == null)
             {
                 _loginWindow = new LoginWindow();
+                _loginWindow.Owner = this;
+                _loginWindow.ShowInTaskbar = false;
             }
 
             _loginWindow.ShowDialog();

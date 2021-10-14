@@ -11,9 +11,11 @@
         <Setter Property="Foreground" Value="{DynamicResource DarkForeground}"/>
         <Setter Property="Background" Value="{DynamicResource BackColor}"/>
         <Setter Property="FocusedColor" Value="{DynamicResource BackColor}"/>
+        <Setter Property="HoverColor" Value="{DynamicResource DarkerBackColor}"/>
+        <Setter Property="FocusedColor" Value="{DynamicResource BackColor}"/>
+        <Setter Property="OutterColor" Value="{DynamicResource DarkestBackColor}"/>
         <Setter Property="NormalPadding" Value="0, 0, 0, 5"/>
         <Setter Property="FocusedPadding" Value="0, 0, 0, 5"/>
-        <Setter Property="OutterColor" Value="Gray"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="FocusedOutterColor" Value="{DynamicResource Accent}"/>
@@ -21,7 +23,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:TextBoxEx">
-                    <Border>
+                    <Border CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CornerRadius}">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OutterColor}"/>

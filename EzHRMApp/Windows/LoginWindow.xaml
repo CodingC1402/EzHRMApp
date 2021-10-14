@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
-        Title="LoginWindow" Height="450" Width="350"
+        Title="LoginWindow" Height="510" Width="370"
         SnapsToDevicePixels="True">
     <Border Background="{DynamicResource LoginBackground}" 
             CornerRadius="20"
@@ -37,8 +37,67 @@
 
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
                 <Label Margin="0, 60, 0, 30" HorizontalContentAlignment="Center" Content="LOGIN" FontFamily="Tahoma" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource DarkForeground}"/>
-                <controls:TextBoxEx FocusedOutterColor="{DynamicResource AccentBright}" Style="{StaticResource GlowingTextBoxStyle}" FontFamily="Ariel" FontSize="18" FontWeight="Regular" Margin="0, 10, 0, 0" Width="240" Height="50" Path="{StaticResource accountIcon}" IconPad="36"/>
-                <controls:PasswordBoxEx FocusedOutterColor="{DynamicResource AccentBright}" Style="{StaticResource GlowingPasswordBoxStyle}" FontFamily="Ariel" FontSize="18" FontWeight="Regular" Margin="0, 20, 0, 0" Width="240" Height="50" Path="{StaticResource keyIcon}" IconPad="36"/>
+                <controls:TextBoxEx CornerRadius="5" 
+                                    NormalPadding="1, 1, 1, 5" 
+                                    FocusedOutterColor="{DynamicResource AccentBright}"
+                                    Style="{StaticResource GlowingTextBoxStyle}" 
+                                    FontFamily="Ariel" FontSize="18" 
+                                    FontWeight="Regular" 
+                                    Margin="0, 10, 0, 0" 
+                                    Width="240" 
+                                    Height="50" 
+                                    Path="{StaticResource accountIcon}" 
+                                    IconPad="36"/>
+                <controls:PasswordBoxEx CornerRadius="5" 
+                                        NormalPadding="1, 1, 1, 5" 
+                                        FocusedOutterColor="{DynamicResource AccentBright}"
+                                        Style="{StaticResource GlowingPasswordBoxStyle}" 
+                                        FontFamily="Ariel" FontSize="18" 
+                                        FontWeight="Regular" 
+                                        Margin="0, 20, 0, 0"
+                                        Width="240" 
+                                        Height="50" 
+                                        Path="{StaticResource keyIcon}" 
+                                        IconPad="36"/>
+                <controls:ButtonEx Margin="0, 45, 0, 0" Height="40"
+                                   Background="{DynamicResource BackColor}"
+                                   BorderThickness="2"
+                                   BorderBrush="{DynamicResource AccentBright}"
+                                   Content="Sign in"
+                                   Foreground="{DynamicResource DarkForeground}"
+                                   HoverColor="{DynamicResource DarkerBackColor}"
+                                   PressedColor="{DynamicResource DarkestBackColor}"
+                                   IconPad="0"
+                                   Width="150"
+                                   HorizontalContentAlignment="Center"
+                                   CornerRadius="5"/>
+                <controls:ButtonEx FontFamily="Tahoma" FontSize="13" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   IconPad="0"
+                                   Background="Transparent"
+                                   HoverColor="Transparent"
+                                   PressedColor="Transparent">
+                    <controls:ButtonEx.Style>
+                        <Style TargetType="controls:ButtonEx">
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentBright}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentReallyBright}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                    <controls:ButtonEx.Content>
+                        <TextBlock Text="Forgot Password?">
+                            <TextBlock.TextDecorations>
+                                <TextDecoration Location="Underline" PenOffset="4"/>
+                            </TextBlock.TextDecorations>
+                        </TextBlock>
+                    </controls:ButtonEx.Content>
+                </controls:ButtonEx>
             </StackPanel>
         </Grid>
     </Border>
