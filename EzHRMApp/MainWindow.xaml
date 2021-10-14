@@ -11,14 +11,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="610" Width="1000"
         WindowStyle="None"
-        ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True" 
         Background="Transparent">
     <windows:BlankWindow.DataContext>
         <viewModel:MainViewModel/>
     </windows:BlankWindow.DataContext>
-    <Grid SnapsToDevicePixels="True">
-        <Grid Margin="4">
+
+    <windows:BlankWindow.Style>
+        <Style TargetType="windows:BlankWindow">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsActive" Value="False">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </windows:BlankWindow.Style>
+    <Grid SnapsToDevicePixels="True" Cursor="Arrow">
+        <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="225"/>
                 <ColumnDefinition Width="*"/>
@@ -60,56 +78,61 @@
                     </StackPanel.Resources>
                     <controls:ButtonEx x:Name="helpBtn"      
                                        Path="{StaticResource questionIcon}" 
-                                       Content="Help"/>
+                                       Content="Help"
+                                       Click="ShowHelp"/>
                     <controls:ButtonEx x:Name="settingBtn"      
                                        Path="{StaticResource settingIcon}" 
                                        Content="Setting"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical">
-                    <StackPanel.Resources>
-                        <Style TargetType="controls:RadioButtonEx">
-                            <Setter Property="Margin" Value="0"/>
-                            <Setter Property="Height" Value="50"/>
-                            <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
-                            <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
-                        </Style>
-                    </StackPanel.Resources>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                              VerticalScrollBarVisibility="Auto"
+                              Margin="0, 15, 0, 5">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <Style TargetType="controls:RadioButtonEx">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
+                                <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
+                            </Style>
+                        </StackPanel.Resources>
 
-                    <controls:RadioButtonEx GroupName="TabButtons" 
+                        <controls:RadioButtonEx GroupName="TabButtons" 
                                             x:Name="dashboardBtn"    
                                             Path="{StaticResource dashboardIcon}" 
-                                            Margin="0, 50, 0, 0"
+                                            Margin="0, 35, 0, 0"
                                             Content="Dashboard"
                                             Click="TabButtonClicked"
                                             Command="{Binding ToDashboard}"/>
 
-                    <controls:RadioButtonEx GroupName="TabButtons" 
+                        <controls:RadioButtonEx GroupName="TabButtons" 
                                             x:Name="payRollBtn"      
                                             Path="{StaticResource moneyIcon}" 
                                             Click="TabButtonClicked"
                                             Content="Payroll"/>
 
-                    <controls:RadioButtonEx GroupName="TabButtons" 
+                        <controls:RadioButtonEx GroupName="TabButtons" 
                                             x:Name="checkInBtn"      
                                             Path="{StaticResource clockIcon}" 
                                             Click="TabButtonClicked"
                                             Content="CheckIn"/>
 
-                    <controls:RadioButtonEx GroupName="TabButtons" 
+                        <controls:RadioButtonEx GroupName="TabButtons" 
                                             x:Name="staffsBtn"          
                                             Path="{StaticResource staffsIcon}" 
                                             Click="TabButtonClicked"
                                             Content="Staffs Management"
                                             Command="{Binding ToStaffsManagementView}"/>
 
-                    <controls:RadioButtonEx GroupName="TabButtons" 
+                        <controls:RadioButtonEx GroupName="TabButtons" 
                                             x:Name="schedule"        
                                             Path="{StaticResource calendarIcon}" 
                                             Click="TabButtonClicked"
                                             Content="Schedule"/>
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
 
             <Border Grid.Row="0" 
@@ -178,97 +201,71 @@
                     </ContentControl.Resources>
                 </ContentControl>
             </DockPanel>
-
-            <Rectangle HorizontalAlignment="Right" 
-                       VerticalAlignment="Bottom" 
-                       Margin="0, 0, -10, -10"
-                       Width="20" 
-                       Height="20"
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       Fill="{DynamicResource DarkerPanel}" RenderTransformOrigin="0.5,0.5">
-                <Rectangle.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="45"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Rectangle.RenderTransform>
-            </Rectangle>
         </Grid>
         
-        <Grid>
+        <Grid Margin="5">
             <Grid.Resources>
                 <Style TargetType="Rectangle">
                     <Setter Property="Fill" Value="{DynamicResource DarkerPanel}"/>
                 </Style>
             </Grid.Resources>
             <Rectangle Name="WindowResizeTop"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Top"
-                   Margin="4, 0, 4, 0"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Top"
+                       Margin="5, 0, 5, 0"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNS"/>
             <Rectangle Name="WindowResizeBottom"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Bottom"
-                   Margin="4, 0, 4, 0"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Bottom"
+                       Margin="5, 0, 5, 0"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNS"/>
             <Rectangle Name="WindowResizeLeft"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Stretch"
-                   Margin="0, 4, 0, 4"
-                   Width="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Stretch"
+                       Margin="0, 5, 0, 5"
+                       Width="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeWE"/>
             <Rectangle Name="WindowResizeRight"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Stretch"
-                   Margin="0, 4, 0, 4"
-                   Width="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Stretch"
+                       Margin="0, 5, 0, 5"
+                       Width="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeWE"/>
 
             <Rectangle Name="WindowResizeTopLeft"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Width="4"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Width="5"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNWSE"/>
             <Rectangle Name="WindowResizeBottomLeft"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Width="4"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Width="5"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNESW"/>
             <Rectangle Name="WindowResizeTopRight"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Width="4"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Width="5"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNESW"/>
             <Rectangle Name="WindowResizeBottomRight"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
-                   Width="4"
-                   Height="4"
-                   PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                   MouseEnter="WindowResize_OnMouseEnter"
-                   MouseLeave="WindowResize_OnMouseLeave"/>
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       Width="5"
+                       Height="5"
+                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
+                       Cursor="SizeNWSE"/>
         </Grid>
     </Grid>
 </windows:BlankWindow>

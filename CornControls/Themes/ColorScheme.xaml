@@ -24,6 +24,13 @@
 
     <!-- Brushes -->
     <!-- Idiotic naming -->
+    <RadialGradientBrush x:Key="LoginBackground" GradientOrigin="0.25, 0" RadiusX="1.2" RadiusY="1" Center="0.25, 0">
+        <GradientStop Color="{DynamicResource ColorBackColor}" Offset="0.8"/>
+        <GradientStop Color="{DynamicResource ColorAccentReallyBright}" Offset="0.9"/>
+        <GradientStop Color="{DynamicResource ColorAccentBright}" Offset="0.95"/>
+        <GradientStop Color="{DynamicResource ColorAccent}" Offset="1"/>
+    </RadialGradientBrush>
+    
     <SolidColorBrush x:Key="DarkForeground" Color="{DynamicResource DarkForegroundColor}"/>
     <SolidColorBrush x:Key="LightForeground" Color="{DynamicResource LightForegroundColor}"/>
 

@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:CornControls.CustomControl">
+    <Style x:Key="{x:Type controls:TextBoxEx}" TargetType="{x:Type controls:TextBoxEx}">
+        <Setter Property="Margin" Value="0, 3, 0, 0"/>
+        <Setter Property="FontFamily" Value="Tahoma"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="IconPad" Value="50"/>
+        <Setter Property="IconSize" Value="24"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource DarkForeground}"/>
+        <Setter Property="Background" Value="{DynamicResource BackColor}"/>
+        <Setter Property="FocusedColor" Value="{DynamicResource BackColor}"/>
+        <Setter Property="NormalPadding" Value="0, 0, 0, 5"/>
+        <Setter Property="FocusedPadding" Value="0, 0, 0, 5"/>
+        <Setter Property="OutterColor" Value="Gray"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="FocusedOutterColor" Value="{DynamicResource Accent}"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TextBoxEx">
+                    <Border>
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OutterColor}"/>
+                                <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalPadding}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=contentTextBox, Path=IsFocused}" Value="True">
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedOutterColor}"/>
+                                        <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedPadding}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Border x:Name="bordder" CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CornerRadius}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=contentTextBox, Path=IsFocused}" Value="True">
+                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedColor}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Width="Auto"
+                                  Height="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{TemplateBinding IconPad}"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
+                                <TextBox x:Name="contentTextBox"
+                                         Grid.Column="1"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         Text="{TemplateBinding Text}"
+                                         FontFamily="{TemplateBinding FontFamily}"
+                                         FontSize="{TemplateBinding FontSize}"
+                                         FontStretch="{TemplateBinding FontStretch}"
+                                         FontWeight="{TemplateBinding FontWeight}"
+                                         FontStyle="{TemplateBinding FontStyle}"
+                                         TextAlignment="{TemplateBinding TextAlignment}"
+                                         SelectionTextBrush="{TemplateBinding SelectionTextBrush}"
+                                         VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Left"
+                                         VerticalAlignment="Stretch"
+                                         HorizontalAlignment="Stretch"/>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

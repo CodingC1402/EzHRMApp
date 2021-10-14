@@ -1,0 +1,45 @@
+﻿<window:BlankWindow x:Class="EzHRMApp.Windows.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EzHRMApp.Windows"
+        xmlns:window="clr-namespace:CornControls.Window;assembly=CornControls"
+        xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        Title="LoginWindow" Height="450" Width="350"
+        SnapsToDevicePixels="True">
+    <Border Background="{DynamicResource LoginBackground}" 
+            CornerRadius="20"
+            MouseDown="OnTopMouseDown"
+            Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentBright}"/>
+        </Border.Effect>
+        <Grid>
+            <controls:ButtonEx CornerRadius="15" 
+                               Width="30" 
+                               Height="30" 
+                               VerticalAlignment="Top" 
+                               HorizontalAlignment="Right" 
+                               Margin="0, 10, 10, 0"
+                               Background="{DynamicResource BackColor}"
+                               Foreground="{DynamicResource AccentBright}"
+                               HoverColor="{DynamicResource DarkerBackColor}"
+                               PressedColor="{DynamicResource DarkestBackColor}"
+                               IconPad="30"
+                               IconSize="24"
+                               Path="{StaticResource xCircleIcon}"
+                               Click="CloseWindow"/>
+
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Label Margin="0, 60, 0, 30" HorizontalContentAlignment="Center" Content="LOGIN" FontFamily="Tahoma" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource DarkForeground}"/>
+                <controls:TextBoxEx FocusedOutterColor="{DynamicResource AccentBright}" Style="{StaticResource GlowingTextBoxStyle}" FontFamily="Ariel" FontSize="18" FontWeight="Regular" Margin="0, 10, 0, 0" Width="240" Height="50" Path="{StaticResource accountIcon}" IconPad="36"/>
+                <controls:PasswordBoxEx FocusedOutterColor="{DynamicResource AccentBright}" Style="{StaticResource GlowingPasswordBoxStyle}" FontFamily="Ariel" FontSize="18" FontWeight="Regular" Margin="0, 20, 0, 0" Width="240" Height="50" Path="{StaticResource keyIcon}" IconPad="36"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</window:BlankWindow>
