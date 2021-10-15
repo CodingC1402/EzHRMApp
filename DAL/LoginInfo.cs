@@ -35,8 +35,6 @@ namespace DAL
                     
                 }
             }
-
-
         }
 
         // Using this will also change the bytes to 0 to remove trace 
