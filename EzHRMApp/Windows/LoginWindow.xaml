@@ -1,24 +1,35 @@
 ﻿<window:BlankWindow x:Class="EzHRMApp.Windows.LoginWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EzHRMApp.Windows"
-        xmlns:window="clr-namespace:CornControls.Window;assembly=CornControls"
-        xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
-        mc:Ignorable="d"
-        AllowsTransparency="True"
-        WindowStyle="None"
-        Background="Transparent"
-        Title="LoginWindow" Height="510" Width="370"
-        SnapsToDevicePixels="True">
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:local="clr-namespace:EzHRMApp.Windows"
+                    xmlns:window="clr-namespace:CornControls.Window;assembly=CornControls"
+                    xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+                    mc:Ignorable="d"
+                    AllowsTransparency="True"
+                    WindowStyle="None"
+                    Background="Transparent"
+                    Title="LoginWindow" Height="510" Width="370"
+                    SnapsToDevicePixels="True"
+                    Name="window">
     <Border Background="{DynamicResource LoginBackground}" 
             CornerRadius="20"
             MouseDown="OnTopMouseDown"
             Margin="10">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentBright}"/>
-        </Border.Effect>
+        <Border.Style>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type window:BlankWindow}}, Path=IsActive}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentBright}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>   
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
         <Grid>
             <controls:ButtonEx CornerRadius="15" 
                                Width="30" 
@@ -36,13 +47,22 @@
                                Click="CloseWindow"/>
 
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Label Margin="0, 60, 0, 30" HorizontalContentAlignment="Center" Content="LOGIN" FontFamily="Tahoma" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource DarkForeground}"/>
+                <Label Margin="0, 60, 0, 30" 
+                       HorizontalContentAlignment="Center" 
+                       Content="LOGIN" 
+                       FontFamily="Ariel" 
+                       FontSize="28"
+                       Height="40"
+                       FontWeight="UltraBold" 
+                       Foreground="{DynamicResource Accent}"/>
                 <controls:TextBoxEx CornerRadius="5" 
                                     NormalPadding="1, 1, 1, 5" 
                                     FocusedOutterColor="{DynamicResource AccentBright}"
+                                    Foreground="{DynamicResource Accent}"
                                     Style="{StaticResource GlowingTextBoxStyle}" 
-                                    FontFamily="Ariel" FontSize="18" 
-                                    FontWeight="Regular" 
+                                    FontFamily="Ariel" 
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
                                     Margin="0, 10, 0, 0" 
                                     Width="240" 
                                     Height="50" 
@@ -51,8 +71,9 @@
                 <controls:PasswordBoxEx CornerRadius="5" 
                                         NormalPadding="1, 1, 1, 5" 
                                         FocusedOutterColor="{DynamicResource AccentBright}"
+                                        Foreground="{DynamicResource Accent}"
                                         Style="{StaticResource GlowingPasswordBoxStyle}" 
-                                        FontFamily="Ariel" FontSize="18" 
+                                        FontFamily="Ariel" FontSize="16" 
                                         FontWeight="Regular" 
                                         Margin="0, 20, 0, 0"
                                         Width="240" 

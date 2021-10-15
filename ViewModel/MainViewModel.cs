@@ -9,6 +9,8 @@ namespace ViewModel
 {
     public class MainViewModel : Navigation.ViewModelBase
     {
+        public override string ViewName => "Main";
+
         private List<ViewModelBase> _viewModels = new List<ViewModelBase>();
         public List<ViewModelBase> ViewModels { get => _viewModels; }
 
