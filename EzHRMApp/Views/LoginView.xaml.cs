@@ -11,25 +11,32 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EzHRMApp.Windows
+namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginWindow : BlankWindow
+    public partial class LoginView : UserControlWindow
     {
-        public LoginWindow()
+        public LoginView()
         {
             InitializeComponent();
-            MaxHeight = MinHeight = Height;
-            MaxWidth = MinWidth = Width;
+        }
+
+        protected override void OnGetWindowParent()
+        {
+            base.OnGetWindowParent();
+            var wnd = OwnerWindow;
+            wnd.MaxHeight = wnd.MinHeight = wnd.Height = 510;
+            wnd.MaxWidth = wnd.MinWidth = wnd.Width = 370;
         }
 
         protected void CloseWindow(object sender, EventArgs e)
         {
-            Hide();
+            OwnerWindow.Close();
         }
     }
 }

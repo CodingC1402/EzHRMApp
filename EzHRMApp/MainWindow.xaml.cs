@@ -17,7 +17,6 @@ using System.Windows.Interop;
 using EzHRMApp.Helper;
 using WpfScreenHelper;
 using CornControls.Window;
-using EzHRMApp.Windows;
 
 namespace EzHRMApp
 {
@@ -26,54 +25,10 @@ namespace EzHRMApp
     /// </summary>
     public partial class MainWindow : BlankWindow
     {
-        private RadioButton  _previousTabButton = null;
-        private LoginWindow _loginWindow = null;
-
         public MainWindow()
         {
             _offSet = new Thickness(-8);
             InitializeComponent();
-        }
-
-        protected void HomeButtonClicked(object sender, EventArgs e)
-        {
-            if (_previousTabButton != null)
-            {
-                _previousTabButton.IsChecked = false;
-                _previousTabButton = null;
-            }
-            homeBtn.Width = 0;
-        }
-
-        protected void TabButtonClicked(object sender, EventArgs e)
-        {
-            homeBtn.Width = 75;
-            _previousTabButton = sender as RadioButton;
-        }
-
-        protected override void OnWindowStateChanged(RoutedPropertyChangedEventArgs<WindowState> e)
-        {
-            base.OnWindowStateChanged(e);
-            if (e.NewValue == WindowState.Normal)
-            {
-                maximizeBtn.Content = "◻";
-            }
-            else
-            {
-                maximizeBtn.Content = "⧉";
-            }
-        }
-
-        protected void ShowHelp(object sender, EventArgs e)
-        {
-            if (_loginWindow == null)
-            {
-                _loginWindow = new LoginWindow();
-                _loginWindow.Owner = this;
-                _loginWindow.ShowInTaskbar = false;
-            }
-
-            _loginWindow.ShowDialog();
         }
     }
 }

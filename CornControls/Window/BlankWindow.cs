@@ -28,6 +28,7 @@ namespace CornControls.Window
 
         protected Screen _currentScreen;
         protected Thickness _offSet = new Thickness(-3, -3, -3, -3);
+        public Thickness OffSet { get => _offSet; set => _offSet = value; }
 
         protected Rect _restoreBound = new Rect();
 
@@ -51,7 +52,7 @@ namespace CornControls.Window
             }
         }
 
-        protected enum ResizeDirection
+        public enum ResizeDirection
         {
             Left = 1,
             Right = 2,
@@ -87,7 +88,7 @@ namespace CornControls.Window
             _hwnd.AddHook(WndProc);
         }
 
-        protected virtual void OnTopMouseDown(object sender, MouseEventArgs e)
+        public virtual void OnTopMouseDown(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -96,12 +97,12 @@ namespace CornControls.Window
             }
         }
 
-        protected virtual void ResizeWindow(ResizeDirection direction)
+        public virtual void ResizeWindow(ResizeDirection direction)
         {
-            SendMessage(_hwnd.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
+            SendMessage(_hwnd.Handle, (uint)Message.WM_SYSCOMMAND, (IntPtr)(61440 + direction), IntPtr.Zero);
         }
 
-        protected virtual void WindowResize_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public virtual void WindowResize_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var rectangle = (Rectangle)sender;
             if (rectangle == null) return;
@@ -145,7 +146,7 @@ namespace CornControls.Window
             }
         }
 
-        protected virtual void WindowResize_OnMouseEnter(object sender, MouseEventArgs e)
+        public virtual void WindowResize_OnMouseEnter(object sender, MouseEventArgs e)
         {
             var rectangle = (Rectangle)sender;
             if (rectangle == null) return;
@@ -182,33 +183,33 @@ namespace CornControls.Window
             }
         }
 
-        protected virtual void WindowResize_OnMouseLeave(object sender, MouseEventArgs e)
+        public virtual void WindowResize_OnMouseLeave(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Arrow;
         }
 
-        protected virtual void Window_OnPreviewMouseMove(object sender, MouseEventArgs e)
+        public virtual void Window_OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed)
                 Cursor = Cursors.Arrow;
         }
 
-        protected virtual void OnMinimizeClicked(object sender, EventArgs e)
+        public virtual void OnMinimizeClicked(object sender, EventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        protected virtual void OnMaximizeClicked(object sender, EventArgs e)
+        public virtual void OnMaximizeClicked(object sender, EventArgs e)
         {
             WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
 
-        protected virtual void OnCloseClicked(object sender, EventArgs e)
+        public virtual void OnCloseClicked(object sender, EventArgs e)
         {
             Close();
         }
 
-        protected virtual void OnWindowStateChanged(RoutedPropertyChangedEventArgs<WindowState> e)
+        public virtual void OnWindowStateChanged(RoutedPropertyChangedEventArgs<WindowState> e)
         {
             RaiseEvent(e);
         }
@@ -250,37 +251,37 @@ namespace CornControls.Window
                     _currentScreen = Screen.FromHandle(hwnd);
                     break;
                 case Message.WM_GETMINMAXINFO:
-                    WmGetMinMaxInfo(hwnd, lParam);
-                    handled = true;
+                    handled = WmGetMinMaxInfo(hwnd, lParam);
                     break;
             }
 
             return IntPtr.Zero;
         }
 
-        protected void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        protected bool WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             if (WindowState != WindowState.Minimized)
-                return;
+                return false;
 
             // Get the MINMAXINFO structure from memory location given by lParam
             NativeMethods.MINMAXINFO mmi =
                 (NativeMethods.MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(NativeMethods.MINMAXINFO));
 
             var workRect = _currentScreen.WorkingArea;
-            var rect = _currentScreen.Bounds;
+            var rect = _currentScreen.Bounds; 
 
             mmi.MaxSize.X = (int)(workRect.Width - (_offSet.Left + _offSet.Right));
             mmi.MaxSize.Y = (int)(workRect.Height - (_offSet.Top + _offSet.Bottom));
             mmi.MaxPosition.X = (int)(workRect.X - rect.X + _offSet.Left);
             mmi.MaxPosition.Y = (int)(workRect.Y - rect.Y + _offSet.Top);
 
-            mmi.MaxTrackSize.X = mmi.MaxSize.X;
-            mmi.MaxTrackSize.Y = mmi.MaxSize.Y;
             mmi.MinTrackSize.X = mmi.MaxSize.X;
             mmi.MinTrackSize.Y = mmi.MaxSize.Y;
+            mmi.MaxTrackSize.X = mmi.MaxSize.X;
+            mmi.MaxTrackSize.Y = mmi.MaxSize.Y;
 
             Marshal.StructureToPtr(mmi, lParam, true);
+            return true;
         }
     }
 }
