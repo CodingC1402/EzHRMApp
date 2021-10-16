@@ -82,7 +82,14 @@
                                         Height="50" 
                                         Path="{StaticResource keyIcon}" 
                                         IconPad="36"/>
-                <controls:ButtonEx Margin="0, 45, 0, 0" Height="40"
+                <Label Foreground="{DynamicResource CancleMouseDown}" 
+                       HorizontalAlignment="Center"
+                       FontFamily="Tahoma"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Margin="0, 10, 0, 0"
+                       Content="{Binding Result}"/>
+                <controls:ButtonEx Margin="0, 35, 0, 0" Height="40"
                                    Background="{DynamicResource BackColor}"
                                    BorderThickness="2"
                                    BorderBrush="{DynamicResource AccentBright}"

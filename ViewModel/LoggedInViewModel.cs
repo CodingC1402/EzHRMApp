@@ -7,14 +7,9 @@ using ViewModel.Navigation;
 
 namespace ViewModel
 {
-    public class LoggedInViewModel : Navigation.ViewModelBase
+    public class LoggedInViewModel : Navigation.NavigationViewModel
     {
         public override string ViewName => "Main";
-
-        private List<ViewModelBase> _viewModels = new List<ViewModelBase>();
-        public List<ViewModelBase> ViewModels { get => _viewModels; }
-
-        public ViewModelBase CurrentViewModel { get; set; }
 
         private static LoggedInViewModel __instance = null;
         public static LoggedInViewModel GetInstance()
@@ -30,14 +25,14 @@ namespace ViewModel
             }
             __instance = this;
 
-            ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
+            ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this);
+            ViewModels.Add(ToHomeView.ViewModel);
 
-            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
+            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this);
+            ViewModels.Add(ToHomeView.ViewModel);
 
-            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
+            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel(), this);
+            ViewModels.Add(ToHomeView.ViewModel);
 
             CurrentViewModel = ToHomeView.ViewModel;
         }

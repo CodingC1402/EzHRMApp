@@ -8,12 +8,14 @@ namespace ViewModel.Navigation
     {
         public event EventHandler CanExecuteChanged;
 
+        private NavigationViewModel _owner = null;
         private T _viewModel = null;
         public T ViewModel { get => _viewModel; }
 
-        public NavigationCommand (T viewModel) 
+        public NavigationCommand (T viewModel, NavigationViewModel owner) 
         {
             _viewModel = viewModel;
+            _owner = owner;
         }
 
         public virtual bool CanExecute(object parameter)
@@ -23,7 +25,7 @@ namespace ViewModel.Navigation
 
         public virtual void Execute(object parameter)
         {
-            MainViewModel.GetInstance().CurrentViewModel = _viewModel;
+           _owner.CurrentViewModel = _viewModel;
         }
     }
 }

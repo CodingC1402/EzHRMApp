@@ -95,6 +95,9 @@ namespace DAL
 
                     value = cmd.Parameters[_accessTokenVar].Value;
                     _accessToken = value != System.DBNull.Value ? (string)value : "";
+
+                    value = cmd.Parameters[_successVar].Value;
+                    success = value != System.DBNull.Value ? ((sbyte)value & 0xff) > 0 : false;
                 }
                 finally
                 {
