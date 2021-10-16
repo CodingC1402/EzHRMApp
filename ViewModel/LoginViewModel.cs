@@ -23,7 +23,11 @@ namespace ViewModel
         // Send in password
         protected void ExecuteLogin(object param)
         {
-            LoginInfo.Login(UserName, param as SecureString);
+            if (LoginInfo.Login(UserName, param as SecureString))
+            {
+                var mainVM = MainViewModel.GetInstance();
+                mainVM.CurrentViewModel = mainVM.ToLoggedIn.ViewModel;
+            }
         }
         protected bool CanExecuteLogin(object param)
         {

@@ -29,20 +29,16 @@ namespace ViewModel
             }
             __instance = this;
 
-            ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
+            ToLogin = new NavigationCommand<LoginViewModel>(new LoginViewModel());
+            _viewModels.Add(ToLogin.ViewModel);
 
-            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
+            ToLoggedIn = new NavigationCommand<LoggedInViewModel>(new LoggedInViewModel());
+            _viewModels.Add(ToLoggedIn.ViewModel);
 
-            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel());
-            _viewModels.Add(ToHomeView.ViewModel);
-
-            CurrentViewModel = ToHomeView.ViewModel;
+            CurrentViewModel = ToLogin.ViewModel;
         }
 
-        public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
-        public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
-        public NavigationCommand<StaffsManagementViewModel> ToStaffsManagementView { get; set; }
+        public NavigationCommand<LoginViewModel> ToLogin { get; set; }
+        public NavigationCommand<LoggedInViewModel> ToLoggedIn { get; set; }
     }
 }
