@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Windows;
@@ -11,7 +12,7 @@ using System.Windows.Media;
 namespace CornControls.CustomControl
 {
     [AddINotifyPropertyChangedInterface]
-    public class PasswordBoxEx : Control
+    public class PasswordBoxEx : Control, INotifyPropertyChanged
     {
         public static readonly DependencyProperty PathProperty = DependencyProperty.Register(nameof(Path), typeof(Geometry), typeof(PasswordBoxEx));
         public static new readonly DependencyProperty IsFocusedProperty = DependencyProperty.Register(nameof(IsFocused), typeof(bool), typeof(PasswordBoxEx));
@@ -144,11 +145,16 @@ namespace CornControls.CustomControl
                     contentPasswordBox.Password = value;
                 else
                     _password = value;
+
+                RaisePropertyChanged(nameof(SecturedPassword));
             }
         }
 
         [Browsable(true), Category("Appearance")]
         private char _passwordChar = '●';
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public char PasswordChar
         {
             get
@@ -184,12 +190,24 @@ namespace CornControls.CustomControl
             {
                 IsFocused = true;
             };
+            contentPasswordBox.PasswordChanged += (s, e) =>
+            {
+                RaisePropertyChanged(nameof(Password));
+                RaisePropertyChanged(nameof(SecturedPassword));
+            };
 
             contentPasswordBox.Password = _password;
             contentPasswordBox.PasswordChar = _passwordChar;
+            RaisePropertyChanged(nameof(SecturedPassword));
 
             _password = "╭∩╮(︶︿︶)╭∩╮";
             _passwordChar = '*';
+        }
+
+        protected void RaisePropertyChanged([CallerMemberName]string propName = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

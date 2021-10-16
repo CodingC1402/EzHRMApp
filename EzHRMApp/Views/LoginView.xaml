@@ -94,7 +94,7 @@
                                    Width="150"
                                    HorizontalContentAlignment="Center"
                                    Command="{Binding LoginCommand}"
-                                   CommandParameter="{Binding ElementName=passwordBox, Path=Password}"
+                                   CommandParameter="{Binding ElementName=passwordBox, Path=SecturedPassword}"
                                    CornerRadius="5"/>
                 <controls:ButtonEx FontFamily="Tahoma" FontSize="13" FontWeight="Bold"
                                    HorizontalAlignment="Center"

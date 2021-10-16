@@ -43,7 +43,7 @@
             <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
                 <view:LoginView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:LoggedInViewModel}">
                 <view:LoggedInView/>
             </DataTemplate>
         </ContentControl.Resources>

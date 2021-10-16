@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ViewModel;
 
 namespace EzHRMApp
 {
@@ -13,5 +14,9 @@ namespace EzHRMApp
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            LoginViewModel.LogOut();
+        }
     }
 }

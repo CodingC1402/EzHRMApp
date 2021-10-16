@@ -64,7 +64,7 @@
                                          Grid.Column="1"
                                          BorderThickness="0"
                                          Background="Transparent"
-                                         Text="{TemplateBinding Text}"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
                                          FontFamily="{TemplateBinding FontFamily}"
                                          FontSize="{TemplateBinding FontSize}"
                                          FontStretch="{TemplateBinding FontStretch}"
