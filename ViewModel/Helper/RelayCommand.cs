@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace AcademicSavingService.Commands
+namespace ViewModel.Helper
 {
     public class RelayCommand<T> : ICommand
     {

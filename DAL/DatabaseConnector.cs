@@ -8,7 +8,7 @@ namespace DAL
         #region Private fields
 
         private static MySqlConnection _connection;
-        private static string _connectionString = "Server=127.0.0.1;Database=academicsavingservice;Uid=root;Pwd=Password123!";
+        private static string _connectionString = "Server=127.0.0.1;Database=EzHRM;Uid=root;Pwd=password123";
 
         private static int _connectionAttemptCount = 0;
 
@@ -16,14 +16,22 @@ namespace DAL
 
         #region Public prop
 
-        public static MySqlConnection Connection => _connection;
+        public static MySqlConnection Connection
+        {
+            get
+            {
+                if (_connection == null)
+                    _connection = new MySqlConnection(_connectionString);
+
+                return _connection;
+            }
+            private set
+            {
+                _connection = value;
+            }
+        }
 
         #endregion
-
-        static DatabaseConnector()
-        {
-            _connection = new MySqlConnection(_connectionString);
-        }
 
         public static void OpenConnection()
         {

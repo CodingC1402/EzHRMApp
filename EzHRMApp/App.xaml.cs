@@ -13,5 +13,9 @@ namespace EzHRMApp
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            ViewModel.LoginViewModel.LogOut();
+        }
     }
 }
