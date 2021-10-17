@@ -77,7 +77,7 @@
                                        Path="{StaticResource settingIcon}" 
                                        Content="Setting"/>
                     <controls:ButtonEx x:Name="logOutBtn"      
-                                       Path="{StaticResource settingIcon}"
+                                       Path="{StaticResource logoutIcon}"
                                        Content="Logout"
                                        Command="{Binding LogOutCommand}"/>
                 </StackPanel>
