@@ -1,9 +1,18 @@
-INSERT INTO TAIKHOAN (TaiKhoan, Password, QuyenHan) VALUES ('CornyCornyCorn0', SHA2('Password123', 256), 123);
-INSERT INTO TAIKHOAN (TaiKhoan, Password, QuyenHan) VALUES ('CornyCornyCorn1', SHA2('Password124', 256), 126);
-INSERT INTO TAIKHOAN (TaiKhoan, Password, QuyenHan) VALUES ('CornyCornyCorn2', SHA2('Password125', 256), 127);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('boss',    0x0FFFFF);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('hrm',     0x0000FF);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('employee',0xF00000);
+
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('boss0', SHA2('0', 256), 'boss');
+
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('hrm0', SHA2('0', 256), 'hrm');
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('hrm1', SHA2('1', 256), 'hrm');
+
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee0', SHA2('0', 256), 'employee');
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee1', SHA2('1', 256), 'employee');
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee2', SHA2('2', 256), 'employee');
 
 DELIMITER  $$
-CALL LOGIN('CornyCornyCorn0', 'Password123', @AccessToken, @Mask, @ID, @IsLogedIn, @Success);
+CALL LOGIN('boss0', SHA2('0', 256), @AccessToken, @Mask, @ID, @IsLogedIn, @Success);
 SELECT @AccessToken;
 SELECT @Mask;
 SELECT @ID;
@@ -16,13 +25,14 @@ CALL LOGOUTALL();
 
  UPDATE TAIKHOAN TK
         SET TK.DangLogin = 0
-        WHERE TK.TaiKhoan = 'CornyCornyCorn0';
+        WHERE TK.TaiKhoan = 'boss0';
 
  UPDATE TAIKHOAN TK
         SET TK.DangLogin = 0
         WHERE TK.TaiKhoan = 'CornyCornyCorn1';
 
 DELETE FROM accesstokens;
+DELETE FROM TAIKHOAN;
 SELECT * FROM accesstokens;
 SELECT * FROM TAIKHOAN;
 

@@ -24,10 +24,10 @@ namespace ViewModel
             }
             __instance = this;
 
-            ToLogin = new NavigationCommand<LoginViewModel>(new LoginViewModel(), this);
+            ToLogin = new NavigationCommand<LoginViewModel>(new LoginViewModel(), this, 0);
             ViewModels.Add(ToLogin.ViewModel);
 
-            ToLoggedIn = new NavigationCommand<LoggedInViewModel>(new LoggedInViewModel(), this);
+            ToLoggedIn = new NavigationCommand<LoggedInViewModel>(new LoggedInViewModel(), this, 0);
             ViewModels.Add(ToLoggedIn.ViewModel);
 
             CurrentViewModel = ToLogin.ViewModel;

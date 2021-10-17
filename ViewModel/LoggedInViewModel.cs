@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModel.Helper;
 using ViewModel.Navigation;
 
 namespace ViewModel
@@ -17,6 +19,15 @@ namespace ViewModel
             return __instance;
         }
 
+        protected RelayCommand<object> _logoutCommand = null;
+        public RelayCommand<object> LogOutCommand => _logoutCommand ?? (_logoutCommand = new RelayCommand<object>(param => ExecuteLogout()));
+        protected void ExecuteLogout()
+        {
+            LoginInfo.Logout();
+            var vm = MainViewModel.GetInstance();
+            vm.CurrentViewModel = vm.ToLogin.ViewModel;
+        }
+
         public LoggedInViewModel()
         {
             if (__instance != null)
@@ -25,13 +36,15 @@ namespace ViewModel
             }
             __instance = this;
 
-            ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this);
+            
+
+            ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
 
-            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this);
+            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
 
-            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel(), this);
+            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
 
             CurrentViewModel = ToHomeView.ViewModel;

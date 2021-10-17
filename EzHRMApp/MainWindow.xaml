@@ -19,25 +19,6 @@
         <viewModel:MainViewModel/>
     </windows:BlankWindow.DataContext>
 
-    <windows:BlankWindow.Style>
-        <Style TargetType="windows:BlankWindow">
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsActive" Value="False">
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="0" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </windows:BlankWindow.Style>
-
     <ContentControl Content="{Binding CurrentViewModel}">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">

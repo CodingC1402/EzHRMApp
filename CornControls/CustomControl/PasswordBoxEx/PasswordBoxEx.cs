@@ -7,6 +7,7 @@ using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace CornControls.CustomControl
@@ -14,6 +15,8 @@ namespace CornControls.CustomControl
     [AddINotifyPropertyChangedInterface]
     public class PasswordBoxEx : Control, INotifyPropertyChanged
     {
+        public static readonly DependencyProperty IsCapslockedProperty = DependencyProperty.Register(nameof(IsCapslocked), typeof(bool), typeof(PasswordBoxEx));
+
         public static readonly DependencyProperty PathProperty = DependencyProperty.Register(nameof(Path), typeof(Geometry), typeof(PasswordBoxEx));
         public static new readonly DependencyProperty IsFocusedProperty = DependencyProperty.Register(nameof(IsFocused), typeof(bool), typeof(PasswordBoxEx));
 
@@ -32,6 +35,13 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty OutterColorProperty = DependencyProperty.Register(nameof(OutterColor), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
         public static readonly DependencyProperty FocusedOutterColorProperty = DependencyProperty.Register(nameof(FocusedOutterColor), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
         public static readonly DependencyProperty SelectionTextBrushProperty = DependencyProperty.Register(nameof(SelectionTextBrush), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
+
+        [Browsable(true), Category("Appearance")]
+        public bool IsCapslocked
+        {
+            get => (bool)GetValue(IsCapslockedProperty);
+            set => SetValue(IsCapslockedProperty, value);
+        }
 
         [Browsable(true), Category("Appearance")]
         public CornerRadius CornerRadius
@@ -194,6 +204,17 @@ namespace CornControls.CustomControl
             {
                 RaisePropertyChanged(nameof(Password));
                 RaisePropertyChanged(nameof(SecturedPassword));
+            };
+            contentPasswordBox.PreviewKeyDown += (s, e) =>
+            {
+                if (Keyboard.GetKeyStates(Key.CapsLock) == KeyStates.Toggled)
+                {
+                    IsCapslocked = true;
+                }
+                else
+                {
+                    IsCapslocked = false;
+                }
             };
 
             contentPasswordBox.Password = _password;
