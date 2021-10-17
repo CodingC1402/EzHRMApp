@@ -93,10 +93,10 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
                                 <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>

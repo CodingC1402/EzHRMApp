@@ -16,7 +16,7 @@ namespace ViewModel
         public override string ViewName => "Login";
 
         public string UserName { get; set; }
-        public string Result { get; set; }
+        public string Result { get; set; } = "";
 
         protected RelayCommand<object> _loginRelayCommand;
         public ICommand LoginCommand => _loginRelayCommand ?? (_loginRelayCommand = new RelayCommand<object>(ExecuteLogin, CanExecuteLogin)) ;
