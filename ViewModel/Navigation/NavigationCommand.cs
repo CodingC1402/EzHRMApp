@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Windows.Input;
 using ViewModel;
 
@@ -8,22 +9,27 @@ namespace ViewModel.Navigation
     {
         public event EventHandler CanExecuteChanged;
 
+        private uint _bitMask = 0;
+        private NavigationViewModel _owner = null;
         private T _viewModel = null;
         public T ViewModel { get => _viewModel; }
 
-        public NavigationCommand (T viewModel) 
+
+        public NavigationCommand (T viewModel, NavigationViewModel owner, uint bitMask) 
         {
             _viewModel = viewModel;
+            _owner = owner;
+            _bitMask = bitMask;
         }
 
         public virtual bool CanExecute(object parameter)
         {
-            return true;
+            return (LoginInfo.PrivilegeMask & _bitMask) == _bitMask;
         }
 
         public virtual void Execute(object parameter)
         {
-            MainViewModel.GetInstance().CurrentViewModel = _viewModel;
+           _owner.CurrentViewModel = _viewModel;
         }
     }
 }

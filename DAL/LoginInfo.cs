@@ -17,17 +17,45 @@ namespace DAL
     {
         public enum Privileges
         {
-            SetUpSchedule = 1,
-            ManageEmployee = 2,
-            ViewEmployee = 4,
-            ManagePayroll = 8,
-            ManageHoliday = 16,
-            CheckIn = 32,
+            ManageEmployee          = 0x000001,
+            SearchAndEditEmployee   = 0x000002,
+            PayRollManagement       = 0x000008,
+            ManageLeaves            = 0x000010,
+            SearchAndEditCheckIn    = 0x000020,
+
+            CompanyManagement       = 0x000100,
+            JobsManagement          = 0x000200,
+            DepartmentManagement    = 0x000400,
+            ChangeRules             = 0x000800,
+            SetUpSchedule           = 0x001000,
+            ManageHoliday           = 0x002000,
+
+            Reports                 = 0x010000,
+            AccountGroupManagement  = 0x020000,
+            AccountManagement       = 0x040000,
+
+            // include account info
+            PersonalInfo            = 0x100000
         }
 
+        public static uint PrivilegeMask
+        {
+            get => _privilegeMask;
+        }
+        public static string AccessToken
+        {
+            get => _accessToken;
+        }
+        public static string EmployeeID
+        {
+            get => _employeeID;
+        }
         private static string _accessToken = "";
         private static uint   _privilegeMask = 0;
         private static string _employeeID = "";
+
+        public static uint MinPasswordLength { get => 1; }
+        public static uint MaxPasswordLength { get => 16; }
 
         private static readonly string _userNameVar = "?UserName";
         private static readonly string _passwordVar = "?LoginPassword";
@@ -95,6 +123,9 @@ namespace DAL
 
                     value = cmd.Parameters[_accessTokenVar].Value;
                     _accessToken = value != System.DBNull.Value ? (string)value : "";
+
+                    value = cmd.Parameters[_successVar].Value;
+                    success = value != System.DBNull.Value ? ((sbyte)value & 0xff) > 0 : false;
                 }
                 finally
                 {

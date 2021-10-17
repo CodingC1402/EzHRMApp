@@ -10,6 +10,25 @@
                            mc:Ignorable="d" 
                            d:DesignHeight="450" d:DesignWidth="800">
     <Grid SnapsToDevicePixels="True" Cursor="Arrow">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type windows:BlankWindow}}, Path=IsActive}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect BlurRadius="0" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="225"/>
@@ -57,6 +76,10 @@
                     <controls:ButtonEx x:Name="settingBtn"      
                                        Path="{StaticResource settingIcon}" 
                                        Content="Setting"/>
+                    <controls:ButtonEx x:Name="logOutBtn"      
+                                       Path="{StaticResource settingIcon}"
+                                       Content="Logout"
+                                       Command="{Binding LogOutCommand}"/>
                 </StackPanel>
 
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" 
@@ -70,6 +93,12 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
                                 <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </StackPanel.Resources>
 

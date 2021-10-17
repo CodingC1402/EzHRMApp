@@ -74,6 +74,12 @@ namespace ViewModel.Helper
             _execute((T)parameter);
         }
 
+        public void RaiseCanExecuteChangeEvent()
+        {
+            if (CanExecuteChanged != null)
+                CanExecuteChanged(this, new EventArgs());
+        }
+
         #endregion
     }
 

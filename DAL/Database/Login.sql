@@ -5,16 +5,19 @@ CREATE PROCEDURE LOGIN(IN Username VARCHAR(255), IN LoginPassword VARCHAR(255), 
 BEGIN
     DECLARE AccountCount TINYINT;
     DECLARE IsInUse TINYINT;
+    DECLARE AccountGroup VARCHAR(255);
     DECLARE Bitmask INT;
     DECLARE NewToken VARCHAR(32);
 
     /** 1 = Succeeded 0 = failed */
     SET Success := 0;
-    SELECT COUNT(*), DangLogIn, TK.QuyenHan INTO AccountCount, IsInUse, Bitmask FROM TAIKHOAN TK WHERE Username = TK.TaiKhoan AND LoginPassword = TK.Password;
+    SELECT COUNT(*), DangLogIn, NhomTaiKhoan INTO AccountCount, IsInUse, AccountGroup FROM TAIKHOAN TK WHERE Username = TK.TaiKhoan AND LoginPassword = TK.Password;
 
     IF (AccountCount > 0) THEN
         SET Success := 1;
         SET StaffID := (SELECT ID FROM NHANVIEN WHERE TaiKhoan = Username LIMIT 1);
+
+        SELECT QuyenHan INTO Bitmask From NHOMTAIKHOAN WHERE TenNhomTaiKHoan = AccountGroup;
         SET PrivilegeMask := Bitmask;
 
         IF ( IsInUse = 0 OR IsInUse IS NULL) THEN
