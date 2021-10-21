@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PropertyChanged;
 
-namespace DAL.Models
+namespace Model
 {
     [AddINotifyPropertyChangedInterface]
     public class BaseModel : INotifyPropertyChanged

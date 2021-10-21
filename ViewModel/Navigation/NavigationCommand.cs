@@ -1,7 +1,7 @@
-﻿using DAL;
-using System;
+﻿using System;
 using System.Windows.Input;
 using ViewModel;
+using Model;
 
 namespace ViewModel.Navigation
 {
