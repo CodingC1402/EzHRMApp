@@ -9,7 +9,7 @@ using System.Text;
 namespace DAL.Repos
 {
     public class Repo<TRow> where TRow : Row
-    { 
+    {
         //Important
         public virtual string TableName { get; protected set; }
         public virtual string[] PKColsName { get; protected set; }

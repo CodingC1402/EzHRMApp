@@ -23,6 +23,7 @@ namespace DAL.Rows
         public int PhongBan { get; set; }
         public int ChucVu { get; set; }
         public string TaiKhoan {get; set;}
+        
 
         public bool ChangeDepartment(Department department)
         {
