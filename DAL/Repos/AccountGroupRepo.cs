@@ -5,10 +5,16 @@ using System.Text;
 
 namespace DAL.Repos
 {
-    public class AccountGroupRepo : Repo<AccountGroup, string>
+    public class AccountGroupRepo : Repo<AccountGroup>
     {
         public static AccountGroupRepo Instance { get; private set; } = new AccountGroupRepo();
-        public override string IDColName => "TenNhomTaiKhoan";
-        public override string TableName => "NHOMTAIKHOAN";
+        private AccountGroupRepo()
+        {
+            TableName = "NHOMTAIKHOAN";
+            PKColsName = new string[]
+            {
+                "TenNhomTaiKhoan"
+            };
+        }
     }
 }

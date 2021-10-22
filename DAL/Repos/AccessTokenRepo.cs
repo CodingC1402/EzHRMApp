@@ -1,4 +1,5 @@
-﻿using DAL.Rows;
+﻿using DAL.Others;
+using DAL.Rows;
 using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,15 @@ using System.Text;
 
 namespace DAL.Repos
 {
-    public class AccessTokenRepo : Repo<AccessToken, string>
+    public class AccessTokenRepo : Repo<AccessToken>
     {
         public static AccessTokenRepo Instance { get; private set; } = new AccessTokenRepo();
-        public override string IDColName => "Token";
-        public override string TableName => "ACCESSTOKENS";
+        private AccessTokenRepo()
+        {
+            TableName = "ACCESSTOKENS";
+            PKColsName = new string[] { "Token" };
+
+        }
         public static int TokenSize { get => 32; }
 
         public AccessToken FindByAccount(string accountName)
@@ -19,16 +24,19 @@ namespace DAL.Repos
             return db.Query(TableName).Where(nameof(AccessToken.Account), accountName).First<AccessToken>();
         }
 
-        public AccessToken CreateToken(Account account)
+        public AccessToken CreateToken(Account account, UnitOfWork uow)
         {
             string tokenStr = GenerateAccessToken(TokenSize);
 
-            var tokenList = new List<AccessToken>(GetAll());
+            if (!uow.Repos.ContainsKey(TableName))
+            {
+                uow.Repos.Add(TableName, new List<Row>(GetAll()));
+            }
             bool needReset = true;
             while (needReset)
             {
                 needReset = false;
-                foreach (var token in tokenList)
+                foreach (AccessToken token in uow.Repos[TableName])
                 {
                     if (token.Token == tokenStr)
                     {
@@ -41,9 +49,9 @@ namespace DAL.Repos
             {
                 Token = GenerateAccessToken(TokenSize),
                 Account = account.TaiKhoan,
-                Bitmask = AccountGroupRepo.Instance.FindByID(account.NhomTaiKhoan).QuyenHan
+                Bitmask = AccountGroupRepo.Instance.FindByID(new object[] { account.NhomTaiKhoan }).QuyenHan
             };
-            Add(newToken);
+            Add(newToken, uow);
 
             return newToken;
         }

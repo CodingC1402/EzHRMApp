@@ -1,4 +1,5 @@
-﻿using DAL.Repos;
+﻿using DAL.Others;
+using DAL.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace DAL.Rows
         public ConnectionResult Login(SecureString password)
         {
             IntPtr rawString = IntPtr.Zero;
+            UnitOfWork uow = new UnitOfWork();
 
             try
             {
@@ -27,17 +29,16 @@ namespace DAL.Rows
                 {
                     if (DangLogin > 0)
                     {
-                        var clause = new List<KeyValuePair<string, object>>();
-                        clause.Add(new KeyValuePair<string, object>(nameof(AccessToken.Account), TaiKhoan));
-
-                        var existedToken = AccessTokenRepo.Instance.FindBy(clause, false).First();
-
+                        var existedToken = AccessTokenRepo.Instance.FindBy(nameof(AccessToken.Account), TaiKhoan).First();
                         return new ConnectionResult(false, existedToken.Token, existedToken.Bitmask, existedToken.NhanVienID);
                     }
 
                     DangLogin = 1;
-                    var token = AccessTokenRepo.Instance.CreateToken(this);
-                    return new ConnectionResult(true, token.Token, token.Bitmask, token.NhanVienID);
+                    Save(uow);
+                    var token = AccessTokenRepo.Instance.CreateToken(this, uow);
+
+                    if (uow.Complete())
+                        return new ConnectionResult(true, token.Token, token.Bitmask, token.NhanVienID);
                 }
 
                 return new ConnectionResult(false, "", 0, "");
@@ -45,6 +46,7 @@ namespace DAL.Rows
             finally
             {
                 Marshal.ZeroFreeGlobalAllocUnicode(rawString);
+                uow.Dispose();
             }
         }
 
@@ -53,12 +55,23 @@ namespace DAL.Rows
             if (DangLogin == 0)
                 return false;
 
-            var tokenRepo = AccessTokenRepo.Instance;
-            var token = tokenRepo.FindByAccount(TaiKhoan);
-            tokenRepo.Remove(token.Token);
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                DangLogin = 0;
+                var tokenRepo = AccessTokenRepo.Instance;
+                var token = tokenRepo.FindByAccount(TaiKhoan);
 
-            DangLogin = 0;
+                tokenRepo.Remove(new object[] { token.Token }, uow);
+                Save(uow);
+
+                uow.Complete();
+            }
             return true;
+        }
+
+        public override bool Save(UnitOfWork uow)
+        {
+            return AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uow);
         }
     }
 }

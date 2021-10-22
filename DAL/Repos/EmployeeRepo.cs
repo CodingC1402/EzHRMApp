@@ -5,9 +5,13 @@ using System.Text;
 
 namespace DAL.Repos
 {
-    public class EmployeeRepo : Repo<Employee, string>
+    public class EmployeeRepo : Repo<Employee>
     {
-        public override string IDColName => "ID";
-        public override string TableName => "NHANVIEN";
+        public static EmployeeRepo Instance { get; private set; } = new EmployeeRepo();
+        private EmployeeRepo()
+        {
+            TableName = "NHANVIEN";
+            PKColsName = new string[] { "ID" };
+        }
     }
 }
