@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using SqlKata.Compilers;
+using SqlKata.Execution;
 using System;
 
 namespace DAL
@@ -7,8 +9,11 @@ namespace DAL
     {
         #region Private fields
 
-        private static MySqlConnection _connection;
         private static string _connectionString = "Server=127.0.0.1;Database=EzHRM;Uid=root;Pwd=password123";
+
+        private static MySqlConnection _connection = new MySqlConnection(_connectionString);
+        private static MySqlCompiler _compiler = new MySqlCompiler();
+        private static QueryFactory _database = new QueryFactory(_connection, _compiler);
 
         private static int _connectionAttemptCount = 0;
 
@@ -16,20 +21,8 @@ namespace DAL
 
         #region Public prop
 
-        public static MySqlConnection Connection
-        {
-            get
-            {
-                if (_connection == null)
-                    _connection = new MySqlConnection(_connectionString);
-
-                return _connection;
-            }
-            private set
-            {
-                _connection = value;
-            }
-        }
+        public static MySqlConnection Connection { get => _connection; private set => _connection = value; }
+        public static QueryFactory Database { get => _database; private set => _database = value; }
 
         #endregion
 

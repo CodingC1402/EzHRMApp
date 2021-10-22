@@ -16,7 +16,7 @@ namespace DAL.DataAccess
     /// </summary>
     /// <typeparam name="Model"> The model class </typeparam>
     /// <typeparam name="IDType"> The type if the id of the class </typeparam>
-    public abstract class BaseDataAccess<Model, IDType> where Model : DAL.Models.BaseModel
+    public abstract class BaseDataAccess<Model, IDType>
     {
         protected MySqlCommand cmd;
 
