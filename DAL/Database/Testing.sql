@@ -39,11 +39,13 @@ SELECT * FROM TAIKHOAN;
 INSERT INTO ACCESSTOKENS(Token, Bitmask, Account)
 VALUES ('sfdasfadsf', Bitmask, 'CornyCornyCorn0');
 
-
+use ezhrm;
 
 insert into phongban(id,tenphong) values (0,'a');
 insert into cachtinhluong(ten) values ('a');
 insert into chucvu(id,tenchucvu,cachtinhluong,mucluongngoaigio) values (0,'a','a',0.5);
+select * from phongban;
+select * from chucvu;
 
 INSERT INTO Nhanvien(id,ho,ten,cmnd,ngaysinh,emailvanphong,emailcanhan,sdtvanphong,sdtcanhan,
 ngayvaolam,phongban,chucvu) VALUES (0,'te','te',4576,'2012-12-12','ad','a','1234','1234','2020-12-12',1,1);

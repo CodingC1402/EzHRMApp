@@ -13,17 +13,27 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        
-        <ListView ItemsSource="{Binding EmployeeList}">
-            <ListView.DataContext>
+
+        <DataGrid ItemsSource="{Binding EmployeeList}"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True">
+            <DataGrid.DataContext>
                 <ViewModel:StaffsViewModel/>
-            </ListView.DataContext>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="140" Header="a" DisplayMemberBinding="{Binding Ten}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>        
+            </DataGrid.DataContext>
+
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="DataGridColumnHeader" >
+                    <Setter Property="Background" Value="{DynamicResource AccentDark}"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0 0 1 1"/>
+                    <Setter Property="Padding" Value="10 0 10 0"/>
+                    <Setter Property="Height" Value="auto" />
+                    <Setter Property="Width" Value="auto"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>        
 
         <StackPanel Grid.Row="1">
             <Label Content="{Binding ViewName}"

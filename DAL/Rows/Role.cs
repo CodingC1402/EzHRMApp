@@ -4,7 +4,11 @@ using System.Text;
 
 namespace DAL.Rows
 {
-    class Job
+    public class Role : Row
     {
+        public int ID { get; set; }
+        public string TenChucVu { get; set; }
+        public string CachTinhLuong { get; set; }
+        public float MucLuongNgoaiGio { get; set; }
     }
 }

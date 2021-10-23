@@ -11,12 +11,12 @@ namespace ViewModel
 {
     public class StaffsViewModel : Navigation.ViewModelBase
     {
-        public ObservableCollection<DAL.Rows.Employee> EmployeeList;
+        public ObservableCollection<Staffs.Employee> EmployeeList { get; set; }
         public override string ViewName => "Staffs";
 
         public StaffsViewModel()
         {
-            EmployeeList = new ObservableCollection<DAL.Rows.Employee>(DAL.Repos.EmployeeRepo.Instance.GetAll());
+            EmployeeList = Staffs.GetList();
         }
     }
 }
