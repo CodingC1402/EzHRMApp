@@ -30,7 +30,7 @@ namespace DAL.Rows
                     if (DangLogin > 0)
                     {
                         var existedToken = AccessTokenRepo.Instance.FindBy(nameof(AccessToken.Account), TaiKhoan).First();
-                        return new ConnectionResult(false, existedToken.Token, existedToken.Bitmask, existedToken.NhanVienID);
+                        return new ConnectionResult(true, existedToken.Token, existedToken.Bitmask, existedToken.NhanVienID);
                     }
 
                     DangLogin = 1;

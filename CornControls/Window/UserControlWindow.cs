@@ -31,6 +31,25 @@ namespace CornControls.Window
             };
         }
 
+        public virtual void SetWindowSize(double width, double height, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double minWidth = 0, double minHeight = 0)
+        {
+            var wnd = OwnerWindow;
+            wnd.MaxWidth = maxWidth;
+            wnd.MaxHeight = maxHeight;
+
+            var posX = wnd.Left + wnd.Width / 2;
+            var posY = wnd.Top + wnd.Height / 2;
+
+            wnd.MinHeight = minHeight;
+            wnd.MinWidth = minWidth;
+
+            wnd.Height = height;
+            wnd.Width = width;
+
+            wnd.Left = posX - wnd.Width / 2;
+            wnd.Top = posY - wnd.Height / 2;
+        }
+
         public virtual void OnTopMouseDown(object sender, MouseEventArgs e)
         {
             OwnerWindow.OnTopMouseDown(sender, e);

@@ -6,5 +6,6 @@
         <ResourceDictionary Source="ButtonEx/ButtonEx.xaml"/>
         <ResourceDictionary Source="TextBoxEx/TextBoxEx.xaml"/>
         <ResourceDictionary Source="PasswordBoxEx/PasswordBoxEx.xaml"/>
+        <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

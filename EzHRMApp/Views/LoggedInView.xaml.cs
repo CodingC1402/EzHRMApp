@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -31,14 +32,7 @@ namespace EzHRMApp.Views
         protected override void OnGetWindowParent()
         {
             base.OnGetWindowParent();
-            var wnd = OwnerWindow;
-            wnd.MaxWidth = double.PositiveInfinity;
-            wnd.MaxHeight = double.PositiveInfinity;
-
-            wnd.MinHeight = 610; 
-            wnd.Height = 610;
-            wnd.MinWidth = 1000; 
-            wnd.Width = 1000;
+            SetWindowSize(1000, 610, double.PositiveInfinity, double.PositiveInfinity, 1000, 610);
 
             OwnerWindow.WindowStateChanged += (s, e) =>
             {

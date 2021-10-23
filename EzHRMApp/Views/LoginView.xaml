@@ -12,7 +12,8 @@
     <Border Background="{DynamicResource LoginBackground}" 
             CornerRadius="20"
             MouseDown="OnTopMouseDown"
-            Margin="10">
+            Height="490"
+            Width="330">
         <Border.Style>
             <Style TargetType="Border">
                 <Style.Triggers>
