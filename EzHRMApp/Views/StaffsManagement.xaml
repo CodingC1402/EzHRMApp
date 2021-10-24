@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EzHRMApp.Views"
              xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="{DynamicResource BackColor}">
+    <!--<UserControl.DataContext>
+        <viewmodels:StaffsManagementViewModel/>
+    </UserControl.DataContext>-->
+    
     <Grid SnapsToDevicePixels="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -42,10 +47,18 @@
                 </Style>
             </Grid.Resources>
 
-            <controls:RadioButtonEx Grid.Column="0" Content="Staffs" Path="{DynamicResource staffsIcon}"/>
+            <controls:RadioButtonEx Grid.Column="0" Content="Staffs" Path="{DynamicResource staffsIcon}" Command="{Binding ToStaffView}" IsChecked="True"/>
             <controls:RadioButtonEx Grid.Column="1" Content="Work"/>
             <controls:RadioButtonEx Grid.Column="2" Content="Role"/>
             <controls:RadioButtonEx Grid.Column="3" Content="Payroll" Path="{DynamicResource clockIcon}"/>
         </Grid>
+
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:StaffsViewModel}">
+                    <local:StaffsView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </UserControl>

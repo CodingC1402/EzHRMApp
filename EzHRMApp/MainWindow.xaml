@@ -19,7 +19,7 @@
         <viewModel:MainViewModel/>
     </windows:BlankWindow.DataContext>
 
-    <ContentControl Content="{Binding CurrentViewModel}">
+    <controls:AnimatedContentControlOpacity Content="{Binding CurrentViewModel}" AnimationTime="1">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
                 <view:LoginView/>
@@ -28,5 +28,5 @@
                 <view:LoggedInView/>
             </DataTemplate>
         </ContentControl.Resources>
-    </ContentControl>
+    </controls:AnimatedContentControlOpacity>
 </windows:BlankWindow>

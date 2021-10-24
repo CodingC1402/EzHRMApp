@@ -12,7 +12,8 @@
     <Border Background="{DynamicResource LoginBackground}" 
             CornerRadius="20"
             MouseDown="OnTopMouseDown"
-            Margin="10">
+            Height="490"
+            Width="330">
         <Border.Style>
             <Style TargetType="Border">
                 <Style.Triggers>
@@ -43,7 +44,7 @@
                                Click="CloseWindow"/>
 
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Label Margin="0, 60, 0, 30" 
+                <Label Margin="0, 60, 0, 35" 
                        HorizontalContentAlignment="Center" 
                        Content="LOGIN" 
                        FontFamily="Ariel" 
@@ -68,7 +69,6 @@
                                     IconPad="36"/>
                 <controls:PasswordBoxEx CornerRadius="5" 
                                         Name="passwordBox"
-                                        IsCapslocked="{Binding ElementName=textBox, Path=IsCapslocked}"
                                         NormalPadding="1, 1, 1, 5" 
                                         FocusedOutterColor="{DynamicResource AccentBright}"
                                         Foreground="{DynamicResource Accent}"
@@ -83,12 +83,19 @@
                 <Label Foreground="{DynamicResource CancleMouseDown}" 
                        HorizontalAlignment="Center"
                        FontFamily="Tahoma"
-                       FontSize="13"
+                       FontSize="12"
                        FontWeight="Bold"
-                       Margin="0, 10, 0, 0">
+                       Margin="0, 5, 0, 0"
+                       Content="{Binding Result}"/>
+                <Label Foreground="{DynamicResource CancleMouseDown}" 
+                       HorizontalAlignment="Center"
+                       FontFamily="Tahoma"
+                       FontSize="12"
+                       FontWeight="Bold"
+                       Margin="0, 0, 0, 0">
                     <Label.Style>
                         <Style TargetType="Label">
-                            <Setter Property="Content" Value="{Binding Result}"/>
+                            <Setter Property="Content" Value=""/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=passwordBox, Path=IsCapslocked}" Value="True">
                                     <Setter Property="Content" Value="Your capslock is on!"/>
@@ -97,7 +104,7 @@
                         </Style>
                     </Label.Style>
                 </Label>
-                <controls:ButtonEx Margin="0, 35, 0, 0" Height="40"
+                <controls:ButtonEx Margin="0, 15, 0, 0" Height="40"
                                    Background="{DynamicResource BackColor}"
                                    BorderThickness="2"
                                    BorderBrush="{DynamicResource AccentBright}"

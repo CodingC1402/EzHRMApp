@@ -29,9 +29,10 @@ namespace EzHRMApp.Views
         protected override void OnGetWindowParent()
         {
             base.OnGetWindowParent();
-            var wnd = OwnerWindow;
-            wnd.MaxHeight = wnd.MinHeight = wnd.Height = 510;
-            wnd.MaxWidth = wnd.MinWidth = wnd.Width = 370;
+
+            var width = 370;
+            var height = 510;
+            SetWindowSize(width, height, width, height, width, height);
         }
 
         protected void CloseWindow(object sender, EventArgs e)

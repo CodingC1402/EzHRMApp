@@ -9,6 +9,18 @@
                            xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
                            mc:Ignorable="d" 
                            d:DesignHeight="450" d:DesignWidth="800">
+    <windows:UserControlWindow.Resources>
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+            <view:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <view:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
+            <view:StaffsManagement/>
+        </DataTemplate>
+    </windows:UserControlWindow.Resources>
+    
     <Grid SnapsToDevicePixels="True" Cursor="Arrow">
         <Grid.Style>
             <Style TargetType="Grid">
@@ -39,6 +51,10 @@
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
+                <controls:AnimatedContentControlOpacity Content="{Binding CurrentViewModel}" AnimationTime="0.5"/>
+            </Grid>
 
             <Grid Grid.Row="1" 
                   Background="{DynamicResource Panel}">
@@ -93,10 +109,10 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
                                 <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -188,22 +204,6 @@
                 </Border.Effect>
                 <Image Source="{DynamicResource Logo}" RenderOptions.BitmapScalingMode="Fant"/>
             </Border>
-
-            <DockPanel x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
-                <ContentControl Content="{Binding CurrentViewModel}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-                            <view:HomeView/>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
-                            <view:DashboardView/>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
-                            <view:StaffsManagement/>
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </DockPanel>
         </Grid>
 
         <Grid Margin="5">
