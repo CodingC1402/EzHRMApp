@@ -83,7 +83,7 @@
                                     FontStyle="{TemplateBinding FontStyle}"
                                     FontWeight="{TemplateBinding FontWeight}"
                                     SelectionTextBrush="{TemplateBinding SelectionTextBrush}"
-                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     TextAlignment="{TemplateBinding TextAlignment}" />
                             </Grid>
                         </Border>

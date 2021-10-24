@@ -291,6 +291,16 @@
                 </Grid>
             </ScrollViewer>
 
+            <Rectangle
+                x:Name="HideTheStupidSquare"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="17"
+                Height="17"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Fill="{DynamicResource BackColor}" />
+
             <Ellipse
                 Grid.Row="1"
                 Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
@@ -304,7 +314,7 @@
 
             <controls:ButtonEx
                 Grid.Row="2"
-                Margin="0, 5"
+                Margin="0,5"
                 HorizontalAlignment="Center"
                 Content="Change profile" />
 
@@ -313,7 +323,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <controls:ButtonEx Margin="0, 5" Content="New" />
+                <controls:ButtonEx Margin="0,5" Content="New" />
                 <controls:ButtonEx Margin="20,5,0,0" Content="Change" />
             </StackPanel>
         </Grid>

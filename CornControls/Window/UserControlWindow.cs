@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfScreenHelper;
 using System.Windows.Interop;
 
 namespace CornControls.Window
@@ -34,6 +35,14 @@ namespace CornControls.Window
         public virtual void SetWindowSize(double width, double height, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double minWidth = 0, double minHeight = 0)
         {
             var wnd = OwnerWindow;
+
+            double sumWidth = 0, sumHeight = 0;
+            foreach (var screen in Screen.AllScreens)
+            {
+                sumWidth += screen.Bounds.Width;
+                sumHeight += screen.Bounds.Height;
+            }
+
             wnd.MaxWidth = maxWidth;
             wnd.MaxHeight = maxHeight;
 
@@ -46,8 +55,20 @@ namespace CornControls.Window
             wnd.Height = height;
             wnd.Width = width;
 
-            wnd.Left = posX - wnd.Width / 2;
-            wnd.Top = posY - wnd.Height / 2;
+            var left = posX - wnd.Width / 2;
+            var top = posY - wnd.Height / 2;
+
+            if (wnd.WindowState == System.Windows.WindowState.Normal)
+            {
+                left = left < 0 ? 0 : left;
+                top = top < 0 ? 0 : top;
+
+                left = left + wnd.Width > sumWidth ? sumWidth - wnd.Width : left;
+                top = top + wnd.Height > sumHeight ? sumHeight - wnd.Height : top;
+            }
+
+            wnd.Top = top;
+            wnd.Left = left;
         }
 
         public virtual void OnTopMouseDown(object sender, MouseEventArgs e)
