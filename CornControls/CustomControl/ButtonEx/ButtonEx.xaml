@@ -1,51 +1,59 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:CornControls.CustomControl">
-    <!-- Used in main window for tabs -->
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl">
+    <!--  Used in main window for tabs  -->
     <Style x:Key="{x:Type controls:ButtonEx}" TargetType="{x:Type controls:ButtonEx}">
-        <Setter Property="Margin" Value="0, 3, 0, 0"/>
-        <Setter Property="FontFamily" Value="Tahoma"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="IconPad" Value="50"/>
-        <Setter Property="IconSize" Value="24"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource BackColor}"/>
-        <Setter Property="Background" Value="{DynamicResource Panel}"/>
-        <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}"/>
-        <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0,3,0,0" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="IconPad" Value="50" />
+        <Setter Property="IconSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource BackColor}" />
+        <Setter Property="Background" Value="{DynamicResource Panel}" />
+        <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}" />
+        <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ButtonEx}">
-                    <Border Padding="{TemplateBinding Padding}"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}"/>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True">
-                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}"/>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
-                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{TemplateBinding IconPad}"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="{TemplateBinding IconPad}" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
-                            <ContentPresenter Grid.Column="1"
-                                                  Content="{TemplateBinding Content}"
-                                                  TextBlock.TextAlignment="Left" VerticalAlignment="Center"/>
+                            <Path
+                                Width="{TemplateBinding IconSize}"
+                                Height="{TemplateBinding IconSize}"
+                                Data="{TemplateBinding Path}"
+                                Fill="{TemplateBinding Foreground}"
+                                RenderTransformOrigin="0.5, 0.5" />
+                            <ContentPresenter
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                TextBlock.TextAlignment="Left" />
                         </Grid>
                     </Border>
                 </ControlTemplate>

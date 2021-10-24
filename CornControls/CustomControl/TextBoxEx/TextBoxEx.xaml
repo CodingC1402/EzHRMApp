@@ -70,6 +70,7 @@
                                 <TextBox
                                     x:Name="contentTextBox"
                                     Grid.Column="1"
+                                    Padding="{TemplateBinding Padding}"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     HorizontalContentAlignment="Left"
