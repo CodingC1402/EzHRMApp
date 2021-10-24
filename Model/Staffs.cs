@@ -84,8 +84,15 @@ namespace Model
             return result;
         }
 
-        public static void AddStaff(Employee input)
+        public static void AddStaff(Employee input, string accessToken)
         {
+            int bitmask = AccessTokenRepo.Instance.FindByID(accessToken).Bitmask;
+
+            if (((AccountRepo.Privileges)bitmask & AccountRepo.Privileges.SearchAndEditEmployee) != AccountRepo.Privileges.SearchAndEditEmployee)
+            {
+                return;
+            }
+
             DAL.Rows.Employee employee = new DAL.Rows.Employee();
 
             employee.ID = input.ID;
@@ -105,8 +112,15 @@ namespace Model
             EmployeeRepo.Instance.Add(employee);
         }
 
-        public static void UpdateStaff(Employee input)
+        public static void UpdateStaff(Employee input, string accessToken)
         {
+            int bitmask = AccessTokenRepo.Instance.FindByID(accessToken).Bitmask;
+            
+            if (((AccountRepo.Privileges)bitmask & AccountRepo.Privileges.SearchAndEditEmployee) != AccountRepo.Privileges.SearchAndEditEmployee)
+            {
+                return;
+            }
+
             DAL.Rows.Employee employee = new DAL.Rows.Employee();
 
             employee.ID = input.ID;

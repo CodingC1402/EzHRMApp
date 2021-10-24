@@ -70,7 +70,7 @@ namespace ViewModel
                 return;
             }
 
-            Staffs.AddStaff(CurrentEmployee);
+            Staffs.AddStaff(CurrentEmployee, LoginInfo.AccessToken);
 
             EmployeeList.Add(CurrentEmployee);
         }
@@ -86,7 +86,7 @@ namespace ViewModel
             if (!Staffs.CheckStaffID(CurrentEmployee))
                 return;
 
-            Staffs.UpdateStaff(CurrentEmployee);
+            Staffs.UpdateStaff(CurrentEmployee, LoginInfo.AccessToken);
 
             inCommand = true;
             var found = EmployeeList.FirstOrDefault(x => x.ID == CurrentEmployee.ID);
