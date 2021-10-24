@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="1300"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewmodels:StaffsViewModel />
@@ -16,25 +16,285 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" />
+            <RowDefinition Height="340" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Margin="10">
+            <Grid.Resources>
+                <Style TargetType="controls:ButtonEx">
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Background" Value="{DynamicResource Accent}" />
+                    <Setter Property="Content" Value="Change profile" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="PressedColor" Value="{DynamicResource AccentReallyBright}" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="TextDecorations">
+                        <Setter.Value>
+                            <TextDecorationCollection>
+                                <TextDecoration
+                                    Location="Underline"
+                                    PenOffset="2"
+                                    PenThicknessUnit="FontRecommended" />
+                            </TextDecorationCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                </Style>
+                <Style TargetType="controls:TextBoxEx">
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="Height" Value="35" />
+
+                    <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="NormalPadding" Value="5, 2, 2, 2" />
+                    <Setter Property="FocusedPadding" Value="5, 2, 2, 2" />
+                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="Padding" Value="5,0" />
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
+                <RowDefinition Height="65" />
             </Grid.RowDefinitions>
 
+            <TextBlock Grid.Column="0" Text="Profile:" />
+            <TextBlock
+                Grid.Column="1"
+                Grid.ColumnSpan="20"
+                Text="Infos:" />
+
+            <ScrollViewer
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalScrollBarVisibility="Auto">
+                <Grid MinWidth="1200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid MinWidth="200" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            VerticalAlignment="Center"
+                            Content="ID:" />
+                        <controls:TextBoxEx
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.ID}" />
+
+                        <Label
+                            Grid.Row="1"
+                            VerticalAlignment="Center"
+                            Content="First name:" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.Ten}" />
+
+                        <Label
+                            Grid.Row="2"
+                            VerticalAlignment="Center"
+                            Content="Surname:" />
+                        <controls:TextBoxEx
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.Ho}" />
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="1"
+                        MinWidth="200"
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            VerticalAlignment="Center"
+                            Content="Work number:" />
+                        <controls:TextBoxEx
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.SDTVanPhong}" />
+
+                        <Label
+                            Grid.Row="1"
+                            VerticalAlignment="Center"
+                            Content="Work email:" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.EmailVanPhong}" />
+
+                        <Label
+                            Grid.Row="2"
+                            VerticalAlignment="Center"
+                            Content="Position:" />
+                        <controls:TextBoxEx
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.ChucVu}" />
+
+                        <Label
+                            Grid.Row="3"
+                            VerticalAlignment="Center"
+                            Content="Department:" />
+                        <controls:TextBoxEx
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.PhongBan}" />
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="2"
+                        MinWidth="200"
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            VerticalAlignment="Center"
+                            Content="Personal number:" />
+                        <controls:TextBoxEx
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.SDTCaNhan}" />
+
+                        <Label
+                            Grid.Row="1"
+                            VerticalAlignment="Center"
+                            Content="Personal email:" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.EmailCaNhan}" />
+
+                        <Label
+                            Grid.Row="2"
+                            VerticalAlignment="Center"
+                            Content="Working since:" />
+                        <controls:TextBoxEx
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" />
+
+                        <Label
+                            Grid.Row="3"
+                            VerticalAlignment="Center"
+                            Content="Resign date:" />
+                        <controls:TextBoxEx
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.NgayThoiViec, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="3"
+                        MinWidth="200"
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            VerticalAlignment="Center"
+                            Content="DOB:" />
+                        <controls:TextBoxEx
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.NgaySinh}" />
+
+                        <Label
+                            Grid.Row="1"
+                            VerticalAlignment="Center"
+                            Content="Citizen ID:" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedEmployee.CMND}" />
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+
             <Ellipse
+                Grid.Row="1"
                 Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                Margin="10"
                 Stroke="{DynamicResource Accent}"
                 StrokeThickness="10">
                 <Ellipse.Fill>
@@ -43,16 +303,19 @@
             </Ellipse>
 
             <controls:ButtonEx
-                Grid.Row="1"
-                Width="140"
-                Height="40"
-                HorizontalContentAlignment="Center"
-                Background="{DynamicResource Accent}"
-                Content="Change profile"
-                CornerRadius="10"
-                HoverColor="{DynamicResource AccentBright}"
-                IconPad="0"
-                PressedColor="{DynamicResource AccentReallyBright}" />
+                Grid.Row="2"
+                Margin="0, 5"
+                HorizontalAlignment="Center"
+                Content="Change profile" />
+
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <controls:ButtonEx Margin="0, 5" Content="New" />
+                <controls:ButtonEx Margin="20,5,0,0" Content="Change" />
+            </StackPanel>
         </Grid>
 
         <DataGrid
