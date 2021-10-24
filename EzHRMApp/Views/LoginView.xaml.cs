@@ -32,12 +32,21 @@ namespace EzHRMApp.Views
 
             var width = 370;
             var height = 510;
+            OwnerWindow.ResizeMode = ResizeMode.NoResize;
             SetWindowSize(width, height, width, height, width, height);
         }
 
         protected void CloseWindow(object sender, EventArgs e)
         {
             OwnerWindow.Close();
+        }
+
+        private void EnterKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                signInBtn.Command?.Execute(signInBtn.CommandParameter);
+            }
         }
     }
 }

@@ -34,6 +34,7 @@ namespace EzHRMApp.Views
             base.OnGetWindowParent();
             SetWindowSize(1000, 610, double.PositiveInfinity, double.PositiveInfinity, 1000, 610);
 
+            OwnerWindow.ResizeMode = ResizeMode.CanResize;
             OwnerWindow.WindowStateChanged += (s, e) =>
             {
                 if (e.NewValue == WindowState.Normal)

@@ -75,7 +75,9 @@
                     IconPad="36"
                     NormalPadding="1, 1, 1, 5"
                     Path="{StaticResource accountIcon}"
+                    PreviewKeyDown="EnterKeyDown"
                     Style="{StaticResource GlowingTextBoxStyle}"
+                    TabIndex="0"
                     Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <controls:PasswordBoxEx
                     Name="passwordBox"
@@ -91,6 +93,7 @@
                     IconPad="36"
                     NormalPadding="1, 1, 1, 5"
                     Path="{StaticResource keyIcon}"
+                    PreviewKeyDown="EnterKeyDown"
                     Style="{StaticResource GlowingPasswordBoxStyle}" />
                 <Label
                     Margin="0,5,0,0"
@@ -119,6 +122,7 @@
                     </Label.Style>
                 </Label>
                 <controls:ButtonEx
+                    x:Name="signInBtn"
                     Width="150"
                     Height="40"
                     Margin="0,15,0,0"
