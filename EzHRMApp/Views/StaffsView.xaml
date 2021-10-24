@@ -230,7 +230,9 @@
                                Grid.Column="3"
                                Grid.Row="2"                               
                                Margin="10,5,10,5"
-                               Background="{DynamicResource AccentReallyDark}"/>
+                               Background="{DynamicResource AccentReallyDark}"
+                               Command="{Binding EditStaffCommand}"
+                               CommandParameter="{Binding UpdateSourceTrigger=PropertyChanged}"/>
 
             <controls:ButtonEx Content="Add"
                                Grid.Column="3"

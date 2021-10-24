@@ -60,7 +60,7 @@ namespace Model
             {
                 employee = new Employee();
                 employee.ID = data.ID;
-                employee.Name = data.Ho + data.Ten;
+                employee.Name = data.Ho + " " + data.Ten;
                 employee.CMND = data.CMND;
                 employee.BirthDay = data.NgaySinh.ToShortDateString();
                 employee.PrivateEmail = data.EmailCaNhan;
@@ -105,11 +105,37 @@ namespace Model
             EmployeeRepo.Instance.Add(employee);
         }
 
-        public static bool CheckStaffInfo(Employee input)
+        public static void UpdateStaff(Employee input)
+        {
+            DAL.Rows.Employee employee = new DAL.Rows.Employee();
+
+            employee.ID = input.ID;
+            string[] temp = input.Name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            employee.Ho = temp[0];
+            employee.Ten = temp.Length == 1 ? temp[0] : temp[1];
+            employee.CMND = input.CMND;
+            employee.NgaySinh = DateTime.Parse(input.BirthDay);
+            employee.EmailCaNhan = input.PrivateEmail;
+            employee.EmailVanPhong = input.OfficeEmail;
+            employee.SDTCaNhan = input.PrivatePhoneNumber;
+            employee.SDTVanPhong = input.OfficePhoneNumber;
+            employee.NgayVaoLam = DateTime.Parse(input.InDate);
+            employee.PhongBan = input.DepartmentID;
+            employee.ChucVu = input.RoleID;
+
+            EmployeeRepo.Instance.Update(employee.ID, employee);
+        }
+
+        public static bool CheckStaffID(Employee input)
         {
             if (EmployeeRepo.Instance.FindByID(input.ID) != null)
                 return true;
 
+            return false;
+        }
+
+        public static bool CheckStaffInfo(Employee input)
+        {
             if (DepartmentRepo.Instance.FindByID(input.DepartmentID) == null)
                 return true;
 

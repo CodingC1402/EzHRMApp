@@ -21,21 +21,21 @@ namespace ViewModel
 
         public override string ViewName => "Staffs";
 
+        private bool inCommand = false;
+
         public Mode CurrentMode { get; set; }
 
         [PropertyChanged.OnChangedMethod(nameof(OnSelectedChange))]
         public Staffs.Employee SelectedEmployee { get; set; }
-
-        public void OnSelectedChange()
-        {
-            CurrentEmployee = new Staffs.Employee(SelectedEmployee);
-        }
 
         public Staffs.Employee CurrentEmployee { get; set; }
         public ObservableCollection<Staffs.Employee> EmployeeList { get; set; }
 
         protected RelayCommand<object> _addStaffRelayCommand;
         public ICommand AddStaffCommand => _addStaffRelayCommand ?? (_addStaffRelayCommand = new RelayCommand<object>(ExecuteAddStaff, CanExecuteAddStaff));
+
+        protected RelayCommand<object> _editStaffRelayCommand;
+        public ICommand EditStaffCommand => _editStaffRelayCommand ?? (_editStaffRelayCommand = new RelayCommand<object>(ExecuteEditStaff, CanExecuteEditStaff));
 
         protected RelayCommand<object> _changeModeRelayCommand;
         public ICommand ChangeModeCommand => _changeModeRelayCommand ?? (_changeModeRelayCommand = new RelayCommand<object>(ExecuteChangeMode, CanExecuteChangeMode));
@@ -49,6 +49,14 @@ namespace ViewModel
                 SelectedEmployee = EmployeeList[0];
         }
 
+        public void OnSelectedChange()
+        {
+            if (inCommand)
+                return;
+
+            CurrentEmployee = new Staffs.Employee(SelectedEmployee);
+        }
+
         private bool CanExecuteAddStaff(object obj)
         {
             return true;
@@ -56,15 +64,36 @@ namespace ViewModel
 
         private void ExecuteAddStaff(object obj)
         {
-            if (Staffs.CheckStaffInfo(CurrentEmployee))
+            // LoginInfo here
+            if (Staffs.CheckStaffInfo(CurrentEmployee) || Staffs.CheckStaffID(CurrentEmployee))
             {
                 return;
             }
 
             Staffs.AddStaff(CurrentEmployee);
+
             EmployeeList.Add(CurrentEmployee);
-            EmployeeList.Count();
         }
+
+
+        private bool CanExecuteEditStaff(object obj)
+        {
+            return true;
+        }
+
+        private void ExecuteEditStaff(object obj)
+        {
+            if (!Staffs.CheckStaffID(CurrentEmployee))
+                return;
+
+            Staffs.UpdateStaff(CurrentEmployee);
+
+            inCommand = true;
+            var found = EmployeeList.FirstOrDefault(x => x.ID == CurrentEmployee.ID);
+            EmployeeList[EmployeeList.IndexOf(found)] = CurrentEmployee;
+            inCommand = false;
+        }
+
 
         private bool CanExecuteChangeMode(object obj)
         {
