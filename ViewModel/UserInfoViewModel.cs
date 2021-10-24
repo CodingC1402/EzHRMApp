@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    class UserInfoViewModel
+    public class UserInfoViewModel : Navigation.ViewModelBase
     {
+
     }
 }

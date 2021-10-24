@@ -1,27 +1,49 @@
-﻿<windows:UserControlWindow x:Class="EzHRMApp.Views.LoggedInView"
-                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                           xmlns:view="clr-namespace:EzHRMApp.Views"
-                           xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
-                           xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
-                           xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
-                           mc:Ignorable="d" 
-                           d:DesignHeight="450" d:DesignWidth="800">
-    <Grid SnapsToDevicePixels="True" Cursor="Arrow">
+﻿<windows:UserControlWindow
+    x:Class="EzHRMApp.Views.LoggedInView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:EzHRMApp.Views"
+    xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+    xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <windows:UserControlWindow.Resources>
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+            <view:HomeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <view:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
+            <view:StaffsManagement />
+        </DataTemplate>
+    </windows:UserControlWindow.Resources>
+
+    <Grid Cursor="Arrow" SnapsToDevicePixels="True">
         <Grid.Style>
             <Style TargetType="Grid">
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                        <DropShadowEffect
+                            BlurRadius="10"
+                            Direction="0"
+                            ShadowDepth="0"
+                            Color="{DynamicResource ColorAccentReallyDark}" />
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type windows:BlankWindow}}, Path=IsActive}" Value="True">
                         <Setter Property="Effect">
                             <Setter.Value>
-                                <DropShadowEffect BlurRadius="0" ShadowDepth="0" Direction="0" Color="{DynamicResource ColorAccentReallyDark}"/>
+                                <DropShadowEffect
+                                    BlurRadius="0"
+                                    Direction="0"
+                                    ShadowDepth="0"
+                                    Color="{DynamicResource ColorAccentReallyDark}" />
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>
@@ -31,244 +53,275 @@
 
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="225"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="225" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1" 
-                  Background="{DynamicResource Panel}">
+            <Grid
+                x:Name="ContentPanel"
+                Grid.Row="1"
+                Grid.Column="1"
+                Background="{DynamicResource BackColor}">
+                <controls:AnimatedContentControlOpacity AnimationTime="0.5" Content="{Binding CurrentViewModel}" />
+            </Grid>
+
+            <Grid Grid.Row="1" Background="{DynamicResource Panel}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="1" 
-                            Orientation="Vertical"
-                            Height="Auto">
+                <StackPanel
+                    Grid.Row="1"
+                    Height="Auto"
+                    Orientation="Vertical">
                     <StackPanel.Resources>
                         <Style TargetType="controls:ButtonEx">
-                            <Setter Property="Margin" Value="0, 7, 0, 0"/>
-                            <Setter Property="Height" Value="35"/>
-                            <Setter Property="IconPad" Value="40"/>
-                            <Setter Property="Background" Value="{DynamicResource AccentDark}"/>
-                            <Setter Property="HoverColor" Value="{DynamicResource Accent}"/>
-                            <Setter Property="PressedColor" Value="{DynamicResource AccentBright}"/>
+                            <Setter Property="Margin" Value="0,7,0,0" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="IconPad" Value="40" />
+                            <Setter Property="Background" Value="{DynamicResource AccentDark}" />
+                            <Setter Property="HoverColor" Value="{DynamicResource Accent}" />
+                            <Setter Property="PressedColor" Value="{DynamicResource AccentBright}" />
                             <Setter Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Direction="270" 
-                                                      Color="{DynamicResource ColorDarkerPanel}" 
-                                                      ShadowDepth="4"
-                                                      BlurRadius="7"
-                                                      Opacity="0.4"/>
+                                    <DropShadowEffect
+                                        BlurRadius="7"
+                                        Direction="270"
+                                        Opacity="0.4"
+                                        ShadowDepth="4"
+                                        Color="{DynamicResource ColorDarkerPanel}" />
                                 </Setter.Value>
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <controls:ButtonEx x:Name="helpBtn"      
-                                       Path="{StaticResource questionIcon}" 
-                                       Content="Help"
-                                       Click="ShowHelp"/>
-                    <controls:ButtonEx x:Name="settingBtn"      
-                                       Path="{StaticResource settingIcon}" 
-                                       Content="Setting"/>
-                    <controls:ButtonEx x:Name="logOutBtn"      
-                                       Path="{StaticResource logoutIcon}"
-                                       Content="Logout"
-                                       Command="{Binding LogOutCommand}"/>
+                    <controls:ButtonEx
+                        x:Name="helpBtn"
+                        Click="ShowHelp"
+                        Content="Help"
+                        Path="{StaticResource questionIcon}" />
+                    <controls:ButtonEx
+                        x:Name="settingBtn"
+                        Content="Setting"
+                        Path="{StaticResource settingIcon}" />
+                    <controls:ButtonEx
+                        x:Name="logOutBtn"
+                        Command="{Binding LogOutCommand}"
+                        Content="Logout"
+                        Path="{StaticResource logoutIcon}" />
                 </StackPanel>
 
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" 
-                              VerticalScrollBarVisibility="Auto"
-                              Margin="0, 15, 0, 5">
+                <ScrollViewer
+                    Margin="0,15,0,5"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <StackPanel.Resources>
                             <Style TargetType="controls:RadioButtonEx">
-                                <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Height" Value="50"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}"/>
-                                <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Height" Value="50" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}" />
+                                <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}" />
+                                <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Resources>
 
-                        <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="dashboardBtn"    
-                                            Path="{StaticResource dashboardIcon}" 
-                                            Margin="0, 35, 0, 0"
-                                            Content="Dashboard"
-                                            Click="TabButtonClicked"
-                                            Command="{Binding ToDashboard}"/>
+                        <controls:RadioButtonEx
+                            x:Name="dashboardBtn"
+                            Margin="0,35,0,0"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToDashboard}"
+                            Content="Dashboard"
+                            GroupName="TabButtons"
+                            Path="{StaticResource dashboardIcon}" />
 
-                        <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="payRollBtn"      
-                                            Path="{StaticResource moneyIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Payroll"/>
+                        <controls:RadioButtonEx
+                            x:Name="payRollBtn"
+                            Click="TabButtonClicked"
+                            Content="Payroll"
+                            GroupName="TabButtons"
+                            Path="{StaticResource moneyIcon}" />
 
-                        <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="checkInBtn"      
-                                            Path="{StaticResource clockIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="CheckIn"/>
+                        <controls:RadioButtonEx
+                            x:Name="checkInBtn"
+                            Click="TabButtonClicked"
+                            Content="CheckIn"
+                            GroupName="TabButtons"
+                            Path="{StaticResource clockIcon}" />
 
-                        <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="staffsBtn"          
-                                            Path="{StaticResource staffsIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Staffs Management"
-                                            Command="{Binding ToStaffsManagementView}"/>
+                        <controls:RadioButtonEx
+                            x:Name="staffsBtn"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToStaffsManagementView}"
+                            Content="Staffs Management"
+                            GroupName="TabButtons"
+                            Path="{StaticResource staffsIcon}" />
 
-                        <controls:RadioButtonEx GroupName="TabButtons" 
-                                            x:Name="schedule"        
-                                            Path="{StaticResource calendarIcon}" 
-                                            Click="TabButtonClicked"
-                                            Content="Schedule"/>
+                        <controls:RadioButtonEx
+                            x:Name="schedule"
+                            Click="TabButtonClicked"
+                            Content="Schedule"
+                            GroupName="TabButtons"
+                            Path="{StaticResource calendarIcon}" />
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
 
-            <Border Grid.Row="0" 
-                    Grid.Column="1"
-                    Background="{DynamicResource Accent}"
-                    MouseDown="OnTopMouseDown"
-                    BorderThickness="0"
-                    RenderOptions.BitmapScalingMode="NearestNeighbor">
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                Background="{DynamicResource Accent}"
+                BorderThickness="0"
+                MouseDown="OnTopMouseDown"
+                RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Grid>
-                    <Label VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontFamily="Tahoma"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           Foreground="{DynamicResource BackColor}"
-                           Content="{Binding CurrentViewModel.ViewName}"/>
+                    <Label
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="{Binding CurrentViewModel.ViewName}"
+                        FontFamily="Tahoma"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Foreground="{DynamicResource BackColor}" />
 
-                    <controls:ButtonEx x:Name="homeBtn" 
-                                       HorizontalAlignment="Left"
-                                       Height="60"
-                                       Width="0"
-                                       Margin="-20, 0, 0, 0"
-                                       Click="HomeButtonClicked"
-                                       Background="{DynamicResource Accent}"
-                                       HoverColor="{DynamicResource AccentBright}"
-                                       PressedColor="{DynamicResource AccentReallyBright}"
-                                       Command="{Binding ToHomeView}"
-                                       IconPad="95"
-                                       IconSize="24"
-                                       CornerRadius="25"
-                                       Path="{StaticResource homeIcon}"/>
+                    <controls:ButtonEx
+                        x:Name="homeBtn"
+                        Width="0"
+                        Height="60"
+                        Margin="-20,0,0,0"
+                        HorizontalAlignment="Left"
+                        Background="{DynamicResource Accent}"
+                        Click="HomeButtonClicked"
+                        Command="{Binding ToHomeView}"
+                        CornerRadius="25"
+                        HoverColor="{DynamicResource AccentBright}"
+                        IconPad="95"
+                        IconSize="24"
+                        Path="{StaticResource homeIcon}"
+                        PressedColor="{DynamicResource AccentReallyBright}" />
 
-                    <StackPanel Orientation="Horizontal" Width="Auto" HorizontalAlignment="Right">
-                        <Button x:Name="minimizeBtn" Style="{StaticResource SysBtnStyle}" Padding="0, 0, 0, 6" Click="OnMinimizeClicked" Content="_"/>
-                        <Button x:Name="maximizeBtn" Style="{StaticResource SysBtnStyle}" Click="OnMaximizeClicked" Content="□"/>
-                        <Button x:Name="closeBtn" Style="{StaticResource SysCancelStyle}" Click="OnCloseClicked" Content="×"/>
+                    <StackPanel
+                        Width="Auto"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="minimizeBtn"
+                            Padding="0,0,0,6"
+                            Click="OnMinimizeClicked"
+                            Content="_"
+                            Style="{StaticResource SysBtnStyle}" />
+                        <Button
+                            x:Name="maximizeBtn"
+                            Click="OnMaximizeClicked"
+                            Content="□"
+                            Style="{StaticResource SysBtnStyle}" />
+                        <Button
+                            x:Name="closeBtn"
+                            Click="OnCloseClicked"
+                            Content="×"
+                            Style="{StaticResource SysCancelStyle}" />
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <Border Background="{DynamicResource AccentDark}"
-                    MouseDown="OnTopMouseDown"
-                    RenderOptions.BitmapScalingMode="NearestNeighbor">
+            <Border
+                Background="{DynamicResource AccentDark}"
+                MouseDown="OnTopMouseDown"
+                RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Border.Effect>
-                    <DropShadowEffect Direction="225" 
-                                      Color="{DynamicResource ColorDarkerPanel}" 
-                                      ShadowDepth="4" 
-                                      Opacity="0.4"
-                                      BlurRadius="7"/>
+                    <DropShadowEffect
+                        BlurRadius="7"
+                        Direction="225"
+                        Opacity="0.4"
+                        ShadowDepth="4"
+                        Color="{DynamicResource ColorDarkerPanel}" />
                 </Border.Effect>
-                <Image Source="{DynamicResource Logo}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource Logo}" />
             </Border>
-
-            <DockPanel x:Name="ContentPanel" Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackColor}">
-                <ContentControl Content="{Binding CurrentViewModel}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-                            <view:HomeView/>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
-                            <view:DashboardView/>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
-                            <view:StaffsManagement/>
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </DockPanel>
         </Grid>
 
         <Grid Margin="5">
             <Grid.Resources>
                 <Style TargetType="Rectangle">
-                    <Setter Property="Fill" Value="{DynamicResource DarkerPanel}"/>
+                    <Setter Property="Fill" Value="{DynamicResource DarkerPanel}" />
                 </Style>
             </Grid.Resources>
-            <Rectangle Name="WindowResizeTop"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Margin="5, 0, 5, 0"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNS"/>
-            <Rectangle Name="WindowResizeBottom"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Bottom"
-                       Margin="5, 0, 5, 0"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNS"/>
-            <Rectangle Name="WindowResizeLeft"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Stretch"
-                       Margin="0, 5, 0, 5"
-                       Width="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeWE"/>
-            <Rectangle Name="WindowResizeRight"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Stretch"
-                       Margin="0, 5, 0, 5"
-                       Width="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeWE"/>
+            <Rectangle
+                Name="WindowResizeTop"
+                Height="5"
+                Margin="5,0,5,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Cursor="SizeNS"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeBottom"
+                Height="5"
+                Margin="5,0,5,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNS"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeLeft"
+                Width="5"
+                Margin="0,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                Cursor="SizeWE"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeRight"
+                Width="5"
+                Margin="0,5,0,5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch"
+                Cursor="SizeWE"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
 
-            <Rectangle Name="WindowResizeTopLeft"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Width="5"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNWSE"/>
-            <Rectangle Name="WindowResizeBottomLeft"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom"
-                       Width="5"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNESW"/>
-            <Rectangle Name="WindowResizeTopRight"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Width="5"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNESW"/>
-            <Rectangle Name="WindowResizeBottomRight"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Bottom"
-                       Width="5"
-                       Height="5"
-                       PreviewMouseDown="WindowResize_OnPreviewMouseDown"
-                       Cursor="SizeNWSE"/>
+            <Rectangle
+                Name="WindowResizeTopLeft"
+                Width="5"
+                Height="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Cursor="SizeNWSE"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeBottomLeft"
+                Width="5"
+                Height="5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNESW"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeTopRight"
+                Width="5"
+                Height="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Cursor="SizeNESW"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
+            <Rectangle
+                Name="WindowResizeBottomRight"
+                Width="5"
+                Height="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Cursor="SizeNWSE"
+                PreviewMouseDown="WindowResize_OnPreviewMouseDown" />
         </Grid>
     </Grid>
 </windows:UserControlWindow>

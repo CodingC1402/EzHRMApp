@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="EzHRMApp.Views.StaffsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:EzHRMApp.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewmodels:StaffsViewModel />
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <Ellipse
+                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                Stroke="{DynamicResource Accent}"
+                StrokeThickness="10">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Views/13192721-mc.png" />
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <controls:ButtonEx
+                Grid.Row="1"
+                Width="140"
+                Height="40"
+                HorizontalContentAlignment="Center"
+                Background="{DynamicResource Accent}"
+                Content="Change profile"
+                CornerRadius="10"
+                HoverColor="{DynamicResource AccentBright}"
+                IconPad="0"
+                PressedColor="{DynamicResource AccentReallyBright}" />
+        </Grid>
+
+        <DataGrid
+            Grid.Row="1"
+            Margin="10"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding Employees}"
+            SelectedItem="{Binding SelectedEmployee}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="100"
+                    MinWidth="100"
+                    Binding="{Binding ID}"
+                    Header="ID" />
+                <DataGridTextColumn
+                    Width="100"
+                    MinWidth="100"
+                    Binding="{Binding Ten}"
+                    Header="First name" />
+                <DataGridTextColumn
+                    Width="100"
+                    MinWidth="100"
+                    Binding="{Binding Ho}"
+                    Header="Surname" />
+                <DataGridTextColumn
+                    Width="100"
+                    MinWidth="100"
+                    Binding="{Binding SDTVanPhong}"
+                    Header="Phone number" />
+                <DataGridTextColumn
+                    Width="*"
+                    MinWidth="200"
+                    Binding="{Binding EmailVanPhong}"
+                    Header="Email" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
