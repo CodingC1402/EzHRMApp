@@ -1,23 +1,24 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:CornControls.CustomControl">
-    <!-- Used in main window for tabs -->
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl">
+    <!--  Used in main window for tabs  -->
     <Style x:Key="{x:Type controls:RadioButtonEx}" TargetType="{x:Type controls:RadioButtonEx}">
-        <Setter Property="Margin" Value="0, 3, 0, 0"/>
-        <Setter Property="FontFamily" Value="Tahoma"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource Self}, Path=NormalPadding}"/>
-        <Setter Property="SelectedPadding" Value="5, 0, 0, 0"/>
-        <Setter Property="IconPad" Value="50"/>
-        <Setter Property="IconSize" Value="24"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource BackColor}"/>
-        <Setter Property="Background" Value="{DynamicResource Panel}"/>
-        <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}"/>
-        <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}"/>
-        <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}"/>
-        <Setter Property="OutterColor" Value="{DynamicResource Accent}"/>
-        <Setter Property="SelectedColor" Value="{DynamicResource Accent}"/>
+        <Setter Property="Margin" Value="0,3,0,0" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource Self}, Path=NormalPadding}" />
+        <Setter Property="SelectedPadding" Value="5, 0, 0, 0" />
+        <Setter Property="IconPad" Value="50" />
+        <Setter Property="IconSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource BackColor}" />
+        <Setter Property="Background" Value="{DynamicResource Panel}" />
+        <Setter Property="SelectedColor" Value="{DynamicResource LightestPanel}" />
+        <Setter Property="PressedColor" Value="{DynamicResource LightestPanel}" />
+        <Setter Property="HoverColor" Value="{DynamicResource LighterPanel}" />
+        <Setter Property="OutterColor" Value="{DynamicResource Accent}" />
+        <Setter Property="SelectedColor" Value="{DynamicResource Accent}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RadioButtonEx">
@@ -25,12 +26,12 @@
                         <Border x:Name="outterBorder">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalPadding}"/>
-                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OutterColor}"/>
+                                    <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalPadding}" />
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OutterColor}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked}" Value="True">
-                                            <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPadding}"/>
-                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOutterColor}"/>
+                                            <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPadding}" />
+                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOutterColor}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -38,34 +39,41 @@
                             <Border x:Name="innerBordder">
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}"/>
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True">
-                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}"/>
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsChecked}" Value="True">
-                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor}"/>
+                                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
-                                <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      Width="Auto"
-                                      Height="Auto">
+                                <Grid
+                                    Width="Auto"
+                                    Height="Auto"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="{TemplateBinding IconPad}"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="{TemplateBinding IconPad}" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Path Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Fill="{TemplateBinding Foreground}" Data="{TemplateBinding Path}" RenderTransformOrigin="0.5, 0.5"/>
-                                    <ContentPresenter Grid.Column="1"
-                                                  Content="{TemplateBinding Content}"
-                                                  VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
+                                    <Path
+                                        Width="{TemplateBinding IconSize}"
+                                        Height="{TemplateBinding IconSize}"
+                                        Data="{TemplateBinding Path}"
+                                        Fill="{TemplateBinding Foreground}"
+                                        RenderTransformOrigin="0.5, 0.5" />
+                                    <ContentPresenter
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}" />
                                 </Grid>
                             </Border>
                         </Border>

@@ -1,15 +1,16 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Colors -->
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Colors  -->
     <Color x:Key="DarkForegroundColor">#061826</Color>
     <Color x:Key="LightForegroundColor">#E2E2EC</Color>
-    
+
     <Color x:Key="ColorBackColor">#E2E2EC</Color>
     <Color x:Key="ColorDarkerBackColor">#D9D9E4</Color>
     <Color x:Key="ColorDarkestBackColor">#D2D2DC</Color>
 
     <Color x:Key="ColorCancleHover">#FF91B6</Color>
     <Color x:Key="ColorCancleMouseDown">#FF5596</Color>
+
+    <Color x:Key="ColorAccentFaint">#C2E2EF</Color>
 
     <Color x:Key="ColorAccentReallyBright">#20BACF</Color>
     <Color x:Key="ColorAccentBright">#06A9C6</Color>
@@ -22,33 +23,35 @@
     <Color x:Key="ColorPanel">#061826</Color>
     <Color x:Key="ColorDarkerPanel">#061016</Color>
 
-    <!-- Brushes -->
-    <!-- Idiotic naming -->
-    <RadialGradientBrush x:Key="LoginBackground" GradientOrigin="0.25, 0" RadiusX="1.2" RadiusY="1" Center="0.25, 0">
-        <GradientStop Color="{DynamicResource ColorBackColor}" Offset="0.8"/>
-        <GradientStop Color="{DynamicResource ColorAccentReallyBright}" Offset="0.9"/>
-        <GradientStop Color="{DynamicResource ColorAccentBright}" Offset="0.95"/>
-        <GradientStop Color="{DynamicResource ColorAccent}" Offset="1"/>
+    <!--  Brushes  -->
+    <!--  Idiotic naming  -->
+    <RadialGradientBrush x:Key="LoginBackground" Center="0.25, 0" GradientOrigin="0.25, 0" RadiusX="1.2" RadiusY="1">
+        <GradientStop Offset="0.8" Color="{DynamicResource ColorBackColor}" />
+        <GradientStop Offset="0.9" Color="{DynamicResource ColorAccentReallyBright}" />
+        <GradientStop Offset="0.95" Color="{DynamicResource ColorAccentBright}" />
+        <GradientStop Offset="1" Color="{DynamicResource ColorAccent}" />
     </RadialGradientBrush>
-    
-    <SolidColorBrush x:Key="DarkForeground" Color="{DynamicResource DarkForegroundColor}"/>
-    <SolidColorBrush x:Key="LightForeground" Color="{DynamicResource LightForegroundColor}"/>
 
-    <SolidColorBrush x:Key="BackColor" Color="{DynamicResource ColorBackColor}"/>
-    <SolidColorBrush x:Key="DarkerBackColor" Color="{DynamicResource ColorDarkerBackColor}"/>
-    <SolidColorBrush x:Key="DarkestBackColor" Color="{DynamicResource ColorDarkestBackColor}"/>
+    <SolidColorBrush x:Key="DarkForeground" Color="{DynamicResource DarkForegroundColor}" />
+    <SolidColorBrush x:Key="LightForeground" Color="{DynamicResource LightForegroundColor}" />
 
-    <SolidColorBrush x:Key="CancleHover" Color="{DynamicResource ColorCancleHover}"/>
-    <SolidColorBrush x:Key="CancleMouseDown" Color="{DynamicResource ColorCancleMouseDown}"/>
+    <SolidColorBrush x:Key="BackColor" Color="{DynamicResource ColorBackColor}" />
+    <SolidColorBrush x:Key="DarkerBackColor" Color="{DynamicResource ColorDarkerBackColor}" />
+    <SolidColorBrush x:Key="DarkestBackColor" Color="{DynamicResource ColorDarkestBackColor}" />
 
-    <SolidColorBrush x:Key="AccentReallyBright" Color="{DynamicResource ColorAccentReallyBright}"/>
-    <SolidColorBrush x:Key="AccentBright" Color="{DynamicResource ColorAccentBright}"/>
-    <SolidColorBrush x:Key="Accent" Color="{DynamicResource ColorAccent}"/>
-    <SolidColorBrush x:Key="AccentDark" Color="{DynamicResource ColorAccentDark}"/>
-    <SolidColorBrush x:Key="AccentReallyDark" Color="{DynamicResource ColorAccentReallyDark}"/>
+    <SolidColorBrush x:Key="CancleHover" Color="{DynamicResource ColorCancleHover}" />
+    <SolidColorBrush x:Key="CancleMouseDown" Color="{DynamicResource ColorCancleMouseDown}" />
 
-    <SolidColorBrush x:Key="LightestPanel" Color="{DynamicResource ColorLightestPanel}"/>
-    <SolidColorBrush x:Key="LighterPanel" Color="{DynamicResource ColorLighterPanel}"/>
-    <SolidColorBrush x:Key="Panel" Color="{DynamicResource ColorPanel}"/>
-    <SolidColorBrush x:Key="DarkerPanel" Color="{DynamicResource ColorDarkerPanel}"/>
+    <SolidColorBrush x:Key="AccentFaint" Color="{DynamicResource ColorAccentFaint}" />
+
+    <SolidColorBrush x:Key="AccentReallyBright" Color="{DynamicResource ColorAccentReallyBright}" />
+    <SolidColorBrush x:Key="AccentBright" Color="{DynamicResource ColorAccentBright}" />
+    <SolidColorBrush x:Key="Accent" Color="{DynamicResource ColorAccent}" />
+    <SolidColorBrush x:Key="AccentDark" Color="{DynamicResource ColorAccentDark}" />
+    <SolidColorBrush x:Key="AccentReallyDark" Color="{DynamicResource ColorAccentReallyDark}" />
+
+    <SolidColorBrush x:Key="LightestPanel" Color="{DynamicResource ColorLightestPanel}" />
+    <SolidColorBrush x:Key="LighterPanel" Color="{DynamicResource ColorLighterPanel}" />
+    <SolidColorBrush x:Key="Panel" Color="{DynamicResource ColorPanel}" />
+    <SolidColorBrush x:Key="DarkerPanel" Color="{DynamicResource ColorDarkerPanel}" />
 </ResourceDictionary>

@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\View
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{ACA22F09-61EE-481C-BC17-2795B8F0E41C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{60EB0410-B978-45A8-B3BD-A2147432FBF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{60EB0410-B978-45A8-B3BD-A2147432FBF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingProject", "TestingProject\TestingProject.csproj", "{97D7DCF1-0CCE-4A4A-8DAD-A72FB2061205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingProject", "TestingProject\TestingProject.csproj", "{97D7DCF1-0CCE-4A4A-8DAD-A72FB2061205}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
