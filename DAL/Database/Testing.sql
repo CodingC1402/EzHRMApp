@@ -50,4 +50,7 @@ select * from chucvu;
 INSERT INTO Nhanvien(id,ho,ten,cmnd,ngaysinh,emailvanphong,emailcanhan,sdtvanphong,sdtcanhan,
 ngayvaolam,phongban,chucvu) VALUES (0,'te','te',4576,'2012-12-12','ad','a','1234','1234','2020-12-12',1,1);
 
+INSERT INTO Nhanvien(id,ho,ten,cmnd,ngaysinh,emailvanphong,emailcanhan,sdtvanphong,sdtcanhan,
+ngayvaolam,phongban,chucvu) VALUES (1,'Nguyen','Ngu',153,'2012-11-11','ad','a','1234','1234','2020-12-12',1,1);
+
 select * from nhanvien;
