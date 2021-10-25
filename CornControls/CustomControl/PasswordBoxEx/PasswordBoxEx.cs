@@ -36,6 +36,8 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty FocusedOutterColorProperty = DependencyProperty.Register(nameof(FocusedOutterColor), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
         public static readonly DependencyProperty SelectionTextBrushProperty = DependencyProperty.Register(nameof(SelectionTextBrush), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
 
+        public static readonly DependencyProperty ReadOnlyBackgroundProperty = DependencyProperty.Register(nameof(ReadOnlyBackground), typeof(Brush), typeof(PasswordBoxEx), new PropertyMetadata(Brushes.Gray));
+
         [Browsable(true), Category("Appearance")]
         public bool IsCapslocked
         {
@@ -123,6 +125,13 @@ namespace CornControls.CustomControl
         {
             get => (Brush)GetValue(SelectionTextBrushProperty);
             set => SetValue(SelectionTextBrushProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public Brush ReadOnlyBackground
+        {
+            get => (Brush)GetValue(ReadOnlyBackgroundProperty);
+            set => SetValue(ReadOnlyBackgroundProperty, value);
         }
 
         private PasswordBox contentPasswordBox = null;

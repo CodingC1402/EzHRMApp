@@ -35,11 +35,16 @@ INSERT INTO PHONGBAN (TenPhong, TruongPhong)
     VALUES ('Coding Department', null);
 
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
-    VALUES ('NV00000001', 'Pham Phuc', 'Nguyen', '000000101010', '2001/02/14', 'NV000000001@gmail.com', 'Nguyen@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 3, 7, 'employee0');
+    VALUES ('NV00000001', 'Pham Phuc', 'Nguyen', '000000101010', '2001/02/14', 'NV000000001@gmail.com', 'Nguyen@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Cleaning Department', 'Cleaner', 'employee0');
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
-    VALUES ('NV00000002', 'Do Phi', 'Long', '000000101010', '2001/02/14', 'NV000000002@gmail.com', 'Long@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 3, 7, 'employee1');
+    VALUES ('NV00000002', 'Do Phi', 'Long', '000000101010', '2001/02/14', 'NV000000002@gmail.com', 'Long@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Coding Department', 'Programmer', 'employee1');
 
-
+INSERT INTO PROFILEPICTURE (ID, Image, Width, Type)
+    VALUES ('0');
+INSERT INTO PROFILEPICTURE (ID, Image, Width, Type)
+    VALUES ('NV00000001');
+INSERT INTO PROFILEPICTURE (ID, Image, Width, Type)
+    VALUES ();
 
 DELIMITER  $$
 CALL LOGIN('boss0', SHA2('0', 256), @AccessToken, @Mask, @ID, @IsLogedIn, @Success);

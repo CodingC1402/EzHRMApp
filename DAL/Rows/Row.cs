@@ -11,6 +11,8 @@ namespace DAL.Rows
     public class Row : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public virtual bool Save(UnitOfWork uow) { return true; }
+        public virtual bool Save(UnitOfWork uow) { 
+            return true; 
+        }
     }
 }

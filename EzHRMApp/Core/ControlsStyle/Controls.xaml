@@ -1,8 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="RadioButtonWithStrip.xaml"/>
-        <ResourceDictionary Source="GlowingBox.xaml"/>
-        <ResourceDictionary Source="SysBtn.xaml"/>
+        <ResourceDictionary Source="RadioButtonWithStrip.xaml" />
+        <ResourceDictionary Source="GlowingBox.xaml" />
+        <ResourceDictionary Source="SysBtn.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

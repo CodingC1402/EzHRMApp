@@ -1,11 +1,13 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converter="clr-namespace:CornControls.CustomControl.Converters">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:CornControls.CustomControl.Converters">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="RadioButtonEx/RadioButtonEx.xaml"/>
-        <ResourceDictionary Source="ButtonEx/ButtonEx.xaml"/>
-        <ResourceDictionary Source="TextBoxEx/TextBoxEx.xaml"/>
-        <ResourceDictionary Source="PasswordBoxEx/PasswordBoxEx.xaml"/>
-        <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml"/>
+        <ResourceDictionary Source="RadioButtonEx/RadioButtonEx.xaml" />
+        <ResourceDictionary Source="ButtonEx/ButtonEx.xaml" />
+        <ResourceDictionary Source="TextBoxEx/TextBoxEx.xaml" />
+        <ResourceDictionary Source="PasswordBoxEx/PasswordBoxEx.xaml" />
+        <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml" />
+        <ResourceDictionary Source="DatagridEx/DatagridEx.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
