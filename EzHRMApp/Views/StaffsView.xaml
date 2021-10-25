@@ -61,7 +61,7 @@
                     <Setter Property="HorizontalAlignment" Value="Left" />
                 </Style>
                 <Style TargetType="controls:TextBoxEx">
-                    <Setter Property="CornerRadius" Value="0" />
+                    <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="IconPad" Value="0" />
                     <Setter Property="Height" Value="35" />
                     <Setter Property="FontFamily" Value="Time New Roman" />
