@@ -22,6 +22,9 @@
         <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
             <view:StaffsManagement />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ScheduleManagementViewModel}">
+            <view:ScheduleManagementView />
+        </DataTemplate>
     </windows:UserControlWindow.Resources>
 
     <Grid Cursor="Arrow" SnapsToDevicePixels="True">
@@ -172,6 +175,7 @@
                         <controls:RadioButtonEx
                             x:Name="schedule"
                             Click="TabButtonClicked"
+                            Command="{Binding ToScheduleManagementView}"
                             Content="Schedule"
                             GroupName="TabButtons"
                             Path="{StaticResource calendarIcon}" />
