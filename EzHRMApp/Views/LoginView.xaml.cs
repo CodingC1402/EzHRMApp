@@ -30,7 +30,7 @@ namespace EzHRMApp.Views
         {
             base.OnGetWindowParent();
 
-            var width = 370;
+            var width = 350;
             var height = 510;
             OwnerWindow.ResizeMode = ResizeMode.NoResize;
             SetWindowSize(width, height, width, height, width, height);

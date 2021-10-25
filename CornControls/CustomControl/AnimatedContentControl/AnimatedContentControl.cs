@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,6 +18,7 @@ namespace CornControls.CustomControl
 	{
 		#region Generated static constructor
 		public readonly static DependencyProperty AnimationTimeProperty = DependencyProperty.Register(nameof(AnimationTime), typeof(double), typeof(AnimatedContentControl));
+		public readonly static DependencyProperty OutDelayProperty = DependencyProperty.Register(nameof(OutDelay), typeof(double), typeof(AnimatedContentControl), new PropertyMetadata(0.0));
 
 		static AnimatedContentControl()
 		{
@@ -31,6 +33,11 @@ namespace CornControls.CustomControl
         {
 			get => (double)GetValue(AnimationTimeProperty);
 			set => SetValue(AnimationTimeProperty, value);
+        }
+		public double OutDelay
+        {
+			get => (double)GetValue(OutDelayProperty);
+			set => SetValue(OutDelayProperty, value);
         }
         /// <summary>
         /// This gets called when the template has been applied and we have our visual tree
@@ -53,6 +60,8 @@ namespace CornControls.CustomControl
 			if (m_paintArea != null && m_mainContent != null)
 			{
 				m_paintArea.Fill = CreateBrushFromVisual(m_mainContent);
+				m_paintArea.Width = m_mainContent.ActualWidth;
+				m_paintArea.Height = m_mainContent.ActualHeight;
 				BeginAnimateContentReplacement();
 			}
 			base.OnContentChanged(oldContent, newContent);
@@ -67,10 +76,16 @@ namespace CornControls.CustomControl
 			var oldContentTransform = new TranslateTransform();
 			m_paintArea.RenderTransform = oldContentTransform;
 			m_mainContent.RenderTransform = newContentTransform;
-			m_paintArea.Visibility = Visibility.Visible;
 
-			newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
-			oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) => m_paintArea.Visibility = Visibility.Hidden));
+			oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) => {
+				m_paintArea.Visibility = Visibility.Visible;
+				Task.Delay((int)(OutDelay * 1000)).ContinueWith(t => {
+					Dispatcher.Invoke(() => {
+						newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
+						m_paintArea.Visibility = Visibility.Hidden;
+					});
+				});
+			}));
 		}
 
 		/// <summary>
@@ -82,7 +97,7 @@ namespace CornControls.CustomControl
 		protected virtual AnimationTimeline CreateAnimation(double from, double to, double amplitude, EasingMode mode, EventHandler whenDone = null)
 		{
 			IEasingFunction ease = new BackEase { Amplitude = amplitude, EasingMode = mode };
-			var duration = new Duration(TimeSpan.FromSeconds(AnimationTime));
+			var duration = new Duration(TimeSpan.FromSeconds(AnimationTime / 2));
 			var anim = new DoubleAnimation(from, to, duration) { EasingFunction = ease };
 			if (whenDone != null)
 				anim.Completed += whenDone;
