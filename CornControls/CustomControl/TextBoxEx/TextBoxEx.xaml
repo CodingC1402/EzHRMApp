@@ -15,6 +15,7 @@
         <Setter Property="HoverColor" Value="{DynamicResource DarkerBackColor}" />
         <Setter Property="FocusedColor" Value="{DynamicResource BackColor}" />
         <Setter Property="OutterColor" Value="{DynamicResource DarkestBackColor}" />
+        <Setter Property="ReadOnlyBackground" Value="{DynamicResource DarkerBackColor}" />
         <Setter Property="NormalPadding" Value="0, 0, 0, 5" />
         <Setter Property="FocusedPadding" Value="0, 0, 0, 5" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -47,6 +48,9 @@
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding ElementName=contentTextBox, Path=IsFocused}" Value="True">
                                             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedColor}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsReadOnly}" Value="True">
+                                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ReadOnlyBackground}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

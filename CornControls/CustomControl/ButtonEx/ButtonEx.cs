@@ -24,6 +24,8 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty IconSizeProperty = DependencyProperty.Register("IconSize", typeof(double), typeof(ButtonEx));
         public static readonly DependencyProperty IconPadProperty = DependencyProperty.Register("IconPad", typeof(GridLength), typeof(ButtonEx));
 
+        public static readonly DependencyProperty DisabledOpacityProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(double), typeof(ButtonEx), new PropertyMetadata(0.8));
+
         [Browsable(true), Category("Appearance")]
         public CornerRadius CornerRadius
         {
@@ -66,6 +68,17 @@ namespace CornControls.CustomControl
         {
             get => (GridLength)GetValue(IconPadProperty);
             set => SetValue(IconPadProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public double DisabledOpacity
+        {
+            get => (double)GetValue(DisabledOpacityProperty);
+            set
+            {
+                value = Math.Clamp(value, 0, 1);
+                SetValue(DisabledOpacityProperty, value);
+            }
         }
 
         static ButtonEx()

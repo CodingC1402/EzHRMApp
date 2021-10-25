@@ -28,6 +28,9 @@
                             <Style TargetType="Border">
                                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
                                 <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}" Value="False">
+                                        <Setter Property="Opacity" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisabledOpacity}" />
+                                    </DataTrigger>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True">
                                         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}" />
                                     </DataTrigger>

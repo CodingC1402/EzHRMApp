@@ -120,7 +120,7 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.ID}" />
+                            Text="{Binding CurrentEmployee.ID}" />
 
                         <Label
                             Grid.Row="1"
@@ -129,8 +129,8 @@
                         <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.Ten}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.Ten}" />
 
                         <Label
                             Grid.Row="2"
@@ -139,8 +139,8 @@
                         <controls:TextBoxEx
                             Grid.Row="2"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.Ho}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.Ho}" />
                     </Grid>
 
                     <Grid
@@ -164,8 +164,8 @@
                             Content="Work number:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.SDTVanPhong}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.SDTVanPhong}" />
 
                         <Label
                             Grid.Row="1"
@@ -174,8 +174,8 @@
                         <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.EmailVanPhong}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.EmailVanPhong}" />
 
                         <Label
                             Grid.Row="2"
@@ -185,7 +185,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.ChucVu}" />
+                            Text="{Binding CurrentEmployee.ChucVu}" />
 
                         <Label
                             Grid.Row="3"
@@ -195,7 +195,7 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.PhongBan}" />
+                            Text="{Binding CurrentEmployee.PhongBan}" />
                     </Grid>
 
                     <Grid
@@ -219,8 +219,8 @@
                             Content="Personal number:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.SDTCaNhan}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.SDTCaNhan}" />
 
                         <Label
                             Grid.Row="1"
@@ -229,8 +229,8 @@
                         <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.EmailCaNhan}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.EmailCaNhan}" />
 
                         <Label
                             Grid.Row="2"
@@ -239,8 +239,8 @@
                         <controls:TextBoxEx
                             Grid.Row="2"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
                         <Label
                             Grid.Row="3"
@@ -249,8 +249,8 @@
                         <controls:TextBoxEx
                             Grid.Row="3"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.NgayThoiViec, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.NgayThoiViec, StringFormat='{}{0:dd/MM/yyyy}'}" />
                     </Grid>
 
                     <Grid
@@ -274,8 +274,8 @@
                             Content="DOB:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.NgaySinh}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.NgaySinh}" />
 
                         <Label
                             Grid.Row="1"
@@ -284,8 +284,8 @@
                         <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding SelectedEmployee.CMND}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentEmployee.CMND}" />
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -324,14 +324,16 @@
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <controls:ButtonEx
-                    Margin="0,5"
-                    Command="{Binding StartAddCommand}"
-                    Content="New">
+                <controls:ButtonEx Margin="0,5">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="New" />
+                            <Setter Property="Command" Value="{Binding StartAddCommand}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
                                     <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
                                     <Setter Property="Content" Value="Confirm" />
                                 </DataTrigger>
@@ -346,12 +348,11 @@
                         </Style>
                     </controls:ButtonEx.Style>
                 </controls:ButtonEx>
-                <controls:ButtonEx
-                    Margin="20,5,0,0"
-                    Command="{Binding StartUpdateCommand}"
-                    Content="Change">
+                <controls:ButtonEx Margin="20,5,0,0">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="Change" />
+                            <Setter Property="Command" Value="{Binding StartUpdateCommand}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
                                     <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
@@ -360,7 +361,10 @@
                                     <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
                                     <Setter Property="Content" Value="Cancle" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsInAddMove}" Value="True">
+                                <DataTrigger Binding="{Binding IsInAddMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
                                     <Setter Property="Command" Value="{Binding CancleAddCommand}" />
                                     <Setter Property="Content" Value="Cancle" />
                                 </DataTrigger>
@@ -371,14 +375,15 @@
             </StackPanel>
         </Grid>
 
-        <DataGrid
+        <controls:DatagridEx
             Grid.Row="1"
             Margin="10"
             AutoGenerateColumns="False"
+            IsEnabled="{Binding IsInNormalMode}"
             IsReadOnly="True"
             ItemsSource="{Binding Employees}"
             SelectedItem="{Binding SelectedEmployee}">
-            <DataGrid.Columns>
+            <controls:DatagridEx.Columns>
                 <DataGridTextColumn
                     Width="100"
                     MinWidth="100"
@@ -404,7 +409,7 @@
                     MinWidth="200"
                     Binding="{Binding EmailVanPhong}"
                     Header="Email" />
-            </DataGrid.Columns>
-        </DataGrid>
+            </controls:DatagridEx.Columns>
+        </controls:DatagridEx>
     </Grid>
 </UserControl>

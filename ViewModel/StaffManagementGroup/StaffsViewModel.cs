@@ -19,9 +19,17 @@ namespace ViewModel
 
         public ObservableCollection<EmployeeModel> Employees { get; set; }
 
-        private EmployeeModel _selectedEmployee;
+        private EmployeeModel _selectedEmployee = null;
+        private EmployeeModel _currentEmployee = null;
 
-        public EmployeeModel CurrentEmployee { get; set; }
+        public EmployeeModel CurrentEmployee {
+            get => _currentEmployee;
+            set
+            {
+                _currentEmployee = value;
+                StartUpdateCommand.RaiseCanExecuteChangeEvent();
+            }
+        }
         public Image ProfilePicture { get; set; }
 
         public EmployeeModel SelectedEmployee {
@@ -32,13 +40,12 @@ namespace ViewModel
                 var profile = value.GetProfilePicture();
 
                 ProfilePicture = profile != null ? new Image(profile) : null;
-
                 CurrentEmployee = value;
             }
         }
 
         private RelayCommand<object> _selectProfileCommand;
-        public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new RelayCommand<object>(ExecuteSelectProfile, CanExecuteSelectProfile));
+        public RelayCommand<object> SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new RelayCommand<object>(ExecuteSelectProfile, CanExecuteSelectProfile));
 
         public void ExecuteSelectProfile(object param)
         {
@@ -58,11 +65,13 @@ namespace ViewModel
 
             CurrentEmployee = newEmployee;
             ProfilePicture = new Image(CurrentEmployee.GetProfilePicture());
+            SelectProfileCommand.RaiseCanExecuteChangeEvent();
         }
         public override void ExecuteUpdate(object param)
         {
             base.ExecuteUpdate(param);
             CurrentEmployee = new EmployeeModel(SelectedEmployee);
+            SelectProfileCommand.RaiseCanExecuteChangeEvent();
         }
 
         public override void ExecuteConfirmAdd(object param)
@@ -82,7 +91,6 @@ namespace ViewModel
         {
             base.ExecuteCancleAdd(param);
             SetCurrentModelBack();
-
         }
         public override void ExecuteCancleUpdate(object param)
         {
@@ -90,9 +98,19 @@ namespace ViewModel
             SetCurrentModelBack();
         }
 
+        public override bool CanExecuteAddStart(object param)
+        {
+            return base.CanExecuteAddStart(param);
+        }
+
+        public override bool CanExecuteUpdateStart(object param)
+        {
+            return base.CanExecuteUpdateStart(param) && CurrentEmployee != null;
+        }
+
         public bool CanExecuteSelectProfile(object param)
         {
-            return IsInUpdateMode || IsInAddMode;
+            return IsInCRUDMode;
         }
 
         public StaffsViewModel()
@@ -103,7 +121,9 @@ namespace ViewModel
         private void SetCurrentModelBack()
         {
             CurrentEmployee = SelectedEmployee;
-            ProfilePicture = new Image(CurrentEmployee.GetProfilePicture());
+            ProfilePicture = CurrentEmployee != null ? new Image(CurrentEmployee.ProfilePicture) : null;
+            SelectProfileCommand.RaiseCanExecuteChangeEvent();
+            StartUpdateCommand.RaiseCanExecuteChangeEvent();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Model
                 ProfilePicture = new ProfilePicture()
                 {
                     ID = profile.ID,
-                    Image = (byte[])profile.Image.Clone(),
+                    Image = (byte[])profile.Image?.Clone(),
                     Type = profile.Type,
                     Width = profile.Width
                 };

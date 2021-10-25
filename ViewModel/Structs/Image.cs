@@ -32,7 +32,7 @@ namespace ViewModel.Structs
             return new ProfilePicture()
             {
                 ID = id,
-                Image = (byte[])ImageBytes.Clone(),
+                Image = (byte[])ImageBytes?.Clone(),
                 Width = Width,
                 Type = FileType
             };

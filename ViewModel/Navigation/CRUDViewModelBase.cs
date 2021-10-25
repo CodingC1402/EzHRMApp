@@ -10,23 +10,61 @@ namespace ViewModel.Navigation
 {
     public class CRUDViewModelBase : ViewModelBase
     {
-        public bool IsInUpdateMode { get; set; }
-        public bool IsInAddMode { get; set; }
+        private bool _isInUpdateMode = false;
+        private bool _isInAddMode = false;
+
+        public bool IsInNormalMode
+        {
+            get => !(_isInAddMode || _isInUpdateMode);
+        }
+        public bool IsInCRUDMode
+        {
+            get => _isInAddMode || _isInUpdateMode;
+        }
+
+        public bool IsInUpdateMode {
+            get => _isInUpdateMode;
+            set
+            {
+                if (_isInUpdateMode == value)
+                    return;
+
+                _isInUpdateMode = value;
+                ConfirmUpdateCommand.RaiseCanExecuteChangeEvent();
+                CancleUpdateCommand.RaiseCanExecuteChangeEvent();
+                RaisePropertyChanged(nameof(IsInNormalMode));
+                RaisePropertyChanged(nameof(IsInCRUDMode));
+            }
+        }
+        public bool IsInAddMode {
+            get => _isInAddMode;
+            set
+            {
+                if (value == _isInAddMode)
+                    return;
+
+                _isInAddMode = value;
+                ConfirmAddCommand.RaiseCanExecuteChangeEvent();
+                CancleAddCommand.RaiseCanExecuteChangeEvent();
+                RaisePropertyChanged(nameof(IsInNormalMode));
+                RaisePropertyChanged(nameof(IsInCRUDMode));
+            }
+        }
 
         private RelayCommand<object> _startUpdateCommand;
-        public ICommand StartUpdateCommand => _startUpdateCommand ?? (_startUpdateCommand = new RelayCommand<object>(ExecuteUpdate));
+        public RelayCommand<object> StartUpdateCommand => _startUpdateCommand ?? (_startUpdateCommand = new RelayCommand<object>(ExecuteUpdate, CanExecuteUpdateStart));
         private RelayCommand<object> _startAddCommand;
-        public ICommand StartAddCommand => _startAddCommand ?? (_startAddCommand = new RelayCommand<object>(ExecuteAdd));
+        public RelayCommand<object> StartAddCommand => _startAddCommand ?? (_startAddCommand = new RelayCommand<object>(ExecuteAdd, CanExecuteAddStart));
 
         private RelayCommand<object> _confirmUpdateCommand;
-        public ICommand ConfirmUpdateCommand => _confirmUpdateCommand ?? (_confirmUpdateCommand = new RelayCommand<object>(ExecuteConfirmUpdate, CanExecuteUpdateConfirm));
+        public RelayCommand<object> ConfirmUpdateCommand => _confirmUpdateCommand ?? (_confirmUpdateCommand = new RelayCommand<object>(ExecuteConfirmUpdate, CanExecuteUpdateConfirm));
         private RelayCommand<object> _confirmAddCommand;
-        public ICommand ConfirmAddCommand => _confirmAddCommand ?? (_confirmAddCommand = new RelayCommand<object>(ExecuteConfirmAdd, CanExecuteAddConfirm));
+        public RelayCommand<object> ConfirmAddCommand => _confirmAddCommand ?? (_confirmAddCommand = new RelayCommand<object>(ExecuteConfirmAdd, CanExecuteAddConfirm));
 
         private RelayCommand<object> _cancleUpdateCommand;
-        public ICommand CancleUpdateCommand => _cancleUpdateCommand ?? (_cancleUpdateCommand = new RelayCommand<object>(ExecuteCancleUpdate, CanExecuteUpdateConfirm));
+        public RelayCommand<object> CancleUpdateCommand => _cancleUpdateCommand ?? (_cancleUpdateCommand = new RelayCommand<object>(ExecuteCancleUpdate, CanExecuteUpdateConfirm));
         private RelayCommand<object> _cancleAddCommand;
-        public ICommand CancleAddCommand => _cancleAddCommand ?? (_cancleAddCommand = new RelayCommand<object>(ExecuteCancleAdd, CanExecuteAddConfirm));
+        public RelayCommand<object> CancleAddCommand => _cancleAddCommand ?? (_cancleAddCommand = new RelayCommand<object>(ExecuteCancleAdd, CanExecuteAddConfirm));
 
         public virtual void ExecuteAdd(object param)
         {
@@ -53,6 +91,16 @@ namespace ViewModel.Navigation
         public virtual void ExecuteCancleUpdate(object param)
         {
             IsInUpdateMode = false;
+        }
+
+        public virtual bool CanExecuteAddStart(object param)
+        {
+            return !IsInAddMode;
+        }
+
+        public virtual bool CanExecuteUpdateStart(object param)
+        {
+            return !IsInUpdateMode;
         }
 
         public virtual bool CanExecuteAddConfirm(object param)
