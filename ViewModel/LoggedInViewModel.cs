@@ -43,10 +43,13 @@ namespace ViewModel
             ViewModels.Add(ToHomeView.ViewModel);
 
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
-            ViewModels.Add(ToHomeView.ViewModel);
+            ViewModels.Add(ToDashboard.ViewModel);
 
             ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel(), this, 1);
-            ViewModels.Add(ToHomeView.ViewModel);
+            ViewModels.Add(ToStaffsManagementView.ViewModel);
+
+            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 1);
+            ViewModels.Add(ToScheduleManagementView.ViewModel);
 
             CurrentViewModel = ToHomeView.ViewModel;
         }
@@ -54,5 +57,6 @@ namespace ViewModel
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
         public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
         public NavigationCommand<StaffsManagementViewModel> ToStaffsManagementView { get; set; }
+        public NavigationCommand<ScheduleManagementViewModel> ToScheduleManagementView { get; set; }
     }
 }

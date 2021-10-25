@@ -61,14 +61,13 @@
                     <Setter Property="HorizontalAlignment" Value="Left" />
                 </Style>
                 <Style TargetType="controls:TextBoxEx">
-                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="CornerRadius" Value="0" />
                     <Setter Property="IconPad" Value="0" />
                     <Setter Property="Height" Value="35" />
-
                     <Setter Property="FontFamily" Value="Time New Roman" />
                     <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="NormalPadding" Value="5, 2, 2, 2" />
-                    <Setter Property="FocusedPadding" Value="5, 2, 2, 2" />
+                    <Setter Property="NormalPadding" Value="5, 1, 1, 1" />
+                    <Setter Property="FocusedPadding" Value="5, 1, 1, 1" />
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="Padding" Value="5,0" />
                 </Style>
