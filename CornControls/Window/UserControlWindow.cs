@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfScreenHelper;
 using System.Windows.Interop;
+using System.Threading.Tasks;
 
 namespace CornControls.Window
 {
@@ -20,6 +21,8 @@ namespace CornControls.Window
             }
         }
 
+        public double DelayBeforeSetWndSize { get; set; } = 1.5;
+
         public UserControlWindow()
         {
             IsVisibleChanged += (s, e) =>
@@ -33,6 +36,18 @@ namespace CornControls.Window
         }
 
         public virtual void SetWindowSize(double width, double height, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double minWidth = 0, double minHeight = 0)
+        {
+            if (DelayBeforeSetWndSize <= 0)
+                SetWindowSizePrivate(width, height, maxWidth, maxHeight, minWidth, minHeight);
+            else
+                Task.Delay((int)(DelayBeforeSetWndSize * 1000)).ContinueWith( t => {
+                        this.Dispatcher.Invoke( () => {
+                            SetWindowSizePrivate(width, height, maxWidth, maxHeight, minWidth, minHeight);
+                        });
+                    });
+        }
+
+        private void SetWindowSizePrivate(double width, double height, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double minWidth = 0, double minHeight = 0)
         {
             var wnd = OwnerWindow;
 

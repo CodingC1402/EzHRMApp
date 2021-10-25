@@ -10,6 +10,7 @@
     xmlns:window="clr-namespace:CornControls.Window;assembly=CornControls"
     d:DesignHeight="510"
     d:DesignWidth="350"
+    DelayBeforeSetWndSize="0"
     mc:Ignorable="d">
     <Border
         Width="330"

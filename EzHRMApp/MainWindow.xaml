@@ -10,13 +10,14 @@
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     xmlns:windows="clr-namespace:CornControls.Window;assembly=CornControls"
     Title="MainWindow"
-    Width="1000"
-    Height="610"
+    Width="350"
+    Height="510"
     AllowsTransparency="True"
     Background="Transparent"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+
     <windows:BlankWindow.DataContext>
         <viewModel:MainViewModel />
     </windows:BlankWindow.DataContext>
