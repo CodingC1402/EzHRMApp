@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# IntelliJ IDEA work directory
+**/.idea/**/dataSources/
+**/.idea/**/workspace.xml
