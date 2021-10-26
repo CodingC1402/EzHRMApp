@@ -20,14 +20,32 @@ namespace DAL.Rows
         public string SDTCaNhan { get; set; }
         public DateTime NgayVaoLam { get; set; }
         public DateTime? NgayThoiViec { get; set; }
-        public int PhongBan { get; set; }
-        public int ChucVu { get; set; }
+        public string PhongBan { get; set; }
+        public string ChucVu { get; set; }
         public string TaiKhoan {get; set;}
-        
 
-        public bool ChangeDepartment(Department department)
+        public Employee() { }
+        public Employee (Employee employee)
         {
-            this.PhongBan = department.ID;
+            ID = employee.ID;
+            Ho = employee.Ho;
+            Ten = employee.Ten;
+            CMND = employee.CMND;
+            NgaySinh = employee.NgaySinh;
+            EmailVanPhong = employee.EmailVanPhong;
+            EmailCaNhan = employee.EmailCaNhan;
+            SDTVanPhong = employee.SDTVanPhong;
+            SDTCaNhan = employee.SDTCaNhan;
+            NgayVaoLam = employee.NgayVaoLam;
+            NgayThoiViec = employee.NgayThoiViec;
+            PhongBan = employee.PhongBan;
+            ChucVu = employee.ChucVu;
+            TaiKhoan = employee.TaiKhoan;
+        }
+
+    public bool ChangeDepartment(Department department)
+        {
+            this.PhongBan = department.TenPhong;
             using (var uow = new UnitOfWork())
             {
                 Save(uow);
@@ -37,7 +55,7 @@ namespace DAL.Rows
 
         public bool ChangeRole(Role role)
         {
-            this.ChucVu = role.ID;
+            this.ChucVu = role.TenChucVu;
             using (var uow = new UnitOfWork())
             {
                 Save(uow);
@@ -105,8 +123,22 @@ namespace DAL.Rows
             }
         }
 
-        public override bool Save(UnitOfWork uow)
+        public virtual ProfilePicture GetProfilePicture()
         {
+            return ProfilePictureRepo.Instance.FindByID(new object[] { ID });
+        }
+
+        public override bool Save(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
+                    return uowNew.Complete();
+                }
+            }
+
             return EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
         }
     }

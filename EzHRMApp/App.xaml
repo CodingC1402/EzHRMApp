@@ -9,7 +9,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/CornControls;component/Style/ScrollBar.xaml" />
-                <ResourceDictionary Source="/CornControls;component/Style/Datagrid.xaml" />
                 <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml" />
                 <ResourceDictionary Source="/CornControls;component/Icons/HRMIcons.xaml" />
                 <ResourceDictionary Source="/CornControls;component/CustomControl/Converters/ConverterDict.xaml" />
