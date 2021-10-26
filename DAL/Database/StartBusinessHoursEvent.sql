@@ -23,10 +23,10 @@ DO
         CREATE TEMPORARY TABLE working_employees
         SELECT *
         FROM chamcong c
-        WHERE NgayChamCong = CURRENT_DATE() - INTERVAL 1 DAY
+        WHERE DATE(ThoiGianVaoLam) = CURRENT_DATE() - INTERVAL 1 DAY
         AND ThoiGianTanLam IS NULL;
 
-        UPDATE donvicongviec
+        UPDATE sogiolamtrongngay
         SET SoGioLamTrongGio = (
             IF ((SELECT
                 CASE
@@ -110,11 +110,11 @@ DO
         SET ThoiGianTanLam = CURRENT_TIME()
         WHERE IDNhanVien in (SELECT IDNhanVien FROM working_employees);
 
-        INSERT INTO chamcong (NgayChamCong, IDNhanVien, ThoiGianVaoLam, ThoiGianTanLam)
-        SELECT CURRENT_DATE(), IDNhanVien, CURRENT_TIME(), NULL
+        INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien,  ThoiGianTanLam)
+        SELECT NOW(), IDNhanVien, NULL
         FROM working_employees;
 
-        INSERT INTO donvicongviec (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
+        INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
         SELECT CURRENT_DATE(), ID, 0, 0
         FROM nhanvien;
 

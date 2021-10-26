@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e138416-cd30-4ca2-b2fc-1c3b3c34d496" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CheckInCheckOut.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/cb2f926b-d4ec-49a9-a30f-6376f3aaacd1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/cb2f926b-d4ec-49a9-a30f-6376f3aaacd1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CreateTable.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CreateTable.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/Model.mwb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/Model.mwb.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StartBusinessHoursEvent.sql" beforeDir="false" afterPath="$PROJECT_DIR$/StartBusinessHoursEvent.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,5 +64,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
