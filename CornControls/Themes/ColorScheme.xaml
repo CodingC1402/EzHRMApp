@@ -23,13 +23,13 @@
     <Color x:Key="ColorPanel">#061826</Color>
     <Color x:Key="ColorDarkerPanel">#061016</Color>
 
-    <Color x:Key="CancleButtonColor">#D62640</Color>
-    <Color x:Key="ConfirmButtonColor">#1DD363</Color>
-    <Color x:Key="UpdateButtonColor">#E5A510</Color>
+    <Color x:Key="CancleButtonColor">#C61630</Color>
+    <Color x:Key="ConfirmButtonColor">#0DC353</Color>
+    <Color x:Key="UpdateButtonColor">#D59500</Color>
 
-    <Color x:Key="CancleButtonColorHover">#EA3A55</Color>
-    <Color x:Key="ConfirmButtonColorHover">#2DE263</Color>
-    <Color x:Key="UpdateButtonColorHover">#EFB52d</Color>
+    <Color x:Key="CancleButtonColorHover">#D92943</Color>
+    <Color x:Key="ConfirmButtonColorHover">#1FD666</Color>
+    <Color x:Key="UpdateButtonColorHover">#E8A813</Color>
 
     <Color x:Key="CancleButtonColorPressed">#FC4b66</Color>
     <Color x:Key="ConfirmButtonColorPressed">#49F47c</Color>

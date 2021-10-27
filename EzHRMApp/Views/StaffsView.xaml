@@ -64,12 +64,21 @@
                     <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="IconPad" Value="0" />
                     <Setter Property="Height" Value="35" />
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
                     <Setter Property="FontFamily" Value="Time New Roman" />
                     <Setter Property="FontWeight" Value="Normal" />
                     <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
                     <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="Padding" Value="5,0" />
+                </Style>
+                <Style TargetType="controls:ComboBoxEx">
+                    <Setter Property="Padding" Value="5,0" />
+                    <Setter Property="Height" Value="35" />
+                    <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="Margin" Value="5,0" />
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -181,11 +190,18 @@
                             Grid.Row="2"
                             VerticalAlignment="Center"
                             Content="Position:" />
-                        <controls:TextBoxEx
+                        <controls:ComboBoxEx
                             Grid.Row="2"
                             Grid.Column="1"
+                            Padding="10,0"
+                            VerticalContentAlignment="Center"
+                            FocusedPadding="5, 1"
+                            FontFamily="Time New Roman"
+                            FontSize="13"
                             IsReadOnly="True"
-                            Text="{Binding CurrentEmployee.ChucVu}" />
+                            ItemCornerRadius="0"
+                            ItemsSource="{Binding AvailableDepartment}"
+                            NormalPadding="5, 1" />
 
                         <Label
                             Grid.Row="3"

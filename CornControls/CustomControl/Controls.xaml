@@ -9,5 +9,6 @@
         <ResourceDictionary Source="PasswordBoxEx/PasswordBoxEx.xaml" />
         <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml" />
         <ResourceDictionary Source="DatagridEx/DatagridEx.xaml" />
+        <ResourceDictionary Source="ComboBoxEx/ComboBoxEx.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
