@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewModel.Helper;
+using DAL.Rows;
 
 namespace ViewModel
 {
@@ -26,10 +27,10 @@ namespace ViewModel
         public Mode CurrentMode { get; set; }
 
         [PropertyChanged.OnChangedMethod(nameof(OnSelectedChange))]
-        public Staffs.Employee SelectedEmployee { get; set; }
+        public Employee SelectedEmployee { get; set; }
 
-        public Staffs.Employee CurrentEmployee { get; set; }
-        public ObservableCollection<Staffs.Employee> EmployeeList { get; set; }
+        public Employee CurrentEmployee { get; set; }
+        public ObservableCollection<Employee> EmployeeList { get; set; }
 
         protected RelayCommand<object> _addStaffRelayCommand;
         public ICommand AddStaffCommand => _addStaffRelayCommand ?? (_addStaffRelayCommand = new RelayCommand<object>(ExecuteAddStaff, CanExecuteAddStaff));
@@ -43,7 +44,7 @@ namespace ViewModel
         public StaffsViewModel()
         {
             CurrentMode = Mode.Edit;
-            EmployeeList = Staffs.GetList();
+            EmployeeList = EmployeeModel.GetList();
 
             if (EmployeeList.Count > 0)
                 SelectedEmployee = EmployeeList[0];
@@ -54,7 +55,7 @@ namespace ViewModel
             if (inCommand)
                 return;
 
-            CurrentEmployee = new Staffs.Employee(SelectedEmployee);
+            CurrentEmployee = new Employee(SelectedEmployee);
         }
 
         private bool CanExecuteAddStaff(object obj)
@@ -65,12 +66,12 @@ namespace ViewModel
         private void ExecuteAddStaff(object obj)
         {
             // LoginInfo here
-            if (Staffs.CheckStaffInfo(CurrentEmployee) || Staffs.CheckStaffID(CurrentEmployee))
+            if (EmployeeModel.CheckStaffInfo(CurrentEmployee) || EmployeeModel.CheckStaffID(CurrentEmployee))
             {
                 return;
             }
 
-            Staffs.AddStaff(CurrentEmployee, LoginInfo.AccessToken);
+            EmployeeModel.AddStaff(CurrentEmployee, LoginInfo.AccessToken);
 
             EmployeeList.Add(CurrentEmployee);
         }
@@ -83,10 +84,10 @@ namespace ViewModel
 
         private void ExecuteEditStaff(object obj)
         {
-            if (!Staffs.CheckStaffID(CurrentEmployee))
+            if (!EmployeeModel.CheckStaffID(CurrentEmployee))
                 return;
 
-            Staffs.UpdateStaff(CurrentEmployee, LoginInfo.AccessToken);
+            EmployeeModel.UpdateStaff(CurrentEmployee, LoginInfo.AccessToken);
 
             inCommand = true;
             var found = EmployeeList.FirstOrDefault(x => x.ID == CurrentEmployee.ID);

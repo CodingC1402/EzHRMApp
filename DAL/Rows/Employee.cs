@@ -19,6 +19,25 @@ namespace DAL.Rows
         public DateTime? NgayThoiViec { get; set; }
         public int PhongBan { get; set; }
         public int ChucVu { get; set; }
-        public string TaiKhoan {get; set;}
+        public string TaiKhoan { get; set; }
+
+        public Employee() { }
+        public Employee(Employee employee)
+        {
+            ID = employee.ID;
+            Ho = employee.Ho;
+            Ten = employee.Ten;
+            CMND = employee.CMND;
+            NgaySinh = employee.NgaySinh;
+            EmailVanPhong = employee.EmailVanPhong;
+            EmailCaNhan = employee.EmailCaNhan;
+            SDTVanPhong = employee.SDTVanPhong;
+            SDTCaNhan = employee.SDTCaNhan;
+            NgayVaoLam = employee.NgayVaoLam;
+            NgayThoiViec = employee.NgayThoiViec;
+            PhongBan = employee.PhongBan;
+            ChucVu = employee.ChucVu;
+            TaiKhoan = employee.TaiKhoan;
+        }
     }
 }
