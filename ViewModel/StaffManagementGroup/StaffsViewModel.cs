@@ -18,6 +18,12 @@ namespace ViewModel
     {
 
         public ObservableCollection<EmployeeModel> Employees { get; set; }
+        public ObservableCollection<string> AvailableDepartment { get; set; } = new ObservableCollection<string>
+        {
+            "Cleaner",
+            "Coder",
+            "Shithead"
+        };
 
         private EmployeeModel _selectedEmployee = null;
         private EmployeeModel _currentEmployee = null;
