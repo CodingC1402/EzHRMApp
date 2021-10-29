@@ -43,7 +43,7 @@ namespace DAL.Rows
             TaiKhoan = employee.TaiKhoan;
         }
 
-    public bool ChangeDepartment(Department department)
+        public bool ChangeDepartment(Department department)
         {
             this.PhongBan = department.TenPhong;
             using (var uow = new UnitOfWork())
