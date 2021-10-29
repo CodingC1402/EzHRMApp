@@ -51,7 +51,10 @@ namespace ViewModel
         public override void ExecuteConfirmAdd(object param)
         {
             base.ExecuteConfirmAdd(param);
-            CurrentDepartment.Save();
+            if (CurrentDepartment.Add() == 0)
+            {
+                UpdateView();
+            }
             SetCurrentModelBack();
         }
         public override void ExecuteConfirmUpdate(object param)
@@ -96,6 +99,12 @@ namespace ViewModel
         {
             CurrentDepartment = SelectedDepartment;
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
+        }
+
+        private void UpdateView()
+        {
+            Departments.Add(CurrentDepartment);
+            SelectedDepartment = CurrentDepartment;
         }
     }
 }

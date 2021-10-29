@@ -113,7 +113,7 @@
                             Content="Name:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
-                            IsReadOnly="True"
+                            IsReadOnly="{Binding IsInNormalMode}"
                             Text="{Binding CurrentDepartment.TenPhong}" />
 
                         <Label
@@ -237,8 +237,8 @@
             SelectedItem="{Binding SelectedDepartment}">
             <controls:DatagridEx.Columns>
                 <DataGridTextColumn
-                    Width="100"
-                    MinWidth="100"
+                    Width="150"
+                    MinWidth="150"
                     Binding="{Binding TenPhong}"
                     Header="Name"/>
                 <DataGridTextColumn

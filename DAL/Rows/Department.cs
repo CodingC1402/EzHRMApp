@@ -45,5 +45,20 @@ namespace DAL.Rows
 
             return DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uow);
         }
+
+        public bool Add(UnitOfWork uow = null)
+        {
+            // why ?
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uow);
+                    return uowNew.Complete();
+                }
+            }
+
+            return DepartmentRepo.Instance.Add(this, uow);
+        }
     }
 }

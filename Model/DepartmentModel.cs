@@ -34,15 +34,33 @@ namespace Model
         public SaveResult Save()
         {
             var result = SaveResult.Ok;
-            if (!Save(null))
+
+            UnitOfWork unit = new UnitOfWork();
+
+            if (!Save(unit))
                 result |= SaveResult.FailData;
 
+            unit.Complete();
+            return result;
+        }
+
+        // try something
+        public SaveResult Add()
+        {
+            var result = SaveResult.Ok;
+
+            UnitOfWork unit = new UnitOfWork();
+
+            if (!Add(unit))
+                result |= SaveResult.FailData;
+
+            unit.Complete();
             return result;
         }
 
         protected new bool Save(UnitOfWork unitOfWork = null)
         {
-            return base.Save();
+            return base.Save(unitOfWork);
         }
     }
 }
