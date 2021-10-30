@@ -24,6 +24,12 @@ namespace CornControls.CustomControl
 
         public static Result ShowMessage()
         {
+            if (Instance.IsOpened == true)
+            {
+                CloseMessage(Result.Error);
+            }
+
+            Instance.IsOpened = true;
             Instance.CurrentWindow = Application.Current.MainWindow;
             Instance.CanClose = true;
 
@@ -51,8 +57,14 @@ namespace CornControls.CustomControl
             rootContent.Children.Remove(Instance);
 
             Instance.MessageResult = Result.Ok;
+            Instance.IsOpened = false;
             Instance.RaiseMessageClosedEvent();
             Instance.CurrentWindow = null;
+        }
+
+        static PopUpMessage()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(PopUpMessage), new FrameworkPropertyMetadata(typeof(PopUpMessage)));
         }
 
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(PopUpMessage), new PropertyMetadata("Message"));
