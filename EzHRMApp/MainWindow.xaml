@@ -22,14 +22,16 @@
         <viewModel:MainViewModel />
     </windows:BlankWindow.DataContext>
 
-    <controls:AnimatedContentControlOpacity AnimationTime="1" Content="{Binding CurrentViewModel}">
-        <ContentControl.Resources>
-            <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
-                <view:LoginView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:LoggedInViewModel}">
-                <view:LoggedInView />
-            </DataTemplate>
-        </ContentControl.Resources>
-    </controls:AnimatedContentControlOpacity>
+    <Grid x:Name="RootControl">
+        <controls:AnimatedContentControlOpacity AnimationTime="1" Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+                    <view:LoginView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:LoggedInViewModel}">
+                    <view:LoggedInView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </controls:AnimatedContentControlOpacity>
+    </Grid>
 </windows:BlankWindow>
