@@ -9,6 +9,10 @@ namespace ViewModel.Structs
 {
     public class Image
     {
+        public Image()
+        {
+
+        }
         public Image(Image image)
         {
             ImageBytes = (byte[])image.ImageBytes.Clone();
