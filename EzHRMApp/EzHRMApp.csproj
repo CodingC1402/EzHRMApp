@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Icons\Logo.png" />
+    <None Remove="Themes\user.png" />
     <None Remove="Views\13192721-mc.png" />
   </ItemGroup>
 
@@ -24,7 +25,7 @@
 
   <ItemGroup>
     <Resource Include="Icons\Logo.png" />
-    <Resource Include="Views\13192721-mc.png" />
+    <Resource Include="Themes\user.png" />
   </ItemGroup>
 
   <ItemGroup>

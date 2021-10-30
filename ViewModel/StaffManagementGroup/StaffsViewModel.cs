@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using Model;
-using System.Windows;
 using ViewModel.Helper;
-using Microsoft.Win32;
-using System.Drawing;
 using ViewModel.Structs;
 
 namespace ViewModel
@@ -18,12 +9,8 @@ namespace ViewModel
     {
 
         public ObservableCollection<EmployeeModel> Employees { get; set; }
-        public ObservableCollection<string> AvailableDepartment { get; set; } = new ObservableCollection<string>
-        {
-            "Cleaner",
-            "Coder",
-            "Shithead"
-        };
+        public ObservableCollection<DepartmentModel> AvailableDepartment { get; set; }
+        public int SelectedDepartmentIndex { get; set; }
 
         private EmployeeModel _selectedEmployee = null;
         private EmployeeModel _currentEmployee = null;
@@ -47,6 +34,8 @@ namespace ViewModel
 
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
+
+                SelectedDepartmentIndex = DepartmentModel.GetIndex(_selectedEmployee, AvailableDepartment);
             }
         }
 
@@ -55,6 +44,9 @@ namespace ViewModel
 
         public void ExecuteSelectProfile(object param)
         {
+            if (param == null)
+                return;
+
             ProfilePicture = new Image(param as Image);
             var employeeProfile = CurrentEmployee.GetProfilePicture();
 
@@ -122,6 +114,8 @@ namespace ViewModel
         public StaffsViewModel()
         {
             Employees = EmployeeModel.LoadAll();
+            AvailableDepartment = DepartmentModel.LoadAll();
+            SelectedDepartmentIndex = -1;
         }
 
         private void SetCurrentModelBack()
