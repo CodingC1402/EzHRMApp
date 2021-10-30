@@ -20,19 +20,19 @@ INSERT INTO cachtinhluong (Ten)
 INSERT INTO cachtinhluong (Ten)
     VALUES ('Wage');
 
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Designer', 'Salary', 30, 900, 1.5);
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Programmer', 'Salary', 20, 600, 1.5);
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Cleaner', 'Wage', 10, 300, 1.5);
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, MucLuongNgoaiGio)
+    VALUES ('Designer', 'Salary', 1.5);
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, MucLuongNgoaiGio)
+    VALUES ('Programmer', 'Salary', 1.5);
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, MucLuongNgoaiGio)
+    VALUES ('Cleaner', 'Wage', 1.5);
 
-INSERT INTO PHONGBAN (TenPhong, TruongPhong, NgayThanhLap)
-    VALUES ('Design Department', null, '2000/01/01');
-INSERT INTO PHONGBAN (TenPhong, TruongPhong, NgayThanhLap)
-    VALUES ('Cleaning Department', null, '2000/01/01');
-INSERT INTO PHONGBAN (TenPhong, TruongPhong, NgayThanhLap)
-    VALUES ('Coding Department', null, '2000/01/01');
+INSERT INTO PHONGBAN (TenPhong, TruongPhong)
+    VALUES ('Design Department', null);
+INSERT INTO PHONGBAN (TenPhong, TruongPhong)
+    VALUES ('Cleaning Department', null);
+INSERT INTO PHONGBAN (TenPhong, TruongPhong)
+    VALUES ('Coding Department', null);
 
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
     VALUES ('NV00000001', 'Pham Phuc', 'Nguyen', '000000101010', '2001/02/14', 'NV000000001@gmail.com', 'Nguyen@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Cleaning Department', 'Cleaner', 'employee0');
@@ -67,10 +67,7 @@ CALL LOGOUTALL();
         SET TK.DangLogin = 0
         WHERE TK.TaiKhoan = 'CornyCornyCorn1';
 
-DELETE FROM nhanvien;
-DELETE FROM phongban;
 DELETE FROM chucvu;
-DELETE FROM cachtinhluong;
 DELETE FROM accesstokens;
 DELETE FROM TAIKHOAN;
 

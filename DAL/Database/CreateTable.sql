@@ -83,7 +83,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `EzHRM`.`CACHTINHLUONG` ;
 
 CREATE TABLE IF NOT EXISTS `EzHRM`.`CACHTINHLUONG` (
-  `Ten` ENUM('PieceWork', 'Commission', 'Salary', 'Wage') NOT NULL,
+  `Ten` ENUM('TheoGio', 'TheoThang') NOT NULL,
   `KyHanTraLuongTheoNgay` INT NULL,
   `LanTraLuongCuoi` DATE NULL,
   PRIMARY KEY (`Ten`))
@@ -130,11 +130,11 @@ DROP TABLE IF EXISTS `EzHRM`.`CHUCVU` ;
 
 CREATE TABLE IF NOT EXISTS `EzHRM`.`CHUCVU` (
   `TenChucVu` VARCHAR(255) NOT NULL,
-  `CachTinhLuong` ENUM('PieceWork', 'Commission', 'Salary', 'Wage') NOT NULL,
+  `CachTinhLuong` ENUM('TheoGio', 'TheoThang') NOT NULL,
   `TienLuongMoiGio` DECIMAL NOT NULL,
   `TienLuongMoiThang` DECIMAL NOT NULL,
   `PhanTramLuongNgoaiGio` FLOAT NOT NULL,
-  `DaXoa` TINYINT NOT NULL DEFAULT 0,
+  `DaXoa` TINYINT NOT NULL,
   PRIMARY KEY (`TenChucVu`),
   CONSTRAINT `FK_CHUCVU_CACHTINHLUONG_TEN`
     FOREIGN KEY (`CachTinhLuong`)
@@ -271,7 +271,7 @@ DROP TABLE IF EXISTS `EzHRM`.`PHONGBAN` ;
 CREATE TABLE IF NOT EXISTS `EzHRM`.`PHONGBAN` (
   `TenPhong` VARCHAR(255) NOT NULL,
   `NgayThanhLap` DATE NOT NULL,
-  `NgayNgungHoatDong` DATE NULL,
+  `NgayNgungHoatDong` DATE NOT NULL,
   `TruongPhong` VARCHAR(10) NULL,
   PRIMARY KEY (`TenPhong`),
   CONSTRAINT `FK_PHONGBAN_TRUONGPHONG_ID`
