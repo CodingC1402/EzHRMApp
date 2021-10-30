@@ -31,36 +31,30 @@ namespace Model
         public DepartmentModel(Department department) : base(department) { }
         public DepartmentModel(DepartmentModel department) : base(department) { }
 
-        public SaveResult Save()
+        public SaveResult Update(Department updatedValue)
         {
             var result = SaveResult.Ok;
 
-            UnitOfWork unit = new UnitOfWork();
+            UnitOfWork uow = new UnitOfWork();
 
-            if (!Save(unit))
+            if (!Update(updatedValue, uow))
                 result |= SaveResult.FailData;
 
-            unit.Complete();
+            uow.Complete();
             return result;
         }
 
-        // try something
         public SaveResult Add()
         {
             var result = SaveResult.Ok;
 
-            UnitOfWork unit = new UnitOfWork();
+            UnitOfWork uow = new UnitOfWork();
 
-            if (!Add(unit))
+            if (!Add(uow))
                 result |= SaveResult.FailData;
 
-            unit.Complete();
+            uow.Complete();
             return result;
-        }
-
-        protected new bool Save(UnitOfWork unitOfWork = null)
-        {
-            return base.Save(unitOfWork);
         }
     }
 }

@@ -51,16 +51,25 @@ namespace ViewModel
         public override void ExecuteConfirmAdd(object param)
         {
             base.ExecuteConfirmAdd(param);
+
             if (CurrentDepartment.Add() == 0)
             {
-                UpdateView();
+                Departments.Add(CurrentDepartment);
+                SelectedDepartment = CurrentDepartment;
             }
+
             SetCurrentModelBack();
         }
         public override void ExecuteConfirmUpdate(object param)
         {
             base.ExecuteConfirmUpdate(param);
-            CurrentDepartment.Save();
+
+            if (SelectedDepartment.Update(CurrentDepartment) == 0)
+            {
+                var found = Departments.FirstOrDefault(x => x.TenPhong == SelectedDepartment.TenPhong);
+                Departments[Departments.IndexOf(found)] = CurrentDepartment;
+            }
+
             SetCurrentModelBack();
         }
 
@@ -99,12 +108,6 @@ namespace ViewModel
         {
             CurrentDepartment = SelectedDepartment;
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
-        }
-
-        private void UpdateView()
-        {
-            Departments.Add(CurrentDepartment);
-            SelectedDepartment = CurrentDepartment;
         }
     }
 }
