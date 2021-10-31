@@ -1,4 +1,5 @@
-﻿using DAL.Rows;
+using DAL.Others;
+using DAL.Rows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,15 +27,34 @@ namespace Model
             return result;
         }
 
-        public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
-        {
-            for (int i = 0; i < arr.Count; i++)
-            {
-                if (employee.PhongBan == arr[i].TenPhong)
-                    return i;
-            }
+        public DepartmentModel() { }
+        public DepartmentModel(Department department) : base(department) { }
+        public DepartmentModel(DepartmentModel department) : base(department) { }
 
-            return -1;
+        public SaveResult Update(Department updatedValue)
+        {
+            var result = SaveResult.Ok;
+
+            UnitOfWork uow = new UnitOfWork();
+
+            if (!Update(updatedValue, uow))
+                result |= SaveResult.FailData;
+
+            uow.Complete();
+            return result;
+        }
+
+        public SaveResult Add()
+        {
+            var result = SaveResult.Ok;
+
+            UnitOfWork uow = new UnitOfWork();
+
+            if (!Add(uow))
+                result |= SaveResult.FailData;
+
+            uow.Complete();
+            return result;
         }
 
         public DepartmentModel(Department department)

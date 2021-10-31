@@ -20,7 +20,7 @@
             <view:DashboardView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
-            <view:StaffsManagement />
+            <view:StaffsManagementView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ScheduleManagementViewModel}">
             <view:ScheduleManagementView />

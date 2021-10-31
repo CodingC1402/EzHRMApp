@@ -20,14 +20,16 @@ namespace ViewModel
         {
             __instance = this;
 
-
             ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
             ViewModels.Add(ToStaffView.ViewModel);
+
+            ToDepartmentView = new NavigationCommand<DepartmentViewModel>(new DepartmentViewModel(), this, 0);
+            ViewModels.Add(ToDepartmentView.ViewModel);
 
             CurrentViewModel = ToStaffView.ViewModel;
         }
 
-
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
+        public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
     }
 }

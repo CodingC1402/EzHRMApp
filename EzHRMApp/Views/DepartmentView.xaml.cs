@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for StaffsManagement.xaml
+    /// Interaction logic for DepartmentView.xaml
     /// </summary>
-    public partial class StaffsManagement : UserControl
+    public partial class DepartmentView : UserControl
     {
-        public StaffsManagement()
+        public DepartmentView()
         {
             InitializeComponent();
         }
