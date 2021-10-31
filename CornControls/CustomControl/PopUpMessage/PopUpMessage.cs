@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
-
 namespace CornControls.CustomControl
 {
     public class PopUpMessage : UserControl
@@ -147,6 +146,7 @@ namespace CornControls.CustomControl
             get => (GridLength)GetValue(MidPanelWidthProperty);
             set => SetValue(MidPanelWidthProperty, value);
         }
+
         public static readonly RoutedEvent MessageClosedEvent = EventManager.RegisterRoutedEvent(nameof(MessageClosed), RoutingStrategy.Tunnel, typeof(RoutedEventHandler), typeof(PopUpMessage));
 
         public event RoutedEventHandler MessageClosed
