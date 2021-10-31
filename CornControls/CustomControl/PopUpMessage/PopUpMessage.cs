@@ -199,38 +199,6 @@ namespace CornControls.CustomControl
             set => SetValue(IconPathProperty, value);
         }
 
-        public double OutAnimTime
-        {
-            get => (double)GetValue(OutAnimTimeProperty);
-            set => SetValue(OutAnimTimeProperty, value);
-        }
-        public double InAnimTime
-        {
-            get => (double)GetValue(InAnimTimeProperty);
-            set => SetValue(InAnimTimeProperty, value);
-        }
-
-        public double BackgroundOpacity
-        {
-            get => (double)GetValue(BackgroundOpacityProperty);
-            set
-            {
-                var clampedValue = Math.Clamp(value, 0, 1);
-                SetValue(BackgroundOpacityProperty, clampedValue);
-            }
-        }
-
-        public double PanelHeight
-        {
-            get => (double)GetValue(PanelHeightProperty);
-            set => SetValue(PanelHeightProperty, value);
-        }
-        public GridLength MidPanelWidth
-        {
-            get => (GridLength)GetValue(MidPanelWidthProperty);
-            set => SetValue(MidPanelWidthProperty, value);
-        }
-
         public static readonly RoutedEvent MessageClosedEvent = EventManager.RegisterRoutedEvent(nameof(MessageClosed), RoutingStrategy.Tunnel, typeof(RoutedEventHandler), typeof(PopUpMessage));
 
         public event RoutedEventHandler MessageClosed
