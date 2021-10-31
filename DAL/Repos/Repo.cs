@@ -95,7 +95,7 @@ namespace DAL.Repos
 
             var q = db.Query(TableName);
             q = AddPKClause(pkKeys, q);
-
+            
             uow.Queries.Add(q.AsUpdate(updatedRow));
             return true;
         }
