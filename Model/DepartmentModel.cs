@@ -1,4 +1,4 @@
-﻿using DAL.Others;
+using DAL.Others;
 using DAL.Rows;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Model
         public enum SaveResult
         {
             Ok = 0,
-            FailData = 1,
+            FailData = 1
         }
 
         public static ObservableCollection<DepartmentModel> LoadAll()
@@ -55,6 +55,12 @@ namespace Model
 
             uow.Complete();
             return result;
+        }
+
+        public DepartmentModel(Department department)
+        {
+            TenPhong = department.TenPhong;
+            TruongPhong = department.TruongPhong;
         }
     }
 }

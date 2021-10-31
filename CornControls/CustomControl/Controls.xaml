@@ -10,5 +10,6 @@
         <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml" />
         <ResourceDictionary Source="DatagridEx/DatagridEx.xaml" />
         <ResourceDictionary Source="ComboBoxEx/ComboBoxEx.xaml" />
+        <ResourceDictionary Source="PopUpMessage/PopUpMessage.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

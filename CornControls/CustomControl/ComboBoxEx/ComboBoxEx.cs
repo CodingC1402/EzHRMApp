@@ -42,6 +42,7 @@ namespace CornControls.CustomControl
 
         public static readonly DependencyProperty ReadOnlyBackgroundProperty = DependencyProperty.Register(nameof(ReadOnlyBackground), typeof(Brush), typeof(ComboBoxEx), new PropertyMetadata(Brushes.Gray));
         public static readonly DependencyProperty DisabledOpacityProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(double), typeof(ComboBoxEx), new PropertyMetadata(0.8));
+        public static readonly DependencyProperty DisabledColorProperty = DependencyProperty.Register(nameof(DisabledColor), typeof(Brush), typeof(ComboBoxEx), new PropertyMetadata(Brushes.Gray));
 
         [Browsable(true), Category("Appearance")]
         public CornerRadius CornerRadius
@@ -196,6 +197,12 @@ namespace CornControls.CustomControl
                 value = Math.Clamp(value, 0, 1);
                 SetValue(DisabledOpacityProperty, value);
             }
+        }
+        [Browsable(true), Category("Appearance")]
+        public Brush DisabledColor
+        {
+            get => (Brush)GetValue(DisabledColorProperty);
+            set => SetValue(DisabledColorProperty, value);
         }
 
         static ComboBoxEx()

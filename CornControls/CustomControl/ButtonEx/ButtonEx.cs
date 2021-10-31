@@ -18,6 +18,7 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty NormalColorProperty = DependencyProperty.Register("NormalColor", typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty HoverColorProperty = DependencyProperty.Register("HoverColor", typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty PressedColorProperty = DependencyProperty.Register("PressedColor", typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty DisabledColorProperty = DependencyProperty.Register(nameof(DisabledColor), typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.Gray));
 
         public static readonly DependencyProperty PathProperty = DependencyProperty.Register("Path", typeof(Geometry), typeof(ButtonEx));
 
@@ -48,6 +49,12 @@ namespace CornControls.CustomControl
         {
             get => (Brush)GetValue(PressedColorProperty);
             set => SetValue(PressedColorProperty, value);
+        }
+        [Browsable(true), Category("Appearance")]
+        public Brush DisabledColor
+        {
+            get => (Brush)GetValue(DisabledColorProperty);
+            set => SetValue(DisabledColorProperty, value);
         }
 
         [Browsable(true), Category("Appearance")]
