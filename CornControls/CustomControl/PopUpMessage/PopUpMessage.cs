@@ -1,10 +1,9 @@
-﻿using PropertyChanged;
+using PropertyChanged;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-
 namespace CornControls.CustomControl
 {
     [TemplatePart(Name = "PART_background", Type = typeof(Border)),
