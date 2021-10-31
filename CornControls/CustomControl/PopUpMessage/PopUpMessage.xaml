@@ -7,11 +7,10 @@
         <ResourceDictionary Source="../Converters/ConverterDict.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-
     <Style x:Key="{x:Type controls:PopUpMessage}" TargetType="{x:Type controls:PopUpMessage}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:PopUpMessage}">
+                <ControlTemplate TargetType="controls:PopUpMessage">
                     <Grid>
                         <Border
                             x:Name="PART_background"
@@ -37,6 +36,21 @@
                                     <RowDefinition Height="70" />
                                 </Grid.RowDefinitions>
 
+                                <Path
+                                    Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IconWidth}"
+                                    Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IconHeight}"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IconPath}"
+                                    Fill="{DynamicResource LightForeground}" />
+
+                                <Rectangle
+                                    Height="3"
+                                    VerticalAlignment="Bottom"
+                                    Fill="{DynamicResource LightForeground}"
+                                    RadiusX="1"
+                                    RadiusY="1" />
+
                                 <TextBlock
                                     Grid.Row="0"
                                     VerticalAlignment="Center"
@@ -44,17 +58,11 @@
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource LightForeground}"
-                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Title, Converter={StaticResource AllCapConverter}, Mode=OneWay}">
-                                    <TextBlock.TextDecorations>
-                                        <TextDecoration
-                                            Location="Underline"
-                                            PenOffset="2"
-                                            PenThicknessUnit="FontRecommended" />
-                                    </TextBlock.TextDecorations>
-                                </TextBlock>
+                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Title, Converter={StaticResource AllCapConverter}, Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Row="1"
+                                    Margin="0,10,0,10"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
                                     FontFamily="Time New Roman"
@@ -78,19 +86,26 @@
                                             <Setter Property="PressedColor" Value="{DynamicResource DarkestBackColor}" />
                                             <Setter Property="Height" Value="35" />
                                             <Setter Property="Width" Value="100" />
-                                            <Setter Property="Margin" Value="5,0" />
+                                            <Setter Property="Margin" Value="10,0,0,0" />
                                             <Setter Property="Foreground" Value="{DynamicResource Accent}" />
                                             <Setter Property="FontFamily" Value="Time New Roman" />
                                             <Setter Property="FontSize" Value="16" />
                                             <Setter Property="FontWeight" Value="Bold" />
                                             <Setter Property="IconPad" Value="0" />
                                             <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </Trigger>
+                                            </Style.Triggers>
                                         </Style>
                                     </StackPanel.Resources>
 
-                                    <controls:ButtonEx Content="Template1" />
-                                    <controls:ButtonEx Content="Template2" />
-                                    <controls:ButtonEx Content="Template3" />
+                                    <controls:ButtonEx Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=YesCommand}" Content="Yes" />
+                                    <controls:ButtonEx Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=NoCommand}" Content="No" />
+
+                                    <controls:ButtonEx Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ConfirmCommand}" Content="Confirm" />
+                                    <controls:ButtonEx Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=CancleCommand}" Content="Cancle" />
                                 </StackPanel>
                             </Grid>
                         </Grid>

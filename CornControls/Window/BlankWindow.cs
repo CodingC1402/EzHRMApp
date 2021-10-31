@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using WpfScreenHelper;
+using CornControls.CustomControl;
 
 namespace CornControls.Window
 {
@@ -86,6 +87,8 @@ namespace CornControls.Window
 
             _hwnd = (HwndSource)PresentationSource.FromVisual(this);
             _hwnd.AddHook(WndProc);
+
+            PopUpMessage.Instance.SetToCurrentMainWindow();
         }
 
         public virtual void OnTopMouseDown(object sender, MouseEventArgs e)
