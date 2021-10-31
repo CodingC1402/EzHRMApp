@@ -134,7 +134,7 @@ namespace DAL.Rows
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
+                    EmployeeRepo.Instance.Update(new object[] { ID }, this, uowNew);
                     return uowNew.Complete();
                 }
             }
