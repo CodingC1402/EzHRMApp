@@ -6,10 +6,11 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Converters/ConverterDict.xaml" />
     </ResourceDictionary.MergedDictionaries>
+  
     <Style x:Key="{x:Type controls:PopUpMessage}" TargetType="{x:Type controls:PopUpMessage}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:PopUpMessage">
+                <ControlTemplate TargetType="{x:Type controls:PopUpMessage}">
                     <Grid>
                         <Border
                             x:Name="PART_background"

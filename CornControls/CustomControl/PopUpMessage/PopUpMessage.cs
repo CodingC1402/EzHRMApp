@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 namespace CornControls.CustomControl
 {
@@ -101,7 +102,6 @@ namespace CornControls.CustomControl
 
         public static readonly DependencyProperty InAnimTimeProperty = DependencyProperty.Register(nameof(InAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(1.0));
         public static readonly DependencyProperty OutAnimTimeProperty = DependencyProperty.Register(nameof(OutAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(1.0));
-
         public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(nameof(BackgroundOpacity), typeof(double), typeof(PopUpMessage), new PropertyMetadata(0.5));
 
         public static readonly DependencyProperty PanelHeightProperty = DependencyProperty.Register(nameof(PanelHeight), typeof(double), typeof(PopUpMessage), new PropertyMetadata(300.0));
@@ -112,7 +112,7 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty IconHeightProperty = DependencyProperty.Register(nameof(IconHeight), typeof(double), typeof(PopUpMessage), new PropertyMetadata(50.0));
         public static readonly DependencyProperty IconWidthProperty = DependencyProperty.Register(nameof(IconWidth), typeof(double), typeof(PopUpMessage), new PropertyMetadata(50.0));
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(nameof(IconPath), typeof(Geometry), typeof(PopUpMessage));
-
+        
         public string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -197,6 +197,38 @@ namespace CornControls.CustomControl
         {
             get => (Geometry)GetValue(IconPathProperty);
             set => SetValue(IconPathProperty, value);
+        }
+
+        public double OutAnimTime
+        {
+            get => (double)GetValue(OutAnimTimeProperty);
+            set => SetValue(OutAnimTimeProperty, value);
+        }
+        public double InAnimTime
+        {
+            get => (double)GetValue(InAnimTimeProperty);
+            set => SetValue(InAnimTimeProperty, value);
+        }
+
+        public double BackgroundOpacity
+        {
+            get => (double)GetValue(BackgroundOpacityProperty);
+            set
+            {
+                var clampedValue = Math.Clamp(value, 0, 1);
+                SetValue(BackgroundOpacityProperty, clampedValue);
+            }
+        }
+
+        public double PanelHeight
+        {
+            get => (double)GetValue(PanelHeightProperty);
+            set => SetValue(PanelHeightProperty, value);
+        }
+        public GridLength MidPanelWidth
+        {
+            get => (GridLength)GetValue(MidPanelWidthProperty);
+            set => SetValue(MidPanelWidthProperty, value);
         }
 
         public static readonly RoutedEvent MessageClosedEvent = EventManager.RegisterRoutedEvent(nameof(MessageClosed), RoutingStrategy.Tunnel, typeof(RoutedEventHandler), typeof(PopUpMessage));
