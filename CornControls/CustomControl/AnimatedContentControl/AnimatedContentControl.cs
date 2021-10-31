@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using PropertyChanged;
 
 namespace CornControls.CustomControl
@@ -67,15 +68,21 @@ namespace CornControls.CustomControl
 			m_paintArea.RenderTransform = oldContentTransform;
 			m_mainContent.RenderTransform = newContentTransform;
 
-			oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) => {
-				m_paintArea.Visibility = Visibility.Visible;
-				Task.Delay((int)(OutDelay * 1000)).ContinueWith(t => {
-					Dispatcher.Invoke(() => {
-						newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
-						m_paintArea.Visibility = Visibility.Hidden;
+			Dispatcher.Invoke(() =>
+			{
+				oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) =>
+				{
+					m_paintArea.Visibility = Visibility.Visible;
+					Task.Delay((int)(OutDelay * 1000)).ContinueWith(t =>
+					{
+						Dispatcher.Invoke(() =>
+						{
+							newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
+							m_paintArea.Visibility = Visibility.Hidden;
+						}, DispatcherPriority.Background);
 					});
-				});
-			}));
+				}));
+			}, DispatcherPriority.Background);
 		}
 
 		/// <summary>

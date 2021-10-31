@@ -57,10 +57,15 @@ namespace Model
             return result;
         }
 
-        public DepartmentModel(Department department)
+        public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
         {
-            TenPhong = department.TenPhong;
-            TruongPhong = department.TruongPhong;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                if (employee.PhongBan == arr[i].TenPhong)
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

@@ -19,7 +19,7 @@
     WindowStyle="None"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootComponent">
+    <Grid x:Name="RootComponent" SnapsToDevicePixels="False">
         <controls:AnimatedContentControlOpacity AnimationTime="1" Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
