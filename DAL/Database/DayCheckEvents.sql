@@ -8,92 +8,162 @@ ON SCHEDULE AT (
 ON COMPLETION NOT PRESERVE
 DO
     BEGIN
-        DECLARE gioTanLamHomNay datetime;
+        DECLARE homQua date;
+        DECLARE gioTanLamHomQua datetime;
+        DECLARE gioVaoLamHomQua datetime;
 
-        /* check if business is currently having a holiday */
-        CREATE TEMPORARY TABLE holidays
-        SELECT *
-        FROM nghile
-        WHERE Ngay <= DAY(CURRENT_DATE() - INTERVAL 1 DAY)
-        AND Thang <= MONTH(CURRENT_DATE() - INTERVAL 1 DAY)
-        AND CURRENT_DATE() - INTERVAL 1 DAY <= MAKEDATE(YEAR(CURRENT_DATE()), 1)
-            + INTERVAL Thang - 1 MONTH
-            + INTERVAL Ngay - 1 DAY
-            + INTERVAL SoNgayNghi - 1 DAY;
+        SET homQua = CURRENT_DATE() - INTERVAL 1 DAY;
 
-        IF NOT EXISTS (SELECT * FROM holidays) THEN
-        BEGIN
-/* region: Process late shift employees situation */
-            SET gioTanLamHomNay =
-            (SELECT ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY,
-                (CASE DAYOFWEEK(CURRENT_DATE() - INTERVAL 1 DAY)
+        SET gioVaoLamHomQua =
+            (SELECT ADDTIME(homQua,
+                (CASE DAYOFWEEK(homQua)
+                    WHEN 1 THEN GioVaoLamChuNhat
+                    WHEN 7 THEN GioVaoLamThuBay
+                    ELSE GioVaoLamCacNgayTrongTuan
+                END))
+            FROM thoigianbieutuan
+            WHERE DATE(ThoiDiemTao) <= homQua
+            ORDER BY ThoiDiemTao DESC
+            LIMIT 1);
+
+        SET gioTanLamHomQua =
+            (SELECT ADDTIME(homQua,
+                (CASE DAYOFWEEK(homQua)
                     WHEN 1 THEN GioTanLamChuNhat
                     WHEN 7 THEN GioTanLamThuBay
                     ELSE GioTanLamCacNgayTrongTuan
                 END))
             FROM thoigianbieutuan
-            WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - INTERVAL 1 DAY
+            WHERE DATE(ThoiDiemTao) <= homQua
             ORDER BY ThoiDiemTao DESC
             LIMIT 1);
 
-            CREATE TEMPORARY TABLE working_employees
-            SELECT *
-            FROM chamcong c
-            WHERE DATE(ThoiGianVaoLam) = CURRENT_DATE() - INTERVAL 1 DAY
-            AND ThoiGianTanLam IS NULL;
+/* region: Process late shift employees situation */
 
-            UPDATE sogiolamtrongngay
-            SET SoGioLamTrongGio =
-                IF (gioTanLamHomNay > (SELECT ThoiGianVaoLam
+        CREATE TEMPORARY TABLE working_employees
+        SELECT *
+        FROM chamcong c
+        WHERE DATE(ThoiGianVaoLam) = homQua
+        AND ThoiGianTanLam IS NULL;
+
+        UPDATE sogiolamtrongngay
+        SET SoGioLamTrongGio =
+            IF (gioTanLamHomQua > (SELECT ThoiGianVaoLam
+                            FROM working_employees we
+                            WHERE we.IDNhanVien = IDNhanVien)
+                , SoGioLamTrongGio +
+                TIMESTAMPDIFF (
+                    HOUR,
+                    gioTanLamHomQua,
+                    (SELECT ThoiGianVaoLam
+                    FROM working_employees we
+                    WHERE we.IDNhanVien = IDNhanVien)
+                    )
+                , SoGioLamTrongGio)
+            ,
+            SoGioLamNgoaiGio =
+                IF (gioTanLamHomQua > (SELECT ThoiGianVaoLam
                                 FROM working_employees we
                                 WHERE we.IDNhanVien = IDNhanVien)
-                    , SoGioLamTrongGio +
-                    TIMESTAMPDIFF (
+                    , SoGioLamNgoaiGio +
+                      TIMESTAMPDIFF(
+                          HOUR,
+                          NOW(),
+                          gioTanLamHomQua
+                          )
+                    , TIMESTAMPDIFF(
                         HOUR,
-                        gioTanLamHomNay,
+                        NOW(),
                         (SELECT ThoiGianVaoLam
                         FROM working_employees we
                         WHERE we.IDNhanVien = IDNhanVien)
-                        )
-                    , SoGioLamTrongGio)
-                ,
-                SoGioLamNgoaiGio =
-                    IF (gioTanLamHomNay > (SELECT ThoiGianVaoLam
-                                    FROM working_employees we
-                                    WHERE we.IDNhanVien = IDNhanVien)
-                        , SoGioLamNgoaiGio +
-                          TIMESTAMPDIFF(
-                              HOUR,
-                              NOW(),
-                              gioTanLamHomNay
-                              )
-                        , TIMESTAMPDIFF(
-                            HOUR,
-                            NOW(),
-                            (SELECT ThoiGianVaoLam
-                            FROM working_employees we
-                            WHERE we.IDNhanVien = IDNhanVien)
-                            ))
-            WHERE Ngay = CURRENT_DATE() - 1
-            AND IDNhanVien IN (SELECT IDNhanVien FROM working_employees);
+                        ))
+        WHERE Ngay = homQua
+        AND IDNhanVien IN (SELECT IDNhanVien FROM working_employees);
 
-            UPDATE chamcong
-            SET ThoiGianTanLam = NOW()
-            WHERE IDNhanVien in (SELECT IDNhanVien FROM working_employees);
+        UPDATE chamcong
+        SET ThoiGianTanLam = NOW()
+        WHERE IDNhanVien in (SELECT IDNhanVien FROM working_employees);
 
-            INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien,  ThoiGianTanLam)
-            SELECT NOW(), IDNhanVien, NULL
-            FROM working_employees;
+        INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien,  ThoiGianTanLam)
+        SELECT NOW(), IDNhanVien, NULL
+        FROM working_employees;
 
-            DROP TEMPORARY TABLE working_employees;
-
+        DROP TEMPORARY TABLE working_employees;
 /* endregion */
 
-            INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
-            SELECT CURRENT_DATE(), ID, 0, 0
-            FROM nhanvien;
-        END;
-        END IF;
+        INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
+        SELECT CURRENT_DATE(), ID, 0, 0
+        FROM nhanvien;
+
+
+/* region: Update truluong due to DiTre or VangMat */
+
+        CREATE TEMPORARY TABLE timeVariables
+        SELECT ThoiGianChoPhepDiTre, ThoiGianChoPhepVeSom,
+               ThoiGianDiTreToiDa, ThoiGianVeSomToiDa
+        FROM thamso
+        WHERE DATE(ThoiDiemTao) <= homQua - INTERVAL 1 DAY
+        ORDER BY ThoiDiemTao
+        LIMIT 1;
+
+        /* Them nhan vien vang mat vao bang NghiPhep */
+        INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
+        SELECT IDNhanVien,
+               homQua,
+               1,
+               'Tu dong them nhan vien vang mat',
+               0
+        FROM chamcong
+        WHERE (
+            SELECT ThoiGianVaoLam
+            FROM chamcong c
+            WHERE DATE(c.ThoiGianVaoLam) = homQua
+            GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
+            ORDER BY c.ThoiGianVaoLam ASC
+            LIMIT 1
+        ) > ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianDiTreToiDa FROM timeVariables))
+        UNION
+        SELECT IDNhanVien,
+               homQua,
+               1,
+               'Tu dong them nhan vien vang mat',
+               0
+        FROM nhanvien n
+        WHERE n.NgayVaoLam <= homQua AND n.NgayThoiViec IS NULL
+        AND n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = homQua);
+
+        /* Tru luong cac nhan vien vang mat hoac di tre */
+        INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
+    /* Nhan vien vang mat */
+        SELECT homQua,
+               IDNhanVien,
+               'VangMat',
+               (SELECT TruLuongTrucTiep FROM cacloaivipham WHERE TenViPham = 'VangMat'),
+               (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'VangMat'),
+               'Tu dong tru luong nhan vien vang mat'
+        FROM nghiphep
+        WHERE NgayBatDauNghi = homQua AND CoPhep = 0
+        UNION
+    /* Nhan vien di tre */
+        SELECT homQua,
+               IDNhanVien,
+               'DiTre',
+               (SELECT TruLuongTrucTiep FROM cacloaivipham WHERE TenViPham = 'DiTre'),
+               (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'DiTre'),
+               'Tu dong tru luong nhan vien di tre'
+        FROM chamcong
+        WHERE (
+            SELECT ThoiGianVaoLam
+            FROM chamcong c
+            WHERE DATE(c.ThoiGianVaoLam) = homQua
+            GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
+            ORDER BY c.ThoiGianVaoLam ASC
+            LIMIT 1
+        ) BETWEEN ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianChoPhepDiTre FROM timeVariables)) + INTERVAL 1 SECOND
+            AND (SELECT ThoiGianDiTreToiDa FROM timeVariables);
+/* endregion */
+
 
 /* region: Check and calculate payment for employees */
 
@@ -110,22 +180,25 @@ DO
                    (
                     SELECT SUM(SoTienTru + SoPhanTramTru * c.TienLuongMoiThang)
                     FROM truluong t
-                    WHERE (Ngay BETWEEN CURRENT_DATE()
-                        AND (SELECT NgayTinhLuongHangThang FROM thamso WHERE DATE(ThoiDiemTao) <= CURRENT_DATE()))
+                    WHERE (Ngay BETWEEN c2.LanTraLuongCuoi AND homQua)
                     AND t.IDNhanVien = n.ID
                    ),
                    (
-                    SELECT c.TienLuongMoiThang / 26 / (
-                    SELECT HOUR(TIMEDIFF(GioTanLamCacNgayTrongTuan, GioVaoLamCacNgayTrongTuan))
-                    FROM thoigianbieutuan
-                    WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - 1
-                    ) * s.SoGioLamNgoaiGio * c.PhanTramLuongNgoaiGio
+                   SELECT SUM(s.SoGioLamNgoaiGio) * c.PhanTramLuongNgoaiGio * c.TienLuongMoiThang / 26 /
+                    (
+                        SELECT HOUR(TIMEDIFF(GioTanLamCacNgayTrongTuan, GioVaoLamCacNgayTrongTuan))
+                        FROM thoigianbieutuan
+                        WHERE DATE(ThoiDiemTao) <= homQua
+                    )
                    ),
                    c.TienLuongMoiThang
             FROM nhanvien n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s on s.IDNhanVien = n.ID
-            WHERE c.CachTinhLuong = 'TheoThang';
+            INNER JOIN cachtinhluong c2 on c.CachTinhLuong = c2.Ten
+            WHERE c.CachTinhLuong = 'TheoThang'
+            AND (s.Ngay BETWEEN c2.LanTraLuongCuoi AND homQua)
+            GROUP BY n.ID;
 
             UPDATE luong l
             SET /*TienTruLuong = (
@@ -171,23 +244,32 @@ DO
             SELECT DISTINCT
                    CURRENT_DATE(),
                    n.ID,
-                   c.TienLuongMoiGio * s.SoGioLamTrongGio,
+                   c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio)),
                    (
-                    SELECT SUM(SoTienTru + SoPhanTramTru * c.TienLuongMoiThang)
+                    SELECT SUM(SoTienTru)
                     FROM truluong t
-                    WHERE (Ngay BETWEEN CURRENT_DATE()
-                        AND (SELECT NgayTinhLuongHangThang FROM thamso WHERE DATE(ThoiDiemTao) <= CURRENT_DATE()))
+                    WHERE t.Ngay BETWEEN c3.LanTraLuongCuoi AND homQua
                     AND t.IDNhanVien = n.ID
                    ),
-                   c.TienLuongMoiGio * c.PhanTramLuongNgoaiGio * s.SoGioLamNgoaiGio,
-                   c.TienLuongMoiGio * s.SoGioLamTrongGio
+                   c.TienLuongMoiGio * c.PhanTramLuongNgoaiGio * (SELECT SUM(s.SoGioLamNgoaiGio)),
+                   c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio))
             FROM nhanvien n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s ON n.ID = s.IDNhanVien
-            WHERE c.CachTinhLuong;
+            INNER JOIN cachtinhluong c3 on c.CachTinhLuong = c3.Ten
+            WHERE c.CachTinhLuong = 'TheoGio'
+            AND (s.Ngay BETWEEN c3.LanTraLuongCuoi AND homQua)
+            GROUP BY n.ID;
 
-            UPDATE luong
-            SET TongTienLuong = TongTienLuong + TienThuong - TienTruLuong
+            UPDATE luong l
+            SET TienTruLuong = TienTruLuong - GREATEST((
+                    SELECT SUM(SoPhanTramTru)
+                    FROM truluong t
+                    WHERE t.Ngay BETWEEN (SELECT LanTraLuongCuoi FROM cachtinhluong WHERE Ten = 'TheoGio')
+                        AND homQua
+                    AND t.IDNhanVien = l.IDNhanVien
+                ), 100) / 100 * l.TienLuong,
+                TongTienLuong = TongTienLuong + TienThuong - TienTruLuong
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
@@ -219,7 +301,7 @@ BEGIN
                 ELSE GioVaoLamCacNgayTrongTuan
             END)))
         FROM thoigianbieutuan
-        WHERE DATE(ThoiDiemTao) <= CURRENT_DATE()
+        WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - INTERVAL 1 DAY
         ORDER BY ThoiDiemTao DESC
         LIMIT 1
     );
@@ -235,7 +317,24 @@ ON SCHEDULE EVERY 1 DAY
 STARTS (TIMESTAMP(CURRENT_DATE()) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE)
 DO
     BEGIN
-        CALL UPDATE_START_BUSINESS_HOURS;
+        DECLARE ngayMai date;
+        SET ngayMai = CURRENT_DATE() + INTERVAL 1 DAY;
+
+        /* check if business is currently having a holiday */
+        CREATE TEMPORARY TABLE incomingHolidays
+        SELECT *
+        FROM nghile
+        WHERE ngayMai BETWEEN MAKEDATE(YEAR(ngayMai), 1)
+            + INTERVAL Thang - 1 MONTH
+            + INTERVAL Ngay - 1 DAY
+        AND MAKEDATE(YEAR(ngayMai), 1)
+            + INTERVAL Thang - 1 MONTH
+            + INTERVAL Ngay - 1 DAY
+            + INTERVAL SoNgayNghi - 1 DAY;
+
+        IF NOT EXISTS(SELECT * FROM incomingHolidays) THEN
+            CALL UPDATE_START_BUSINESS_HOURS;
+        END IF;
     END $
 
 DELIMITER ;
