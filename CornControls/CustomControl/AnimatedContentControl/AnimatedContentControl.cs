@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using PropertyChanged;
 
 namespace CornControls.CustomControl
@@ -39,9 +40,7 @@ namespace CornControls.CustomControl
 			get => (double)GetValue(OutDelayProperty);
 			set => SetValue(OutDelayProperty, value);
         }
-        /// <summary>
-        /// This gets called when the template has been applied and we have our visual tree
-        /// </summary>
+
         public override void OnApplyTemplate()
 		{
 			m_paintArea = Template.FindName("PART_PaintArea", this) as Shape;
@@ -50,11 +49,6 @@ namespace CornControls.CustomControl
 			base.OnApplyTemplate();
 		}
 
-		/// <summary>
-		/// This gets called when the content we're displaying has changed
-		/// </summary>
-		/// <param name="oldContent">The content that was previously displayed</param>
-		/// <param name="newContent">The new content that is displayed</param>
 		protected override void OnContentChanged(object oldContent, object newContent)
 		{
 			if (m_paintArea != null && m_mainContent != null)
@@ -67,9 +61,6 @@ namespace CornControls.CustomControl
 			base.OnContentChanged(oldContent, newContent);
 		}
 
-		/// <summary>
-		/// Starts the animation for the new content
-		/// </summary>
 		protected virtual void BeginAnimateContentReplacement()
 		{
 			var newContentTransform = new TranslateTransform();
@@ -77,15 +68,21 @@ namespace CornControls.CustomControl
 			m_paintArea.RenderTransform = oldContentTransform;
 			m_mainContent.RenderTransform = newContentTransform;
 
-			oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) => {
-				m_paintArea.Visibility = Visibility.Visible;
-				Task.Delay((int)(OutDelay * 1000)).ContinueWith(t => {
-					Dispatcher.Invoke(() => {
-						newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
-						m_paintArea.Visibility = Visibility.Hidden;
+			Dispatcher.Invoke(() =>
+			{
+				oldContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(0, this.ActualWidth, 0.3, EasingMode.EaseIn, (s, e) =>
+				{
+					m_paintArea.Visibility = Visibility.Visible;
+					Task.Delay((int)(OutDelay * 1000)).ContinueWith(t =>
+					{
+						Dispatcher.Invoke(() =>
+						{
+							newContentTransform.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(this.ActualWidth, 0, 0.3, EasingMode.EaseIn));
+							m_paintArea.Visibility = Visibility.Hidden;
+						}, DispatcherPriority.Background);
 					});
-				});
-			}));
+				}));
+			}, DispatcherPriority.Background);
 		}
 
 		/// <summary>

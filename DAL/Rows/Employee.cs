@@ -43,7 +43,7 @@ namespace DAL.Rows
             TaiKhoan = employee.TaiKhoan;
         }
 
-    public bool ChangeDepartment(Department department)
+        public bool ChangeDepartment(Department department)
         {
             this.PhongBan = department.TenPhong;
             using (var uow = new UnitOfWork())
@@ -134,7 +134,7 @@ namespace DAL.Rows
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
+                    EmployeeRepo.Instance.Update(new object[] { ID }, this, uowNew);
                     return uowNew.Complete();
                 }
             }

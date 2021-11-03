@@ -26,6 +26,36 @@ namespace Model
             return result;
         }
 
+        public DepartmentModel() { }
+        public DepartmentModel(Department department) : base(department) { }
+        public DepartmentModel(DepartmentModel department) : base(department) { }
+
+        public SaveResult Update(Department updatedValue)
+        {
+            var result = SaveResult.Ok;
+
+            UnitOfWork uow = new UnitOfWork();
+
+            if (!Update(updatedValue, uow))
+                result |= SaveResult.FailData;
+
+            uow.Complete();
+            return result;
+        }
+
+        public SaveResult Add()
+        {
+            var result = SaveResult.Ok;
+
+            UnitOfWork uow = new UnitOfWork();
+
+            if (!Add(uow))
+                result |= SaveResult.FailData;
+
+            uow.Complete();
+            return result;
+        }
+
         public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
         {
             for (int i = 0; i < arr.Count; i++)
@@ -35,12 +65,6 @@ namespace Model
             }
 
             return -1;
-        }
-
-        public DepartmentModel(Department department)
-        {
-            TenPhong = department.TenPhong;
-            TruongPhong = department.TruongPhong;
         }
     }
 }

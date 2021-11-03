@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CornControls.CustomControl;
 using Microsoft.Win32;
 using PropertyChanged;
 
@@ -97,7 +98,12 @@ namespace EzHRMApp.Views
                 }
                 catch
                 {
-                    MessageBox.Show("Please choose an image!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    PopUpMessage.Instance.Margin = new Thickness(7);
+                    PopUpMessage.Instance.IconPath = (Geometry)Application.Current.FindResource("accountIcon");
+                    PopUpMessage.Instance.IconHeight = 24;
+                    PopUpMessage.Instance.IconWidth = 24;
+                    PopUpMessage.ShowMessage();
+                    //MessageBox.Show("Please choose an image!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     profileBtn.CommandParameter = null;
                 }
             }

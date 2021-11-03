@@ -12,18 +12,13 @@ namespace ViewModel
         public override string ViewName => "Main";
 
         private static MainViewModel __instance = null;
+        public static MainViewModel Instance { get => __instance ?? (__instance = new MainViewModel()); }
         public static MainViewModel GetInstance()
         {
-            return __instance;
+            return Instance;
         }
 
         public MainViewModel() {
-            if (__instance != null)
-            {
-                throw new Exception("There is another MainViewModel");
-            }
-            __instance = this;
-
             ToLogin = new NavigationCommand<LoginViewModel>(new LoginViewModel(), this, 0);
             ViewModels.Add(ToLogin.ViewModel);
 

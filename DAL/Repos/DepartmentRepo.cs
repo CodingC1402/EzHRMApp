@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DAL.Rows;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using DAL.Rows;
 
 namespace DAL.Repos
 {
