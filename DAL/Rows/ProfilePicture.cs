@@ -19,7 +19,7 @@ namespace DAL.Rows
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    ProfilePictureRepo.Instance.Update(new object[] { ID }, this, uow);
+                    ProfilePictureRepo.Instance.Update(new object[] { ID }, this, uowNew);
                     return uowNew.Complete();
                 }
             }
