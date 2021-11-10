@@ -1,18 +1,21 @@
+DELETE FROM chamcong;
+DELETE FROM nhanvien;
+DELETE FROM phongban;
+DELETE FROM truluong;
+DELETE FROM cacloaivipham;
+DELETE FROM luong;
 DELETE FROM chucvu;
 DELETE FROM accesstokens;
 DELETE FROM taikhoan;
 DELETE FROM nhomtaikhoan;
-DELETE FROM cachtinhluong;
-DELETE FROM nhanvien;
-DELETE FROM phongban;
-DELETE FROM cacloaivipham;
 DELETE FROM thamso;
-DELETE FROM truluong;
-DELETE FROM luong;
-DELETE FROM chamcong;
+DELETE FROM cachtinhluong;
 DELETE FROM sogiolamtrongngay;
 DELETE FROM nghiphep;
 DELETE FROM nghile;
+DELETE FROM thoigianbieutuan;
+DELETE FROM baocaochamcong;
+DELETE FROM baocaonhansu;
 
 
 INSERT INTO thamso (ThoiDiemTao, CoLamThuHai, CoLamThuBa, CoLamThuTu,
@@ -22,7 +25,22 @@ INSERT INTO thamso (ThoiDiemTao, CoLamThuHai, CoLamThuBa, CoLamThuTu,
                     TruLuongDiTreTheoPhanTram, TruLuongDiTreTrucTiep,
                     TruLuongVangMatTheoPhanTram, TruLuongVangMatTrucTiep,
                     NgayTinhLuongHangThang)
-VALUES (NOW(), 1, 1, 1, 1, 1, 0, 0, '00:15:00', '00:20:00', '02:00:00', '1:00:00', 2.0, 0, 5.0, 0, '2021/1/30');
+VALUES (NOW() - INTERVAL 1 DAY, 1, 1, 1, 1, 1, 0, 0, '00:15:00', '00:20:00', '02:00:00', '1:00:00', 2.0, 0, 5.0, 0, '2021/1/30');
+
+INSERT INTO thoigianbieutuan (ThoiDiemTao,
+                              GioVaoLamCacNgayTrongTuan,
+                              GioVaoLamThuBay,
+                              GioVaoLamChuNhat,
+                              GioTanLamCacNgayTrongTuan,
+                              GioTanLamThuBay,
+                              GioTanLamChuNhat)
+VALUES (NOW() - INTERVAL 1 DAY,
+        '07:00:00',
+        '07:30:00',
+        '00:00:00',
+        '17:00:00',
+        '16:00:00',
+        '00:00:00');
 
 INSERT INTO cacloaivipham (TenViPham, TruLuongTheoPhanTram, TruLuongTrucTiep)
 VALUES ('DiTre', 2.0, 0), ('VangMat', 5.0, 0);
@@ -63,3 +81,9 @@ INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, S
     VALUES ('NV00000001', 'Pham Phuc', 'Nguyen', '000000101010', '2001/02/14', 'NV000000001@gmail.com', 'Nguyen@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Cleaning Department', 'Cleaner', 'employee0');
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
     VALUES ('NV00000002', 'Do Phi', 'Long', '000000101010', '2001/02/14', 'NV000000002@gmail.com', 'Long@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Coding Department', 'Programmer', 'employee1');
+
+INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
+VALUES (NOW() - INTERVAL 6 HOUR, 'NV00000002', NULL);
+
+INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
+VALUES (NOW() - INTERVAL 12 HOUR, 'NV00000001', NULL);

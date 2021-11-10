@@ -5,7 +5,7 @@ CREATE EVENT START_BUSINESS_HOURS_EVENT
 ON SCHEDULE AT (
     CURRENT_DATE() + INTERVAL 1 DAY + INTERVAL 6 HOUR
     )
-ON COMPLETION NOT PRESERVE
+ON COMPLETION PRESERVE
 DO
     BEGIN
         DECLARE homQua date;
@@ -46,6 +46,12 @@ DO
         WHERE DATE(ThoiGianVaoLam) = homQua
         AND ThoiGianTanLam IS NULL;
 
+        INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
+        SELECT CURRENT_DATE(), ID, 0, 0
+        FROM nhanvien
+        WHERE NgayVaoLam <= CURRENT_DATE()
+        AND NgayThoiViec IS NULL;
+
         UPDATE sogiolamtrongngay
         SET SoGioLamTrongGio =
             IF (gioTanLamHomQua > (SELECT ThoiGianVaoLam
@@ -85,19 +91,21 @@ DO
         SET ThoiGianTanLam = NOW()
         WHERE IDNhanVien in (SELECT IDNhanVien FROM working_employees);
 
-        INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien,  ThoiGianTanLam)
+        INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
         SELECT NOW(), IDNhanVien, NULL
         FROM working_employees;
 
         DROP TEMPORARY TABLE working_employees;
 /* endregion */
 
-        INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
-        SELECT CURRENT_DATE(), ID, 0, 0
-        FROM nhanvien;
-
 
 /* region: Update truluong due to DiTre or VangMat */
+
+        CREATE TEMPORARY TABLE nhanvien_hientai
+        SELECT *
+        FROM nhanvien
+        WHERE NgayVaoLam <= homQua
+        AND NgayThoiViec IS NULL;
 
         CREATE TEMPORARY TABLE timeVariables
         SELECT ThoiGianChoPhepDiTre, ThoiGianChoPhepVeSom,
@@ -129,9 +137,8 @@ DO
                1,
                'Tu dong them nhan vien vang mat',
                0
-        FROM nhanvien n
-        WHERE n.NgayVaoLam <= homQua AND n.NgayThoiViec IS NULL
-        AND n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = homQua);
+        FROM nhanvien_hientai n
+        WHERE n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = homQua);
 
         /* Tru luong cac nhan vien vang mat hoac di tre */
         INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
@@ -192,7 +199,7 @@ DO
                     )
                    ),
                    c.TienLuongMoiThang
-            FROM nhanvien n
+            FROM nhanvien_hientai n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s on s.IDNhanVien = n.ID
             INNER JOIN cachtinhluong c2 on c.CachTinhLuong = c2.Ten
@@ -225,7 +232,7 @@ DO
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
-                FROM nhanvien
+                FROM nhanvien_hientai
                 WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoThang')
             );
 
@@ -253,7 +260,7 @@ DO
                    ),
                    c.TienLuongMoiGio * c.PhanTramLuongNgoaiGio * (SELECT SUM(s.SoGioLamNgoaiGio)),
                    c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio))
-            FROM nhanvien n
+            FROM nhanvien_hientai n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s ON n.ID = s.IDNhanVien
             INNER JOIN cachtinhluong c3 on c.CachTinhLuong = c3.Ten
@@ -273,7 +280,7 @@ DO
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
-                FROM nhanvien
+                FROM nhanvien_hientai
                 WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoGio')
             );
 
@@ -301,7 +308,7 @@ BEGIN
                 ELSE GioVaoLamCacNgayTrongTuan
             END)))
         FROM thoigianbieutuan
-        WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - INTERVAL 1 DAY
+        WHERE ThoiDiemTao <= NOW()
         ORDER BY ThoiDiemTao DESC
         LIMIT 1
     );
@@ -314,11 +321,28 @@ END $
 DROP EVENT IF EXISTS DAILY_UPDATE_START_BUSINESS_HOURS_EVENT;
 CREATE EVENT DAILY_UPDATE_START_BUSINESS_HOURS_EVENT
 ON SCHEDULE EVERY 1 DAY
-STARTS (TIMESTAMP(CURRENT_DATE()) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE)
+STARTS (TIMESTAMP(CURRENT_DATE()) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE /*+ INTERVAL 47 MINUTE*/)
 DO
     BEGIN
         DECLARE ngayMai date;
+        DECLARE coLamNgayMai tinyint;
+
         SET ngayMai = CURRENT_DATE() + INTERVAL 1 DAY;
+        SET coLamNgayMai = (
+            SELECT (
+                CASE DAYOFWEEK(ngayMai)
+                    WHEN 2 THEN CoLamThuHai
+                    WHEN 3 THEN CoLamThuBa
+                    WHEN 4 THEN CoLamThuTu
+                    WHEN 5 THEN CoLamThuNam
+                    WHEN 6 THEN CoLamThuSau
+                    WHEN 7 THEN CoLamThuBay
+                    WHEN 1 THEN CoLamChuNhat
+                END
+               )
+            FROM thamso
+            WHERE ThoiDiemTao <= NOW()
+            );
 
         /* check if business is currently having a holiday */
         CREATE TEMPORARY TABLE incomingHolidays
@@ -332,7 +356,7 @@ DO
             + INTERVAL Ngay - 1 DAY
             + INTERVAL SoNgayNghi - 1 DAY;
 
-        IF NOT EXISTS(SELECT * FROM incomingHolidays) THEN
+        IF NOT EXISTS(SELECT * FROM incomingHolidays) AND coLamNgayMai = 1 THEN
             CALL UPDATE_START_BUSINESS_HOURS;
         END IF;
     END $

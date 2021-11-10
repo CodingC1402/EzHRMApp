@@ -1,8 +1,6 @@
-﻿using DAL.Rows;
-using System;
-using System.Collections.Generic;
+﻿using DAL.Others;
+using DAL.Rows;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Model
 {
