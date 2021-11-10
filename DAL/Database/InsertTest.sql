@@ -83,7 +83,7 @@ INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, S
     VALUES ('NV00000002', 'Do Phi', 'Long', '000000101010', '2001/02/14', 'NV000000002@gmail.com', 'Long@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Coding Department', 'Programmer', 'employee1');
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
-VALUES (NOW() - INTERVAL 6 HOUR, 'NV00000002', NULL);
+VALUES (NOW() - INTERVAL 1 DAY - INTERVAL 6 HOUR, 'NV00000002', NULL);
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
-VALUES (NOW() - INTERVAL 12 HOUR, 'NV00000001', NULL);
+VALUES (NOW() - INTERVAL 1 DAY - INTERVAL 12 HOUR, 'NV00000001', NULL);

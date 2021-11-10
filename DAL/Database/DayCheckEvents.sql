@@ -3,7 +3,7 @@ DELIMITER $
 DROP EVENT IF EXISTS START_BUSINESS_HOURS_EVENT;
 CREATE EVENT START_BUSINESS_HOURS_EVENT
 ON SCHEDULE AT (
-    CURRENT_DATE() + INTERVAL 1 DAY + INTERVAL 6 HOUR
+    CURRENT_DATE() + INTERVAL 1 DAY + INTERVAL 6 HOUR /*+ INTERVAL 12 HOUR + INTERVAL 18 MINUTE*/
     )
 ON COMPLETION PRESERVE
 DO
@@ -46,46 +46,58 @@ DO
         WHERE DATE(ThoiGianVaoLam) = homQua
         AND ThoiGianTanLam IS NULL;
 
+        CREATE TEMPORARY TABLE we2
+        SELECT * FROM working_employees;
+
+        CREATE TEMPORARY TABLE we3
+        SELECT * FROM working_employees;
+
+        CREATE TEMPORARY TABLE we4
+        SELECT * FROM working_employees;
+
+        CREATE TEMPORARY TABLE we5
+        SELECT * FROM working_employees;
+
         INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
-        SELECT CURRENT_DATE(), ID, 0, 0
+        SELECT homQua, ID, 0, 0
         FROM nhanvien
-        WHERE NgayVaoLam <= CURRENT_DATE()
+        WHERE NgayVaoLam <= homQua
         AND NgayThoiViec IS NULL;
 
-        UPDATE sogiolamtrongngay
+        UPDATE sogiolamtrongngay s
         SET SoGioLamTrongGio =
             IF (gioTanLamHomQua > (SELECT ThoiGianVaoLam
-                            FROM working_employees we
-                            WHERE we.IDNhanVien = IDNhanVien)
+                            FROM working_employees
+                            WHERE working_employees.IDNhanVien = s.IDNhanVien)
                 , SoGioLamTrongGio +
                 TIMESTAMPDIFF (
                     HOUR,
-                    gioTanLamHomQua,
                     (SELECT ThoiGianVaoLam
-                    FROM working_employees we
-                    WHERE we.IDNhanVien = IDNhanVien)
+                    FROM we2
+                    WHERE we2.IDNhanVien = s.IDNhanVien),
+                    gioTanLamHomQua
                     )
                 , SoGioLamTrongGio)
             ,
             SoGioLamNgoaiGio =
                 IF (gioTanLamHomQua > (SELECT ThoiGianVaoLam
-                                FROM working_employees we
-                                WHERE we.IDNhanVien = IDNhanVien)
+                                FROM we3
+                                WHERE we3.IDNhanVien = s.IDNhanVien)
                     , SoGioLamNgoaiGio +
                       TIMESTAMPDIFF(
                           HOUR,
-                          NOW(),
-                          gioTanLamHomQua
+                          gioTanLamHomQua,
+                          NOW()
                           )
                     , TIMESTAMPDIFF(
                         HOUR,
-                        NOW(),
                         (SELECT ThoiGianVaoLam
-                        FROM working_employees we
-                        WHERE we.IDNhanVien = IDNhanVien)
+                        FROM we4
+                        WHERE we4.IDNhanVien = s.IDNhanVien),
+                        NOW()
                         ))
         WHERE Ngay = homQua
-        AND IDNhanVien IN (SELECT IDNhanVien FROM working_employees);
+        AND s.IDNhanVien IN (SELECT we5.IDNhanVien FROM we5);
 
         UPDATE chamcong
         SET ThoiGianTanLam = NOW()
@@ -96,6 +108,10 @@ DO
         FROM working_employees;
 
         DROP TEMPORARY TABLE working_employees;
+        DROP TEMPORARY TABLE we2;
+        DROP TEMPORARY TABLE we3;
+        DROP TEMPORARY TABLE we4;
+        DROP TEMPORARY TABLE we5;
 /* endregion */
 
 
@@ -107,6 +123,18 @@ DO
         WHERE NgayVaoLam <= homQua
         AND NgayThoiViec IS NULL;
 
+        CREATE TEMPORARY TABLE nv_ht2
+        SELECT * FROM nhanvien_hientai;
+
+        CREATE TEMPORARY TABLE nv_ht3
+        SELECT * FROM nhanvien_hientai;
+
+        CREATE TEMPORARY TABLE nv_ht4
+        SELECT * FROM nhanvien_hientai;
+
+        CREATE TEMPORARY TABLE nv_ht5
+        SELECT * FROM nhanvien_hientai;
+
         CREATE TEMPORARY TABLE timeVariables
         SELECT ThoiGianChoPhepDiTre, ThoiGianChoPhepVeSom,
                ThoiGianDiTreToiDa, ThoiGianVeSomToiDa
@@ -114,6 +142,12 @@ DO
         WHERE DATE(ThoiDiemTao) <= homQua - INTERVAL 1 DAY
         ORDER BY ThoiDiemTao
         LIMIT 1;
+
+        CREATE TEMPORARY TABLE time2
+        SELECT * FROM timeVariables;
+
+        CREATE TEMPORARY TABLE time3
+        SELECT * FROM timeVariables;
 
         /* Them nhan vien vang mat vao bang NghiPhep */
         INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
@@ -167,8 +201,8 @@ DO
             GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
             ORDER BY c.ThoiGianVaoLam ASC
             LIMIT 1
-        ) BETWEEN ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianChoPhepDiTre FROM timeVariables)) + INTERVAL 1 SECOND
-            AND (SELECT ThoiGianDiTreToiDa FROM timeVariables);
+        ) BETWEEN ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianChoPhepDiTre FROM time2)) + INTERVAL 1 SECOND
+            AND (SELECT ThoiGianDiTreToiDa FROM time3);
 /* endregion */
 
 
@@ -199,7 +233,7 @@ DO
                     )
                    ),
                    c.TienLuongMoiThang
-            FROM nhanvien_hientai n
+            FROM nv_ht2 n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s on s.IDNhanVien = n.ID
             INNER JOIN cachtinhluong c2 on c.CachTinhLuong = c2.Ten
@@ -232,7 +266,7 @@ DO
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
-                FROM nhanvien_hientai
+                FROM nv_ht3
                 WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoThang')
             );
 
@@ -260,7 +294,7 @@ DO
                    ),
                    c.TienLuongMoiGio * c.PhanTramLuongNgoaiGio * (SELECT SUM(s.SoGioLamNgoaiGio)),
                    c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio))
-            FROM nhanvien_hientai n
+            FROM nv_ht4 n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s ON n.ID = s.IDNhanVien
             INNER JOIN cachtinhluong c3 on c.CachTinhLuong = c3.Ten
@@ -280,7 +314,7 @@ DO
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
-                FROM nhanvien_hientai
+                FROM nv_ht5
                 WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoGio')
             );
 
@@ -314,7 +348,8 @@ BEGIN
     );
 
     ALTER EVENT START_BUSINESS_HOURS_EVENT
-    ON SCHEDULE AT businessHour;
+    ON SCHEDULE AT businessHour
+    ENABLE;
 END $
 
 

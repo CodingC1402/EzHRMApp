@@ -1,5 +1,4 @@
 
-
 DELIMITER  $$
 CALL LOGIN('boss0', SHA2('0', 256), @AccessToken, @Mask, @ID, @IsLogedIn, @Success);
 SELECT @AccessToken;
