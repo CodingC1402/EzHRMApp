@@ -210,7 +210,7 @@ DO
 
         /* calc payment for employees with CachTinhLuong TheoThang */
         IF (CURRENT_DATE() = (
-            SELECT NgayTinhLuongHangThang FROM thamso WHERE DATE(ThoiDiemTao) <= CURRENT_DATE()
+            SELECT NgayTinhLuongThangNay from cachtinhluong WHERE Ten = 'TheoThang'
         )) THEN
         BEGIN
             INSERT INTO luong (NgayTinhLuong, IDNhanVien, TienLuong, TienTruLuong, TienThuong, TongTienLuong)
