@@ -14,7 +14,7 @@ namespace DAL.Rows
 
         public override bool Save(UnitOfWork uow)
         {
-            return CheckInRepo.Instance.Update(new object[] { ThoiGianVaoLam }, this, uow);
+            return CheckInRepo.Instance.Update(new object[] { ThoiGianVaoLam, IDNhanVien }, this, uow);
         }
     }
 }

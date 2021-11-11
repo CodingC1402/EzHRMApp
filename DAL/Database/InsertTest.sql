@@ -21,11 +21,8 @@ DELETE FROM baocaonhansu;
 INSERT INTO thamso (ThoiDiemTao, CoLamThuHai, CoLamThuBa, CoLamThuTu,
                     CoLamThuNam, CoLamThuSau, CoLamThuBay, CoLamChuNhat,
                     ThoiGianChoPhepDiTre, ThoiGianChoPhepVeSom,
-                    ThoiGianDiTreToiDa, ThoiGianVeSomToiDa,
-                    TruLuongDiTreTheoPhanTram, TruLuongDiTreTrucTiep,
-                    TruLuongVangMatTheoPhanTram, TruLuongVangMatTrucTiep,
-                    NgayTinhLuongHangThang)
-VALUES (NOW() - INTERVAL 1 DAY, 1, 1, 1, 1, 1, 0, 0, '00:15:00', '00:20:00', '02:00:00', '1:00:00', 2.0, 0, 5.0, 0, '2021/1/30');
+                    ThoiGianDiTreToiDa, ThoiGianVeSomToiDa)
+VALUES (NOW() - INTERVAL 1 DAY, 1, 1, 1, 1, 1, 0, 0, '00:15:00', '00:20:00', '02:00:00', '1:00:00');
 
 INSERT INTO thoigianbieutuan (ThoiDiemTao,
                               GioVaoLamCacNgayTrongTuan,
@@ -58,8 +55,8 @@ INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee0', SHA
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee1', SHA2('1', 256), 'employee');
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee2', SHA2('2', 256), 'employee');
 
-INSERT INTO cachtinhluong (Ten, LanTraLuongCuoi)
-    VALUES ('TheoThang', CURRENT_DATE());
+INSERT INTO cachtinhluong (Ten, LanTraLuongCuoi, NgayTinhLuongThangNay)
+    VALUES ('TheoThang', CURRENT_DATE(), LAST_DAY(CURRENT_DATE()));
 INSERT INTO cachtinhluong (Ten, KyHanTraLuongTheoNgay, LanTraLuongCuoi)
     VALUES ('TheoGio', 7, CURRENT_DATE());
 
