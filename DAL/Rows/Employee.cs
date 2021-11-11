@@ -87,18 +87,30 @@ namespace DAL.Rows
             }
         }
 
-        public bool CheckingIn(DateTime checkIn)
+        public bool CheckingIn(DateTime checkInStamp)
         {
+            DateTime gioTanLam = checkInStamp.Date;
+            TimeSpan time;
+            if (gioTanLam.DayOfWeek == DayOfWeek.Saturday)
+                time = TimetableRepo.CurrentTimetable.GioTanLamThuBay;
+            else if (gioTanLam.DayOfWeek == DayOfWeek.Sunday)
+                time = TimetableRepo.CurrentTimetable.GioTanLamChuNhat;
+            else
+                time = TimetableRepo.CurrentTimetable.GioTanLamCacNgayTrongTuan;
+
+            gioTanLam = gioTanLam.Add(time);
+            if (checkInStamp > gioTanLam)
+                return false;
+
             using (var uow = new UnitOfWork())
             {
-                var db = DatabaseConnector.Database;
                 var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
 
                 if (!newestCheckIn.ThoiGianTanLam.HasValue)
                     return false;
 
                 CheckInRepo.Instance.Add(new CheckIn { 
-                    ThoiGianVaoLam = checkIn,
+                    ThoiGianVaoLam = checkInStamp,
                     IDNhanVien = ID
                 }, uow);
 
@@ -106,19 +118,53 @@ namespace DAL.Rows
             }
         }
 
-        public bool CheckingOut(DateTime checkOut)
+        public bool CheckingOut(DateTime checkOutStamp)
         {
+            var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+            if (newestCheckIn.ThoiGianTanLam.HasValue)
+                return false;
+
+            DateTime gioVaoLam = newestCheckIn.ThoiGianVaoLam.Date;
+            TimeSpan time;
+            if (gioVaoLam.DayOfWeek == DayOfWeek.Saturday)
+                time = TimetableRepo.CurrentTimetable.GioVaoLamThuBay;
+            else if (gioVaoLam.DayOfWeek == DayOfWeek.Sunday)
+                time = TimetableRepo.CurrentTimetable.GioVaoLamChuNhat;
+            else
+                time = TimetableRepo.CurrentTimetable.GioVaoLamCacNgayTrongTuan;
+
+            gioVaoLam = gioVaoLam.Add(time);
+
             using (var uow = new UnitOfWork())
             {
-                var db = DatabaseConnector.Database;
-                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+                if (checkOutStamp < gioVaoLam)
+                    CheckInRepo.Instance.Remove(new object[] { newestCheckIn.ThoiGianVaoLam, newestCheckIn.IDNhanVien }, uow);
+                else
+                {
+                    newestCheckIn.ThoiGianTanLam = checkOutStamp;
+                    newestCheckIn.Save(uow);
 
-                if (newestCheckIn.ThoiGianTanLam.HasValue)
-                    return false;
+                    DateTime gioTanLam = newestCheckIn.ThoiGianVaoLam.Date;
+                    if (gioVaoLam.DayOfWeek == DayOfWeek.Saturday)
+                        time = TimetableRepo.CurrentTimetable.GioTanLamThuBay;
+                    else if (gioVaoLam.DayOfWeek == DayOfWeek.Sunday)
+                        time = TimetableRepo.CurrentTimetable.GioTanLamChuNhat;
+                    else
+                        time = TimetableRepo.CurrentTimetable.GioTanLamCacNgayTrongTuan;
 
-                newestCheckIn.ThoiGianTanLam = checkOut;
-                newestCheckIn.Save(uow);
-
+                    gioTanLam = gioTanLam.Add(time);
+                    DateTime batDauLamViec = newestCheckIn.ThoiGianVaoLam > gioVaoLam ? newestCheckIn.ThoiGianVaoLam : gioVaoLam;
+                    DateTime ketThucLamViecTrongGio = checkOutStamp < gioTanLam ? checkOutStamp : gioTanLam;
+                    WorkhoursInDay soGioLam = new WorkhoursInDay()
+                    {
+                        Ngay = newestCheckIn.ThoiGianVaoLam.Date,
+                        IDNhanVien = newestCheckIn.IDNhanVien,
+                        SoGioLamTrongGio = (ketThucLamViecTrongGio - batDauLamViec).Hours,
+                        SoGioLamNgoaiGio = (checkOutStamp - ketThucLamViecTrongGio).Hours
+                    };
+                    soGioLam.Save(uow);
+                }
+                
                 return uow.Complete();
             }
         }

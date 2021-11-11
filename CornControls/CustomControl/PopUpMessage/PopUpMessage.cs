@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
+
 namespace CornControls.CustomControl
 {
     [TemplatePart(Name = "PART_background", Type = typeof(Border)),
@@ -37,16 +39,29 @@ namespace CornControls.CustomControl
                 return false;
             }
 
-            Instance.IsOpened = true;
-            Instance.CanClose = true;
-            Instance.SetToCurrentMainWindow();
-            Instance.Visibility = Visibility.Visible;
+            Instance.Dispatcher.Invoke(() =>
+            {
+                Instance.IsOpened = true;
+                Instance.CanClose = true;
+                Instance.SetToCurrentMainWindow();
 
-            AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
-            AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
 
-            Instance._border?.BeginAnimation(OpacityProperty, inBackgroundAnim);
-            Instance._innerPanel?.BeginAnimation(HeightProperty, inPanelAnim);
+                if (Instance._border != null)
+                {
+                    Instance._border.Opacity = 0;
+                    Instance._border.BeginAnimation(OpacityProperty, inBackgroundAnim);
+                }
+                
+                if (Instance._innerPanel != null)
+                {
+                    Instance._innerPanel.Height = 0;
+                    Instance._innerPanel.BeginAnimation(HeightProperty, inPanelAnim);
+                }
+
+                Instance.Visibility = Visibility.Visible;
+            }, DispatcherPriority.Background);
 
             return true;
         }
@@ -58,19 +73,21 @@ namespace CornControls.CustomControl
                 return;
             }
 
-            Instance.MessageResult = result;
-            AnimationTimeline outBackgroundAnim = CreateAnimation(Instance.BackgroundOpacity, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
-                Instance.Visibility = Visibility.Hidden;
-                Instance.MessageResult = Result.Ok;
-                Instance.IsOpened = false;
-                Instance.CanClose = false;
-                Instance.RaiseMessageClosedEvent();
-            });
+            Instance.Dispatcher.Invoke(() =>
+            {
+                Instance.MessageResult = result;
+                AnimationTimeline outBackgroundAnim = CreateAnimation(Instance.BackgroundOpacity, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline outPanelAnim = CreateAnimation(Instance.PanelHeight, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
+                    Instance.Visibility = Visibility.Hidden;
+                    Instance.MessageResult = Result.Ok;
+                    Instance.IsOpened = false;
+                    Instance.CanClose = false;
+                    Instance.RaiseMessageClosedEvent();
+                });
 
-            AnimationTimeline outPanelAnim = CreateAnimation(Instance.PanelHeight, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut);
-
-            Instance._border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
-            Instance._innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
+                Instance._border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
+                Instance._innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
+            }, DispatcherPriority.Background);
         }
 
         protected static AnimationTimeline CreateAnimation(double from, double to, double time, double amplitude, EasingMode mode, EventHandler whenDone = null)
@@ -100,9 +117,9 @@ namespace CornControls.CustomControl
 
         public static readonly DependencyProperty IsOpenedProperty = DependencyProperty.Register(nameof(IsOpened), typeof(bool), typeof(PopUpMessage), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty InAnimTimeProperty = DependencyProperty.Register(nameof(InAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(1.0));
-        public static readonly DependencyProperty OutAnimTimeProperty = DependencyProperty.Register(nameof(OutAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(1.0));
-        public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(nameof(BackgroundOpacity), typeof(double), typeof(PopUpMessage), new PropertyMetadata(0.5));
+        public static readonly DependencyProperty InAnimTimeProperty = DependencyProperty.Register(nameof(InAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(0.75));
+        public static readonly DependencyProperty OutAnimTimeProperty = DependencyProperty.Register(nameof(OutAnimTime), typeof(double), typeof(PopUpMessage), new PropertyMetadata(0.75));
+        public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(nameof(BackgroundOpacity), typeof(double), typeof(PopUpMessage), new PropertyMetadata(0.3));
 
         public static readonly DependencyProperty PanelHeightProperty = DependencyProperty.Register(nameof(PanelHeight), typeof(double), typeof(PopUpMessage), new PropertyMetadata(300.0));
         public static readonly DependencyProperty MidPanelWidthProperty = DependencyProperty.Register(nameof(MidPanelWidth), typeof(GridLength), typeof(PopUpMessage), new PropertyMetadata(new GridLength(600, GridUnitType.Pixel)));

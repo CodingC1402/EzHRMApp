@@ -1,9 +1,6 @@
 using DAL.Others;
 using DAL.Rows;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Model
 {
@@ -28,7 +25,11 @@ namespace Model
         }
 
         public DepartmentModel() { }
-        public DepartmentModel(Department department) : base(department) { }
+        public DepartmentModel(Department department) : base(department) 
+        {
+            TenPhong = department.TenPhong;
+            TruongPhong = department.TruongPhong;
+        }
         public DepartmentModel(DepartmentModel department) : base(department) { }
 
         public SaveResult Update(Department updatedValue)
@@ -57,10 +58,17 @@ namespace Model
             return result;
         }
 
-        public DepartmentModel(Department department)
-        {
-            TenPhong = department.TenPhong;
-            TruongPhong = department.TruongPhong;
-        }
+        //public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
+        //{
+        //    var result = SaveResult.Ok;
+
+        //    UnitOfWork uow = new UnitOfWork();
+
+        //    if (!Update(updatedValue, uow))
+        //        result |= SaveResult.FailData;
+
+        //    uow.Complete();
+        //    return result;
+        //}
     }
 }

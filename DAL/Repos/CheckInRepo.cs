@@ -14,7 +14,8 @@ namespace DAL.Repos
             TableName = "CHAMCONG";
             PKColsName = new string[]
             {
-                "ThoiGianVaoLam"
+                "ThoiGianVaoLam",
+                "IDNhanVien"
             };
         }
 
