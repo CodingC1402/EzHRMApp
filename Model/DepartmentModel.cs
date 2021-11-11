@@ -29,6 +29,8 @@ namespace Model
         {
             TenPhong = department.TenPhong;
             TruongPhong = department.TruongPhong;
+            NgayNgungHoatDong = department.NgayNgungHoatDong;
+            NgayThanhLap = department.NgayThanhLap;
         }
         public DepartmentModel(DepartmentModel department) : base(department) { }
 
@@ -58,17 +60,15 @@ namespace Model
             return result;
         }
 
-        //public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
-        //{
-        //    var result = SaveResult.Ok;
+        public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
+        {
+            for (int i = 0; i<arr.Count; i++)
+            {
+                if (employee.PhongBan == arr[i].TenPhong)
+                    return i;
+            }
 
-        //    UnitOfWork uow = new UnitOfWork();
-
-        //    if (!Update(updatedValue, uow))
-        //        result |= SaveResult.FailData;
-
-        //    uow.Complete();
-        //    return result;
-        //}
+            return -1;
+        }
     }
 }
