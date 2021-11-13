@@ -70,13 +70,19 @@
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="Padding" Value="5,0" />
                 </Style>
-                <Style TargetType="controls:ComboBoxEx">
-                    <Setter Property="Padding" Value="5,0" />
+                <Style TargetType="controls:CheckIDBox">
+                    <Setter Property="Padding" Value="10,0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
                     <Setter Property="Height" Value="35" />
                     <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="ItemCornerRadius" Value="0" />
                     <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="FocusedPadding" Value="5, 1" />
+                    <Setter Property="NormalPadding" Value="5, 1" />
                 </Style>
             </Grid.Resources>
 
@@ -120,11 +126,11 @@
                             Grid.Row="1"
                             VerticalAlignment="Center"
                             Content="Manager:" />
-                        <controls:TextBoxEx
+                        <controls:CheckIDBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentDepartment.TruongPhong}" />
+                            IsEditable="{Binding IsInCRUDMode}"
+                            IsReadOnly="{Binding IsInNormalMode}"/>
                     </Grid>
 
                     <Grid
@@ -211,14 +217,14 @@
                                     <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
                                     <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
                                     <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
-                                    <Setter Property="Content" Value="Cancle" />
+                                    <Setter Property="Content" Value="Cancel" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsInAddMode}" Value="True">
                                     <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
                                     <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
                                     <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
                                     <Setter Property="Command" Value="{Binding CancleAddCommand}" />
-                                    <Setter Property="Content" Value="Cancle" />
+                                    <Setter Property="Content" Value="Cancel" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
