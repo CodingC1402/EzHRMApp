@@ -153,30 +153,49 @@
                     x:Name="shadow"
                     MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                    Color="Transparent">
+                    Color="{DynamicResource ColorAccent}"
+                    Height="200">
                     <Border
                         x:Name="dropDownBorder"
                         Background="{Binding RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, Path=Background}"
                         BorderBrush="{DynamicResource Accent}"
-                        BorderThickness="1">
-                        <ScrollViewer x:Name="DropDownScrollViewer">
+                        BorderThickness="1"
+                        Height="200">
+                        <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
-                                <Canvas
-                                    x:Name="canvas"
-                                    Width="0"
-                                    Height="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top">
-                                    <Rectangle
-                                        x:Name="opaqueRect"
-                                        Width="{Binding ActualWidth, ElementName=dropDownBorder}"
-                                        Height="{Binding ActualHeight, ElementName=dropDownBorder}"
-                                        Fill="{Binding Background, ElementName=dropDownBorder}" />
-                                </Canvas>
-                                <ItemsPresenter
-                                    x:Name="ItemsPresenter"
-                                    KeyboardNavigation.DirectionalNavigation="Contained"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Ellipse
+                                    Grid.RowSpan="2"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                    Margin="10"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                    Stroke="{DynamicResource Accent}"
+                                    StrokeThickness="10">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                            Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label
+                                    Grid.Column="1"
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                <Label
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                <Label
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="2"
+                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
                             </Grid>
                         </ScrollViewer>
                     </Border>
@@ -213,9 +232,6 @@
                 <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
                 <Setter TargetName="shadow" Property="Color" Value="#71000000" />
             </Trigger>
-            <Trigger Property="HasItems" Value="false">
-                <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
-            </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsGrouping" Value="true" />
@@ -223,10 +239,6 @@
                 </MultiTrigger.Conditions>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
             </MultiTrigger>
-            <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
-                <Setter TargetName="opaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
-                <Setter TargetName="opaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
-            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -249,15 +261,51 @@
                     x:Name="shadow"
                     MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                    Color="{DynamicResource ColorAccent}">
+                    Color="{DynamicResource ColorAccent}"
+                    Height="200">
                     <Border
                         x:Name="dropDownBorder"
                         Background="{Binding RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, Path=Background}"
                         BorderBrush="{DynamicResource Accent}"
-                        BorderThickness="1">
-                        <Grid x:Name="grid">
-                            <Label Content="AAAA"/>
-                        </Grid>
+                        BorderThickness="1"
+                        Height="200">
+                        <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
+                            <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Ellipse
+                                    Grid.RowSpan="2"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                    Margin="10"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                    Stroke="{DynamicResource Accent}"
+                                    StrokeThickness="10">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                            Stretch="Uniform" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                    <Label
+                                    Grid.Column="1"
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                <Label
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                <Label
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="2"
+                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                            </Grid>
+                        </ScrollViewer>
                     </Border>
                 </theme:SystemDropShadowChrome>
             </Popup>
@@ -283,9 +331,6 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true" />
-            <Trigger Property="HasItems" Value="false">
-                <Setter TargetName="dropDownBorder" Property="Height" Value="95" />
-            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 

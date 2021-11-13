@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModel.Structs;
 
 namespace ViewModel
 {
@@ -99,9 +100,25 @@ namespace ViewModel
             return IsInCRUDMode;
         }
 
+        //Test
+        public Image ProfilePicture { get; set; }
+        private EmployeeModel _manager = null;
+        public EmployeeModel Manager
+        {
+            get => _manager;
+            set
+            {
+                _manager = value;
+                var profile = value.GetProfilePicture();
+
+                ProfilePicture = profile != null ? new Image(profile) : null;
+            }
+        }
+
         public DepartmentViewModel()
         {
             Departments = DepartmentModel.LoadAll();
+            Manager = EmployeeModel.LoadAll()[0];
         }
 
         private void SetCurrentModelBack()

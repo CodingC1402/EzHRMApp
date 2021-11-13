@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:converter="clr-namespace:EzHRMApp.Core.Converter"
              xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
              xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
              mc:Ignorable="d" 
@@ -11,6 +12,10 @@
     <UserControl.DataContext>
         <viewmodels:DepartmentViewModel />
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <converter:ByteImageConverter x:Key="byteImageConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -129,8 +134,18 @@
                         <controls:CheckIDBox
                             Grid.Row="1"
                             Grid.Column="1"
+                            MessageText="Something"
+                            ProfilePicture="{Binding ProfilePicture, Converter={StaticResource byteImageConverter}}"
+                            IDText="{Binding Manager.ID}"
                             IsEditable="{Binding IsInCRUDMode}"
-                            IsReadOnly="{Binding IsInNormalMode}"/>
+                            IsReadOnly="{Binding IsInNormalMode}">
+                            <controls:CheckIDBox.NameText>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Manager.Ho" />
+                                    <Binding Path="Manager.Ten" />
+                                </MultiBinding>
+                            </controls:CheckIDBox.NameText>
+                        </controls:CheckIDBox>
                     </Grid>
 
                     <Grid

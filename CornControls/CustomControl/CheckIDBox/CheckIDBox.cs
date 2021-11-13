@@ -206,9 +206,60 @@ namespace CornControls.CustomControl
             set => SetValue(DisabledColorProperty, value);
         }
 
+        // For testing purpose
+
+        private TextBox _textBox = null;
+
+        public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        [Browsable(true), Category("Appearance")]
+        public string MessageText
+        {
+            get => (string)GetValue(MessageTextProperty);
+            set => SetValue(MessageTextProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public string IDText
+        {
+            get => (string)GetValue(IDTextProperty);
+            set => SetValue(IDTextProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public string NameText
+        {
+            get => (string)GetValue(NameTextProperty);
+            set => SetValue(NameTextProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public ImageSource ProfilePicture
+        {
+            get => (ImageSource)GetValue(ProfilePictureProperty);
+            set => SetValue(ProfilePictureProperty, value);
+        }
+
         static CheckIDBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CheckIDBox), new FrameworkPropertyMetadata(typeof(CheckIDBox)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            _textBox = Template.FindName("PART_EditableTextBox", this) as TextBox;
+            if (_textBox != null)
+            {
+                _textBox.TextChanged += (s, e) =>
+                {
+                    IsDropDownOpen = false;
+                };
+            }
+
+            base.OnApplyTemplate();
         }
     }
 }
