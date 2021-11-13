@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModel.Helper;
 using ViewModel.Structs;
 
 namespace ViewModel
@@ -101,6 +102,18 @@ namespace ViewModel
         }
 
         //Test
+        bool _isPopupOpened = false;
+        public bool IsPopupOpened
+        {
+            get => _isPopupOpened;
+            set
+            {
+                _isPopupOpened = value;
+                UpdatePopup();
+            }
+        }
+
+        public string Message { get; set; }
         public Image ProfilePicture { get; set; }
         private EmployeeModel _manager = null;
         public EmployeeModel Manager
@@ -109,7 +122,8 @@ namespace ViewModel
             set
             {
                 _manager = value;
-                var profile = value.GetProfilePicture();
+                
+                var profile = value != null ? value.GetProfilePicture() : null;
 
                 ProfilePicture = profile != null ? new Image(profile) : null;
             }
@@ -118,13 +132,19 @@ namespace ViewModel
         public DepartmentViewModel()
         {
             Departments = DepartmentModel.LoadAll();
-            Manager = EmployeeModel.LoadAll()[0];
         }
 
         private void SetCurrentModelBack()
         {
             CurrentDepartment = SelectedDepartment;
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
+        }
+
+        private void UpdatePopup()
+        {
+            Message = "Help";
+            if (CurrentDepartment != null)
+                Manager = EmployeeModel.GetEmployeeByID(CurrentDepartment.TruongPhong);
         }
     }
 }

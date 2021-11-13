@@ -134,9 +134,11 @@
                         <controls:CheckIDBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            MessageText="Something"
+                            ContentText="{Binding CurrentDepartment.TruongPhong, UpdateSourceTrigger=PropertyChanged}"
+                            MessageText="{Binding Message}"
                             ProfilePicture="{Binding ProfilePicture, Converter={StaticResource byteImageConverter}}"
                             IDText="{Binding Manager.ID}"
+                            IsDropDownOpen="{Binding IsPopupOpened}"
                             IsEditable="{Binding IsInCRUDMode}"
                             IsReadOnly="{Binding IsInNormalMode}">
                             <controls:CheckIDBox.NameText>

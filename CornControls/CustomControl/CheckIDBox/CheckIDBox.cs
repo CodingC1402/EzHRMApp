@@ -210,10 +210,11 @@ namespace CornControls.CustomControl
 
         private TextBox _textBox = null;
 
-        public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata("Empty", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         [Browsable(true), Category("Appearance")]
         public string MessageText
@@ -243,6 +244,13 @@ namespace CornControls.CustomControl
             set => SetValue(ProfilePictureProperty, value);
         }
 
+        [Browsable(true), Category("Appearance")]
+        public string ContentText
+        {
+            get => (string)GetValue(ContentTextProperty);
+            set => SetValue(ContentTextProperty, value);
+        }
+
         static CheckIDBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CheckIDBox), new FrameworkPropertyMetadata(typeof(CheckIDBox)));
@@ -255,6 +263,7 @@ namespace CornControls.CustomControl
             {
                 _textBox.TextChanged += (s, e) =>
                 {
+                    
                     IsDropDownOpen = false;
                 };
             }

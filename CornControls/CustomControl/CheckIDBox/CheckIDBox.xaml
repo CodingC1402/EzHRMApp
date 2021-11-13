@@ -211,9 +211,11 @@
                 Style="{StaticResource ComboBoxToggleButton}" />
             <Border
                 x:Name="border"
+                BorderBrush="{DynamicResource Accent}"
                 Margin="{TemplateBinding BorderThickness}">
                 <TextBox
                     x:Name="PART_EditableTextBox"
+                    Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, UpdateSourceTrigger=PropertyChanged}"
                     Margin="{TemplateBinding Padding}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -321,8 +323,8 @@
                 x:Name="contentPresenter"
                 Margin="{TemplateBinding Padding}"
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                Content="{TemplateBinding SelectionBoxItem}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                Content="{Binding ContentText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
                 ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                 ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"

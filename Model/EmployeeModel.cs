@@ -22,7 +22,7 @@ namespace Model
 
         public static ObservableCollection<EmployeeModel> LoadAll()
         {
-            var rows = DAL.Repos.EmployeeRepo.Instance.GetAll();
+            var rows = EmployeeRepo.Instance.GetAll();
             var result = new ObservableCollection<EmployeeModel>();
 
             foreach (var row in rows)
@@ -49,6 +49,16 @@ namespace Model
                     Width = profile.Width
                 };
             }
+        }
+
+        public static EmployeeModel GetEmployeeByID(string id)
+        {
+            var employee = EmployeeRepo.Instance.FindByID(new object[] { id });
+
+            if (employee == null)
+                return null;
+
+            return new EmployeeModel(employee);
         }
 
         public static string GetNextEmployeeID()
