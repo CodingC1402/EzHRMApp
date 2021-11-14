@@ -261,11 +261,11 @@
                             Grid.Row="2"
                             VerticalAlignment="Center"
                             Content="Working since:" />
-                        <controls:TextBoxEx
+                        <controls:DatePickerEx
                             Grid.Row="2"
                             Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentEmployee.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            SelectedDate="{Binding CurrentEmployee.NgayVaoLam}" />
 
                         <Label
                             Grid.Row="3"
