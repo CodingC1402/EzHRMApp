@@ -171,21 +171,72 @@ namespace DAL.Rows
 
         public virtual ProfilePicture GetProfilePicture()
         {
-            return ProfilePictureRepo.Instance.FindByID(new object[] { ID });
+            return ProfilePictureRepo.Instance.FindByID(ID);
         }
 
-        public override bool Save(UnitOfWork uow = null)
+        public override string Add(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    EmployeeRepo.Instance.Add(this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (EmployeeRepo.Instance.Add(this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string Save(UnitOfWork uow = null)
         {
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
                 {
                     EmployeeRepo.Instance.Update(new object[] { ID }, this, uowNew);
-                    return uowNew.Complete();
+                    return ExecuteAndReturn(uow);
                 }
             }
 
-            return EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
+            if (EmployeeRepo.Instance.Update(new object[] { ID }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            if (NgaySinh > NgayVaoLam)
+            {
+                return "Date of birth can't be greater than working date!";
+            }
+
+            if (NgayThoiViec.HasValue && NgayThoiViec.Value < NgayVaoLam)
+            {
+                return "Resign date can't be before working date!";
+            }
+
+            if (Ten == "")
+            {
+                return "Name can't be empty!";
+            }
+
+            if (CMND == "")
+            {
+                return "Citizen ID can't be empty!";
+            }
+
+            if (EmailVanPhong == "")
+                return "Work email can't be empty!";
+
+            if (SDTVanPhong == "")
+                return "Work phone can't be empty!";
+
+            return "";
         }
     }
 }

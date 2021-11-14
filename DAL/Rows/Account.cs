@@ -69,9 +69,9 @@ namespace DAL.Rows
             return true;
         }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
-            return AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uow);
+            return BoolToString(AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uow));
         }
     }
 }

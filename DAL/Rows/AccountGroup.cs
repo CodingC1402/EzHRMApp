@@ -11,9 +11,9 @@ namespace DAL.Rows
         public string TenNhomTaiKhoan { get; set; }
         public int QuyenHan { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
-            return AccountGroupRepo.Instance.Update(new object[] { TenNhomTaiKhoan }, this, uow);
+            return BoolToString(AccountGroupRepo.Instance.Update(new object[] { TenNhomTaiKhoan }, this, uow));
         }
     }
 }

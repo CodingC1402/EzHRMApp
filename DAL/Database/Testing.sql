@@ -29,6 +29,7 @@ SELECT * FROM NHANVIEN;
 SELECT * FROM CHUCVU;
 SELECT * FROM accesstokens;
 SELECT * FROM TAIKHOAN;
+SELECT * FROM profilepicture;
 
 INSERT INTO ACCESSTOKENS(Token, Bitmask, Account)
 VALUES ('sfdasfadsf', Bitmask, 'CornyCornyCorn0');

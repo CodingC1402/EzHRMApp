@@ -52,7 +52,7 @@ namespace ViewModel
         {
             base.ExecuteConfirmAdd(param);
 
-            if (CurrentDepartment.Add() == 0)
+            if (CurrentDepartment.Add() == "")
             {
                 Departments.Add(CurrentDepartment);
                 SelectedDepartment = CurrentDepartment;
@@ -64,7 +64,7 @@ namespace ViewModel
         {
             base.ExecuteConfirmUpdate(param);
 
-            if (SelectedDepartment.Update(CurrentDepartment) == 0)
+            if (SelectedDepartment.Save() == "")
             {
                 var found = Departments.FirstOrDefault(x => x.TenPhong == SelectedDepartment.TenPhong);
                 Departments[Departments.IndexOf(found)] = CurrentDepartment;
