@@ -26,10 +26,14 @@ namespace ViewModel
             ToDepartmentView = new NavigationCommand<DepartmentViewModel>(new DepartmentViewModel(), this, 0);
             ViewModels.Add(ToDepartmentView.ViewModel);
 
+            ToRoleManagementView = new NavigationCommand<RoleManagementViewModel>(new RoleManagementViewModel(), this, 0);
+            ViewModels.Add(ToRoleManagementView.ViewModel);
+
             CurrentViewModel = ToStaffView.ViewModel;
         }
 
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
         public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
+        public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
     }
 }

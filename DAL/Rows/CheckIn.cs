@@ -12,9 +12,9 @@ namespace DAL.Rows
         public string IDNhanVien { get; set; }
         public DateTime? ThoiGianTanLam { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
-            return CheckInRepo.Instance.Update(new object[] { ThoiGianVaoLam, IDNhanVien }, this, uow);
+            return BoolToString(CheckInRepo.Instance.Update(new object[] { ThoiGianVaoLam, IDNhanVien }, this, uow));
         }
     }
 }

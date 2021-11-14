@@ -29,7 +29,6 @@ WHERE IDNhanVien = 'NV00000001';
 /*   test queries   */
 
 
-
 DELIMITER  $$
 CALL LOGIN('boss0', SHA2('0', 256), @AccessToken, @Mask, @ID, @IsLogedIn, @Success);
 SELECT @AccessToken;
@@ -60,6 +59,7 @@ SELECT * FROM NHANVIEN;
 SELECT * FROM CHUCVU;
 SELECT * FROM accesstokens;
 SELECT * FROM TAIKHOAN;
+SELECT * FROM profilepicture;
 
 INSERT INTO ACCESSTOKENS(Token, Bitmask, Account)
 VALUES ('sfdasfadsf', Bitmask, 'CornyCornyCorn0');

@@ -32,32 +32,32 @@ namespace DAL.Rows
             }
         }
 
-        public bool Add(UnitOfWork uow = null)
+        public override string Add(UnitOfWork uow = null)
         {
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
                 {
                     DepartmentRepo.Instance.Add(this, uowNew);
-                    return uowNew.Complete();
+                    return ExecuteAndReturn(uowNew);
                 }
             }
 
-            return DepartmentRepo.Instance.Add(this, uow);
+            return BoolToString(DepartmentRepo.Instance.Add(this, uow));
         }
 
-        public bool Update(Department updatedValue, UnitOfWork uow = null)
+        public override string Save(UnitOfWork uow = null)
         {
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    DepartmentRepo.Instance.Update(new object[] { TenPhong }, updatedValue, uowNew);
-                    return uowNew.Complete();
+                    DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uowNew);
+                    return ExecuteAndReturn(uow);
                 }
             }
 
-            return DepartmentRepo.Instance.Update(new object[] { TenPhong }, updatedValue, uow);
+            return BoolToString(DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uow));
         }
     }
 }

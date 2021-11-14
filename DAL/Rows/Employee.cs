@@ -123,6 +123,34 @@ namespace DAL.Rows
             var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
             if (newestCheckIn.ThoiGianTanLam.HasValue)
                 return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
 
             DateTime gioVaoLam = newestCheckIn.ThoiGianVaoLam.Date;
             TimeSpan time;
@@ -171,21 +199,111 @@ namespace DAL.Rows
 
         public virtual ProfilePicture GetProfilePicture()
         {
-            return ProfilePictureRepo.Instance.FindByID(new object[] { ID });
+            return ProfilePictureRepo.Instance.FindByID(ID);
         }
 
-        public override bool Save(UnitOfWork uow = null)
+        public override string Add(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    EmployeeRepo.Instance.Add(this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (EmployeeRepo.Instance.Add(this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string Save(UnitOfWork uow = null)
         {
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
                 {
                     EmployeeRepo.Instance.Update(new object[] { ID }, this, uowNew);
-                    return uowNew.Complete();
+                    return ExecuteAndReturn(uowNew);
                 }
             }
 
-            return EmployeeRepo.Instance.Update(new object[] { ID }, this, uow);
+            if (EmployeeRepo.Instance.Update(new object[] { ID }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            if (NgaySinh > NgayVaoLam)
+            {
+                return "Date of birth can't be greater than working date!";
+            }
+
+            if (NgayThoiViec.HasValue && NgayThoiViec.Value < NgayVaoLam)
+            {
+                return "Resign date can't be before working date!";
+            }
+
+            if (Ten == "")
+            {
+                return "Name can't be empty!";
+            }
+
+            if (CMND == "")
+            {
+                return "Citizen ID can't be empty!";
+            }
+
+            if (EmailVanPhong == "")
+                return "Work email can't be empty!";
+
+            if (SDTVanPhong == "")
+                return "Work phone can't be empty!";
+
+            if (!IsValidEmail(EmailVanPhong))
+                return "Work email isn't valid!";
+
+            if (EmailCaNhan != "" && !IsValidEmail(EmailCaNhan))
+                return "Personal email isn't valid!";
+
+            if (!IsValidCitizenID(CMND))
+                return "Citizen ID is not valid!";
+
+            return "";
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            if (email.Trim().EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidCitizenID(string id)
+        {
+            bool result = id.Length == 9 || id.Length == 12;
+            foreach (char c in id)
+            {
+                if (!char.IsDigit(c))
+                {
+                    result &= false;
+                }
+            }
+            return result;
         }
     }
 }

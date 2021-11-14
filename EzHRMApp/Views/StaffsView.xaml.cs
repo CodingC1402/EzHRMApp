@@ -63,7 +63,6 @@ namespace EzHRMApp.Views
         {
             InitializeComponent();
             openFileDialog = new OpenFileDialog();
-
         }
 
         public void SetFilterForFileDialog()
@@ -98,12 +97,7 @@ namespace EzHRMApp.Views
                 }
                 catch
                 {
-                    PopUpMessage.Instance.Margin = new Thickness(7);
-                    PopUpMessage.Instance.IconPath = (Geometry)Application.Current.FindResource("accountIcon");
-                    PopUpMessage.Instance.IconHeight = 24;
-                    PopUpMessage.Instance.IconWidth = 24;
-                    PopUpMessage.ShowMessage();
-                    //MessageBox.Show("Please choose an image!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    PopUpMessage.ShowErrorMessage("ERROR!", "The file you choose is either not a supported image format or not an image!");
                     profileBtn.CommandParameter = null;
                 }
             }

@@ -13,6 +13,25 @@ namespace ViewModel.Navigation
         private bool _isInUpdateMode = false;
         private bool _isInAddMode = false;
 
+        public bool HaveError {
+            get => PopUpMessage.Instance.IsOpened;
+            set
+            {
+                if (value)
+                {
+                    PopUpMessage.Instance.Title = "Error!";
+                }
+                PopUpMessage.Instance.IsOpened = value;
+            }
+        }
+        public string ErrorString {
+            get => PopUpMessage.Instance.Message;
+            set
+            {
+                PopUpMessage.Instance.Message = value;
+            }
+        }
+
         public bool IsInNormalMode
         {
             get => !(_isInAddMode || _isInUpdateMode);
