@@ -48,8 +48,10 @@ namespace ViewModel
             set
             {
                 _selectedEmployee = value;
-                var profile = value.GetProfilePicture();
+                if (_selectedEmployee == null)
+                    return;
 
+                var profile = value.GetProfilePicture();
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
 
