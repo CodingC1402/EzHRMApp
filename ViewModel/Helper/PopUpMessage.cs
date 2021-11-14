@@ -17,6 +17,7 @@ namespace ViewModel.Helper
 
         private string _message = "";
         private bool _isOpened = false;
+        private string _title = "";
 
         public string Message {
             get => _message;
@@ -24,6 +25,7 @@ namespace ViewModel.Helper
             {
                 _message = value;
                 RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
             }
         }
         public bool IsOpened {
@@ -32,7 +34,31 @@ namespace ViewModel.Helper
             {
                 _isOpened = value;
                 RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
             }
+        }
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
+                RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
+            }
+        }
+
+        private event EventHandler _whenPropertyChanged = null;
+        public event EventHandler WhenPropertyChanged
+        {
+            add { _whenPropertyChanged += value; }
+            remove { _whenPropertyChanged -= value; }
+        }
+
+        protected void OnPropertyChanged(EventArgs e)
+        {
+            if (_whenPropertyChanged != null)
+                _whenPropertyChanged(this, e);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

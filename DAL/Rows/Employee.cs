@@ -198,7 +198,7 @@ namespace DAL.Rows
                 using (var uowNew = new UnitOfWork())
                 {
                     EmployeeRepo.Instance.Update(new object[] { ID }, this, uowNew);
-                    return ExecuteAndReturn(uow);
+                    return ExecuteAndReturn(uowNew);
                 }
             }
 
@@ -236,7 +236,46 @@ namespace DAL.Rows
             if (SDTVanPhong == "")
                 return "Work phone can't be empty!";
 
+            if (!IsValidEmail(EmailVanPhong))
+                return "Work email isn't valid!";
+
+            if (EmailCaNhan != "" && !IsValidEmail(EmailCaNhan))
+                return "Personal email isn't valid!";
+
+            if (!IsValidCitizenID(CMND))
+                return "Citizen ID is not valid!";
+
             return "";
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            if (email.Trim().EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidCitizenID(string id)
+        {
+            bool result = id.Length == 9 || id.Length == 12;
+            foreach (char c in id)
+            {
+                if (!char.IsDigit(c))
+                {
+                    result &= false;
+                }
+            }
+            return result;
         }
     }
 }
