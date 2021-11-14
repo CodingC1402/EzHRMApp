@@ -17,6 +17,10 @@ namespace ViewModel.Navigation
             get => PopUpMessage.Instance.IsOpened;
             set
             {
+                if (value)
+                {
+                    PopUpMessage.Instance.Title = "Error!";
+                }
                 PopUpMessage.Instance.IsOpened = value;
             }
         }

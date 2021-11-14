@@ -98,18 +98,26 @@ namespace CornControls.CustomControl
         
         public PopUpMessage()
         {
-            Timer timer = new Timer();
-            timer.Interval = 250;
-            timer.Elapsed += (s, e) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    this.IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
-                    this.Message = ViewModel.Helper.PopUpMessage.Instance.Message;
-                });
-            };
-            timer.Start();
+            //Timer timer = new Timer();
+            //timer.Interval = 250;
+            //timer.Elapsed += (s, e) =>
+            //{
+            //    this.Dispatcher.Invoke(() =>
+            //    {
+            //        this.IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
+            //        this.Message = ViewModel.Helper.PopUpMessage.Instance.Message;
+            //    });
+            //};
+            //timer.Start();
             // Fucking stupid ass solution ~~
+
+            // Better solution but still stupid
+            ViewModel.Helper.PopUpMessage.Instance.WhenPropertyChanged += (s, e) =>
+            {
+                IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
+                Message = ViewModel.Helper.PopUpMessage.Instance.Message;
+                Title = ViewModel.Helper.PopUpMessage.Instance.Title;
+            };
 
             //DataContext = ViewModel.Helper.PopUpMessage.Instance;
             //Binding bindingIsOpen = new Binding(nameof(ViewModel.Helper.PopUpMessage.IsOpened));
