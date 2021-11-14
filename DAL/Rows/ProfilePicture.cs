@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DAL.Rows
 {
+    [Serializable]
     public class ProfilePicture : Row
     {
         public string ID { get; set; }
@@ -13,18 +14,15 @@ namespace DAL.Rows
         public int Width { get; set; }
         public string Type { get; set; }
 
-        public override bool Save(UnitOfWork uow = null)
+        // The same cause IO stream know when to truncate and when to add
+        public override string Add(UnitOfWork uow = null)
         {
-            if (uow == null)
-            {
-                using (var uowNew = new UnitOfWork())
-                {
-                    ProfilePictureRepo.Instance.Update(new object[] { ID }, this, uowNew);
-                    return uowNew.Complete();
-                }
-            }
+            return ProfilePictureRepo.Instance.Add(this);
+        }
 
-            return ProfilePictureRepo.Instance.Update(new object[] { ID }, this, uow);
+        public override string Save(UnitOfWork uow = null)
+        {
+            return ProfilePictureRepo.Instance.Save(this);
         }
     }
 }

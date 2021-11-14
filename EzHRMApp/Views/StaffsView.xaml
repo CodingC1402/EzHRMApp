@@ -205,10 +205,10 @@
                         <controls:ComboBoxEx
                             Grid.Row="2"
                             Grid.Column="1"
-                            DisplayMemberPath="TenPhong"
+                            DisplayMemberPath="TenChucVu"
                             IsEnabled="{Binding IsInCRUDMode}"
-                            ItemsSource="{Binding AvailableDepartment}"
-                            SelectedIndex="{Binding SelectedDepartmentIndex}" />
+                            ItemsSource="{Binding AvailableRole}"
+                            SelectedItem="{Binding SelectedRole}" />
 
                         <Label
                             Grid.Row="3"
@@ -300,7 +300,7 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentEmployee.NgaySinh}" />
+                            Text="{Binding CurrentEmployee.NgaySinh, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
                         <Label
                             Grid.Row="1"
@@ -413,6 +413,7 @@
             IsEnabled="{Binding IsInNormalMode}"
             IsReadOnly="True"
             ItemsSource="{Binding Employees}"
+            SelectedIndex="{Binding SelectedEmployeeIndex}"
             SelectedItem="{Binding SelectedEmployee}">
             <controls:DatagridEx.Columns>
                 <DataGridTextColumn

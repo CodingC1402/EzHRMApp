@@ -16,10 +16,10 @@ namespace DAL.Rows
         public TimeSpan GioTanLamThuBay { get; set; }
         public TimeSpan GioTanLamChuNhat { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
             ThoiDiemTao = DateTime.Now;
-            bool res = TimetableRepo.Instance.Add(this, uow);
+            string res = BoolToString(TimetableRepo.Instance.Add(this, uow));
             TimetableRepo.Instance.FindLatestTimetable();
             return res;
         }

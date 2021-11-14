@@ -3,9 +3,9 @@
     <Color x:Key="DarkForegroundColor">#061826</Color>
     <Color x:Key="LightForegroundColor">#E2E2EC</Color>
 
-    <Color x:Key="ColorBackColor">#E2E2EC</Color>
-    <Color x:Key="ColorDarkerBackColor">#D9D9E4</Color>
-    <Color x:Key="ColorDarkestBackColor">#D2D2DC</Color>
+    <Color x:Key="ColorBackColor">#F2F2FC</Color>
+    <Color x:Key="ColorDarkerBackColor">#E9E9F4</Color>
+    <Color x:Key="ColorDarkestBackColor">#E2E2EC</Color>
 
     <Color x:Key="ColorCancleHover">#FF91B6</Color>
     <Color x:Key="ColorCancleMouseDown">#FF5596</Color>

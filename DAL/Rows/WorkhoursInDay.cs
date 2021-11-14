@@ -13,9 +13,9 @@ namespace DAL.Rows
         public int SoGioLamTrongGio { get; set; }
         public int SoGioLamNgoaiGio { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
-            return WorkhoursInDayRepo.Instance.Update(new object[] { Ngay, IDNhanVien }, this, uow);
+            return BoolToString(WorkhoursInDayRepo.Instance.Update(new object[] { Ngay, IDNhanVien }, this, uow));
         }
     }
 }

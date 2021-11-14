@@ -21,10 +21,10 @@ namespace DAL.Rows
         public TimeSpan ThoiGianDiTreToiDa { get; set; }
         public TimeSpan ThoiGianVeSomToiDa { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
             ThoiDiemTao = DateTime.Now;
-            bool res = VariablesRepo.Instance.Add(this, uow);
+            string res = BoolToString(VariablesRepo.Instance.Add(this, uow));
             VariablesRepo.Instance.FindLatestVariables();
             return res;
         }

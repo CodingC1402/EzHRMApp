@@ -7,13 +7,31 @@ namespace ViewModel
 {
     public class StaffsViewModel : Navigation.CRUDViewModelBase
     {
-
         public ObservableCollection<EmployeeModel> Employees { get; set; }
         public ObservableCollection<DepartmentModel> AvailableDepartment { get; set; }
-        public int SelectedDepartmentIndex { get; set; }
 
+        private ObservableCollection<RoleModel> _availableRoles;
+        public ObservableCollection<RoleModel> AvailableRole {
+            get => _availableRoles;
+            set => _availableRoles = value;
+        }
+
+        private int _selectedDepartmentIndex = 0;
+        public int SelectedDepartmentIndex
+        {
+            get => _selectedDepartmentIndex;
+            set
+            {
+                _selectedDepartmentIndex = value;
+                if (_currentEmployee != null && _selectedDepartmentIndex > 0)
+                    _currentEmployee.PhongBan = AvailableDepartment[_selectedDepartmentIndex].TenPhong;
+            }
+        }
+
+        public int SelectedEmployeeIndex {get; set;}
         private EmployeeModel _selectedEmployee = null;
         private EmployeeModel _currentEmployee = null;
+        private RoleModel _selectedRole = null;
 
         public EmployeeModel CurrentEmployee {
             get => _currentEmployee;
@@ -35,7 +53,31 @@ namespace ViewModel
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
 
+                AvailableRole = new ObservableCollection<RoleModel>();
+                foreach (RoleModel role in RoleManagementViewModel.Instance.Roles)
+                {
+                    if (role.DaXoa == 0 || _selectedEmployee.NgayThoiViec != null)
+                    {
+                        AvailableRole.Add(role);
+                        if (role.TenChucVu == _selectedEmployee.ChucVu)
+                        {
+                            SelectedRole = role;
+                        }
+                    }
+                }
+
                 SelectedDepartmentIndex = DepartmentModel.GetIndex(_selectedEmployee, AvailableDepartment);
+            }
+        }
+
+        public RoleModel SelectedRole
+        {
+            get => _selectedRole;
+            set
+            {
+                _selectedRole = value;
+                if (_currentEmployee != null && _selectedRole != null)
+                _currentEmployee.ChucVu = _selectedRole.TenChucVu;
             }
         }
 
@@ -75,13 +117,37 @@ namespace ViewModel
         public override void ExecuteConfirmAdd(object param)
         {
             base.ExecuteConfirmAdd(param);
-            CurrentEmployee.Save();
+
+            var result = CurrentEmployee.Save(true);
+            if (result == "")
+            {
+                Employees.Add(CurrentEmployee);
+                SelectedEmployeeIndex = Employees.Count - 1;
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
+
             SetCurrentModelBack();
         }
         public override void ExecuteConfirmUpdate(object param)
         {
             base.ExecuteConfirmUpdate(param);
-            CurrentEmployee.Save();
+
+            var result = CurrentEmployee.Save(false);
+            if (result == "")
+            {
+                Employees[SelectedEmployeeIndex] = CurrentEmployee;
+                SelectedEmployee = CurrentEmployee;
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
+
             SetCurrentModelBack();
         }
 

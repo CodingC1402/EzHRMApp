@@ -12,14 +12,6 @@ namespace Model
 {
     public class EmployeeModel : Employee
     {
-        public enum SaveResult
-        {
-            Ok = 0,
-            FailProfile = 1,
-            FailData = 2,
-            FailAll = 3,
-        }
-
         public static ObservableCollection<EmployeeModel> LoadAll()
         {
             var rows = DAL.Repos.EmployeeRepo.Instance.GetAll();
@@ -66,20 +58,28 @@ namespace Model
             return ProfilePicture;
         }
 
-        public SaveResult Save()
+        public string Save(bool addNew)
         {
-            var result = SaveResult.Ok;
-            if (ProfilePicture != null && !ProfilePicture.Save())
-                result |= SaveResult.FailProfile;
-            if (!Save(null))
-                result |= SaveResult.FailData;
+            if (ProfilePicture != null)
+            {
+                var result = ProfilePicture.Save();
+                if (result != "")
+                    return result;
+            }
 
-            return result;
+            if (addNew)
+            {
+                Employee row = new Employee(this);
+                return row.Add();
+            }
+            else
+                return Save();
         }
 
-        protected new bool Save(UnitOfWork unitOfWork = null)
+        protected new string Save(UnitOfWork unitOfWork = null)
         {
-            return base.Save();
+            Employee row = new Employee(this);
+            return row.Save();
         }
     }
 }
