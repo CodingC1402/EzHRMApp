@@ -18,7 +18,6 @@ namespace ViewModel.Helper
         private string _message = "";
         private bool _isOpened = false;
         private string _title = "";
-
         public string Message {
             get => _message;
             set
