@@ -271,11 +271,39 @@
                             Grid.Row="3"
                             VerticalAlignment="Center"
                             Content="Resign date:" />
-                        <controls:TextBoxEx
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentEmployee.NgayThoiViec, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <controls:DatePickerEx
+                                x:Name="resignDatePicker"
+                                IsEnabled="{Binding IsInCRUDMode}"
+                                SelectedDate="{Binding CurrentEmployee.NgayThoiViec}" />
+                            <controls:ButtonEx
+                                Grid.Column="1"
+                                Width="20"
+                                Margin="0,5,5,5"
+                                HorizontalAlignment="Center"
+                                Background="{DynamicResource Accent}"
+                                Command="{Binding ElementName=resignDatePicker, Path=ClearCalendar}"
+                                CornerRadius="5"
+                                HoverColor="{DynamicResource AccentBright}"
+                                IconPad="20"
+                                IconSize="20"
+                                Path="{DynamicResource xCircleIconSM}"
+                                PressedColor="{DynamicResource AccentReallyBright}">
+                                <controls:ButtonEx.Style>
+                                    <Style TargetType="controls:ButtonEx">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:ButtonEx.Style>
+                            </controls:ButtonEx>
+                        </Grid>
                     </Grid>
 
                     <Grid
@@ -297,10 +325,10 @@
                             Grid.Row="0"
                             VerticalAlignment="Center"
                             Content="DOB:" />
-                        <controls:TextBoxEx
+                        <controls:DatePickerEx
                             Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentEmployee.NgaySinh, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            SelectedDate="{Binding CurrentEmployee.NgaySinh}" />
 
                         <Label
                             Grid.Row="1"

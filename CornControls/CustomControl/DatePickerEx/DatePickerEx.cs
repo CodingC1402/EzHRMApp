@@ -19,10 +19,10 @@ using PropertyChanged;
 namespace CornControls.CustomControl
 {
     [AddINotifyPropertyChangedInterface]
-    public class DatePickerEx : TextBoxEx
+    public class DatePickerEx : TextBoxEx, INotifyPropertyChanged
     {
         public static readonly DependencyProperty DateFormatProperty = DependencyProperty.Register(nameof(DateFormat), typeof(string), typeof(DatePickerEx), new PropertyMetadata("dd/MM/yyyy"));
-        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(nameof(SelectedDate), typeof(DateTime?), typeof(DatePickerEx), new PropertyMetadata(OnSelectedChangedCallBack));
+        public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(nameof(SelectedDate), typeof(DateTime?), typeof(DatePickerEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedChangedCallBack));
         public static readonly DependencyProperty CalendarIconPathProperty = DependencyProperty.Register(nameof(CalendarIconPath), typeof(Geometry), typeof(DatePickerEx));
         public static readonly DependencyProperty CalendarIconWidthProperty = DependencyProperty.Register(nameof(CalendarIconWidth), typeof(GridLength), typeof(DatePickerEx));
         public static readonly DependencyProperty CalendarIconBrushProperty = DependencyProperty.Register(nameof(CalendarIconBrush), typeof(Brush), typeof(DatePickerEx));
@@ -31,7 +31,7 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty ButtonHoverBrushProperty = DependencyProperty.Register(nameof(ButtonHoverBrush), typeof(Brush), typeof(DatePickerEx));
         public static readonly DependencyProperty ButtonNormalBrushProperty = DependencyProperty.Register(nameof(ButtonNormalBrush), typeof(Brush), typeof(DatePickerEx));
         public static readonly DependencyProperty ButtonPressedBrushProperty = DependencyProperty.Register(nameof(ButtonPressedBrush), typeof(Brush), typeof(DatePickerEx));
-
+        
         protected Calendar _calendar = null;
         protected Popup _popup = null;
         protected ButtonEx _calenderBtn = null;
@@ -92,6 +92,12 @@ namespace CornControls.CustomControl
             set => SetValue(ButtonPressedBrushProperty, value);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
 
         private event EventHandler _selectedDateChanged = null;
         public event EventHandler SelectedDateChanged
@@ -114,6 +120,15 @@ namespace CornControls.CustomControl
             return IsEnabled;
         });
 
+        private RelayCommand<object> _clearCalendar;
+        public RelayCommand<object> ClearCalendar => _clearCalendar ??= new RelayCommand<object>(param => {
+            SetValue(SelectedDateProperty, null);
+            RaisePropertyChanged(nameof(SelectedDate));
+        }, param =>
+        {
+            return SelectedDate.HasValue && IsEnabled;
+        });
+
         private static void OnSelectedChangedCallBack(
         DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -125,6 +140,7 @@ namespace CornControls.CustomControl
         }
         protected virtual void OnSelectedDateChanged(EventArgs e)
         {
+            UpdateText();
             if (_selectedDateChanged != null)
                 _selectedDateChanged(this, new EventArgs());
         }
@@ -140,6 +156,7 @@ namespace CornControls.CustomControl
             IsEnabledChanged += (s, e) =>
             {
                 OpenCalendar.RaiseCanExecuteChangeEvent();
+                ClearCalendar.RaiseCanExecuteChangeEvent();
                 if (_calenderBtn != null)
                     _calenderBtn.Visibility = IsEnabled ? Visibility.Visible : Visibility.Collapsed;
             };
@@ -156,7 +173,6 @@ namespace CornControls.CustomControl
 
             _calendar = Template.FindName("PART_calendar", this) as Calendar;
             _calendar.SelectionMode = CalendarSelectionMode.SingleDate;
-            _calendar.SelectedDatesChanged += (s, e) => UpdateText();
             _calendar.MouseDown += (s, e) =>
             {
                 _calendar.ReleaseMouseCapture();
@@ -167,10 +183,12 @@ namespace CornControls.CustomControl
 
         protected virtual void UpdateText()
         {
-            if (_calendar.SelectedDate.HasValue)
+            if (SelectedDate.HasValue)
             {
-                Text = _calendar.SelectedDate.Value.ToString(DateFormat);
+                Text = SelectedDate.Value.ToString(DateFormat);
+                ClearCalendar.RaiseCanExecuteChangeEvent();
             }
+            else Text = "";
         }
     }
 }
