@@ -122,8 +122,8 @@ namespace CornControls.CustomControl
 
         private RelayCommand<object> _clearCalendar;
         public RelayCommand<object> ClearCalendar => _clearCalendar ??= new RelayCommand<object>(param => {
-            SetValue(SelectedDateProperty, null);
-            RaisePropertyChanged(nameof(SelectedDate));
+            SelectedDate = null;
+            ClearCalendar.RaiseCanExecuteChangeEvent();
         }, param =>
         {
             return SelectedDate.HasValue && IsEnabled;
