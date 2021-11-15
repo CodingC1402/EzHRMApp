@@ -35,6 +35,7 @@ namespace EzHRMApp.Views
         public static readonly DependencyProperty StartWorkingWidthProperty = DependencyProperty.Register(nameof(StartWorkingWidth), typeof(GridLength), typeof(StaffsView), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
 
         private OpenFileDialog openFileDialog;
+        private bool viewingReport = false;
 
         public GridLength IDWidth {
             get => (GridLength)GetValue(IDWidthProperty);
@@ -64,6 +65,8 @@ namespace EzHRMApp.Views
         public StaffsView()
         {
             InitializeComponent();
+            reportView.Visibility = Visibility.Collapsed;
+            infoView.Visibility = Visibility.Visible;
             openFileDialog = new OpenFileDialog();
             UpdateFilter();
         }
@@ -160,6 +163,25 @@ namespace EzHRMApp.Views
 
                     return true;
                 };
+            }
+        }
+
+        private void changeModeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            viewingReport = !viewingReport;
+            if (viewingReport)
+            {
+                viewLabel.Text = "Report";
+                changeModeBtn.Content = "View Infos";
+                addPenaltyBtn.Visibility = reportView.Visibility = Visibility.Visible;
+                changeOrCancleBtn.Visibility = newOrConfirmBtn.Visibility = infoView.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                viewLabel.Text = "Infos";
+                changeModeBtn.Content = "View Report";
+                addPenaltyBtn.Visibility = reportView.Visibility = Visibility.Collapsed;
+                changeOrCancleBtn.Visibility = newOrConfirmBtn.Visibility = infoView.Visibility = Visibility.Visible;
             }
         }
     }
