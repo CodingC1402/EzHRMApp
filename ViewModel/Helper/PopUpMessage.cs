@@ -79,19 +79,6 @@ namespace ViewModel.Helper
                 _whenPropertyChanged(this, e);
         }
 
-        private event EventHandler _whenPropertyChanged = null;
-        public event EventHandler WhenPropertyChanged
-        {
-            add { _whenPropertyChanged += value; }
-            remove { _whenPropertyChanged -= value; }
-        }
-
-        protected void OnPropertyChanged(EventArgs e)
-        {
-            if (_whenPropertyChanged != null)
-                _whenPropertyChanged(this, e);
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string propName = "")
         {
