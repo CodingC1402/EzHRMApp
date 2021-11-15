@@ -174,40 +174,58 @@ DO
         CREATE TEMPORARY TABLE time3
         SELECT * FROM timeVariables;
 
+        CREATE TEMPORARY TABLE time4
+        SELECT * FROM timeVariables;
+
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
         VALUES (NOW(), 'tao bang temp nhanvien_hientai va timeVariables hoan tat', NULL, NULL, NULL);
 
         /* Them nhan vien vang mat vao bang NghiPhep */
         INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
+        /* Nhan vien bo ve som qua thoi gian ve som toi da */
         SELECT IDNhanVien,
                homQua,
                1,
-               'Tu dong them nhan vien vang mat',
+               'Tu dong them nhan vien bo ve som qua thoi gian',
                0
-        FROM chamcong
+        FROM chamcong ch
         WHERE (
-            SELECT ThoiGianVaoLam
+            SELECT c.ThoiGianTanLam
             FROM chamcong c
             WHERE DATE(c.ThoiGianVaoLam) = homQua
-            GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
-            ORDER BY c.ThoiGianVaoLam ASC
+            AND c.IDNhanVien = ch.IDNhanVien
+            ORDER BY c.ThoiGianTanLam DESC
             LIMIT 1
-        ) > ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianDiTreToiDa FROM timeVariables))
+        ) < SUBTIME(gioTanLamHomQua, (SELECT ThoiGianVeSomToiDa FROM time4))
+        AND ch.IDNhanVien NOT IN (
+            SELECT IDNhanVien
+            FROM nghiphep np
+            WHERE homQua BETWEEN np.NgayBatDauNghi AND np.NgayBatDauNghi + INTERVAL np.SoNgayNghi - 1 DAY
+        )
         UNION
+        /* Nhan vien khong di lam */
         SELECT n.ID as IDNhanVien,
                homQua,
                1,
                'Tu dong them nhan vien vang mat',
                0
         FROM nhanvien_hientai n
-        WHERE n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = homQua);
+        WHERE n.ID NOT IN (
+            SELECT IDNhanVien
+            FROM chamcong c
+            WHERE DATE(c.ThoiGianVaoLam) = homQua
+            UNION
+            SELECT IDNhanVien
+            FROM nghiphep np
+            WHERE homQua BETWEEN np.NgayBatDauNghi AND np.NgayBatDauNghi + INTERVAL np.SoNgayNghi - 1 DAY
+        );
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
         VALUES (NOW(), 'Them nhan vien vang mat vao bang NghiPhep hoan tat', NULL, NULL, NULL);
 
-        /* Tru luong cac nhan vien di tre va cac nhan vien bo ve som */
+        /* Tru luong cac nhan vien vang mat va cac nhan vien bo ve som */
         INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
         SELECT homQua,
                IDNhanVien,
@@ -225,8 +243,7 @@ DO
                (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'VeSom'),
                'Tu dong tru luong nhan vien bo ve som'
         FROM chamcong ch
-        WHERE DATE(ThoiGianVaoLam) = homQua
-        AND ThoiGianTanLam BETWEEN SUBTIME(gioTanLamHomQua, (SELECT ThoiGianVeSomToiDa FROM time2))
+        WHERE ThoiGianTanLam BETWEEN SUBTIME(gioTanLamHomQua, (SELECT ThoiGianVeSomToiDa FROM time2))
             AND SUBTIME(gioTanLamHomQua, (SELECT ThoiGianChoPhepVeSom FROM time3) + INTERVAL 1 SECOND)
         AND ThoiGianTanLam = (
             SELECT ThoiGianTanLam

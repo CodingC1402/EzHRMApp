@@ -83,13 +83,13 @@ INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, S
     VALUES ('NV00000003', 'Nguyen Bao', 'Duy', '000000101010', '2001/02/14', 'NV000000003@gmail.com', 'Duy@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Design Department', 'Designer', 'employee2');
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
-VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '07:00:00'), 'NV00000002', NULL);
+VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '07:00:00'), 'NV00000002', ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '17:00:00'));
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
-VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '11:00:00'), 'NV00000001', NULL);
+VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '11:00:00'), 'NV00000001', ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '15:55:00'));
 
 INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
-VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 'NV00000001', 8, 8);
+VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000001', 8, 8);
 
 INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000002', 0, 8);
@@ -98,7 +98,13 @@ INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoai
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000003', 12, 8);
 
 INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
-VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000001', 'VangMat', 100, 15, 'Testing...');
+VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 'NV00000001', 'VangMat', 100, 15, 'Testing...');
 
 INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000002', 'VangMat', 80, 5, 'Testing...');
+
+INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
+VALUES ('NV00000001', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tham gia hoi nghi 3N Quoc Te', 1);
+
+INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
+VALUES ('NV00000002', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tai nan giao thong', 1);
