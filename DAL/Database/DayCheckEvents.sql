@@ -164,7 +164,7 @@ DO
         SELECT ThoiGianChoPhepDiTre, ThoiGianChoPhepVeSom,
                ThoiGianDiTreToiDa, ThoiGianVeSomToiDa
         FROM thamso
-        WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - INTERVAL 2 DAY
+        WHERE DATE(ThoiDiemTao) <= homQua - INTERVAL 1 DAY
         ORDER BY ThoiDiemTao
         LIMIT 1;
 
@@ -254,9 +254,9 @@ DO
             LIMIT 1
         );
 
-        DROP TEMPORARY TABLE timeVariables;
         DROP TEMPORARY TABLE time2;
         DROP TEMPORARY TABLE time3;
+        DROP TEMPORARY TABLE time4;
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
@@ -394,6 +394,107 @@ DO
         END;
         END IF;
 
+        /* Them dong va cap nhat baocaochamcong va baocaonhansu */
+        IF (
+            SELECT (
+                CASE DAYOFWEEK(CURRENT_DATE())
+                    WHEN 2 THEN CoLamThuHai
+                    WHEN 3 THEN CoLamThuBa
+                    WHEN 4 THEN CoLamThuTu
+                    WHEN 5 THEN CoLamThuNam
+                    WHEN 6 THEN CoLamThuSau
+                    WHEN 7 THEN CoLamThuBay
+                    WHEN 1 THEN CoLamChuNhat
+                END
+               )
+            FROM thamso
+            WHERE ThoiDiemTao <= NOW()
+            ) THEN
+        BEGIN
+            /* !!!!LOG!!!! */
+            INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+            VALUES (NOW(), 'Hom nay co lam, bat dau insert bao cao moi', NULL, NULL, NULL);
+
+            IF (DAY(CURRENT_DATE()) = 1) THEN
+                BEGIN
+                    INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
+                    VALUES (MONTH(CURRENT_DATE()), YEAR(CURRENT_DATE()), 0, 0);
+                END;
+            END IF;
+
+            /* !!!!LOG!!!! */
+            INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+            VALUES (NOW(), 'Insert bao cao moi hoan tat', NULL, NULL, NULL);
+
+            INSERT INTO baocaochamcong (NgayBaoCao,
+                                       SoNVDenSom,
+                                       SoNVDenDungGio,
+                                       SoNVDenTre,
+                                       SoNVTanLamSom,
+                                       SoNVTanLamDungGio,
+                                       SoNVLamThemGio)
+            VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0);
+        END;
+        END IF;
+
+        /* !!!!LOG!!!! */
+        INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+        VALUES (NOW(), 'Insert baocaochamcong va baocaonhansu bat dau cho ngay hien tai hoan tat', NULL, NULL, NULL);
+
+        CREATE TEMPORARY TABLE time5
+        SELECT * FROM timeVariables;
+
+        CREATE TEMPORARY TABLE time6
+        SELECT * FROM timeVariables;
+
+        UPDATE baocaochamcong
+        SET SoNVTanLamSom = (
+            SELECT COUNT(*)
+            FROM chamcong ch
+            WHERE ThoiGianTanLam < SUBTIME(gioTanLamHomQua, (SELECT ThoiGianChoPhepVeSom from time6))
+            AND ThoiGianTanLam = (
+                SELECT ThoiGianTanLam
+                FROM chamcong c
+                WHERE c.IDNhanVien = ch.IDNhanVien
+                AND DATE(ThoiGianVaoLam) = homQua
+                ORDER BY ThoiGianTanLam DESC
+                LIMIT 1
+            )
+        ), SoNVTanLamDungGio = (
+            SELECT COUNT(*)
+            FROM chamcong ch
+            WHERE ThoiGianTanLam BETWEEN SUBTIME(gioTanLamHomQua, (SELECT ThoiGianChoPhepVeSom from time5))
+                AND gioTanLamHomQua + INTERVAL 1 HOUR - INTERVAL 1 SECOND
+            AND ThoiGianTanLam = (
+                SELECT ThoiGianTanLam
+                FROM chamcong c
+                WHERE c.IDNhanVien = ch.IDNhanVien
+                AND DATE(ThoiGianVaoLam) = homQua
+                ORDER BY ThoiGianTanLam DESC
+                LIMIT 1
+            )
+        ), SoNVLamThemGio = (
+            SELECT COUNT(*)
+            FROM chamcong ch
+            WHERE TIMESTAMPDIFF(HOUR, gioTanLamHomQua, ThoiGianTanLam) >= 1
+            AND ThoiGianTanLam = (
+                SELECT ThoiGianTanLam
+                FROM chamcong c
+                WHERE c.IDNhanVien = ch.IDNhanVien
+                AND DATE(ThoiGianVaoLam) = homQua
+                ORDER BY ThoiGianTanLam DESC
+                LIMIT 1
+            )
+        )
+        WHERE NgayBaoCao = homQua;
+
+        /* !!!!LOG!!!! */
+        INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+        VALUES (NOW(), 'Update baocaochamcong cho ngay da qua hoan tat', NULL, NULL, NULL);
+
+        DROP TEMPORARY TABLE time5;
+        DROP TEMPORARY TABLE time6;
+
         DROP TEMPORARY TABLE nhanvien_hientai;
         DROP TEMPORARY TABLE nv_ht2;
         DROP TEMPORARY TABLE nv_ht3;
@@ -406,8 +507,8 @@ DO
         VALUES (NOW(), 'KET THUC EVENT.', NULL, NULL, NULL);
 
 /* endregion */
-
     END $
+
 DELIMITER ;
 
 DELIMITER $
