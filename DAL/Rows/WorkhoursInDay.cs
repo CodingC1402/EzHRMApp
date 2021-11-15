@@ -10,8 +10,8 @@ namespace DAL.Rows
     {
         public DateTime Ngay { get; set; }
         public string IDNhanVien { get; set; }
-        public int SoGioLamTrongGio { get; set; }
-        public int SoGioLamNgoaiGio { get; set; }
+        public float SoGioLamTrongGio { get; set; }
+        public float SoGioLamNgoaiGio { get; set; }
 
         public override string Save(UnitOfWork uow)
         {

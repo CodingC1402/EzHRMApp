@@ -69,7 +69,7 @@ DO
         VALUES (NOW(), 'tao bang temp working_employees hoan tat', null, null, null);
 
         INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
-        SELECT homQua, ID, 0, 0
+        SELECT homQua, ID, 0.0, 0.0
         FROM nhanvien
         WHERE NgayVaoLam <= homQua
         AND NgayThoiViec IS NULL;
@@ -85,12 +85,12 @@ DO
                             WHERE working_employees.IDNhanVien = s.IDNhanVien)
                 , SoGioLamTrongGio +
                 TIMESTAMPDIFF (
-                    HOUR,
+                    MINUTE,
                     (SELECT ThoiGianVaoLam
                     FROM we2
                     WHERE we2.IDNhanVien = s.IDNhanVien),
                     gioTanLamHomQua
-                    )
+                    ) / 60
                 , SoGioLamTrongGio)
             ,
             SoGioLamNgoaiGio =
@@ -99,17 +99,17 @@ DO
                                 WHERE we3.IDNhanVien = s.IDNhanVien)
                     , SoGioLamNgoaiGio +
                       TIMESTAMPDIFF(
-                          HOUR,
+                          MINUTE,
                           gioTanLamHomQua,
                           NOW()
-                          )
+                          ) / 60
                     , TIMESTAMPDIFF(
-                        HOUR,
+                        MINUTE,
                         (SELECT ThoiGianVaoLam
                         FROM we4
                         WHERE we4.IDNhanVien = s.IDNhanVien),
                         NOW()
-                        ))
+                        ) / 60)
         WHERE Ngay = homQua
         AND s.IDNhanVien IN (SELECT we5.IDNhanVien FROM we5);
 
