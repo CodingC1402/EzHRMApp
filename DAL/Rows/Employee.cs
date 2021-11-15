@@ -210,42 +210,85 @@ namespace DAL.Rows
 
         public override string CheckForError()
         {
-            if (NgaySinh > NgayVaoLam)
+            try
             {
-                return "Date of birth can't be greater than working date!";
-            }
+                if (ChucVu == null)
+                    return "Position can't be empty!";
 
-            if (NgayThoiViec.HasValue && NgayThoiViec.Value < NgayVaoLam)
+                if (NgaySinh > NgayVaoLam)
+                {
+                    return "Date of birth can't be greater than working date!";
+                }
+
+                if (NgayThoiViec.HasValue && NgayThoiViec.Value < NgayVaoLam)
+                {
+                    return "Resign date can't be before working date!";
+                }
+
+                if (Ten == null || Ten == "")
+                {
+                    return "Name can't be empty!";
+                }
+
+                if (CMND == null || CMND == "")
+                {
+                    return "Citizen ID can't be empty!";
+                }
+
+                if (EmailVanPhong == null || EmailVanPhong == "")
+                    return "Work email can't be empty!";
+
+                if (SDTVanPhong == null || SDTVanPhong == "")
+                    return "Work phone can't be empty!";
+
+                if (!IsValidEmail(EmailVanPhong))
+                    return "Work email isn't valid!";
+
+                if (!IsValidEmail(EmailCaNhan))
+                    return "Personal email isn't valid!";
+
+                if (!IsValidCitizenID(CMND))
+                    return "Citizen ID is not valid!";
+
+                return "";
+            }
+            catch(Exception e) 
+            { 
+                return $"Unknow error: {e.Message}"; 
+            }
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            if (email == null || email.Trim().EndsWith("."))
             {
-                return "Resign date can't be before working date!";
+                return false; // suggested by @TK-421
             }
-
-            if (Ten == "")
+            try
             {
-                return "Name can't be empty!";
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
             }
-
-            if (CMND == "")
+            catch
             {
-                return "Citizen ID can't be empty!";
+                return false;
             }
+        }
 
-            if (EmailVanPhong == "")
-                return "Work email can't be empty!";
-
-            if (SDTVanPhong == "")
-                return "Work phone can't be empty!";
-
-            if (!IsValidEmail(EmailVanPhong))
-                return "Work email isn't valid!";
-
-            if (EmailCaNhan != "" && !IsValidEmail(EmailCaNhan))
-                return "Personal email isn't valid!";
-
-            if (!IsValidCitizenID(CMND))
-                return "Citizen ID is not valid!";
-
-            return "";
+        public bool IsValidCitizenID(string id)
+        {
+            if (id == null)
+                return false;
+                
+            bool result = id.Length == 9 || id.Length == 12;
+            foreach (char c in id)
+            {
+                if (!char.IsDigit(c))
+                {
+                    result &= false;
+                }
+            }
+            return result;
         }
 
         public bool IsValidEmail(string email)

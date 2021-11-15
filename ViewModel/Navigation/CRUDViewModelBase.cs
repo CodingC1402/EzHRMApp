@@ -20,6 +20,7 @@ namespace ViewModel.Navigation
                 if (value)
                 {
                     PopUpMessage.Instance.Title = "Error!";
+                    PopUpMessage.Instance.ButtonStyle = PopUpMessage.ButtonStyleEnum.ConfirmButton;
                 }
                 PopUpMessage.Instance.IsOpened = value;
             }

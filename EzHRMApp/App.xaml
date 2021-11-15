@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml" />
                 <ResourceDictionary Source="/CornControls;component/Icons/HRMIcons.xaml" />
                 <ResourceDictionary Source="/CornControls;component/CustomControl/Converters/ConverterDict.xaml" />
+                <ResourceDictionary Source="/CornControls;component/CustomControl/Controls.xaml" />
                 <ResourceDictionary Source="Icons/IconsDictionary.xaml" />
                 <ResourceDictionary Source="Core/ControlsStyle/Controls.xaml" />
                 <ResourceDictionary Source="Themes/DefaultImages.xaml" />

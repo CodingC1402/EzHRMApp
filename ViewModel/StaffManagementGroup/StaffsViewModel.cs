@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Model;
 using ViewModel.Helper;
 using ViewModel.Structs;
@@ -23,7 +24,7 @@ namespace ViewModel
             set
             {
                 _selectedDepartmentIndex = value;
-                if (_currentEmployee != null && _selectedDepartmentIndex > 0)
+                if (_currentEmployee != null && _selectedDepartmentIndex >= 0)
                     _currentEmployee.PhongBan = AvailableDepartment[_selectedDepartmentIndex].TenPhong;
             }
         }
@@ -38,6 +39,20 @@ namespace ViewModel
             set
             {
                 _currentEmployee = value;
+
+                AvailableRole = new ObservableCollection<RoleModel>();
+                foreach (RoleModel role in RoleManagementViewModel.Instance.Roles)
+                {
+                    if (role.DaXoa == 0 || (_currentEmployee != null && _currentEmployee.NgayThoiViec != null))
+                    {
+                        AvailableRole.Add(role);
+                        if (_currentEmployee != null && role.TenChucVu == _currentEmployee.ChucVu)
+                        {
+                            SelectedRole = role;
+                        }
+                    }
+                }
+                SelectedDepartmentIndex = _currentEmployee != null ? DepartmentModel.GetIndex(_currentEmployee, AvailableDepartment) : -1;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
             }
         }
@@ -54,21 +69,6 @@ namespace ViewModel
                 var profile = value.GetProfilePicture();
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
-
-                AvailableRole = new ObservableCollection<RoleModel>();
-                foreach (RoleModel role in RoleManagementViewModel.Instance.Roles)
-                {
-                    if (role.DaXoa == 0 || _selectedEmployee.NgayThoiViec != null)
-                    {
-                        AvailableRole.Add(role);
-                        if (role.TenChucVu == _selectedEmployee.ChucVu)
-                        {
-                            SelectedRole = role;
-                        }
-                    }
-                }
-
-                SelectedDepartmentIndex = DepartmentModel.GetIndex(_selectedEmployee, AvailableDepartment);
             }
         }
 
@@ -105,6 +105,12 @@ namespace ViewModel
             var newEmployee = new EmployeeModel();
             newEmployee.ID = EmployeeModel.GetNextEmployeeID();
 
+            newEmployee.NgaySinh = DateTime.Today;
+            newEmployee.NgayVaoLam = DateTime.Today;
+
+            SelectedDepartmentIndex = -1;
+            SelectedRole = null;
+
             CurrentEmployee = newEmployee;
             ProfilePicture = new Image(CurrentEmployee.GetProfilePicture());
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
@@ -118,39 +124,35 @@ namespace ViewModel
 
         public override void ExecuteConfirmAdd(object param)
         {
-            base.ExecuteConfirmAdd(param);
-
             var result = CurrentEmployee.Save(true);
             if (result == "")
             {
+                base.ExecuteConfirmAdd(param);
                 Employees.Add(CurrentEmployee);
                 SelectedEmployeeIndex = Employees.Count - 1;
+                SetCurrentModelBack();
             }
             else
             {
                 ErrorString = result;
                 HaveError = true;
             }
-
-            SetCurrentModelBack();
         }
         public override void ExecuteConfirmUpdate(object param)
         {
-            base.ExecuteConfirmUpdate(param);
-
             var result = CurrentEmployee.Save(false);
             if (result == "")
             {
+                base.ExecuteConfirmUpdate(param);
                 Employees[SelectedEmployeeIndex] = CurrentEmployee;
                 SelectedEmployee = CurrentEmployee;
+                SetCurrentModelBack();
             }
             else
             {
                 ErrorString = result;
                 HaveError = true;
             }
-
-            SetCurrentModelBack();
         }
 
         public override void ExecuteCancleAdd(object param)

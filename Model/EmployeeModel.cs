@@ -60,20 +60,37 @@ namespace Model
 
         public string Save(bool addNew)
         {
-            if (ProfilePicture != null)
-            {
-                var result = ProfilePicture.Save();
-                if (result != "")
-                    return result;
-            }
+            string result = "";
 
             if (addNew)
             {
-                Employee row = new Employee(this);
-                return row.Add();
+                UnitOfWork uow = new UnitOfWork();
+                Employee employee = new Employee(this);
+                employee.TaiKhoan = employee.ID;
+
+                Account account = Account.CreateAccount(employee.ID);
+                
+                result = employee.CheckForError();
+                if (result != "")
+                    return result;
+
+                if (account != null)
+                {
+                    AccountRepo.Instance.Add(account, uow);
+                }
+                EmployeeRepo.Instance.Add(employee, uow);
+
+                result = uow.Complete() ? "" : "Transaction failed! Unknow reason";
             }
             else
-                return Save();
+                result = Save();
+
+            if (result == "" && ProfilePicture != null)
+            {
+                result = ProfilePicture.Save();
+            }
+
+            return result;
         }
 
         protected new string Save(UnitOfWork unitOfWork = null)

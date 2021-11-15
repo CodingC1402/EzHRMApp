@@ -114,9 +114,11 @@ namespace CornControls.CustomControl
             // Better solution but still stupid
             ViewModel.Helper.PopUpMessage.Instance.WhenPropertyChanged += (s, e) =>
             {
-                IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
-                Message = ViewModel.Helper.PopUpMessage.Instance.Message;
-                Title = ViewModel.Helper.PopUpMessage.Instance.Title;
+                var vmInstance = ViewModel.Helper.PopUpMessage.Instance;
+                IsOpened = vmInstance.IsOpened;
+                Message = vmInstance.Message;
+                Title = vmInstance.Title;
+                ButtonStyle = (ButtonStyleEnum)vmInstance.ButtonStyle;
             };
 
             //DataContext = ViewModel.Helper.PopUpMessage.Instance;
