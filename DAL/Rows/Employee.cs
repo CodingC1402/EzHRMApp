@@ -123,6 +123,34 @@ namespace DAL.Rows
             var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
             if (newestCheckIn.ThoiGianTanLam.HasValue)
                 return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
+                var newestCheckIn = CheckInRepo.Instance.FindNewestCheckIn(ID);
+
+                if (newestCheckIn.ThoiGianTanLam.HasValue)
+                    return false;
 
             DateTime gioVaoLam = newestCheckIn.ThoiGianVaoLam.Date;
             TimeSpan time;
