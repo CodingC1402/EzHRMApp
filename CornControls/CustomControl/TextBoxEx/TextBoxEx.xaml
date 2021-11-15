@@ -19,7 +19,7 @@
         <Setter Property="NormalPadding" Value="0, 0, 0, 5" />
         <Setter Property="FocusedPadding" Value="0, 0, 0, 5" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FocusedOutterColor" Value="{DynamicResource Accent}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
@@ -55,11 +55,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <Grid
-                                Width="Auto"
-                                Height="Auto"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid Width="Auto" Height="Auto">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{TemplateBinding IconPad}" />
                                     <ColumnDefinition Width="*" />
@@ -68,17 +64,22 @@
                                 <Path
                                     Width="{TemplateBinding IconSize}"
                                     Height="{TemplateBinding IconSize}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Data="{TemplateBinding Path}"
                                     Fill="{TemplateBinding Foreground}"
                                     RenderTransformOrigin="0.5, 0.5" />
+
                                 <TextBox
                                     x:Name="contentTextBox"
                                     Grid.Column="1"
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualWidth}"
+                                    Height="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualHeight}"
                                     Padding="{TemplateBinding Padding}"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="Left"
-                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Background="Transparent"
                                     BorderThickness="0"
                                     FontFamily="{TemplateBinding FontFamily}"
@@ -89,7 +90,8 @@
                                     IsReadOnly="{TemplateBinding IsReadOnly}"
                                     SelectionTextBrush="{TemplateBinding SelectionTextBrush}"
                                     Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    TextAlignment="{TemplateBinding TextAlignment}" />
+                                    TextAlignment="{TemplateBinding TextAlignment}"
+                                    TextWrapping="{TemplateBinding TextWrapping}" />
                             </Grid>
                         </Border>
                     </Border>
