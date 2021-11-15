@@ -10,6 +10,7 @@
         <ResourceDictionary Source="AnimatedContentControl/AnimatedContentControl.xaml" />
         <ResourceDictionary Source="DatagridEx/DatagridEx.xaml" />
         <ResourceDictionary Source="ComboBoxEx/ComboBoxEx.xaml" />
+        <ResourceDictionary Source="DatePickerEx/DatePickerEx.xaml" />
         <ResourceDictionary Source="PopUpMessage/PopUpMessage.xaml" />
         <ResourceDictionary Source="CheckIDBox/CheckIDBox.xaml" />
     </ResourceDictionary.MergedDictionaries>

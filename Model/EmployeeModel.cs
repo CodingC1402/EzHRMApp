@@ -12,14 +12,6 @@ namespace Model
 {
     public class EmployeeModel : Employee
     {
-        public enum SaveResult
-        {
-            Ok = 0,
-            FailProfile = 1,
-            FailData = 2,
-            FailAll = 3,
-        }
-
         public static ObservableCollection<EmployeeModel> LoadAll()
         {
             var rows = EmployeeRepo.Instance.GetAll();
@@ -76,20 +68,45 @@ namespace Model
             return ProfilePicture;
         }
 
-        public SaveResult Save()
+        public string Save(bool addNew)
         {
-            var result = SaveResult.Ok;
-            if (ProfilePicture != null && !ProfilePicture.Save())
-                result |= SaveResult.FailProfile;
-            if (!Save(null))
-                result |= SaveResult.FailData;
+            string result = "";
+
+            if (addNew)
+            {
+                UnitOfWork uow = new UnitOfWork();
+                Employee employee = new Employee(this);
+                employee.TaiKhoan = employee.ID;
+
+                Account account = Account.CreateAccount(employee.ID);
+                
+                result = employee.CheckForError();
+                if (result != "")
+                    return result;
+
+                if (account != null)
+                {
+                    AccountRepo.Instance.Add(account, uow);
+                }
+                EmployeeRepo.Instance.Add(employee, uow);
+
+                result = uow.Complete() ? "" : "Transaction failed! Unknow reason";
+            }
+            else
+                result = Save();
+
+            if (result == "" && ProfilePicture != null)
+            {
+                result = ProfilePicture.Save();
+            }
 
             return result;
         }
 
-        protected new bool Save(UnitOfWork unitOfWork = null)
+        protected new string Save(UnitOfWork unitOfWork = null)
         {
-            return base.Save();
+            Employee row = new Employee(this);
+            return row.Save();
         }
     }
 }

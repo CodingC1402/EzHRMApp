@@ -6,12 +6,14 @@ using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using System.Windows.Data;
+using System.Timers;
 
 namespace CornControls.CustomControl
 {
     [TemplatePart(Name = "PART_background", Type = typeof(Border)),
     TemplatePart(Name = "PART_innerPanel", Type = typeof(Grid)), AddINotifyPropertyChangedInterface]
-    public class PopUpMessage : UserControl
+    public class PopUpMessage : Control
     {
         public enum ButtonStyleEnum
         {
@@ -31,63 +33,27 @@ namespace CornControls.CustomControl
         private static PopUpMessage _instance;
         public static PopUpMessage Instance => _instance ??= new PopUpMessage();
 
-        public static bool ShowMessage()
+        public static bool ShowErrorMessage(string title, string message)
         {
-            if (Instance.IsOpened)
-            {
-                CloseMessage(Result.Error);
-                return false;
-            }
-
-            Instance.Dispatcher.Invoke(() =>
-            {
-                Instance.IsOpened = true;
-                Instance.CanClose = true;
-                Instance.SetToCurrentMainWindow();
-
-                AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
-                AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
-
-                if (Instance._border != null)
-                {
-                    Instance._border.Opacity = 0;
-                    Instance._border.BeginAnimation(OpacityProperty, inBackgroundAnim);
-                }
-                
-                if (Instance._innerPanel != null)
-                {
-                    Instance._innerPanel.Height = 0;
-                    Instance._innerPanel.BeginAnimation(HeightProperty, inPanelAnim);
-                }
-
-                Instance.Visibility = Visibility.Visible;
-            }, DispatcherPriority.Background);
-
+            Instance.Margin = new Thickness(7);
+            Instance.IconPath = (Geometry)Application.Current.FindResource("errorIcon");
+            Instance.IconHeight = 24;
+            Instance.IconWidth = 24;
+            Instance.Title = title;
+            Instance.Message = message;
+            Instance.ButtonStyle = PopUpMessage.ButtonStyleEnum.ConfirmButton;
+            Instance.IsOpened = true;
             return true;
         }
 
-        public static void CloseMessage(Result result)
+        public static bool ShowMessage()
         {
-            if (!Instance.CanClose || !Instance.IsOpened)
-            {
-                return;
-            }
+            return Instance.IsOpened = true;
+        }
 
-            Instance.Dispatcher.Invoke(() =>
-            {
-                Instance.MessageResult = result;
-                AnimationTimeline outBackgroundAnim = CreateAnimation(Instance.BackgroundOpacity, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut);
-                AnimationTimeline outPanelAnim = CreateAnimation(Instance.PanelHeight, 0, Instance.OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
-                    Instance.Visibility = Visibility.Hidden;
-                    Instance.MessageResult = Result.Ok;
-                    Instance.IsOpened = false;
-                    Instance.CanClose = false;
-                    Instance.RaiseMessageClosedEvent();
-                });
-
-                Instance._border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
-                Instance._innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
-            }, DispatcherPriority.Background);
+        public static void CloseMessage()
+        {
+            Instance.IsOpened = false;
         }
 
         protected static AnimationTimeline CreateAnimation(double from, double to, double time, double amplitude, EasingMode mode, EventHandler whenDone = null)
@@ -130,6 +96,96 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty IconWidthProperty = DependencyProperty.Register(nameof(IconWidth), typeof(double), typeof(PopUpMessage), new PropertyMetadata(50.0));
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(nameof(IconPath), typeof(Geometry), typeof(PopUpMessage));
         
+        public PopUpMessage()
+        {
+            //Timer timer = new Timer();
+            //timer.Interval = 250;
+            //timer.Elapsed += (s, e) =>
+            //{
+            //    this.Dispatcher.Invoke(() =>
+            //    {
+            //        this.IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
+            //        this.Message = ViewModel.Helper.PopUpMessage.Instance.Message;
+            //    });
+            //};
+            //timer.Start();
+            // Fucking stupid ass solution ~~
+
+            // Better solution but still stupid
+            ViewModel.Helper.PopUpMessage.Instance.WhenPropertyChanged += (s, e) =>
+            {
+                var vmInstance = ViewModel.Helper.PopUpMessage.Instance;
+                IsOpened = vmInstance.IsOpened;
+                Message = vmInstance.Message;
+                Title = vmInstance.Title;
+                ButtonStyle = (ButtonStyleEnum)vmInstance.ButtonStyle;
+            };
+
+            //DataContext = ViewModel.Helper.PopUpMessage.Instance;
+            //Binding bindingIsOpen = new Binding(nameof(ViewModel.Helper.PopUpMessage.IsOpened));
+            //Binding bindingMessage = new Binding(nameof(ViewModel.Helper.PopUpMessage.Message));
+            //bindingIsOpen.Source = ViewModel.Helper.PopUpMessage.Instance;
+            //bindingMessage.Source = ViewModel.Helper.PopUpMessage.Instance;
+            //SetBinding(IsOpenedProperty, bindingIsOpen);
+            //SetBinding(MessageProperty, bindingMessage);
+        }
+
+        protected bool Show()
+        {
+            if (IsOpened)
+            {
+                CloseMessage();
+                return false;
+            }
+
+            Instance.Dispatcher.Invoke(() =>
+            {
+                CanClose = true;
+                SetToCurrentMainWindow();
+
+                AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
+
+                if (Instance._border != null)
+                {
+                    Instance._border.Opacity = 0;
+                    Instance._border.BeginAnimation(OpacityProperty, inBackgroundAnim);
+                }
+
+                if (Instance._innerPanel != null)
+                {
+                    Instance._innerPanel.Height = 0;
+                    Instance._innerPanel.BeginAnimation(HeightProperty, inPanelAnim);
+                }
+
+                Instance.Visibility = Visibility.Visible;
+            }, DispatcherPriority.Background);
+
+            return true;
+        }
+
+        protected void Close()
+        {
+            if (!CanClose || !IsOpened)
+            {
+                return;
+            }
+
+            Instance.Dispatcher.Invoke(() =>
+            {
+                AnimationTimeline outBackgroundAnim = CreateAnimation(BackgroundOpacity, 0, OutAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline outPanelAnim = CreateAnimation(PanelHeight, 0, OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
+                    Visibility = Visibility.Hidden;
+                    IsOpened = false;
+                    CanClose = false;
+                    RaiseMessageClosedEvent();
+                });
+
+                _border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
+                _innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
+            }, DispatcherPriority.Background);
+        }
+
         public string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -138,7 +194,11 @@ namespace CornControls.CustomControl
         public string Message
         {
             get => (string)GetValue(MessageProperty);
-            set => SetValue(MessageProperty, value);
+            set
+            {
+                SetValue(MessageProperty, value);
+                ViewModel.Helper.PopUpMessage.Instance.Message = value;
+            }
         }
         public bool CanClose
         {
@@ -159,7 +219,15 @@ namespace CornControls.CustomControl
         public bool IsOpened
         {
             get => (bool)GetValue(IsOpenedProperty);
-            private set => SetValue(IsOpenedProperty, value);
+            set
+            {
+                if (value)
+                    Show();
+                else
+                    Close();
+                SetValue(IsOpenedProperty, value);
+                ViewModel.Helper.PopUpMessage.Instance.IsOpened = value;
+            }
         }
 
         public double OutAnimTime
@@ -197,7 +265,14 @@ namespace CornControls.CustomControl
         public ButtonStyleEnum ButtonStyle
         {
             get => (ButtonStyleEnum)GetValue(ButtonStyleProperty);
-            set => SetValue(ButtonStyleProperty, value);
+            set
+            {
+                SetValue(ButtonStyleProperty, value);
+                CancelCommand.RaiseCanExecuteChangeEvent();
+                YesCommand.RaiseCanExecuteChangeEvent();
+                ConfirmCommand.RaiseCanExecuteChangeEvent();
+                NoCommand.RaiseCanExecuteChangeEvent();
+            }
         }
 
         public double IconHeight
@@ -275,26 +350,30 @@ namespace CornControls.CustomControl
 
         private RelayCommand<object> _confirmCommand;
         public RelayCommand<object> ConfirmCommand => _confirmCommand ??= new RelayCommand<object>(param => {
-            CloseMessage(Result.Ok);
+            MessageResult = Result.Ok;
+            IsOpened = false;
         }, param => {
             return (ButtonStyle & ButtonStyleEnum.ConfirmButton) > 0;
         });
-        private RelayCommand<object> _cancleCommand;
-        public RelayCommand<object> CancleCommand => _cancleCommand ??= new RelayCommand<object>(param => {
-            CloseMessage(Result.Cancled);
+        private RelayCommand<object> _cancelCommand;
+        public RelayCommand<object> CancelCommand => _cancelCommand ??= new RelayCommand<object>(param => {
+            MessageResult = Result.Cancled;
+            IsOpened = false;
         }, param => {
             return (ButtonStyle & ButtonStyleEnum.CancleButton) > 0;
         });
 
         private RelayCommand<object> _yesCommand;
         public RelayCommand<object> YesCommand => _yesCommand ??= new RelayCommand<object>(param => {
-            CloseMessage(Result.Ok);
+            MessageResult = Result.Ok;
+            IsOpened = false;
         }, param => {
             return (ButtonStyle & ButtonStyleEnum.YesButton) > 0;
         });
         private RelayCommand<object> _noCommand;
         public RelayCommand<object> NoCommand => _noCommand ??= new RelayCommand<object>(param => {
-            CloseMessage(Result.Ok);
+            MessageResult = Result.Cancled;
+            IsOpened = false;
         }, param => {
             return (ButtonStyle & ButtonStyleEnum.NoButton) > 0;
         });

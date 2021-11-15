@@ -82,5 +82,4 @@ namespace ViewModel.Helper
 
         #endregion
     }
-
 }

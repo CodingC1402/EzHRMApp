@@ -52,7 +52,7 @@ namespace CornControls.CustomControl
         public new bool IsFocused
         {
             get => (bool)GetValue(IsFocusedProperty);
-            private set => SetValue(IsFocusedProperty, value);
+            protected set => SetValue(IsFocusedProperty, value);
         }
         public Brush NormalColor
         {
@@ -118,7 +118,7 @@ namespace CornControls.CustomControl
             set => SetValue(FocusedOutterColorProperty, value);
         }
 
-        private TextBox contentTextBox = null;
+        protected TextBox contentTextBox = null;
         [Browsable(true), Category("Appearance")]
         public new string SelectedText
         {

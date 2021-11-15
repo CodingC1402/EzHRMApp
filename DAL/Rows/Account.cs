@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Cryptography;
 using System.Text;
 using static DAL.Repos.AccountRepo;
 
@@ -12,10 +13,29 @@ namespace DAL.Rows
 {
     public class Account : Row
     {
+        public const string DefaultPassword = "1";
         public string TaiKhoan { get; set; }
         public string Password { get; set; }
         public string NhomTaiKhoan { get; set; }
         public int DangLogin { get; set; }
+
+        public static Account CreateAccount(string accountName)
+        {
+            var account = AccountRepo.Instance.FindByID(new object[] { accountName });
+            if (account != null)
+                return null;
+
+            account = new Account();
+            using (var sh256 = SHA256.Create())
+            {
+                account.TaiKhoan = accountName;
+                var hash = sh256.ComputeHash(Encoding.UTF8.GetBytes(DefaultPassword));
+                account.Password = ToHex(ref hash, false);
+            }
+            account.NhomTaiKhoan = "employee";
+
+            return account;
+        }
 
         public ConnectionResult Login(SecureString password)
         {
@@ -69,9 +89,78 @@ namespace DAL.Rows
             return true;
         }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Add(UnitOfWork uow = null)
         {
-            return AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uow);
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    AccountRepo.Instance.Add(this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (AccountRepo.Instance.Add(this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string Save(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (AccountRepo.Instance.Update(new object[] { TaiKhoan }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            try
+            {
+                if (!IsAccountValid())
+                    return "Your account is too short!";
+
+                return "";
+            }
+            catch (Exception e)
+            {
+                return $"Unknow error: {e.Message}";
+            }
+        }
+
+        public bool IsAccountValid()
+        {
+            if (TaiKhoan.Length < 5)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static string ToHex(ref byte[] bytes, bool upperCase)
+        {
+            string result = "";
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                string byteStr = bytes[i].ToString(upperCase ? "X2" : "x2");
+                foreach (char c in byteStr)
+                {
+                    result += c;
+                }
+                bytes[i] = 0;
+            }
+            return result;
         }
     }
 }

@@ -1,18 +1,27 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls">
-    
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls">
+
     <Style x:Key="GlowingTextBoxStyle" TargetType="controls:TextBoxEx">
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect BlurRadius="3" ShadowDepth="0" Direction="0" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:TextBoxEx}}, Path=OutterColor, Converter={StaticResource SolidColorConverter}}"/>
+                <DropShadowEffect
+                    BlurRadius="3"
+                    Direction="0"
+                    ShadowDepth="0"
+                    Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:TextBoxEx}}, Path=OutterColor, Converter={StaticResource SolidColorConverter}}" />
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect BlurRadius="7" ShadowDepth="0" Direction="0" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:TextBoxEx}}, Path=FocusedOutterColor, Converter={StaticResource SolidColorConverter}}"/>
+                        <DropShadowEffect
+                            BlurRadius="7"
+                            Direction="0"
+                            ShadowDepth="0"
+                            Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:TextBoxEx}}, Path=FocusedOutterColor, Converter={StaticResource SolidColorConverter}}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -22,14 +31,22 @@
     <Style x:Key="GlowingPasswordBoxStyle" TargetType="controls:PasswordBoxEx">
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect BlurRadius="3" ShadowDepth="0" Direction="0" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PasswordBoxEx}}, Path=OutterColor, Converter={StaticResource SolidColorConverter}}"/>
+                <DropShadowEffect
+                    BlurRadius="3"
+                    Direction="0"
+                    ShadowDepth="0"
+                    Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PasswordBoxEx}}, Path=OutterColor, Converter={StaticResource SolidColorConverter}}" />
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect BlurRadius="7" ShadowDepth="0" Direction="0" Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PasswordBoxEx}}, Path=FocusedOutterColor, Converter={StaticResource SolidColorConverter}}"/>
+                        <DropShadowEffect
+                            BlurRadius="7"
+                            Direction="0"
+                            ShadowDepth="0"
+                            Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PasswordBoxEx}}, Path=FocusedOutterColor, Converter={StaticResource SolidColorConverter}}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>

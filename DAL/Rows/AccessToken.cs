@@ -13,9 +13,9 @@ namespace DAL.Rows
         public string NhanVienID { get; set; }
         public string Account { get; set; }
 
-        public override bool Save(UnitOfWork uow)
+        public override string Save(UnitOfWork uow)
         {
-            return AccessTokenRepo.Instance.Update(new object[] { Token }, this, uow);
+            return BoolToString(AccessTokenRepo.Instance.Update(new object[] { Token }, this, uow));
         }
     }
 }

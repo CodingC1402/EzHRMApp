@@ -6,12 +6,6 @@ namespace Model
 {
     public class DepartmentModel : Department
     {
-        public enum SaveResult
-        {
-            Ok = 0,
-            FailData = 1
-        }
-
         public static ObservableCollection<DepartmentModel> LoadAll()
         {
             var rows = DAL.Repos.DepartmentRepo.Instance.GetAll();
@@ -33,32 +27,6 @@ namespace Model
             NgayThanhLap = department.NgayThanhLap;
         }
         public DepartmentModel(DepartmentModel department) : base(department) { }
-
-        public SaveResult Update(Department updatedValue)
-        {
-            var result = SaveResult.Ok;
-
-            UnitOfWork uow = new UnitOfWork();
-
-            if (!Update(updatedValue, uow))
-                result |= SaveResult.FailData;
-
-            uow.Complete();
-            return result;
-        }
-
-        public SaveResult Add()
-        {
-            var result = SaveResult.Ok;
-
-            UnitOfWork uow = new UnitOfWork();
-
-            if (!Add(uow))
-                result |= SaveResult.FailData;
-
-            uow.Complete();
-            return result;
-        }
 
         public static int GetIndex(EmployeeModel employee, ObservableCollection<DepartmentModel> arr)
         {

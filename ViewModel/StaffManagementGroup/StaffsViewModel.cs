@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Model;
 using ViewModel.Helper;
 using ViewModel.Structs;
@@ -7,19 +8,62 @@ namespace ViewModel
 {
     public class StaffsViewModel : Navigation.CRUDViewModelBase
     {
+        public enum ReportTimeSpanEnum
+        {
+            InWeek,
+            InMonth,
+            InYear
+        }
 
         public ObservableCollection<EmployeeModel> Employees { get; set; }
         public ObservableCollection<DepartmentModel> AvailableDepartment { get; set; }
-        public int SelectedDepartmentIndex { get; set; }
 
+        private ObservableCollection<RoleModel> _availableRoles;
+        public ObservableCollection<RoleModel> AvailableRole {
+            get => _availableRoles;
+            set => _availableRoles = value;
+        }
+
+        public EmployeeReportModel Report { get; set; }
+        public ReportTimeSpanEnum ReportTimeSpan { get; set; }
+
+        private int _selectedDepartmentIndex = 0;
+        public int SelectedDepartmentIndex
+        {
+            get => _selectedDepartmentIndex;
+            set
+            {
+                _selectedDepartmentIndex = value;
+                if (_currentEmployee != null && _selectedDepartmentIndex >= 0)
+                    _currentEmployee.PhongBan = AvailableDepartment[_selectedDepartmentIndex].TenPhong;
+            }
+        }
+
+        // Use index to make it easier in search for department
+        public int SelectedEmployeeIndex {get; set;}
         private EmployeeModel _selectedEmployee = null;
         private EmployeeModel _currentEmployee = null;
+        private RoleModel _selectedRole = null;
 
         public EmployeeModel CurrentEmployee {
             get => _currentEmployee;
             set
             {
                 _currentEmployee = value;
+
+                AvailableRole = new ObservableCollection<RoleModel>();
+                foreach (RoleModel role in RoleManagementViewModel.Instance.Roles)
+                {
+                    if (role.DaXoa == 0 || (_currentEmployee != null && _currentEmployee.NgayThoiViec != null))
+                    {
+                        AvailableRole.Add(role);
+                        if (_currentEmployee != null && role.TenChucVu == _currentEmployee.ChucVu)
+                        {
+                            SelectedRole = role;
+                        }
+                    }
+                }
+                SelectedDepartmentIndex = _currentEmployee != null ? DepartmentModel.GetIndex(_currentEmployee, AvailableDepartment) : -1;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
             }
         }
@@ -30,17 +74,63 @@ namespace ViewModel
             set
             {
                 _selectedEmployee = value;
-                var profile = value.GetProfilePicture();
+                AddPenaltyCommand.RaiseCanExecuteChangeEvent();
 
+                if (_selectedEmployee == null)
+                    return;
+                UpdateReport();
+                var profile = value.GetProfilePicture();
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
-
-                SelectedDepartmentIndex = DepartmentModel.GetIndex(_selectedEmployee, AvailableDepartment);
             }
         }
 
+        public RoleModel SelectedRole
+        {
+            get => _selectedRole;
+            set
+            {
+                _selectedRole = value;
+                if (_currentEmployee != null && _selectedRole != null)
+                _currentEmployee.ChucVu = _selectedRole.TenChucVu;
+            }
+        }
+
+        #region Commands
         private RelayCommand<object> _selectProfileCommand;
         public RelayCommand<object> SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new RelayCommand<object>(ExecuteSelectProfile, CanExecuteSelectProfile));
+
+        private RelayCommand<object> _addPenaltyCommand;
+        public RelayCommand<object> AddPenaltyCommand => _addPenaltyCommand ?? (_addPenaltyCommand = new RelayCommand<object>(ExecuteAddPenalty, CanExecuteAddPenalty));
+        #endregion
+        #region Functions
+        private void UpdateReport()
+        {
+            var endTime = DateTime.Today;
+            var startTime = DateTime.Today;
+            switch (ReportTimeSpan)
+            {
+                case ReportTimeSpanEnum.InWeek:
+                    startTime = startTime.AddDays(-7);
+                    break;
+                case ReportTimeSpanEnum.InMonth:
+                    startTime = startTime.AddMonths(-1);
+                        break;
+                case ReportTimeSpanEnum.InYear:
+                    startTime = startTime.AddYears(-1);
+                    break;
+            }
+            Report = EmployeeReportModel.Compile(_selectedEmployee, startTime, endTime);
+        }
+
+        public void ExecuteAddPenalty(object param)
+        {
+
+        }
+        public bool CanExecuteAddPenalty(object param)
+        {
+            return _selectedEmployee != null;
+        }
 
         public void ExecuteSelectProfile(object param)
         {
@@ -61,6 +151,12 @@ namespace ViewModel
             var newEmployee = new EmployeeModel();
             newEmployee.ID = EmployeeModel.GetNextEmployeeID();
 
+            newEmployee.NgaySinh = DateTime.Today;
+            newEmployee.NgayVaoLam = DateTime.Today;
+
+            SelectedDepartmentIndex = -1;
+            SelectedRole = null;
+
             CurrentEmployee = newEmployee;
             ProfilePicture = new Image(CurrentEmployee.GetProfilePicture());
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
@@ -74,15 +170,35 @@ namespace ViewModel
 
         public override void ExecuteConfirmAdd(object param)
         {
-            base.ExecuteConfirmAdd(param);
-            CurrentEmployee.Save();
-            SetCurrentModelBack();
+            var result = CurrentEmployee.Save(true);
+            if (result == "")
+            {
+                base.ExecuteConfirmAdd(param);
+                Employees.Add(CurrentEmployee);
+                SelectedEmployeeIndex = Employees.Count - 1;
+                SetCurrentModelBack();
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
         }
         public override void ExecuteConfirmUpdate(object param)
         {
-            base.ExecuteConfirmUpdate(param);
-            CurrentEmployee.Save();
-            SetCurrentModelBack();
+            var result = CurrentEmployee.Save(false);
+            if (result == "")
+            {
+                base.ExecuteConfirmUpdate(param);
+                Employees[SelectedEmployeeIndex] = CurrentEmployee;
+                SelectedEmployee = CurrentEmployee;
+                SetCurrentModelBack();
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
         }
 
         public override void ExecuteCancleAdd(object param)
@@ -125,5 +241,6 @@ namespace ViewModel
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
         }
+        #endregion
     }
 }
