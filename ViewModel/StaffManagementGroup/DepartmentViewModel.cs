@@ -113,6 +113,7 @@ namespace ViewModel
             }
         }
 
+        public bool OnlyMessage { get; set; }
         public string Message { get; set; }
         public Image ProfilePicture { get; set; }
         private EmployeeModel _manager = null;
@@ -132,6 +133,8 @@ namespace ViewModel
         public DepartmentViewModel()
         {
             Departments = DepartmentModel.LoadAll();
+            OnlyMessage = true;
+            Message = "Empty";
         }
 
         private void SetCurrentModelBack()
@@ -142,9 +145,29 @@ namespace ViewModel
 
         private void UpdatePopup()
         {
-            Message = "Help";
             if (CurrentDepartment != null)
+            {
                 Manager = EmployeeModel.GetEmployeeByID(CurrentDepartment.TruongPhong);
+
+                if (Manager == null)
+                {
+                    if (CurrentDepartment.TruongPhong == null)
+                    {
+                        Message = "No manager here";
+                    }
+                    else
+                    {
+                        Message = "Unknown employee ID: " + CurrentDepartment.TruongPhong;
+                    }
+
+                    OnlyMessage = true;
+                }
+                else
+                {
+                    OnlyMessage = false;
+                    Message = "";
+                }
+            }
         }
     }
 }

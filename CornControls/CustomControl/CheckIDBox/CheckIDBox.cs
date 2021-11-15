@@ -215,6 +215,7 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IsMessageOnlyProperty = DependencyProperty.Register(nameof(IsMessageOnly), typeof(bool), typeof(CheckIDBox), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         [Browsable(true), Category("Appearance")]
         public string MessageText
@@ -249,6 +250,13 @@ namespace CornControls.CustomControl
         {
             get => (string)GetValue(ContentTextProperty);
             set => SetValue(ContentTextProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public bool IsMessageOnly
+        {
+            get => (bool)GetValue(IsMessageOnlyProperty);
+            set => SetValue(IsMessageOnlyProperty, value);
         }
 
         static CheckIDBox()

@@ -30,7 +30,6 @@
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
@@ -39,7 +38,7 @@
                     <ScrollViewer
                         x:Name="PART_ContentHost"
                         Background="Transparent"
-                        Focusable="false"
+                        Focusable="True"
                         HorizontalScrollBarVisibility="Hidden"
                         VerticalScrollBarVisibility="Hidden" />
                 </ControlTemplate>
@@ -164,7 +163,7 @@
                         <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -173,6 +172,7 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <Ellipse
+                                    x:Name="profilePicture"
                                     Grid.RowSpan="2"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
@@ -193,6 +193,8 @@
                                     Grid.Row="1"
                                     Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
                                 <Label
+                                    x:Name="messageLabel"
+                                    HorizontalAlignment="Center"
                                     Grid.ColumnSpan="2"
                                     Grid.Row="2"
                                     Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
@@ -234,13 +236,12 @@
                 <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
                 <Setter TargetName="shadow" Property="Color" Value="#71000000" />
             </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsGrouping" Value="true" />
-                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                </MultiTrigger.Conditions>
-                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
-            </MultiTrigger>
+            <Trigger Property="IsMessageOnly" Value="true">
+                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0"/>
+                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3"/>
+                <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden"/>
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -274,7 +275,7 @@
                         <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" MinWidth="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -283,6 +284,7 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <Ellipse
+                                    x:Name="profilePicture"
                                     Grid.RowSpan="2"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
@@ -295,14 +297,19 @@
                                             Stretch="Uniform" />
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                    <Label
+                                <Label
+                                    x:Name="idLabel"
                                     Grid.Column="1"
                                     Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
                                 <Label
+                                    x:Name="nameLabel"
                                     Grid.Column="1"
                                     Grid.Row="1"
                                     Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
                                 <Label
+                                    x:Name="messageLabel"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center"
                                     Grid.ColumnSpan="2"
                                     Grid.Row="2"
                                     Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
@@ -332,7 +339,19 @@
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true" />
+            <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true">
+                <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
+                <Setter TargetName="shadow" Property="Color" Value="#71000000" />
+            </Trigger>
+            <Trigger Property="IsMessageOnly" Value="true">
+                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0"/>
+                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3"/>
+                <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden"/>
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -367,8 +386,6 @@
 
         <Setter Property="ItemSelectedForeground" Value="{DynamicResource LightForeground}" />
 
-        <Setter Property="IconColor" Value="{DynamicResource DarkForeground}" />
-        <Setter Property="IconHoverColor" Value="{DynamicResource Accent}" />
         <Setter Property="ItemCornerRadius" Value="5" />
         <Setter Property="CornerRadius" Value="5" />
 
