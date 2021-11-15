@@ -110,7 +110,7 @@ DO
                         WHERE we4.IDNhanVien = s.IDNhanVien),
                         NOW()
                         ))
-        WHERE Ngay = CURRENT_DATE() - INTERVAL 1 DAY
+        WHERE Ngay = homQua
         AND s.IDNhanVien IN (SELECT we5.IDNhanVien FROM we5);
 
         /* !!!!LOG!!!! */
@@ -142,7 +142,7 @@ DO
         CREATE TEMPORARY TABLE nhanvien_hientai
         SELECT *
         FROM nhanvien
-        WHERE NgayVaoLam <= CURRENT_DATE() - INTERVAL 1 DAY
+        WHERE NgayVaoLam <= homQua
         AND NgayThoiViec IS NULL;
 
         CREATE TEMPORARY TABLE nv_ht2
@@ -155,6 +155,9 @@ DO
         SELECT * FROM nhanvien_hientai;
 
         CREATE TEMPORARY TABLE nv_ht5
+        SELECT * FROM nhanvien_hientai;
+
+        CREATE TEMPORARY TABLE nv_ht6
         SELECT * FROM nhanvien_hientai;
 
         CREATE TEMPORARY TABLE timeVariables
@@ -178,7 +181,7 @@ DO
         /* Them nhan vien vang mat vao bang NghiPhep */
         INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
         SELECT IDNhanVien,
-               CURRENT_DATE() - INTERVAL 1 DAY,
+               homQua,
                1,
                'Tu dong them nhan vien vang mat',
                0
@@ -186,53 +189,53 @@ DO
         WHERE (
             SELECT ThoiGianVaoLam
             FROM chamcong c
-            WHERE DATE(c.ThoiGianVaoLam) = CURRENT_DATE() - INTERVAL 1 DAY
+            WHERE DATE(c.ThoiGianVaoLam) = homQua
             GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
             ORDER BY c.ThoiGianVaoLam ASC
             LIMIT 1
         ) > ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianDiTreToiDa FROM timeVariables))
         UNION
         SELECT n.ID as IDNhanVien,
-               CURRENT_DATE() - INTERVAL 1 DAY,
+               homQua,
                1,
                'Tu dong them nhan vien vang mat',
                0
         FROM nhanvien_hientai n
-        WHERE n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = CURRENT_DATE() - INTERVAL 1 DAY);
+        WHERE n.ID NOT IN (SELECT IDNhanVien FROM chamcong c2 WHERE DATE(c2.ThoiGianVaoLam) = homQua);
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
         VALUES (NOW(), 'Them nhan vien vang mat vao bang NghiPhep hoan tat', NULL, NULL, NULL);
 
-        /* Tru luong cac nhan vien vang mat hoac di tre */
+        /* Tru luong cac nhan vien di tre va cac nhan vien bo ve som */
         INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
-    /* Nhan vien vang mat */
-        SELECT CURRENT_DATE() - INTERVAL 1 DAY,
+        SELECT homQua,
                IDNhanVien,
                'VangMat',
                (SELECT TruLuongTrucTiep FROM cacloaivipham WHERE TenViPham = 'VangMat'),
                (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'VangMat'),
                'Tu dong tru luong nhan vien vang mat'
         FROM nghiphep
-        WHERE NgayBatDauNghi = CURRENT_DATE() - INTERVAL 1 DAY AND CoPhep = 0
+        WHERE NgayBatDauNghi = homQua AND CoPhep = 0
         UNION
-    /* Nhan vien di tre */
-        SELECT CURRENT_DATE() - INTERVAL 1 DAY,
+        SELECT homQua,
                IDNhanVien,
-               'DiTre',
-               (SELECT TruLuongTrucTiep FROM cacloaivipham WHERE TenViPham = 'DiTre'),
-               (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'DiTre'),
-               'Tu dong tru luong nhan vien di tre'
-        FROM chamcong
-        WHERE (
-            SELECT ThoiGianVaoLam
+               'VeSom',
+               (SELECT TruLuongTrucTiep FROM cacloaivipham WHERE TenViPham = 'VeSom'),
+               (SELECT TruLuongTheoPhanTram FROM cacloaivipham WHERE TenViPham = 'VeSom'),
+               'Tu dong tru luong nhan vien bo ve som'
+        FROM chamcong ch
+        WHERE DATE(ThoiGianVaoLam) = homQua
+        AND ThoiGianTanLam BETWEEN SUBTIME(gioTanLamHomQua, (SELECT ThoiGianVeSomToiDa FROM time2))
+            AND SUBTIME(gioTanLamHomQua, (SELECT ThoiGianChoPhepVeSom FROM time3) + INTERVAL 1 SECOND)
+        AND ThoiGianTanLam = (
+            SELECT ThoiGianTanLam
             FROM chamcong c
-            WHERE DATE(c.ThoiGianVaoLam) = CURRENT_DATE() - INTERVAL 1 DAY
-            GROUP BY c.IDNhanVien, DATE(c.ThoiGianVaoLam)
-            ORDER BY c.ThoiGianVaoLam ASC
+            WHERE c.IDNhanVien = ch.IDNhanVien
+            AND DATE(ThoiGianVaoLam) = homQua
+            ORDER BY ThoiGianTanLam DESC
             LIMIT 1
-        ) BETWEEN ADDTIME(gioVaoLamHomQua, (SELECT ThoiGianChoPhepDiTre FROM time2)) + INTERVAL 1 SECOND
-            AND (SELECT ThoiGianDiTreToiDa FROM time3);
+        );
 
         DROP TEMPORARY TABLE timeVariables;
         DROP TEMPORARY TABLE time2;
@@ -240,7 +243,7 @@ DO
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
-        VALUES (NOW(), 'Tru luong nhan vien vang mat hoac di tre hoan tat', NULL, NULL, NULL);
+        VALUES (NOW(), 'Tru luong nhan vien vang mat hoac bo ve som hoan tat', NULL, NULL, NULL);
 /* endregion */
 
 
@@ -260,27 +263,27 @@ DO
                    CURRENT_DATE(),
                    n.ID,
                    c.TienLuongMoiThang,
-                   (
-                    SELECT SUM(SoTienTru + SoPhanTramTru * c.TienLuongMoiThang)
+                   IFNULL((
+                    SELECT SUM(SoTienTru + SoPhanTramTru / 100.0 * c.TienLuongMoiThang)
                     FROM truluong t
-                    WHERE (Ngay BETWEEN c2.LanTraLuongCuoi AND CURRENT_DATE() - INTERVAL 1 DAY)
+                    WHERE (Ngay BETWEEN c2.LanTraLuongCuoi AND homQua)
                     AND t.IDNhanVien = n.ID
-                   ),
-                   (
+                   ), 0),
+                   IFNULL((
                    SELECT SUM(s.SoGioLamNgoaiGio) * c.PhanTramLuongNgoaiGio * c.TienLuongMoiThang / 26 /
                     (
                         SELECT HOUR(TIMEDIFF(GioTanLamCacNgayTrongTuan, GioVaoLamCacNgayTrongTuan))
                         FROM thoigianbieutuan
-                        WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - INTERVAL 1 DAY
+                        WHERE DATE(ThoiDiemTao) <= homQua
                     )
-                   ),
+                   ), 0),
                    c.TienLuongMoiThang
             FROM nv_ht2 n
             INNER JOIN chucvu c ON n.ChucVu = c.TenChucVu
             INNER JOIN sogiolamtrongngay s on s.IDNhanVien = n.ID
             INNER JOIN cachtinhluong c2 on c.CachTinhLuong = c2.Ten
             WHERE c.CachTinhLuong = 'TheoThang'
-            AND (s.Ngay BETWEEN c2.LanTraLuongCuoi AND CURRENT_DATE() - INTERVAL 1 DAY)
+            AND (s.Ngay BETWEEN c2.LanTraLuongCuoi AND homQua)
             GROUP BY n.ID;
 
             /* !!!!LOG!!!! */
@@ -288,27 +291,7 @@ DO
             VALUES (NOW(), 'LUONG THANG: insert cac dong moi vao table luong hoan tat', NULL, NULL, NULL);
 
             UPDATE luong l
-            SET /*TienTruLuong = (
-                SELECT SUM(SoTienTru + SoPhanTramTru * l.TienLuong)
-                FROM truluong t
-                WHERE (Ngay BETWEEN CURRENT_DATE()
-                    AND (SELECT NgayTinhLuongHangThang FROM thamso WHERE DATE(ThoiDiemTao) <= CURRENT_DATE()))
-                AND t.IDNhanVien = l.IDNhanVien
-            ),
-            TienThuong = (
-                SELECT l.TienLuong / 26 / (
-                    SELECT HOUR(TIMEDIFF(GioTanLamCacNgayTrongTuan, GioVaoLamCacNgayTrongTuan))
-                    FROM thoigianbieutuan
-                    WHERE DATE(ThoiDiemTao) <= CURRENT_DATE() - 1
-                ) * s.SoGioLamNgoaiGio * c.PhanTramLuongNgoaiGio
-                FROM chucvu c
-                INNER JOIN nhanvien n on c.TenChucVu = n.ChucVu
-                INNER JOIN sogiolamtrongngay s on s.IDNhanVien = n.ID
-                WHERE n.ID = l.IDNhanVien
-                AND (s.Ngay BETWEEN CURRENT_DATE() AND
-                    (SELECT LanTraLuongCuoi FROM cachtinhluong ctl WHERE ctl.Ten = 'TheoThang'))
-            ),*/
-            TongTienLuong = TongTienLuong + TienThuong - TienTruLuong
+            SET TongTienLuong = GREATEST(TongTienLuong + TienThuong - TienTruLuong, 0)
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
@@ -333,19 +316,19 @@ DO
         BEGIN
             /* !!!!LOG!!!! */
             INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
-            VALUES (NOW(), 'Hom nay la ngay tra luong cho nhan vien theo ngay', NULL, NULL, NULL);
+            VALUES (NOW(), 'Hom nay la ngay tra luong cho nhan vien theo gio', NULL, NULL, NULL);
 
             INSERT INTO luong (NgayTinhLuong, IDNhanVien, TienLuong, TienTruLuong, TienThuong, TongTienLuong)
             SELECT DISTINCT
                    CURRENT_DATE(),
                    n.ID,
                    c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio)),
-                   (
+                   IFNULL((
                     SELECT SUM(SoTienTru)
                     FROM truluong t
-                    WHERE t.Ngay BETWEEN c3.LanTraLuongCuoi AND CURRENT_DATE() - INTERVAL 1 DAY
+                    WHERE t.Ngay BETWEEN c3.LanTraLuongCuoi AND homQua
                     AND t.IDNhanVien = n.ID
-                   ),
+                   ), 0),
                    c.TienLuongMoiGio * c.PhanTramLuongNgoaiGio * (SELECT SUM(s.SoGioLamNgoaiGio)),
                    c.TienLuongMoiGio * (SELECT SUM(s.SoGioLamTrongGio))
             FROM nv_ht4 n
@@ -353,7 +336,7 @@ DO
             INNER JOIN sogiolamtrongngay s ON n.ID = s.IDNhanVien
             INNER JOIN cachtinhluong c3 on c.CachTinhLuong = c3.Ten
             WHERE c.CachTinhLuong = 'TheoGio'
-            AND (s.Ngay BETWEEN c3.LanTraLuongCuoi AND CURRENT_DATE() - INTERVAL 1 DAY)
+            AND (s.Ngay BETWEEN c3.LanTraLuongCuoi AND homQua)
             GROUP BY n.ID;
 
             /* !!!!LOG!!!! */
@@ -361,18 +344,26 @@ DO
             VALUES (NOW(), 'LUONG NGAY: insert cac dong moi vao table luong hoan tat', NULL, NULL, NULL);
 
             UPDATE luong l
-            SET TienTruLuong = TienTruLuong - GREATEST((
+            SET TienTruLuong = TienTruLuong + LEAST(IFNULL((
                     SELECT SUM(SoPhanTramTru)
                     FROM truluong t
                     WHERE t.Ngay BETWEEN (SELECT LanTraLuongCuoi FROM cachtinhluong WHERE Ten = 'TheoGio')
-                        AND CURRENT_DATE() - INTERVAL 1 DAY
+                        AND homQua
                     AND t.IDNhanVien = l.IDNhanVien
-                ), 100) / 100 * l.TienLuong,
-                TongTienLuong = TongTienLuong + TienThuong - TienTruLuong
+                ), 0.0), 100.0) / 100.0 * l.TienLuong
             WHERE NgayTinhLuong = CURRENT_DATE()
             AND IDNhanVien IN (
                 SELECT ID
                 FROM nv_ht5
+                WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoGio')
+            );
+
+            UPDATE luong l
+            SET TongTienLuong = GREATEST(TongTienLuong + TienThuong - TienTruLuong, 0)
+            WHERE NgayTinhLuong = CURRENT_DATE()
+            AND IDNhanVien IN (
+                SELECT ID
+                FROM nv_ht6
                 WHERE ChucVu IN (SELECT TenChucVu FROM chucvu WHERE CachTinhLuong = 'TheoGio')
             );
 
@@ -391,6 +382,7 @@ DO
         DROP TEMPORARY TABLE nv_ht3;
         DROP TEMPORARY TABLE nv_ht4;
         DROP TEMPORARY TABLE nv_ht5;
+        DROP TEMPORARY TABLE nv_ht6;
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)

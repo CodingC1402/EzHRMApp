@@ -25,6 +25,8 @@ UPDATE chamcong
 SET ThoiGianVaoLam = NOW() - INTERVAL 17 HOUR
 WHERE IDNhanVien = 'NV00000001';
 
+UPDATE cachtinhluong
+SET LanTraLuongCuoi = NOW() - INTERVAL 1 MONTH;
 
 /*   test queries   */
 
@@ -59,7 +61,6 @@ SELECT * FROM NHANVIEN;
 SELECT * FROM CHUCVU;
 SELECT * FROM accesstokens;
 SELECT * FROM TAIKHOAN;
-SELECT * FROM profilepicture;
 
 INSERT INTO ACCESSTOKENS(Token, Bitmask, Account)
 VALUES ('sfdasfadsf', Bitmask, 'CornyCornyCorn0');
