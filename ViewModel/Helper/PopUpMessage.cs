@@ -15,9 +15,19 @@ namespace ViewModel.Helper
         private static PopUpMessage _instance = null;
         public static PopUpMessage Instance { get => _instance ??= new PopUpMessage(); }
 
+        public enum ButtonStyleEnum
+        {
+            CancleButton = 1,
+            ConfirmButton = 2,
+            YesButton = 4,
+            NoButton = 8
+        }
+
         private string _message = "";
         private bool _isOpened = false;
         private string _title = "";
+        private ButtonStyleEnum _buttonStyle = ButtonStyleEnum.ConfirmButton | ButtonStyleEnum.CancleButton;
+
         public string Message {
             get => _message;
             set
@@ -42,6 +52,16 @@ namespace ViewModel.Helper
             set
             {
                 _title = value;
+                RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
+            }
+        }
+        public ButtonStyleEnum ButtonStyle
+        {
+            get => _buttonStyle;
+            set
+            {
+                _buttonStyle = value;
                 RaisePropertyChanged();
                 OnPropertyChanged(new EventArgs());
             }
