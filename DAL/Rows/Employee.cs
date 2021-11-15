@@ -290,35 +290,5 @@ namespace DAL.Rows
             }
             return result;
         }
-
-        public bool IsValidEmail(string email)
-        {
-            if (email.Trim().EndsWith("."))
-            {
-                return false; // suggested by @TK-421
-            }
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool IsValidCitizenID(string id)
-        {
-            bool result = id.Length == 9 || id.Length == 12;
-            foreach (char c in id)
-            {
-                if (!char.IsDigit(c))
-                {
-                    result &= false;
-                }
-            }
-            return result;
-        }
     }
 }
