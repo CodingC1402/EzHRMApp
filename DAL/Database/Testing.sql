@@ -4,15 +4,20 @@ show create event START_BUSINESS_HOURS_EVENT;
 ALTER EVENT START_BUSINESS_HOURS_EVENT
 ON SCHEDULE
 EVERY 1 DAY
-STARTS NOW() + INTERVAL 15 SECOND;
+STARTS ADDTIME(CURRENT_DATE() + INTERVAL 1 DAY, '06:00:00')
+ENABLE;
 
 select * from eventlog;
 
+select * from thamso;
+select * from cacloaivipham;
 select * from thoigianbieutuan;
 select * from cachtinhluong;
 select * from nhanvien;
 select * from chamcong;
+select * from chucvu;
 select * from truluong;
+select * from luong;
 select * from nghiphep;
 select * from sogiolamtrongngay;
 
@@ -20,13 +25,16 @@ DELETE FROM sogiolamtrongngay;
 DELETE FROM nghiphep;
 DELETE FROM chamcong;
 DELETE FROM truluong;
+DELETE FROM luong;
+
+UPDATE thoigianbieutuan
+SET GioVaoLamChuNhat = '07:00:00';
+UPDATE thoigianbieutuan
+SET GioTanLamChuNhat = '17:00:00';
 
 UPDATE chamcong
-SET ThoiGianVaoLam = NOW() - INTERVAL 17 HOUR
+SET ThoiGianVaoLam = '2021-11-14 11:00:00'
 WHERE IDNhanVien = 'NV00000001';
-
-UPDATE cachtinhluong
-SET LanTraLuongCuoi = NOW() - INTERVAL 1 MONTH;
 
 /*   test queries   */
 
