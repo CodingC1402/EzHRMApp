@@ -121,8 +121,6 @@ namespace CornControls.CustomControl
                 ButtonStyle = (ButtonStyleEnum)vmInstance.ButtonStyle;
             };
 
-            // OK I DIDN"T FIX IT
-
             //DataContext = ViewModel.Helper.PopUpMessage.Instance;
             //Binding bindingIsOpen = new Binding(nameof(ViewModel.Helper.PopUpMessage.IsOpened));
             //Binding bindingMessage = new Binding(nameof(ViewModel.Helper.PopUpMessage.Message));
