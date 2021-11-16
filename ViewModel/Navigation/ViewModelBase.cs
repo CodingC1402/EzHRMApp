@@ -22,5 +22,10 @@ namespace ViewModel.Navigation
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
+
+        protected virtual void CleanUp()
+        {
+
+        }
     }
 }

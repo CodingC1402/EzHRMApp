@@ -15,6 +15,7 @@
     AllowsTransparency="True"
     Background="Transparent"
     DataContext="{x:Static viewModel:MainViewModel.Instance}"
+    Icon="/EzHRMApp;component/Icons/time.ico"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
