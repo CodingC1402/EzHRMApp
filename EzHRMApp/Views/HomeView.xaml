@@ -6,11 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:EzHRMApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{DynamicResource Accent}"
+    DataContext="{x:Static viewmodels:HomeViewModel.Instance}"
     mc:Ignorable="d">
+
     <Grid>
-        <controls:DatePickerEx Height="35" />
+        <Grid.Background>
+            <ImageBrush
+                ImageSource="/EzHRMApp;component/Icons/HomeBG.jpg"
+                Opacity="0.2"
+                Stretch="UniformToFill" />
+        </Grid.Background>
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                FontFamily="Stencil"
+                FontSize="72"
+                FontWeight="Bold"
+                Foreground="{DynamicResource Accent}"
+                Text="Ez HRM"
+                TextAlignment="Center" />
+            <Border
+                Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Height}"
+                Height="200"
+                Padding="5"
+                Background="{DynamicResource BackColor}"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="10"
+                CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Width}">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="/EzHRMApp;component/Icons/icon.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+            <TextBlock
+                FontFamily="Stencil"
+                FontSize="72"
+                FontWeight="Bold"
+                Foreground="{DynamicResource Accent}"
+                Text="{Binding CurrentTime, StringFormat='{}{0:hh:mm:ss}'}"
+                TextAlignment="Center" />
+        </StackPanel>
     </Grid>
 </UserControl>
