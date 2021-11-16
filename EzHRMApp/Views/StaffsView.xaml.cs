@@ -113,29 +113,20 @@ namespace EzHRMApp.Views
             }
         }
 
-        protected void showResignedEmployeesChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateFilter();
-        }
-        protected void filterTypeChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateFilter();
-        }
-        protected void filterTextChanged(object sender, TextChangedEventArgs e)
+        protected void searchChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
 
         protected virtual void UpdateFilter()
         {
-            ICollectionView cv = CollectionViewSource.GetDefaultView(datagridEx.ItemsSource);
-            if (filterTextBox.Text == "" && showResignCheckBox.IsChecked.HasValue && showResignCheckBox.IsChecked.Value)
+            if (datagridEx.SearchText == "" && showResignCheckBox.IsChecked.HasValue && showResignCheckBox.IsChecked.Value)
             {
-                cv.Filter = null;
+                datagridEx.SetCollectionFilter(null);
             }
             else
             {
-                cv.Filter = obj =>
+                datagridEx.SetCollectionFilter(obj =>
                 {
                     EmployeeModel employee = obj as EmployeeModel;
                     if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && employee.NgayThoiViec.HasValue)
@@ -143,10 +134,10 @@ namespace EzHRMApp.Views
                         return false;
                     }
 
-                    if (filterTextBox.Text != "")
+                    if (datagridEx.SearchText != "")
                     {
-                        var searchText = filterTextBox.Text;
-                        switch ((filterComboboxs.SelectedItem as DataGridTextColumn).Header)
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
                         {
                             case "ID":
                                 return employee.ID.Contains(searchText);
@@ -162,7 +153,7 @@ namespace EzHRMApp.Views
                     }
 
                     return true;
-                };
+                });
             }
         }
 
