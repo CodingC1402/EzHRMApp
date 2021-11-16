@@ -55,6 +55,7 @@ INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('hrm1', SHA2('1'
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee0', SHA2('0', 256), 'employee');
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee1', SHA2('1', 256), 'employee');
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee2', SHA2('2', 256), 'employee');
+INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('employee3', SHA2('3', 256), 'employee');
 
 INSERT INTO cachtinhluong (Ten, LanTraLuongCuoi, NgayTinhLuongThangNay)
     VALUES ('TheoThang', CURRENT_DATE() - INTERVAL 1 MONTH, CURRENT_DATE());
@@ -81,12 +82,17 @@ INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, S
     VALUES ('NV00000002', 'Do Phi', 'Long', '000000101010', '2001/02/14', 'NV000000002@gmail.com', 'Long@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Coding Department', 'Programmer', 'employee1');
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
     VALUES ('NV00000003', 'Nguyen Bao', 'Duy', '000000101010', '2001/02/14', 'NV000000003@gmail.com', 'Duy@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Design Department', 'Designer', 'employee2');
+INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
+    VALUES ('NV00000004', 'Nguyen Vuong Thanh', 'Tuan', '000000101010', '2001/02/14', 'NV000000004@gmail.com', 'Tuan@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Design Department', 'Designer', 'employee3');
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
 VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '07:00:00'), 'NV00000002', ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '17:00:00'));
 
 INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
 VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '11:00:00'), 'NV00000001', ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '15:55:00'));
+
+INSERT INTO chamcong (ThoiGianVaoLam, IDNhanVien, ThoiGianTanLam)
+VALUES (ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '07:15:00'), 'NV00000003', ADDTIME(CURRENT_DATE() - INTERVAL 1 DAY, '21:00:00'));
 
 INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000001', 8, 8);
