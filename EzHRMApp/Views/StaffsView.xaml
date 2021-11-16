@@ -525,7 +525,6 @@
             <StackPanel
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="10,0"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <controls:ButtonEx
@@ -610,97 +609,25 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="30,10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Border Background="{DynamicResource Accent}">
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Setter Property="Opacity" Value="1" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=datagridEx, Path=IsEnabled}" Value="False">
-                                <Setter Property="Opacity" Value="{Binding ElementName=datagridEx, Path=DisabledOpacity}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="CheckBox">
-                                <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                                <Setter Property="FontFamily" Value="Tahoma" />
-                                <Setter Property="FontSize" Value="13" />
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="HorizontalAlignment" Value="Left" />
-                            </Style>
-                            <Style TargetType="controls:TextBoxEx">
-                                <Setter Property="CornerRadius" Value="5" />
-                                <Setter Property="IconPad" Value="0" />
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
-                                <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
-                                <Setter Property="FontFamily" Value="Time New Roman" />
-                                <Setter Property="FontWeight" Value="Normal" />
-                                <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
-                                <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
-                                <Setter Property="Margin" Value="5,0" />
-                                <Setter Property="Padding" Value="5,0" />
-                            </Style>
-                            <Style TargetType="controls:ComboBoxEx">
-                                <Setter Property="Padding" Value="10,0" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
-                                <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="FontFamily" Value="Time New Roman" />
-                                <Setter Property="CornerRadius" Value="5" />
-                                <Setter Property="FontWeight" Value="Normal" />
-                                <Setter Property="FontSize" Value="13" />
-                                <Setter Property="ItemCornerRadius" Value="0" />
-                                <Setter Property="Margin" Value="5,0" />
-                                <Setter Property="FocusedPadding" Value="5, 1" />
-                                <Setter Property="NormalPadding" Value="5, 1" />
-                            </Style>
-                        </ResourceDictionary>
-                    </StackPanel.Resources>
-                    <CheckBox
-                        x:Name="showResignCheckBox"
-                        Margin="0,0,50,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Checked="showResignedEmployeesChanged"
-                        Content="Show resigned employee"
-                        IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
-                        Unchecked="showResignedEmployeesChanged" />
-                    <controls:ComboBoxEx
-                        x:Name="filterComboboxs"
-                        Width="100"
-                        DisplayMemberPath="Header"
-                        IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
-                        ItemsSource="{Binding ElementName=datagridEx, Path=Columns}"
-                        SelectedIndex="0"
-                        SelectionChanged="filterTypeChanged" />
-                    <controls:TextBoxEx
-                        x:Name="filterTextBox"
-                        Width="200"
-                        Margin="10,0,10,0"
-                        IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
-                        TextChanged="filterTextChanged" />
-                </StackPanel>
-            </Border>
+        <Grid Grid.Row="1" Margin="20,10">
+            <Grid.Resources>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                </Style>
+            </Grid.Resources>
 
             <controls:DatagridEx
                 x:Name="datagridEx"
-                Grid.Row="1"
                 AutoGenerateColumns="False"
                 Background="{DynamicResource DarkerBackColor}"
                 IsEnabled="{Binding IsInNormalMode}"
                 IsReadOnly="True"
                 ItemsSource="{Binding Employees}"
+                SearchChanged="searchChanged"
                 SelectedIndex="{Binding SelectedEmployeeIndex}"
                 SelectedItem="{Binding SelectedEmployee}">
                 <controls:DatagridEx.Columns>
@@ -746,8 +673,16 @@
                         Header="Email" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
+
+            <CheckBox
+                x:Name="showResignCheckBox"
+                Margin="0,17,350,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Checked="searchChanged"
+                Content="Show resigned employee"
+                IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
+                Unchecked="searchChanged" />
         </Grid>
-
-
     </Grid>
 </UserControl>

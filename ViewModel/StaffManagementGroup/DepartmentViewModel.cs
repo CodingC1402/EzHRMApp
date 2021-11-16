@@ -12,6 +12,7 @@ namespace ViewModel
 {
     public class DepartmentViewModel : Navigation.CRUDViewModelBase
     {
+        public override string ViewName => "Departments";
         public ObservableCollection<DepartmentModel> Departments { get; set; }
 
         private DepartmentModel _selectedDepartment = null;

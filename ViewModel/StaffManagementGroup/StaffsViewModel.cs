@@ -8,6 +8,7 @@ namespace ViewModel
 {
     public class StaffsViewModel : Navigation.CRUDViewModelBase
     {
+        public override string ViewName => "Staffs";
         public enum ReportTimeSpanEnum
         {
             InWeek,
