@@ -39,10 +39,12 @@ namespace ViewModel
 
         public override void ExecuteAdd(object param)
         {
-            base.ExecuteAdd(param);
             var newDepartment = new DepartmentModel();
+            newDepartment.NgayThanhLap = DateTime.Now;
 
             CurrentDepartment = newDepartment;
+
+            base.ExecuteAdd(param);
         }
         public override void ExecuteUpdate(object param)
         {

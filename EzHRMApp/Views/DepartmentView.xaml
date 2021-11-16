@@ -88,6 +88,7 @@
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="FocusedPadding" Value="5, 1" />
                     <Setter Property="NormalPadding" Value="5, 1" />
+                    <Setter Property="FocusedOutterColor" Value="{DynamicResource Accent}"/>
                 </Style>
             </Grid.Resources>
 

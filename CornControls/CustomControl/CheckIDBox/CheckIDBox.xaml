@@ -24,12 +24,14 @@
     </Style>
 
     <!--  ========================== Textbox ==========================  -->
-    <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF" />
+
+    
     <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
@@ -38,7 +40,7 @@
                     <ScrollViewer
                         x:Name="PART_ContentHost"
                         Background="Transparent"
-                        Focusable="True"
+                        Focusable="false"
                         HorizontalScrollBarVisibility="Hidden"
                         VerticalScrollBarVisibility="Hidden" />
                 </ControlTemplate>
@@ -213,7 +215,6 @@
                 Style="{StaticResource ComboBoxToggleButton}" />
             <Border
                 x:Name="border"
-                BorderBrush="{DynamicResource Accent}"
                 Margin="{TemplateBinding BorderThickness}">
                 <TextBox
                     x:Name="PART_EditableTextBox"

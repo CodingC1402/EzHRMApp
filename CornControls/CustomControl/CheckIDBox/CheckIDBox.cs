@@ -249,7 +249,10 @@ namespace CornControls.CustomControl
         public string ContentText
         {
             get => (string)GetValue(ContentTextProperty);
-            set => SetValue(ContentTextProperty, value);
+            set
+            {
+                SetValue(ContentTextProperty, value);
+            }
         }
 
         [Browsable(true), Category("Appearance")]
