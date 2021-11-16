@@ -29,6 +29,7 @@
                     <Setter Property="VerticalAlignment" Value="Top" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="Background" Value="{DynamicResource Accent}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
                     <Setter Property="Content" Value="Change profile" />
                     <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
@@ -73,12 +74,18 @@
                     <Setter Property="Padding" Value="5,0" />
                 </Style>
                 <Style TargetType="controls:ComboBoxEx">
-                    <Setter Property="Padding" Value="5,0" />
+                    <Setter Property="Padding" Value="10,0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
                     <Setter Property="Height" Value="35" />
                     <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="FontWeight" Value="Normal" />
                     <Setter Property="FontSize" Value="13" />
+                    <Setter Property="ItemCornerRadius" Value="0" />
                     <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="FocusedPadding" Value="5, 1" />
+                    <Setter Property="NormalPadding" Value="5, 1" />
                 </Style>
             </Grid.Resources>
 
@@ -174,9 +181,10 @@
 
             <StackPanel
                 Grid.Row="2"
+                Margin="20,0"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <controls:ButtonEx Margin="0,5">
+                <controls:ButtonEx Margin="10,5">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
                             <Setter Property="Content" Value="New" />
@@ -200,7 +208,7 @@
                         </Style>
                     </controls:ButtonEx.Style>
                 </controls:ButtonEx>
-                <controls:ButtonEx Margin="20,5,0,0">
+                <controls:ButtonEx Margin="10,5,0,0">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
                             <Setter Property="Content" Value="Change" />

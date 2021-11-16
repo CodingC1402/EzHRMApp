@@ -10,6 +10,7 @@ namespace ViewModel
 {
     public class RoleManagementViewModel : Navigation.CRUDViewModelBase
     {
+        public override string ViewName => "Positions";
         private static RoleManagementViewModel _instance = null;
         public static RoleManagementViewModel Instance { get => _instance; }
 
