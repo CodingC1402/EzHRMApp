@@ -150,7 +150,6 @@
                 PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                 <theme:SystemDropShadowChrome
                     x:Name="shadow"
-                    Height="200"
                     MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
                     Color="{DynamicResource ColorAccent}">
@@ -173,12 +172,13 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30" />
                                     <RowDefinition Height="30" />
+                                    <RowDefinition Height="30"/>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
                                 <Ellipse
                                     x:Name="profilePicture"
-                                    Grid.RowSpan="3"
+                                    Grid.RowSpan="4"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
                                     RenderOptions.BitmapScalingMode="HighQuality"
@@ -190,14 +190,22 @@
                                 </Ellipse>
 
                                 <Label
+                                    x:Name="idTextLabel"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
                                     Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
                                 <Label
+                                    x:Name="nameTextLabel"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
                                     Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                <Label
+                                    x:Name="roleTextLabel"
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
 
                                 <Label
                                     x:Name="PART_idText"
@@ -210,11 +218,18 @@
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
+                                <Label
+                                    x:Name="PART_roleText"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="Role: " />
 
                                 <Label
                                     x:Name="messageLabel"
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Grid.ColumnSpan="3"
+                                    Background="{DynamicResource Accent}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
                                     Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
@@ -257,7 +272,10 @@
                 <Setter TargetName="messageLabel" Property="Grid.Row" Value="0" />
                 <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
-                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed"/>
             </Trigger>
             <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="true">
                 <Setter Property="OutterColor" Value="{DynamicResource Accent}" />
@@ -402,7 +420,10 @@
                 <Setter TargetName="messageLabel" Property="Grid.Row" Value="0" />
                 <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
-                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
