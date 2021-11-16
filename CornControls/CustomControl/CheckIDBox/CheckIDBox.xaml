@@ -202,14 +202,31 @@
                                 <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="ID: " />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
+
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
 
                                 <Label
                                     x:Name="messageLabel"
@@ -322,32 +339,37 @@
                                 </Ellipse>
 
                                 <Label
-                                    x:Name="idTextLabel"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center"
-                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
-                                <Label
-                                    x:Name="nameTextLabel"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center"
-                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
-
-                                <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="ID: " />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
+
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
 
                                 <Label
                                     x:Name="messageLabel"
                                     Grid.Row="2"
+                                    Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
