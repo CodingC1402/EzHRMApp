@@ -46,31 +46,30 @@ namespace EzHRMApp.Views
             else
             {
                 datagridEx.SetCollectionFilter(obj =>
+                {
+                    CheckInModel checkIn = obj as CheckInModel;
+                    if (showTodayCheckBox.IsChecked.HasValue && showTodayCheckBox.IsChecked.Value
+                    && !(checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date
+                    || (checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date.AddDays(-1) && checkIn.ThoiGianTanLam == null)))
+                        return false;
+
+                    if (datagridEx.SearchText != "")
                     {
-                        CheckInModel checkIn = obj as CheckInModel;
-                        if (showTodayCheckBox.IsChecked.HasValue && showTodayCheckBox.IsChecked.Value
-                        && !(checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date
-                        || (checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date.AddDays(-1) && checkIn.ThoiGianTanLam == null)))
-                            return false;
-
-                        if (datagridEx.SearchText != "")
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
                         {
-                            var searchText = datagridEx.SearchText;
-                            switch (datagridEx.SearchFilter)
-                            {
-                                case "Check-in time":
-                                    return checkIn.ThoiGianVaoLam.ToString("dd/MM/yyyy").Contains(searchText);
-                                case "Employee ID":
-                                    return checkIn.IDNhanVien.Contains(searchText);
-                                case "Check-out time":
-                                    return checkIn.ThoiGianTanLam.HasValue 
-                                        && checkIn.ThoiGianTanLam.Value.ToString("dd/MM/yyyy").Contains(searchText);
-                            }
+                            case "Check-in time":
+                                return checkIn.ThoiGianVaoLam.ToString("dd/MM/yyyy").Contains(searchText);
+                            case "Employee ID":
+                                return checkIn.IDNhanVien.Contains(searchText);
+                            case "Check-out time":
+                                return checkIn.ThoiGianTanLam.HasValue 
+                                    && checkIn.ThoiGianTanLam.Value.ToString("dd/MM/yyyy").Contains(searchText);
                         }
-
-                        return true;
                     }
-                );
+
+                    return true;
+                });
             }
         }
     }

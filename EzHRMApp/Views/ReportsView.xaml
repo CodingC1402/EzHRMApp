@@ -4,9 +4,68 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:view="clr-namespace:EzHRMApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.DataContext>
+        <viewModel:ReportsViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="controls:RadioButtonEx">
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="SelectedPadding" Value="0, 0, 0, 5" />
+                    <Setter Property="NormalPadding" Value="0, 0, 0, 5" />
+                    <Setter Property="OutterColor" Value="{DynamicResource DarkerBackColor}" />
+                    <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}" />
+                    <Setter Property="SelectedColor" Value="{DynamicResource BackColor}" />
+                    <Setter Property="Background" Value="{DynamicResource BackColor}" />
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="HoverColor" Value="{DynamicResource DarkerBackColor}" />
+                    <Setter Property="PressedColor" Value="{DynamicResource DarkestBackColor}" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="IconPad" Value="50" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+
+            <controls:RadioButtonEx
+                Grid.Column="0"
+                Command="{Binding ToDailyReports}"
+                Content="Daily Reports"
+                IsChecked="True"/>
+            <controls:RadioButtonEx
+                Grid.Column="1"
+                Command="{Binding ToMonthlyReports}"
+                Content="Monthly Reports" />
+        </Grid>
+
+        <ContentControl Grid.Row="1" Margin="30, 10">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewModel:DailyReportViewModel}">
+                    <view:DailyReportsView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:MonthlyReportViewModel}">
+                    <view:MonthlyReportsView />
+                </DataTemplate>
+            </ContentControl.Resources>
             
+            <controls:AnimatedContentControlOpacity AnimationTime="0.5" Content="{Binding CurrentViewModel}" />
+        </ContentControl>
     </Grid>
 </UserControl>

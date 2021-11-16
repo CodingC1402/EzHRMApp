@@ -2,12 +2,25 @@
 using DAL.Rows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Model
 {
     public class DailyReportModel : DailyReport
     {
+        public static ObservableCollection<DailyReportModel> LoadAll()
+        {
+            var reports = DailyReportRepo.Instance.GetAll();
+            var resultList = new ObservableCollection<DailyReportModel>();
+
+            foreach (var report in reports)
+            {
+                resultList.Add(new DailyReportModel(report));
+            }
+            return resultList;
+        }
+
         public DailyReportModel() { }
         public DailyReportModel(DailyReport report) : base(report) { }
 
