@@ -47,12 +47,12 @@
             <controls:RadioButtonEx
                 Grid.Column="0"
                 Command="{Binding ToDailyReports}"
-                Content="Daily Reports"
+                Content="Check-in Reports"
                 IsChecked="True"/>
             <controls:RadioButtonEx
                 Grid.Column="1"
                 Command="{Binding ToMonthlyReports}"
-                Content="Monthly Reports" />
+                Content="Human Resource Reports" />
         </Grid>
 
         <ContentControl Grid.Row="1" Margin="30, 10">

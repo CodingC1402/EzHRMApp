@@ -53,7 +53,7 @@
                     Header="Check-in time">
                     <DataGridTextColumn.CellStyle>
                         <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
-                            <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentDark}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ThoiGianTanLam}" Value="{x:Null}">
                                     <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}" />
