@@ -192,7 +192,75 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
                         <Grid SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Background="{DynamicResource Accent}">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Opacity" Value="1" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=datagridEx, Path=IsEnabled}" Value="False">
+                                                <Setter Property="Opacity" Value="{Binding ElementName=datagridEx, Path=DisabledOpacity}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <StackPanel.Resources>
+                                        <ResourceDictionary>
+                                            <Style TargetType="controls:TextBoxEx">
+                                                <Setter Property="CornerRadius" Value="5" />
+                                                <Setter Property="IconPad" Value="0" />
+                                                <Setter Property="Height" Value="35" />
+                                                <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                                                <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
+                                                <Setter Property="FontFamily" Value="Time New Roman" />
+                                                <Setter Property="FontWeight" Value="Normal" />
+                                                <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
+                                                <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
+                                                <Setter Property="Margin" Value="5,0" />
+                                                <Setter Property="Padding" Value="5,0" />
+                                            </Style>
+                                            <Style TargetType="controls:ComboBoxEx">
+                                                <Setter Property="Padding" Value="10,0" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
+                                                <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
+                                                <Setter Property="Height" Value="35" />
+                                                <Setter Property="FontFamily" Value="Time New Roman" />
+                                                <Setter Property="CornerRadius" Value="5" />
+                                                <Setter Property="FontWeight" Value="Normal" />
+                                                <Setter Property="FontSize" Value="13" />
+                                                <Setter Property="ItemCornerRadius" Value="0" />
+                                                <Setter Property="Margin" Value="5,0" />
+                                                <Setter Property="FocusedPadding" Value="5, 1" />
+                                                <Setter Property="NormalPadding" Value="5, 1" />
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </StackPanel.Resources>
+                                    <controls:ComboBoxEx
+                                        x:Name="filterComboboxs"
+                                        Width="100"
+                                        DisplayMemberPath="Header"
+                                        IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=IsEnabled}"
+                                        ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=Columns}"
+                                        SelectedIndex="0" />
+                                    <controls:TextBoxEx
+                                        x:Name="filterTextBox"
+                                        Width="200"
+                                        Margin="10,0,10,0"
+                                        IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=IsEnabled}"
+                                        Text="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Border>
+
+                            <ScrollViewer
+                                x:Name="DG_ScrollViewer"
+                                Grid.Row="1"
+                                Focusable="false">
                                 <ScrollViewer.Template>
                                     <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                         <Grid>
@@ -251,6 +319,7 @@
                                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </ScrollViewer>
                             <Rectangle
+                                Grid.Row="1"
                                 Width="17"
                                 Height="{TemplateBinding ColumnHeaderHeight}"
                                 HorizontalAlignment="Right"

@@ -41,6 +41,10 @@ namespace ViewModel.Navigation
         {
             get => _isInAddMode || _isInUpdateMode;
         }
+        public bool IsInNormalAndUpdateMode
+        {
+            get => _isInUpdateMode || IsInNormalMode;
+        }
 
         public bool IsInUpdateMode {
             get => _isInUpdateMode;
