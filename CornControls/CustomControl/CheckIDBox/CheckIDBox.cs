@@ -12,19 +12,10 @@ namespace CornControls.CustomControl
     public class CheckIDBox : ComboBox
     {
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CheckIDBox));
-        public static readonly DependencyProperty ItemCornerRadiusProperty = DependencyProperty.Register(nameof(ItemCornerRadius), typeof(CornerRadius), typeof(CheckIDBox));
 
         public static readonly DependencyProperty NormalColorProperty = DependencyProperty.Register("NormalColor", typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty HoverColorProperty = DependencyProperty.Register("HoverColor", typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty FocusedColorProperty = DependencyProperty.Register(nameof(FocusedColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.Gray));
-
-        public static readonly DependencyProperty ItemBorderFocusedColorProperty = DependencyProperty.Register(nameof(ItemBorderFocusedColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty ItemNormalColorProperty = DependencyProperty.Register(nameof(ItemNormalColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty ItemHoverColorProperty = DependencyProperty.Register(nameof(ItemHoverColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty ItemSelectedColorProperty = DependencyProperty.Register(nameof(ItemSelectedColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.Gray));
-        public static readonly DependencyProperty ItemHoverAndSelectedColorProperty = DependencyProperty.Register(nameof(ItemHoverAndSelectedColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
-
-        public static readonly DependencyProperty ItemSelectedForegroundProperty = DependencyProperty.Register(nameof(ItemSelectedForeground), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.LightGray));
 
         public static readonly DependencyProperty DropDownColorProperty = DependencyProperty.Register(nameof(DropDownColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.Gray));
 
@@ -45,17 +36,18 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty DisabledOpacityProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(double), typeof(CheckIDBox), new PropertyMetadata(0.8));
         public static readonly DependencyProperty DisabledColorProperty = DependencyProperty.Register(nameof(DisabledColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.Gray));
 
+        public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IsMessageOnlyProperty = DependencyProperty.Register(nameof(IsMessageOnly), typeof(bool), typeof(CheckIDBox), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         [Browsable(true), Category("Appearance")]
         public CornerRadius CornerRadius
         {
             get => (CornerRadius)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
-        }
-        [Browsable(true), Category("Appearance")]
-        public CornerRadius ItemCornerRadius
-        {
-            get => (CornerRadius)GetValue(ItemCornerRadiusProperty);
-            set => SetValue(ItemCornerRadiusProperty, value);
         }
 
         // Control color
@@ -76,45 +68,6 @@ namespace CornControls.CustomControl
         {
             get => (Brush)GetValue(FocusedColorProperty);
             set => SetValue(FocusedColorProperty, value);
-        }
-
-        // Item color
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemBorderFocusedColor
-        {
-            get => (Brush)GetValue(NormalColorProperty);
-            set => SetValue(NormalColorProperty, value);
-        }
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemNormalColor
-        {
-            get => (Brush)GetValue(ItemNormalColorProperty);
-            set => SetValue(ItemNormalColorProperty, value);
-        }
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemHoverColor
-        {
-            get => (Brush)GetValue(ItemHoverColorProperty);
-            set => SetValue(ItemHoverColorProperty, value);
-        }
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemSelectedColor
-        {
-            get => (Brush)GetValue(ItemSelectedColorProperty);
-            set => SetValue(ItemSelectedColorProperty, value);
-        }
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemHoverAndSelectedColor
-        {
-            get => (Brush)GetValue(ItemHoverAndSelectedColorProperty);
-            set => SetValue(ItemHoverAndSelectedColorProperty, value);
-        }
-
-        [Browsable(true), Category("Appearance")]
-        public Brush ItemSelectedForeground
-        {
-            get => (Brush)GetValue(ItemSelectedForegroundProperty);
-            set => SetValue(ItemSelectedForegroundProperty, value);
         }
 
         // Dropdown color
@@ -206,17 +159,7 @@ namespace CornControls.CustomControl
             set => SetValue(DisabledColorProperty, value);
         }
 
-        // For testing purpose
-
-        private TextBox _textBox = null;
-
-        public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty IsMessageOnlyProperty = DependencyProperty.Register(nameof(IsMessageOnly), typeof(bool), typeof(CheckIDBox), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
+        // Popup
         [Browsable(true), Category("Appearance")]
         public string MessageText
         {
@@ -261,6 +204,8 @@ namespace CornControls.CustomControl
             get => (bool)GetValue(IsMessageOnlyProperty);
             set => SetValue(IsMessageOnlyProperty, value);
         }
+
+        private TextBox _textBox = null;
 
         static CheckIDBox()
         {

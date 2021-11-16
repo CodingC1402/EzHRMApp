@@ -37,6 +37,36 @@ namespace ViewModel
             }
         }
 
+        bool _isPopupOpened = false;
+        public bool IsPopupOpened
+        {
+            get => _isPopupOpened;
+            set
+            {
+                _isPopupOpened = value;
+                UpdatePopup();
+            }
+        }
+
+        public bool OnlyMessage { get; set; }
+        public string Message { get; set; }
+        public Image ProfilePicture { get; set; }
+
+        private EmployeeModel _manager = null;
+        public EmployeeModel Manager
+        {
+            get => _manager;
+            set
+            {
+                _manager = value;
+
+                var profile = value != null ? value.GetProfilePicture() : null;
+
+                ProfilePicture = profile != null ? new Image(profile) : null;
+            }
+        }
+
+        #region Function
         public override void ExecuteAdd(object param)
         {
             var newDepartment = new DepartmentModel();
@@ -112,35 +142,7 @@ namespace ViewModel
         {
             return IsInCRUDMode;
         }
-
-        //Test
-        bool _isPopupOpened = false;
-        public bool IsPopupOpened
-        {
-            get => _isPopupOpened;
-            set
-            {
-                _isPopupOpened = value;
-                UpdatePopup();
-            }
-        }
-
-        public bool OnlyMessage { get; set; }
-        public string Message { get; set; }
-        public Image ProfilePicture { get; set; }
-        private EmployeeModel _manager = null;
-        public EmployeeModel Manager
-        {
-            get => _manager;
-            set
-            {
-                _manager = value;
-                
-                var profile = value != null ? value.GetProfilePicture() : null;
-
-                ProfilePicture = profile != null ? new Image(profile) : null;
-            }
-        }
+        #endregion
 
         public DepartmentViewModel()
         {

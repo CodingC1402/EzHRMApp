@@ -24,8 +24,6 @@
     </Style>
 
     <!--  ========================== Textbox ==========================  -->
-
-    
     <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="AllowDrop" Value="true" />
@@ -382,15 +380,6 @@
         <Setter Property="NormalColor" Value="{DynamicResource BackColor}" />
         <Setter Property="HoverColor" Value="{DynamicResource DarkerBackColor}" />
 
-        <Setter Property="ItemNormalColor" Value="{DynamicResource BackColor}" />
-        <Setter Property="ItemHoverColor" Value="{DynamicResource AccentReallyBright}" />
-        <Setter Property="ItemSelectedColor" Value="{DynamicResource Accent}" />
-        <Setter Property="ItemBorderFocusedColor" Value="{DynamicResource AccentDark}" />
-        <Setter Property="ItemHoverAndSelectedColor" Value="{DynamicResource AccentBright}" />
-
-        <Setter Property="ItemSelectedForeground" Value="{DynamicResource LightForeground}" />
-
-        <Setter Property="ItemCornerRadius" Value="5" />
         <Setter Property="CornerRadius" Value="5" />
 
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
