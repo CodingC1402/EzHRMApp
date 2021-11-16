@@ -45,18 +45,34 @@ namespace ViewModel
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToDashboard.ViewModel);
 
-            ToStaffsManagementView = new NavigationCommand<StaffsManagementViewModel>(new StaffsManagementViewModel(), this, 1);
-            ViewModels.Add(ToStaffsManagementView.ViewModel);
-
             ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 1);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
+
+            ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
+            ViewModels.Add(ToStaffView.ViewModel);
+
+            ToDepartmentView = new NavigationCommand<DepartmentViewModel>(new DepartmentViewModel(), this, 0);
+            ViewModels.Add(ToDepartmentView.ViewModel);
+
+            ToRoleManagementView = new NavigationCommand<RoleManagementViewModel>(new RoleManagementViewModel(), this, 0);
+            ViewModels.Add(ToRoleManagementView.ViewModel);
+
+            ToPayRollManagementView = new NavigationCommand<PayRollManagementViewModel>(new PayRollManagementViewModel(), this, 0);
+            ViewModels.Add(ToPayRollManagementView.ViewModel);
+
+            ToReportsView = new NavigationCommand<ReportsViewModel>(new ReportsViewModel(), this, 0);
+            ViewModels.Add(ToReportsView.ViewModel);
 
             CurrentViewModel = ToHomeView.ViewModel;
         }
 
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
         public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
-        public NavigationCommand<StaffsManagementViewModel> ToStaffsManagementView { get; set; }
         public NavigationCommand<ScheduleManagementViewModel> ToScheduleManagementView { get; set; }
+        public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
+        public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
+        public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
+        public NavigationCommand<PayRollManagementViewModel> ToPayRollManagementView { get; set; }
+        public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
     }
 }

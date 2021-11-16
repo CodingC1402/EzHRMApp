@@ -19,11 +19,23 @@
         <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
             <view:DashboardView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:StaffsManagementViewModel}">
-            <view:StaffsManagementView />
-        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ScheduleManagementViewModel}">
             <view:ScheduleManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:StaffsViewModel}">
+            <view:StaffsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DepartmentViewModel}">
+            <view:DepartmentView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:RoleManagementViewModel}">
+            <view:RoleManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PayRollManagementViewModel}">
+            <view:PayRollMangementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ReportsViewModel}">
+            <view:ReportsView />
         </DataTemplate>
     </windows:UserControlWindow.Resources>
 
@@ -151,26 +163,11 @@
                             Path="{StaticResource dashboardIcon}" />
 
                         <controls:RadioButtonEx
-                            x:Name="payRollBtn"
-                            Click="TabButtonClicked"
-                            Content="Payroll"
-                            GroupName="TabButtons"
-                            Path="{StaticResource moneyIcon}" />
-
-                        <controls:RadioButtonEx
                             x:Name="checkInBtn"
                             Click="TabButtonClicked"
                             Content="CheckIn"
                             GroupName="TabButtons"
                             Path="{StaticResource clockIcon}" />
-
-                        <controls:RadioButtonEx
-                            x:Name="staffsBtn"
-                            Click="TabButtonClicked"
-                            Command="{Binding ToStaffsManagementView}"
-                            Content="Staffs Management"
-                            GroupName="TabButtons"
-                            Path="{StaticResource staffsIcon}" />
 
                         <controls:RadioButtonEx
                             x:Name="schedule"
@@ -179,6 +176,47 @@
                             Content="Schedule"
                             GroupName="TabButtons"
                             Path="{StaticResource calendarIcon}" />
+
+                        <controls:RadioButtonEx
+                            Grid.Column="0"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToStaffView}"
+                            Content="Staffs"
+                            GroupName="TabButtons"
+                            Path="{DynamicResource staffsIcon}" />
+
+                        <controls:RadioButtonEx
+                            Grid.Column="1"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToDepartmentView}"
+                            Content="Departments"
+                            GroupName="TabButtons"
+                            Path="{DynamicResource CompanyIcon}" />
+
+                        <controls:RadioButtonEx
+                            Grid.Column="2"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToRoleManagementView}"
+                            Content="Positions"
+                            GroupName="TabButtons"
+                            Path="{DynamicResource suitcaseIcon}" />
+
+                        <controls:RadioButtonEx
+                            Grid.Column="3"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToPayRollManagementView}"
+                            Content="Payrolls"
+                            GroupName="TabButtons"
+                            Path="{DynamicResource moneyIcon}" />
+
+                        <controls:RadioButtonEx
+                            Grid.Column="3"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToReportsView}"
+                            Content="Reports"
+                            GroupName="TabButtons"
+                            Path="{DynamicResource reportIcon}" />
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
