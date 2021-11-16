@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="EzHRMApp.Views.CheckInManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1300">
+    <UserControl.DataContext>
+        <viewmodels:CheckInManagementViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="30, 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource Accent}">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="13" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Left" />
+                        </Style>
+                        <Style TargetType="controls:TextBoxEx">
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="IconPad" Value="0" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                            <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
+                            <Setter Property="FontFamily" Value="Time New Roman" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
+                            <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
+                            <Setter Property="Margin" Value="5,0" />
+                            <Setter Property="Padding" Value="5,0" />
+                        </Style>
+                        <Style TargetType="controls:ComboBoxEx">
+                            <Setter Property="Padding" Value="10,0" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
+                            <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="FontFamily" Value="Time New Roman" />
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="FontSize" Value="13" />
+                            <Setter Property="ItemCornerRadius" Value="0" />
+                            <Setter Property="Margin" Value="5,0" />
+                            <Setter Property="FocusedPadding" Value="5, 1" />
+                            <Setter Property="NormalPadding" Value="5, 1" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackPanel.Resources>
+                <CheckBox
+                        x:Name="showTodayCheckBox"
+                        Margin="0,0,35,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Checked="showTodayOnlyChanged"
+                        Unchecked="showTodayOnlyChanged"
+                        Content="Show today only"/>
+                <controls:ComboBoxEx
+                        x:Name="filterComboboxs"
+                        Width="130"
+                        DisplayMemberPath="Header"
+                        ItemsSource="{Binding ElementName=datagridEx, Path=Columns}"
+                        SelectedIndex="1"
+                        SelectionChanged="filterTypeChanged" />
+                <controls:TextBoxEx
+                        x:Name="filterTextBox"
+                        Width="200"
+                        Margin="10,0,10,0"
+                        TextChanged="filterTextChanged" />
+            </StackPanel>
+        </Border>
+
+        <controls:DatagridEx
+                x:Name="datagridEx"
+                Grid.Row="1"
+                AutoGenerateColumns="False"
+                Background="{DynamicResource DarkerBackColor}"
+                IsReadOnly="True"
+                ItemsSource="{Binding CheckIns}">
+            <controls:DatagridEx.Columns>
+                <DataGridTextColumn
+                        Width="215"
+                        MinWidth="100"
+                        Binding="{Binding ThoiGianVaoLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
+                        FontWeight="Bold"
+                        Header="Check-in time">
+                    <DataGridTextColumn.CellStyle>
+                        <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
+                            <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ThoiGianTanLam}" Value="{x:Null}">
+                                    <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsSelected}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn
+                        Width="140"
+                        MinWidth="100"
+                        FontWeight="Bold"
+                        Binding="{Binding IDNhanVien}"
+                        Header="Employee ID" />
+                <DataGridTextColumn
+                        Width="200"
+                        MinWidth="100"
+                        Binding="{Binding ThoiGianTanLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
+                        Header="Check-out time" />
+            </controls:DatagridEx.Columns>
+        </controls:DatagridEx>
+    </Grid>
+</UserControl>
