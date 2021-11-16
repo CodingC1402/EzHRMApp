@@ -13,19 +13,24 @@ namespace ViewModel
         public override string ViewName => "Home";
 
         public static HomeViewModel Instance { get; private set; }
+
         public DateTime CurrentTime { get => DateTime.Now; }
+        public bool ShowPapaFranku { get; set; }
 
         private Timer _currentTimeUpdateTimer = null;
+        private DateTime _papaTime;
 
         public HomeViewModel()
         {
             Instance?.CleanUp();
             Instance = this;
 
+            _papaTime = DateTime.Now;
             _currentTimeUpdateTimer = new Timer();
             _currentTimeUpdateTimer.Interval = 1000;
             _currentTimeUpdateTimer.Elapsed += (s, e) =>
             {
+                ShowPapaFranku = (DateTime.Now - _papaTime).Seconds % 5 == 2;
                 RaisePropertyChanged(nameof(CurrentTime));
             };
             _currentTimeUpdateTimer.Start();
