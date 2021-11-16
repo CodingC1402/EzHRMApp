@@ -10,7 +10,7 @@ namespace DAL.Rows
     {
         public string TenPhong { get; set; }
         public DateTime NgayThanhLap { get; set; }
-        public DateTime NgayNgungHoatDong { get; set; }
+        public DateTime? NgayNgungHoatDong { get; set; }
         public string TruongPhong { get; set; }
 
         public Department() { }
