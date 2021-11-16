@@ -747,7 +747,5 @@
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
         </Grid>
-
-
     </Grid>
 </UserControl>

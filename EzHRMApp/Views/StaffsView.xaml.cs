@@ -113,20 +113,20 @@ namespace EzHRMApp.Views
             }
         }
 
-        private void showResignedEmployeesChanged(object sender, RoutedEventArgs e)
+        protected void showResignedEmployeesChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
-        private void filterTypeChanged(object sender, RoutedEventArgs e)
+        protected void filterTypeChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
-        private void filterTextChanged(object sender, TextChangedEventArgs e)
+        protected void filterTextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateFilter();
         }
 
-        private void UpdateFilter()
+        protected virtual void UpdateFilter()
         {
             ICollectionView cv = CollectionViewSource.GetDefaultView(datagridEx.ItemsSource);
             if (filterTextBox.Text == "" && showResignCheckBox.IsChecked.HasValue && showResignCheckBox.IsChecked.Value)

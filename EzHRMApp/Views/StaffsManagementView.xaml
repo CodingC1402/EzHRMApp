@@ -54,7 +54,7 @@
                 Content="Staffs"
                 IsChecked="True"
                 Path="{DynamicResource staffsIcon}" />
-            <controls:RadioButtonEx 
+            <controls:RadioButtonEx
                 Grid.Column="1"
                 Command="{Binding ToDepartmentView}"
                 Content="Department" />
