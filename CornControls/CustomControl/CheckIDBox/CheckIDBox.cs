@@ -37,8 +37,8 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty DisabledColorProperty = DependencyProperty.Register(nameof(DisabledColor), typeof(Brush), typeof(CheckIDBox), new PropertyMetadata(Brushes.Gray));
 
         public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIDTextChangedCallBack));
+        public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnNameTextChangedCallBack));
         public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty IsMessageOnlyProperty = DependencyProperty.Register(nameof(IsMessageOnly), typeof(bool), typeof(CheckIDBox), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -206,6 +206,28 @@ namespace CornControls.CustomControl
         }
 
         private TextBox _textBox = null;
+        private Label _idText = null;
+        private Label _nameText = null;
+
+        private static void OnIDTextChangedCallBack(
+        DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            CheckIDBox control = sender as CheckIDBox;
+            if (control != null)
+            {
+                control._idText.Visibility = string.IsNullOrEmpty(control.IDText) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private static void OnNameTextChangedCallBack(
+        DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            CheckIDBox control = sender as CheckIDBox;
+            if (control != null)
+            {
+                control._nameText.Visibility = string.IsNullOrEmpty(control.NameText) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
         static CheckIDBox()
         {
@@ -215,6 +237,9 @@ namespace CornControls.CustomControl
         public override void OnApplyTemplate()
         {
             _textBox = Template.FindName("PART_EditableTextBox", this) as TextBox;
+            _idText = Template.FindName("PART_idText", this) as Label;
+            _nameText = Template.FindName("PART_nameText", this) as Label;
+
             if (_textBox != null)
             {
                 _textBox.TextChanged += (s, e) =>

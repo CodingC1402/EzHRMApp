@@ -150,54 +150,74 @@
                 PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                 <theme:SystemDropShadowChrome
                     x:Name="shadow"
+                    Height="200"
                     MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                    Color="{DynamicResource ColorAccent}"
-                    Height="200">
+                    Color="{DynamicResource ColorAccent}">
                     <Border
                         x:Name="dropDownBorder"
                         Background="{Binding RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, Path=Background}"
                         BorderBrush="{DynamicResource Accent}"
-                        BorderThickness="1"
-                        Height="200">
-                        <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
+                        BorderThickness="1">
+                        <ScrollViewer x:Name="DropDownScrollViewer">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="100"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition
+                                        Width="*"
+                                        MinWidth="100"
+                                        MaxWidth="200" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+
                                 <Ellipse
                                     x:Name="profilePicture"
-                                    Grid.RowSpan="2"
+                                    Grid.RowSpan="3"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
                                     RenderOptions.BitmapScalingMode="HighQuality"
                                     Stroke="{DynamicResource Accent}"
                                     StrokeThickness="10">
                                     <Ellipse.Fill>
-                                        <ImageBrush
-                                            ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
-                                            Stretch="Uniform" />
+                                        <ImageBrush ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" Stretch="Uniform" />
                                     </Ellipse.Fill>
                                 </Ellipse>
+
                                 <Label
-                                    Grid.Column="1"
-                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
                                 <Label
-                                    Grid.Column="1"
                                     Grid.Row="1"
-                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+
+                                <Label
+                                    x:Name="PART_idText"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="ID: " />
+                                <Label
+                                    x:Name="PART_nameText"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="Name: " />
+
                                 <Label
                                     x:Name="messageLabel"
-                                    HorizontalAlignment="Center"
-                                    Grid.ColumnSpan="2"
                                     Grid.Row="2"
-                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    Grid.ColumnSpan="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
                             </Grid>
                         </ScrollViewer>
                     </Border>
@@ -211,17 +231,15 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                 Style="{StaticResource ComboBoxToggleButton}" />
-            <Border
-                x:Name="border"
-                Margin="{TemplateBinding BorderThickness}">
+            <Border x:Name="border" Margin="{TemplateBinding BorderThickness}">
                 <TextBox
                     x:Name="PART_EditableTextBox"
-                    Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, UpdateSourceTrigger=PropertyChanged}"
                     Margin="{TemplateBinding Padding}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                     IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                    Style="{StaticResource ComboBoxEditableTextBox}" />
+                    Style="{StaticResource ComboBoxEditableTextBox}"
+                    Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
@@ -236,13 +254,14 @@
                 <Setter TargetName="shadow" Property="Color" Value="#71000000" />
             </Trigger>
             <Trigger Property="IsMessageOnly" Value="true">
-                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0"/>
-                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3"/>
+                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
-                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden"/>
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden" />
             </Trigger>
             <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="true">
-                <Setter Property="OutterColor" Value="{DynamicResource Accent}"/> <!-- need change something here -->
+                <Setter Property="OutterColor" Value="{DynamicResource Accent}" />
+                <!--  need change something here  -->
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -266,55 +285,73 @@
                     x:Name="shadow"
                     MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                    Color="{DynamicResource ColorAccent}"
-                    Height="200">
+                    Color="{DynamicResource ColorAccent}">
                     <Border
                         x:Name="dropDownBorder"
                         Background="{Binding RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}, Path=Background}"
                         BorderBrush="{DynamicResource Accent}"
-                        BorderThickness="1"
-                        Height="200">
-                        <ScrollViewer x:Name="DropDownScrollViewer" Height="200">
+                        BorderThickness="1">
+                        <ScrollViewer x:Name="DropDownScrollViewer">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="100"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition
+                                        Width="*"
+                                        MinWidth="100"
+                                        MaxWidth="200" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+
                                 <Ellipse
                                     x:Name="profilePicture"
-                                    Grid.RowSpan="2"
+                                    Grid.RowSpan="3"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
                                     RenderOptions.BitmapScalingMode="HighQuality"
                                     Stroke="{DynamicResource Accent}"
                                     StrokeThickness="10">
                                     <Ellipse.Fill>
-                                        <ImageBrush
-                                            ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
-                                            Stretch="Uniform" />
+                                        <ImageBrush ImageSource="{Binding ProfilePicture, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" Stretch="Uniform" />
                                     </Ellipse.Fill>
                                 </Ellipse>
+
                                 <Label
-                                    x:Name="idLabel"
-                                    Grid.Column="1"
-                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    x:Name="idTextLabel"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
                                 <Label
-                                    x:Name="nameLabel"
-                                    Grid.Column="1"
+                                    x:Name="nameTextLabel"
                                     Grid.Row="1"
-                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+
+                                <Label
+                                    x:Name="PART_idText"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="ID: " />
+                                <Label
+                                    x:Name="PART_nameText"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="Name: " />
+
                                 <Label
                                     x:Name="messageLabel"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center"
-                                    Grid.ColumnSpan="2"
                                     Grid.Row="2"
-                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"/>
+                                    Grid.ColumnSpan="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
                             </Grid>
                         </ScrollViewer>
                     </Border>
@@ -332,7 +369,7 @@
                 x:Name="contentPresenter"
                 Margin="{TemplateBinding Padding}"
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{Binding ContentText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
                 ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -349,10 +386,10 @@
                 <Setter TargetName="shadow" Property="Color" Value="#71000000" />
             </Trigger>
             <Trigger Property="IsMessageOnly" Value="true">
-                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0"/>
-                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3"/>
+                <Setter TargetName="messageLabel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
-                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden"/>
+                <Setter TargetName="profilePicture" Property="Visibility" Value="Hidden" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

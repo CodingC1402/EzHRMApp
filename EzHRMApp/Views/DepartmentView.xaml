@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+    xmlns:converter="clr-namespace:EzHRMApp.Core.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:EzHRMApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -133,14 +134,14 @@
                         <controls:CheckIDBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsMessageOnly="{Binding OnlyMessage}"
                             ContentText="{Binding CurrentDepartment.TruongPhong, UpdateSourceTrigger=PropertyChanged}"
-                            MessageText="{Binding Message}"
-                            ProfilePicture="{Binding ProfilePicture, Converter={StaticResource byteImageConverter}}"
                             IDText="{Binding Manager.ID}"
                             IsDropDownOpen="{Binding IsPopupOpened}"
                             IsEditable="{Binding IsInCRUDMode}"
-                            IsReadOnly="{Binding IsInNormalMode}">
+                            IsMessageOnly="{Binding OnlyMessage}"
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            MessageText="{Binding Message}"
+                            ProfilePicture="{Binding ProfilePicture, Converter={StaticResource byteImageConverter}}">
                             <controls:CheckIDBox.NameText>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="Manager.Ho" />
@@ -169,8 +170,8 @@
                             VerticalAlignment="Center"
                             Content="Founding Date:" />
                         <controls:DatePickerEx
-                            Margin="5,10"
                             Grid.Column="1"
+                            Margin="5,10"
                             IsEnabled="{Binding IsInCRUDMode}"
                             SelectedDate="{Binding CurrentDepartment.NgayThanhLap}" />
 
@@ -178,7 +179,7 @@
                             Grid.Row="1"
                             VerticalAlignment="Center"
                             Content="Shutdown Date:" />
-                        <Grid 
+                        <Grid
                             Grid.Row="1"
                             Grid.Column="1"
                             Margin="0,5">
