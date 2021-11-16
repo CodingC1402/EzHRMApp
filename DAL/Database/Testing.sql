@@ -4,7 +4,7 @@ show create event START_BUSINESS_HOURS_EVENT;
 ALTER EVENT START_BUSINESS_HOURS_EVENT
 ON SCHEDULE
 EVERY 1 DAY
-STARTS ADDTIME(CURRENT_DATE() + INTERVAL 1 DAY, '06:00:00')
+STARTS NOW() + INTERVAL 10 SECOND
 ENABLE;
 
 select * from eventlog;
@@ -20,6 +20,7 @@ select * from truluong;
 select * from luong;
 select * from nghiphep;
 select * from sogiolamtrongngay;
+select * from baocaochamcong;
 
 DELETE FROM sogiolamtrongngay;
 DELETE FROM nghiphep;
@@ -33,8 +34,17 @@ UPDATE thoigianbieutuan
 SET GioTanLamChuNhat = '17:00:00';
 
 UPDATE chamcong
-SET ThoiGianVaoLam = '2021-11-14 11:00:00'
+SET ThoiGianTanLam = '2021-11-15 18:00:00'
 WHERE IDNhanVien = 'NV00000001';
+
+INSERT INTO baocaochamcong (NgayBaoCao,
+                            SoNVDenSom,
+                            SoNVDenDungGio,
+                            SoNVDenTre,
+                            SoNVTanLamSom,
+                            SoNVTanLamDungGio,
+                            SoNVLamThemGio)
+VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 0, 0, 0, 0, 0, 0);
 
 /*   test queries   */
 
