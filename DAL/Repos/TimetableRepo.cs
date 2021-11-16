@@ -9,6 +9,7 @@ namespace DAL.Repos
     public class TimetableRepo : Repo<Timetable>
     {
         public static TimetableRepo Instance { get; private set; } = new TimetableRepo();
+
         public static Timetable CurrentTimetable { get; private set; }
 
         public TimetableRepo()
