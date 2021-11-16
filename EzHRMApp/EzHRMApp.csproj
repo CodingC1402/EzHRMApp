@@ -11,6 +11,7 @@
     <None Remove="Icons\HomeBG.jpg" />
     <None Remove="Icons\icon.png" />
     <None Remove="Icons\Logo.png" />
+    <None Remove="Icons\PapaFranku.png" />
     <None Remove="Icons\time.ico" />
     <None Remove="Themes\user.png" />
     <None Remove="Views\13192721-mc.png" />
@@ -30,6 +31,7 @@
     <Resource Include="Icons\HomeBG.jpg" />
     <Resource Include="Icons\icon.png" />
     <Resource Include="Icons\Logo.png" />
+    <Resource Include="Icons\PapaFranku.png" />
     <Resource Include="Icons\time.ico" />
     <Resource Include="Themes\user.png" />
   </ItemGroup>
