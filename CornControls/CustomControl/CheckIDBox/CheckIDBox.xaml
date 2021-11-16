@@ -305,12 +305,13 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30" />
                                     <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
                                 <Ellipse
                                     x:Name="profilePicture"
-                                    Grid.RowSpan="3"
+                                    Grid.RowSpan="4"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="10"
                                     RenderOptions.BitmapScalingMode="HighQuality"
@@ -332,6 +333,12 @@
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
                                     Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                <Label
+                                    x:Name="roleTextLabel"
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
 
                                 <Label
                                     x:Name="PART_idText"
@@ -344,10 +351,16 @@
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
+                                <Label
+                                    x:Name="PART_roleText"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="Role: " />
 
                                 <Label
                                     x:Name="messageLabel"
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Grid.ColumnSpan="3"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
