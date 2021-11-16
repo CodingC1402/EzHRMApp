@@ -32,50 +32,45 @@ namespace EzHRMApp.Views
             UpdateFilter();
         }
 
-        protected void filterTypeChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateFilter();
-        }
-
-        protected void filterTextChanged(object sender, TextChangedEventArgs e)
+        protected void filterTextChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
 
         protected virtual void UpdateFilter()
         {
-            ICollectionView cv = CollectionViewSource.GetDefaultView(datagridEx.ItemsSource);
-            if (filterTextBox.Text == "" && showTodayCheckBox.IsChecked.HasValue && !showTodayCheckBox.IsChecked.Value)
+            if (datagridEx.SearchText == "" && showTodayCheckBox.IsChecked.HasValue && !showTodayCheckBox.IsChecked.Value)
             {
-                cv.Filter = null;
+                datagridEx.SetCollectionFilter(null);
             }
             else
             {
-                cv.Filter = obj =>
-                {
-                    CheckInModel checkIn = obj as CheckInModel;
-                    if (showTodayCheckBox.IsChecked.HasValue && showTodayCheckBox.IsChecked.Value
-                    && !(checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date
-                    || (checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date.AddDays(-1) && checkIn.ThoiGianTanLam == null)))
-                        return false;
-
-                    if (filterTextBox.Text != "")
+                datagridEx.SetCollectionFilter(obj =>
                     {
-                        var searchText = filterTextBox.Text;
-                        switch ((filterComboboxs.SelectedItem as DataGridTextColumn).Header)
-                        {
-                            case "Check-in time":
-                                return checkIn.ThoiGianVaoLam.ToString("dd/MM/yyyy").Contains(searchText);
-                            case "Employee ID":
-                                return checkIn.IDNhanVien.Contains(searchText);
-                            case "Check-out time":
-                                return checkIn.ThoiGianTanLam.HasValue 
-                                    && checkIn.ThoiGianTanLam.Value.ToString("dd/MM/yyyy").Contains(searchText);
-                        }
-                    }
+                        CheckInModel checkIn = obj as CheckInModel;
+                        if (showTodayCheckBox.IsChecked.HasValue && showTodayCheckBox.IsChecked.Value
+                        && !(checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date
+                        || (checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date.AddDays(-1) && checkIn.ThoiGianTanLam == null)))
+                            return false;
 
-                    return true;
-                };
+                        if (datagridEx.SearchText != "")
+                        {
+                            var searchText = datagridEx.SearchText;
+                            switch (datagridEx.SearchFilter)
+                            {
+                                case "Check-in time":
+                                    return checkIn.ThoiGianVaoLam.ToString("dd/MM/yyyy").Contains(searchText);
+                                case "Employee ID":
+                                    return checkIn.IDNhanVien.Contains(searchText);
+                                case "Check-out time":
+                                    return checkIn.ThoiGianTanLam.HasValue 
+                                        && checkIn.ThoiGianTanLam.Value.ToString("dd/MM/yyyy").Contains(searchText);
+                            }
+                        }
+
+                        return true;
+                    }
+                );
             }
         }
     }
