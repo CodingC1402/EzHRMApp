@@ -54,27 +54,37 @@ namespace ViewModel
 
         public override void ExecuteConfirmAdd(object param)
         {
-            base.ExecuteConfirmAdd(param);
+            var result = CurrentDepartment.Add();
 
-            if (CurrentDepartment.Add() == "")
+            if (result == "")
             {
+                base.ExecuteConfirmAdd(param);
                 Departments.Add(CurrentDepartment);
                 SelectedDepartment = CurrentDepartment;
+                SetCurrentModelBack();
             }
-
-            SetCurrentModelBack();
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
         }
         public override void ExecuteConfirmUpdate(object param)
         {
-            base.ExecuteConfirmUpdate(param);
+            var result = CurrentDepartment.Save();
 
-            if (SelectedDepartment.Save() == "")
+            if (result == "")
             {
+                base.ExecuteConfirmUpdate(param);
                 var found = Departments.FirstOrDefault(x => x.TenPhong == SelectedDepartment.TenPhong);
                 Departments[Departments.IndexOf(found)] = CurrentDepartment;
+                SetCurrentModelBack();
             }
-
-            SetCurrentModelBack();
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
         }
 
         public override void ExecuteCancleAdd(object param)
@@ -136,7 +146,7 @@ namespace ViewModel
         {
             Departments = DepartmentModel.LoadAll();
             OnlyMessage = true;
-            Message = "Empty";
+            Message = "No manager here!";
         }
 
         private void SetCurrentModelBack()
@@ -155,7 +165,7 @@ namespace ViewModel
                 {
                     if (CurrentDepartment.TruongPhong == null)
                     {
-                        Message = "No manager here";
+                        Message = "No manager here!";
                     }
                     else
                     {

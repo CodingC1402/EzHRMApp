@@ -34,6 +34,13 @@ namespace DAL.Rows
 
         public override string Add(UnitOfWork uow = null)
         {
+            var result = this.CheckForError();
+
+            result = this.IsNameTaken(TenPhong);
+
+            if (result != "")
+                return result; 
+            
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
@@ -43,11 +50,19 @@ namespace DAL.Rows
                 }
             }
 
-            return BoolToString(DepartmentRepo.Instance.Add(this, uow));
+            if (DepartmentRepo.Instance.Add(this, uow))
+                return "";
+            else
+                return "Failed!";
         }
 
         public override string Save(UnitOfWork uow = null)
         {
+            var result = this.CheckForError();
+        
+            if (result != "")
+                return result;
+
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
@@ -57,7 +72,69 @@ namespace DAL.Rows
                 }
             }
 
-            return BoolToString(DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uow));
+            if (DepartmentRepo.Instance.Update(new object[] { TenPhong }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            try
+            {
+                if (!IsValidDepartmentName(TenPhong))
+                    return "Department's name can't be empty!";
+
+                if (NgayNgungHoatDong.HasValue && NgayNgungHoatDong.Value < NgayThanhLap)
+                {
+                    return "Shutdown date can't be before founding date!";
+                }
+
+                if (!IsValidManagerID(TruongPhong))
+                {
+                    return "Unknown manager ID: " + TruongPhong;
+                }
+
+                return "";
+            }
+            catch (Exception e)
+            {
+                return $"Unknow error: {e.Message}";
+            }
+        }
+
+        public bool IsValidDepartmentName(string name)
+        {
+            if (name == null || name == "")
+                return false;
+
+            return true;
+        }
+
+        public string IsNameTaken(string name)
+        {
+            if (DepartmentRepo.Instance.FindByID(new object[] { name }) != null)
+                return "Department's name is already taken!";
+
+            return "";
+        }
+
+        public bool IsValidManagerID(string id)
+        {
+            if (id == null || id == "")
+                return true;
+
+            try
+            {
+                if (EmployeeRepo.Instance.FindByID(new object[] { id }) == null)
+                    return false;
+                else
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

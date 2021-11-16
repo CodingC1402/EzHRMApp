@@ -124,7 +124,7 @@
                             Content="Name:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
+                            IsReadOnly="{Binding IsInNormalAndUpdateMode}"
                             Text="{Binding CurrentDepartment.TenPhong}" />
 
                         <Label
