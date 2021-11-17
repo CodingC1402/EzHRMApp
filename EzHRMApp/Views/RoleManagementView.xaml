@@ -334,6 +334,11 @@
                         MinWidth="150"
                         Binding="{Binding PhanTramLuongNgoaiGio}"
                         Header="Overtime %" />
+                    <DataGridTextColumn
+                        Width="100"
+                        MinWidth="100" 
+                        Binding="{Binding DaXoa}"
+                        Header="Deleted" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
 
