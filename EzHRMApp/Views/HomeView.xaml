@@ -6,11 +6,88 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:EzHRMApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{DynamicResource Accent}"
+    DataContext="{x:Static viewmodels:HomeViewModel.Instance}"
     mc:Ignorable="d">
+
     <Grid>
-        <controls:DatePickerEx Height="35" />
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush
+                            ImageSource="/EzHRMApp;component/Icons/HomeBG.jpg"
+                            Opacity="0.4"
+                            Stretch="UniformToFill" />
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ShowPapaFranku}" Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <ImageBrush
+                                    ImageSource="/EzHRMApp;component/Icons/PapaFranku.png"
+                                    Opacity="1"
+                                    Stretch="UniformToFill" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowPapaFranku}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock
+                FontFamily="Stencil"
+                FontSize="72"
+                FontWeight="Bold"
+                Foreground="{DynamicResource Accent}"
+                Text="Ez HRM"
+                TextAlignment="Center" />
+            <Border
+                Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Height}"
+                Height="200"
+                Margin="0,20"
+                Padding="5"
+                Background="{DynamicResource BackColor}"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="10"
+                CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Width}">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="/EzHRMApp;component/Icons/icon.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+            <TextBlock
+                FontFamily="Stencil"
+                FontSize="50"
+                FontWeight="Bold"
+                Foreground="{DynamicResource Accent}"
+                Text="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy}'}"
+                TextAlignment="Center" />
+            <TextBlock
+                FontFamily="Stencil"
+                FontSize="36"
+                FontWeight="Bold"
+                Foreground="{DynamicResource Accent}"
+                Text="{Binding CurrentTime, StringFormat='{}{0:hh:mm:ss}'}"
+                TextAlignment="Center" />
+        </StackPanel>
     </Grid>
 </UserControl>

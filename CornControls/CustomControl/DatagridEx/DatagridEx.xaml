@@ -243,14 +243,14 @@
                                     </StackPanel.Resources>
                                     <controls:ComboBoxEx
                                         x:Name="filterComboboxs"
-                                        Width="100"
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=SearchComboboxWidth}"
                                         DisplayMemberPath="Header"
                                         IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=IsEnabled}"
                                         ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=Columns}"
                                         SelectedIndex="0" />
                                     <controls:TextBoxEx
                                         x:Name="filterTextBox"
-                                        Width="200"
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=SearchTextboxWidth}"
                                         Margin="10,0,10,0"
                                         IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=IsEnabled}"
                                         Text="{Binding RelativeSource={RelativeSource AncestorType=controls:DatagridEx}, Path=SearchText, UpdateSourceTrigger=PropertyChanged}" />

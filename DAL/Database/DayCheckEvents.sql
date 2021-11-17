@@ -395,6 +395,22 @@ DO
         END IF;
 
         /* Them dong va cap nhat baocaochamcong va baocaonhansu */
+
+        /* !!!!LOG!!!! */
+        INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+        VALUES (NOW(), 'Bat dau kiem tra va insert cac dong moi vao cac table bao cao', NULL, NULL, NULL);
+
+        IF (DAY(CURRENT_DATE()) = 1) THEN
+            BEGIN
+                /* !!!!LOG!!!! */
+                INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+                VALUES (NOW(), 'Hom nay la ngay dau cua thang, insert baocaonhansu moi', NULL, NULL, NULL);
+
+                INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
+                VALUES (MONTH(CURRENT_DATE()), YEAR(CURRENT_DATE()), 0, 0);
+            END;
+        END IF;
+
         IF (
             SELECT (
                 CASE DAYOFWEEK(CURRENT_DATE())
@@ -415,17 +431,6 @@ DO
             INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
             VALUES (NOW(), 'Hom nay co lam, bat dau insert bao cao moi', NULL, NULL, NULL);
 
-            IF (DAY(CURRENT_DATE()) = 1) THEN
-                BEGIN
-                    INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
-                    VALUES (MONTH(CURRENT_DATE()), YEAR(CURRENT_DATE()), 0, 0);
-                END;
-            END IF;
-
-            /* !!!!LOG!!!! */
-            INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
-            VALUES (NOW(), 'Insert bao cao moi hoan tat', NULL, NULL, NULL);
-
             INSERT INTO baocaochamcong (NgayBaoCao,
                                        SoNVDenSom,
                                        SoNVDenDungGio,
@@ -436,6 +441,10 @@ DO
             VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0);
         END;
         END IF;
+
+        /* !!!!LOG!!!! */
+            INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+            VALUES (NOW(), 'Insert cac bao cao moi hoan tat', NULL, NULL, NULL);
 
         /* !!!!LOG!!!! */
         INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)

@@ -37,6 +37,9 @@
         <DataTemplate DataType="{x:Type viewModel:ReportsViewModel}">
             <view:ReportsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CheckInManagementViewModel}">
+            <view:CheckInManagementView />
+        </DataTemplate>
     </windows:UserControlWindow.Resources>
 
     <Grid Cursor="Arrow" SnapsToDevicePixels="True">
@@ -165,7 +168,8 @@
                         <controls:RadioButtonEx
                             x:Name="checkInBtn"
                             Click="TabButtonClicked"
-                            Content="CheckIn"
+                            Command="{Binding ToCheckInManagementView}"
+                            Content="Check-Ins"
                             GroupName="TabButtons"
                             Path="{StaticResource clockIcon}" />
 

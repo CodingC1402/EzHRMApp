@@ -263,6 +263,9 @@ namespace CornControls.CustomControl
             _nameText = Template.FindName("PART_nameText", this) as Label;
             _roleText = Template.FindName("PART_roleText", this) as Label;
 
+            _nameText.Visibility = string.IsNullOrEmpty(NameText) ? Visibility.Collapsed : Visibility.Visible;
+            _idText.Visibility = string.IsNullOrEmpty(IDText) ? Visibility.Collapsed : Visibility.Visible;
+
             if (_textBox != null)
             {
                 _textBox.TextChanged += (s, e) =>

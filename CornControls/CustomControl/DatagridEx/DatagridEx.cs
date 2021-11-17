@@ -17,6 +17,9 @@ namespace CornControls.CustomControl
 
         public static readonly DependencyProperty SearchTextProperty = DependencyProperty.Register(nameof(SearchText), typeof(string), typeof(DatagridEx), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchChangedCallBack));
         public static readonly DependencyProperty SearchFilterProperty = DependencyProperty.Register(nameof(SearchFilter), typeof(string), typeof(DatagridEx), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchChangedCallBack));
+        
+        public static readonly DependencyProperty SearchTextboxWidthProperty = DependencyProperty.Register(nameof(SearchTextboxWidth), typeof(double), typeof(DatagridEx), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchChangedCallBack));
+        public static readonly DependencyProperty SearchComboboxWidthProperty = DependencyProperty.Register(nameof(SearchComboboxWidth), typeof(double), typeof(DatagridEx), new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchChangedCallBack));
 
         private ICollectionView _collectionView;
         private Predicate<object> _filter;
@@ -44,6 +47,19 @@ namespace CornControls.CustomControl
         {
             get => (string)GetValue(SearchFilterProperty);
             set => SetValue(SearchFilterProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public double SearchTextboxWidth
+        {
+            get => (double)GetValue(SearchTextboxWidthProperty);
+            set => SetValue(SearchTextboxWidthProperty, value);
+        }
+        [Browsable(true), Category("Appearance")]
+        public double SearchComboboxWidth
+        {
+            get => (double)GetValue(SearchComboboxWidthProperty);
+            set => SetValue(SearchComboboxWidthProperty, value);
         }
 
         public Predicate<object> GetCollectionFilter()

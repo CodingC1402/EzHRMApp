@@ -210,12 +210,14 @@
                                 <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="ID: " />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
                                 <Label
@@ -224,6 +226,21 @@
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
                                     Content="Role: " />
+
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
 
                                 <Label
                                     x:Name="messageLabel"
@@ -360,12 +377,14 @@
                                 <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="ID: " />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
+                                    Margin="10,0"
                                     VerticalAlignment="Center"
                                     Content="Name: " />
                                 <Label
@@ -375,9 +394,24 @@
                                     VerticalAlignment="Center"
                                     Content="Role: " />
 
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5" />
+
                                 <Label
                                     x:Name="messageLabel"
                                     Grid.Row="3"
+                                    Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
