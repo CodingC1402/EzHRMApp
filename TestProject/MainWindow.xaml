@@ -10,6 +10,9 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="{x:Type Border}"/>
+    </Window.Resources>
     <Grid>
         <DatePicker Height="30" Foreground="Blue" />
         <controls:DatePickerEx
@@ -17,5 +20,6 @@
             VerticalAlignment="Top"
             CalendarIconPath="{DynamicResource accountIcon}"
             CalendarIconWidth="50" />
+        <Border Width="100" Height="50" Background="Black"/>
     </Grid>
 </Window>
