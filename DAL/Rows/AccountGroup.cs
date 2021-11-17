@@ -11,6 +11,13 @@ namespace DAL.Rows
         public string TenNhomTaiKhoan { get; set; }
         public int QuyenHan { get; set; }
 
+        public AccountGroup(AccountGroup ag)
+        {
+            TenNhomTaiKhoan = ag.TenNhomTaiKhoan;
+            QuyenHan = ag.QuyenHan;
+        }
+        public AccountGroup() { }
+
         public override string Save(UnitOfWork uow)
         {
             return BoolToString(AccountGroupRepo.Instance.Update(new object[] { TenNhomTaiKhoan }, this, uow));
