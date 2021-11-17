@@ -12,7 +12,7 @@ namespace DAL.Repos
         {
             TableName = "CHUCVU";
             PKColsName = new string[] {
-                "ID"
+                "TenChucVu"
             };
         }
 
