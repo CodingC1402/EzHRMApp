@@ -229,7 +229,6 @@
                                     x:Name="messageLabel"
                                     Grid.Row="3"
                                     Grid.ColumnSpan="3"
-                                    Background="{DynamicResource Accent}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
                                     Content="{Binding MessageText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />

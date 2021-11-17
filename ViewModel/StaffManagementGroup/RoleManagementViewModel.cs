@@ -14,12 +14,17 @@ namespace ViewModel
         private static RoleManagementViewModel _instance = null;
         public static RoleManagementViewModel Instance { get => _instance; }
 
+        public List<string> CachTinhLuong { get; set; }
+
         public ObservableCollection<RoleModel> Roles { get; set; }
 
         public RoleManagementViewModel()
         {
             _instance = this;
             Roles = RoleModel.LoadAll();
+            CachTinhLuong = new List<string>();
+            CachTinhLuong.Add("Theo giờ");
+            CachTinhLuong.Add("Theo tháng");
         }
     }
 }

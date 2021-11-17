@@ -183,14 +183,6 @@ namespace ViewModel
                     Message = "";
                 }
             }
-            else
-            {
-                Manager = new EmployeeModel();
-                Manager.ID = "";
-                Manager.Ho = null;
-                Manager.Ten = null;
-                Manager.CMND = "";
-            }
         }
     }
 }
