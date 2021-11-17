@@ -39,6 +39,7 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(nameof(MessageText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty IDTextProperty = DependencyProperty.Register(nameof(IDText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIDTextChangedCallBack));
         public static readonly DependencyProperty NameTextProperty = DependencyProperty.Register(nameof(NameText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnNameTextChangedCallBack));
+        public static readonly DependencyProperty RoleTextProperty = DependencyProperty.Register(nameof(RoleText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnRoleTextChangedCallBack));
         public static readonly DependencyProperty ProfilePictureProperty = DependencyProperty.Register(nameof(ProfilePicture), typeof(ImageSource), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty ContentTextProperty = DependencyProperty.Register(nameof(ContentText), typeof(string), typeof(CheckIDBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public static readonly DependencyProperty IsMessageOnlyProperty = DependencyProperty.Register(nameof(IsMessageOnly), typeof(bool), typeof(CheckIDBox), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -182,6 +183,13 @@ namespace CornControls.CustomControl
         }
 
         [Browsable(true), Category("Appearance")]
+        public string RoleText
+        {
+            get => (string)GetValue(RoleTextProperty);
+            set => SetValue(RoleTextProperty, value);
+        }
+
+        [Browsable(true), Category("Appearance")]
         public ImageSource ProfilePicture
         {
             get => (ImageSource)GetValue(ProfilePictureProperty);
@@ -208,6 +216,7 @@ namespace CornControls.CustomControl
         private TextBox _textBox = null;
         private Label _idText = null;
         private Label _nameText = null;
+        private Label _roleText = null;
 
         private static void OnIDTextChangedCallBack(
         DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -225,7 +234,20 @@ namespace CornControls.CustomControl
             CheckIDBox control = sender as CheckIDBox;
             if (control != null)
             {
-                control._nameText.Visibility = string.IsNullOrEmpty(control.NameText) ? Visibility.Collapsed : Visibility.Visible;
+                if (control.NameText == null)
+                    control._nameText.Visibility = Visibility.Collapsed;
+                else
+                    control._nameText.Visibility = string.IsNullOrEmpty(control.NameText.Trim()) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private static void OnRoleTextChangedCallBack(
+        DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            CheckIDBox control = sender as CheckIDBox;
+            if (control != null)
+            {
+                control._roleText.Visibility = string.IsNullOrEmpty(control.RoleText) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -239,6 +261,7 @@ namespace CornControls.CustomControl
             _textBox = Template.FindName("PART_EditableTextBox", this) as TextBox;
             _idText = Template.FindName("PART_idText", this) as Label;
             _nameText = Template.FindName("PART_nameText", this) as Label;
+            _roleText = Template.FindName("PART_roleText", this) as Label;
 
             _nameText.Visibility = string.IsNullOrEmpty(NameText) ? Visibility.Collapsed : Visibility.Visible;
             _idText.Visibility = string.IsNullOrEmpty(IDText) ? Visibility.Collapsed : Visibility.Visible;
