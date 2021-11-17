@@ -122,7 +122,7 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalAndUpdateMode}"
-                            Text="" />
+                            Text="{Binding CurrentRole.TenChucVu}" />
 
                         <Label
                             Grid.Row="1"
@@ -132,6 +132,8 @@
                             Grid.Column="1"
                             Grid.Row="1"
                             IsReadOnly="True"
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            SelectedItem="{Binding CurrentRole.CachTinhLuong}"
                             ItemsSource="{Binding CachTinhLuong}"/>
                         
                         <Label
@@ -141,7 +143,8 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             Grid.Row="2"
-                            IsReadOnly="{Binding IsInNormalMode}"/>
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}"/>
 
                     </Grid>
 
@@ -166,7 +169,7 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalMode}"
-                            Text="" />
+                            Text="{Binding CurrentRole.TienLuongMoiGio}" />
 
                         <Label
                             Grid.Row="1"
@@ -176,29 +179,28 @@
                             Grid.Column="1"
                             Grid.Row="1"
                             IsReadOnly="{Binding IsInNormalMode}"
-                            Text="" />
+                            Text="{Binding CurrentRole.TienLuongMoiThang}" />
 
                         <controls:ButtonEx Margin="5,5,5,0"
                                            Grid.Column="1"
-                                           Grid.Row="2">
+                                           Grid.Row="2"
+                                           IsEnabled="{Binding IsInCRUDMode}">
                             <controls:ButtonEx.Style>
                                 <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
-                                    <Setter Property="Content" Value="New" />
-                                    <Setter Property="Command" Value="{Binding StartAddCommand}" />
+                                    <Setter Property="Command" Value="{Binding DeleteCommand}"/>
+                                    <Setter Property="Content" Value="Delete" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
-                                            <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
-                                            <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
-                                            <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
-                                            <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
-                                            <Setter Property="Content" Value="Confirm" />
+                                        <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="0">
+                                            <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                            <Setter Property="Content" Value="Delete" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsInAddMode}" Value="True">
+                                        <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="1">
                                             <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
                                             <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
                                             <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
-                                            <Setter Property="Command" Value="{Binding ConfirmAddCommand}" />
-                                            <Setter Property="Content" Value="Confirm" />
+                                            <Setter Property="Content" Value="Retore" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -293,7 +295,7 @@
                 IsReadOnly="True"
                 ItemsSource="{Binding Roles}"
                 SearchChanged="searchChanged"
-                SelectedItem="">
+                SelectedItem="{Binding SelectedRole}">
                 <controls:DatagridEx.Columns>
                     <DataGridTextColumn
                         Width="150"

@@ -36,11 +36,14 @@ namespace DAL.Rows
         {
             var result = this.CheckForError();
 
+            if (result != "")
+                return result;
+
             result = this.IsNameTaken(TenPhong);
 
             if (result != "")
-                return result; 
-            
+                return result;
+
             if (uow == null)
             {
                 using (var uowNew = new UnitOfWork())
