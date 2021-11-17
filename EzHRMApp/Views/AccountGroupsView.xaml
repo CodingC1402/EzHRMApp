@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="EzHRMApp.Views.AccountGroupsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             xmlns:view="clr-namespace:EzHRMApp.Views"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000">
+    <UserControl.DataContext>
+        <viewModel:AccountGroupsViewModel/>
+    </UserControl.DataContext>
+    
+    <Grid Margin="30, 10, 0, 10">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="controls:TextBoxEx">
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="Height" Value="35" />
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
+                    <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
+                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="Padding" Value="5,0" />
+                </Style>
+                <Style x:Key="ButtonExStyle" TargetType="controls:ButtonEx">
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Background" Value="{DynamicResource Accent}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
+                    <Setter Property="Content" Value="Change profile" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="PressedColor" Value="{DynamicResource AccentReallyBright}" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" MaxWidth="450"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0, 50, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Margin="0, 0, 0, 25"
+                FontSize="14"
+                Foreground="{DynamicResource AccentDark}"
+                VerticalAlignment="Bottom"
+                FontWeight="Bold"
+                Text="Select an account group to see it's permissions"/>
+            <controls:DatagridEx
+                Grid.Row="1"
+                x:Name="datagridEx"
+                AutoGenerateColumns="False"
+                Background="{DynamicResource DarkerBackColor}"
+                IsEnabled="{Binding IsInNormalMode}"
+                IsReadOnly="True"
+                ItemsSource="{Binding AccountGroups}"
+                SearchChanged="searchChanged"
+                SearchComboboxWidth="75"
+                SelectedItem="{Binding SelectedAccountGroup}">
+                <controls:DatagridEx.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding TenNhomTaiKhoan}"
+                        Header="Name" />
+                </controls:DatagridEx.Columns>
+
+            </controls:DatagridEx>
+        </Grid>
+        <Grid
+            Grid.Column="1"
+            Margin="0, 50, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <controls:TextBoxEx
+                    Grid.Column="1"
+                    MaxWidth="300"
+                    IsReadOnly="True"
+                    Text="{Binding CurrentAccountGroup.TenNhomTaiKhoan}" />
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+            <StackPanel
+                Grid.Row="2"
+                Margin="0, 15, 15, 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <controls:ButtonEx Margin="10,5">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="New" />
+                            <Setter Property="Command" Value="{Binding StartAddCommand}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                    <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
+                                    <Setter Property="Content" Value="Confirm" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsInAddMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                    <Setter Property="Command" Value="{Binding ConfirmAddCommand}" />
+                                    <Setter Property="Content" Value="Confirm" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
+                <controls:ButtonEx Margin="10,5">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="Change" />
+                            <Setter Property="Command" Value="{Binding StartUpdateCommand}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                    <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
+                                    <Setter Property="Content" Value="Cancel" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsInAddMode}" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                    <Setter Property="Command" Value="{Binding CancleAddCommand}" />
+                                    <Setter Property="Content" Value="Cancel" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

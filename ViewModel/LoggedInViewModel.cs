@@ -66,6 +66,9 @@ namespace ViewModel
             ToCheckInManagementView = new NavigationCommand<CheckInManagementViewModel>(new CheckInManagementViewModel(), this, 0);
             ViewModels.Add(ToCheckInManagementView.ViewModel);
 
+            ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
+            ViewModels.Add(ToAccountGroupsView.ViewModel);
+
             CurrentViewModel = ToHomeView.ViewModel;
         }
 
@@ -78,5 +81,6 @@ namespace ViewModel
         public NavigationCommand<PayRollManagementViewModel> ToPayRollManagementView { get; set; }
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
+        public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
     }
 }
