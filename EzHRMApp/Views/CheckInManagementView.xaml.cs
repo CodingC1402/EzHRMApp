@@ -32,26 +32,20 @@ namespace EzHRMApp.Views
             UpdateFilter();
         }
 
-        protected void filterTypeChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateFilter();
-        }
-
-        protected void filterTextChanged(object sender, TextChangedEventArgs e)
+        protected void filterTextChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
 
         protected virtual void UpdateFilter()
         {
-            ICollectionView cv = CollectionViewSource.GetDefaultView(datagridEx.ItemsSource);
-            if (filterTextBox.Text == "" && showTodayCheckBox.IsChecked.HasValue && !showTodayCheckBox.IsChecked.Value)
+            if (datagridEx.SearchText == "" && showTodayCheckBox.IsChecked.HasValue && !showTodayCheckBox.IsChecked.Value)
             {
-                cv.Filter = null;
+                datagridEx.SetCollectionFilter(null);
             }
             else
             {
-                cv.Filter = obj =>
+                datagridEx.SetCollectionFilter(obj =>
                 {
                     CheckInModel checkIn = obj as CheckInModel;
                     if (showTodayCheckBox.IsChecked.HasValue && showTodayCheckBox.IsChecked.Value
@@ -59,10 +53,10 @@ namespace EzHRMApp.Views
                     || (checkIn.ThoiGianVaoLam.Date == DateTime.Now.Date.AddDays(-1) && checkIn.ThoiGianTanLam == null)))
                         return false;
 
-                    if (filterTextBox.Text != "")
+                    if (datagridEx.SearchText != "")
                     {
-                        var searchText = filterTextBox.Text;
-                        switch ((filterComboboxs.SelectedItem as DataGridTextColumn).Header)
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
                         {
                             case "Check-in time":
                                 return checkIn.ThoiGianVaoLam.ToString("dd/MM/yyyy").Contains(searchText);
@@ -75,7 +69,7 @@ namespace EzHRMApp.Views
                     }
 
                     return true;
-                };
+                });
             }
         }
     }

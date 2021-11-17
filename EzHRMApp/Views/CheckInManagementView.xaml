@@ -12,92 +12,48 @@
         <viewmodels:CheckInManagementViewModel/>
     </UserControl.DataContext>
     <Grid Margin="30, 20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
 
-        <Border Background="{DynamicResource Accent}">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <ResourceDictionary>
-                        <Style TargetType="CheckBox">
-                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                            <Setter Property="FontFamily" Value="Tahoma" />
-                            <Setter Property="FontSize" Value="13" />
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="HorizontalAlignment" Value="Left" />
-                        </Style>
-                        <Style TargetType="controls:TextBoxEx">
-                            <Setter Property="CornerRadius" Value="5" />
-                            <Setter Property="IconPad" Value="0" />
-                            <Setter Property="Height" Value="35" />
-                            <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
-                            <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
-                            <Setter Property="FontFamily" Value="Time New Roman" />
-                            <Setter Property="FontWeight" Value="Normal" />
-                            <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
-                            <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
-                            <Setter Property="Margin" Value="5,0" />
-                            <Setter Property="Padding" Value="5,0" />
-                        </Style>
-                        <Style TargetType="controls:ComboBoxEx">
-                            <Setter Property="Padding" Value="10,0" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
-                            <Setter Property="FocusedOutterColor" Value="{DynamicResource AccentBright}" />
-                            <Setter Property="Height" Value="35" />
-                            <Setter Property="FontFamily" Value="Time New Roman" />
-                            <Setter Property="CornerRadius" Value="5" />
-                            <Setter Property="FontWeight" Value="Normal" />
-                            <Setter Property="FontSize" Value="13" />
-                            <Setter Property="ItemCornerRadius" Value="0" />
-                            <Setter Property="Margin" Value="5,0" />
-                            <Setter Property="FocusedPadding" Value="5, 1" />
-                            <Setter Property="NormalPadding" Value="5, 1" />
-                        </Style>
-                    </ResourceDictionary>
-                </StackPanel.Resources>
-                <CheckBox
-                        x:Name="showTodayCheckBox"
-                        Margin="0,0,35,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Checked="showTodayOnlyChanged"
-                        Unchecked="showTodayOnlyChanged"
-                        Content="Show today only"/>
-                <controls:ComboBoxEx
-                        x:Name="filterComboboxs"
-                        Width="130"
-                        DisplayMemberPath="Header"
-                        ItemsSource="{Binding ElementName=datagridEx, Path=Columns}"
-                        SelectedIndex="1"
-                        SelectionChanged="filterTypeChanged" />
-                <controls:TextBoxEx
-                        x:Name="filterTextBox"
-                        Width="200"
-                        Margin="10,0,10,0"
-                        TextChanged="filterTextChanged" />
-            </StackPanel>
-        </Border>
+        <CheckBox
+            x:Name="showTodayCheckBox"
+            Margin="0,18,420,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Checked="showTodayOnlyChanged"
+            Unchecked="showTodayOnlyChanged"
+            Content="Show today only"
+            Panel.ZIndex="1"/>
 
         <controls:DatagridEx
-                x:Name="datagridEx"
-                Grid.Row="1"
-                AutoGenerateColumns="False"
-                Background="{DynamicResource DarkerBackColor}"
-                IsReadOnly="True"
-                ItemsSource="{Binding CheckIns}">
+            x:Name="datagridEx"
+            Grid.Row="1"
+            AutoGenerateColumns="False"
+            Background="{DynamicResource DarkerBackColor}"
+            SearchComboboxWidth="150"
+            SearchChanged="filterTextChanged"
+            IsReadOnly="True"
+            ItemsSource="{Binding CheckIns}"
+            Panel.ZIndex="0">
             <controls:DatagridEx.Columns>
                 <DataGridTextColumn
-                        Width="215"
-                        MinWidth="100"
-                        Binding="{Binding ThoiGianVaoLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
-                        FontWeight="Bold"
-                        Header="Check-in time">
+                    Width="215"
+                    MinWidth="100"
+                    Binding="{Binding ThoiGianVaoLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
+                    FontWeight="Bold"
+                    Header="Check-in time">
                     <DataGridTextColumn.CellStyle>
                         <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
-                            <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentDark}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ThoiGianTanLam}" Value="{x:Null}">
                                     <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}" />
@@ -110,16 +66,17 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn
-                        Width="140"
-                        MinWidth="100"
-                        FontWeight="Bold"
-                        Binding="{Binding IDNhanVien}"
-                        Header="Employee ID" />
+                    Width="140"
+                    MinWidth="100"
+                    FontWeight="Bold"
+                    Binding="{Binding IDNhanVien}"
+                    Header="Employee ID" />
                 <DataGridTextColumn
-                        Width="200"
-                        MinWidth="100"
-                        Binding="{Binding ThoiGianTanLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
-                        Header="Check-out time" />
+                    Width="*"
+                    MinWidth="100"
+                    FontWeight="SemiBold"
+                    Binding="{Binding ThoiGianTanLam, StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}"
+                    Header="Check-out time" />
             </controls:DatagridEx.Columns>
         </controls:DatagridEx>
     </Grid>
