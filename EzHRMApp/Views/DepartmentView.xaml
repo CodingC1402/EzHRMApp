@@ -136,6 +136,7 @@
                             Grid.Column="1"
                             ContentText="{Binding CurrentDepartment.TruongPhong, UpdateSourceTrigger=PropertyChanged}"
                             IDText="{Binding Manager.ID}"
+                            RoleText="{Binding Manager.CMND}"
                             IsDropDownOpen="{Binding IsPopupOpened}"
                             IsEditable="{Binding IsInCRUDMode}"
                             IsMessageOnly="{Binding OnlyMessage}"
