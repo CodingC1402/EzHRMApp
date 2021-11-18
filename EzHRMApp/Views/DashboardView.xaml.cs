@@ -16,6 +16,7 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using PropertyChanged;
+using ViewModel;
 
 namespace EzHRMApp.Views
 {
@@ -26,8 +27,6 @@ namespace EzHRMApp.Views
     public partial class DashboardView : UserControl
     {
         public SeriesCollection ChartCollections { get; set; }
-        public Func<double, string> XFormatter { get; set; }
-        public Func<double, string> YFormatter { get; set; }
 
         public DashboardView()
         {
@@ -101,8 +100,17 @@ namespace EzHRMApp.Views
                     LineSmoothness = 0
                 }
             };
-            XFormatter = val => new DateTime((long)val).ToString("yyyy");
-            YFormatter = val => val.ToString("N") + " M";
+        }
+
+        public void UpdatePieChart(object sender, RoutedEventArgs e)
+        {
+            checkInPieChart.Series[0].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.BeingLateSum });
+            checkInPieChart.Series[1].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.BeingOnTimeSum });
+            checkInPieChart.Series[2].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.BeingEarlySum });
+
+            checkOutPieChart.Series[0].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.CheckOutEarly });
+            checkOutPieChart.Series[1].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.CheckOutOnTime });
+            checkOutPieChart.Series[2].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.WorkOverTimeSum });
         }
     }
 }

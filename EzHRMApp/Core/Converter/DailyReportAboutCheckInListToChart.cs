@@ -42,9 +42,12 @@ namespace EzHRMApp.Core.Converter
 
                 foreach (var report in dailyReports)
                 {
-                    checkInLate.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenTre));
-                    checkInOnTime.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenDungGio));
-                    checkInEarly.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenSom));
+                    if (report != null)
+                    {
+                        checkInLate.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenTre));
+                        checkInOnTime.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenDungGio));
+                        checkInEarly.Values.Add(new DateTimePoint(report.NgayBaoCao, report.SoNVDenSom));
+                    }
                 }
 
                 series = new()

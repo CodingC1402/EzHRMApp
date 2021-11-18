@@ -75,6 +75,7 @@ DELETE FROM accesstokens;
 DELETE FROM taikhoan;
 DELETE FROM nhomtaikhoan;
 
+SELECT * FROM baocaochamcong;
 SELECT * FROM NHANVIEN;
 SELECT * FROM CHUCVU;
 SELECT * FROM accesstokens;

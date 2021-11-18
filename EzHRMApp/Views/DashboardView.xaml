@@ -7,9 +7,12 @@
     xmlns:local="clr-namespace:EzHRMApp.Views"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewModel:DashboardViewModel}"
     d:DesignHeight="650"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
     <Grid Margin="10">
         <Grid.Resources>
             <ResourceDictionary>
@@ -51,7 +54,7 @@
 
         <Rectangle
             Grid.ColumnSpan="3"
-            Width="440"
+            Width="740"
             Height="130"
             Margin="-80,-75,-80,0"
             HorizontalAlignment="Right"
@@ -60,18 +63,38 @@
             RadiusX="60"
             RadiusY="60" />
 
-        <Grid
+        <StackPanel
             Grid.ColumnSpan="3"
+            Width="Auto"
             Height="50"
             Margin="10,0"
             HorizontalAlignment="Right"
-            VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
 
             <Label
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                Content="Timespan: "
+                Foreground="{DynamicResource LightForeground}" />
+            <controls:ComboBoxEx
+                Width="150"
+                Height="35"
+                Padding="10"
+                VerticalContentAlignment="Center"
+                FocusedOutterColor="{DynamicResource AccentBright}"
+                FocusedPadding="5, 1"
+                FontFamily="Tahoma"
+                FontSize="14"
+                ItemCornerRadius="0"
+                ItemsSource="{Binding AvailableTimeSpan}"
+                NormalPadding="5, 1"
+                SelectedIndex="0"
+                SelectedItem="{Binding CompilingTimeSpan}"
+                SelectionChanged="UpdatePieChart" />
+
+            <Label
+                Margin="20,0,0,0"
                 VerticalAlignment="Center"
                 Content="Viewing date: "
                 Foreground="{DynamicResource LightForeground}" />
@@ -80,8 +103,12 @@
                 Width="200"
                 Height="35"
                 HorizontalAlignment="Left"
-                FocusedOutterColor="{DynamicResource AccentBright}" />
-        </Grid>
+                FocusedOutterColor="{DynamicResource AccentBright}"
+                FontFamily="Tahoma"
+                FontSize="14"
+                SelectedDate="{Binding ViewingDate}"
+                SelectedDateChanged="UpdatePieChart" />
+        </StackPanel>
 
         <Border
             Grid.Row="1"
@@ -95,53 +122,54 @@
             Grid.Row="1"
             Background="{DynamicResource CancleButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVDenTre, FallbackValue='0'}"
+            Text="Check in late" />
 
         <controls:NumberDisplay
             Grid.Row="1"
             Grid.Column="1"
             Background="{DynamicResource UpdateButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVDenDungGio, FallbackValue='0'}"
+            Text="Check in on time" />
 
         <controls:NumberDisplay
             Grid.Row="1"
             Grid.Column="2"
             Background="{DynamicResource ConfirmButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVDenSom, FallbackValue='0'}"
+            Text="Check in early" />
 
         <controls:NumberDisplay
             Grid.Row="2"
             Background="{DynamicResource CancleButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVTanLamSom, FallbackValue='0'}"
+            Text="Check out early" />
 
         <controls:NumberDisplay
             Grid.Row="2"
             Grid.Column="1"
             Background="{DynamicResource UpdateButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVTanLamDungGio, FallbackValue='0'}"
+            Text="Check out on time" />
 
         <controls:NumberDisplay
             Grid.Row="2"
             Grid.Column="2"
             Background="{DynamicResource ConfirmButtonBrush}"
             IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+            NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
+            Text="Work over time" />
 
         <Border
             Grid.Row="3"
             Grid.ColumnSpan="2"
             Margin="0,20,10,10"
             Padding="10,20,10,0"
+            d:DataContext="{d:DesignInstance Type=local:DashboardView}"
             Background="{DynamicResource BackColor}"
             BorderBrush="{DynamicResource Accent}"
             BorderThickness="5"
@@ -165,6 +193,7 @@
             Grid.ColumnSpan="2"
             Margin="0,10,10,20"
             Padding="10,20,10,0"
+            d:DataContext="{d:DesignInstance Type=local:DashboardView}"
             Background="{DynamicResource BackColor}"
             BorderBrush="{DynamicResource Accent}"
             BorderThickness="5"
@@ -194,22 +223,45 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Label
-                    HorizontalAlignment="Center"
-                    Content="Pie chart 2"
-                    Foreground="{DynamicResource LightForeground}" />
+                <Label HorizontalAlignment="Center" Foreground="{DynamicResource LightForeground}">
+                    <Label.Content>
+                        <TextBlock>
+                            <Run Text="Check-Ins in" />
+                            <Run Text="{Binding TimeSpanText}" />
+                        </TextBlock>
+                    </Label.Content>
+                </Label>
 
                 <lvc:PieChart
+                    x:Name="checkInPieChart"
                     Grid.Row="1"
                     Margin="10,0,10,10"
                     DataTooltip="{x:Null}"
+                    FontFamily="Tahoma"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource LightForeground}"
                     Hoverable="False"
                     LegendLocation="Bottom">
                     <lvc:PieChart.Series>
-                        <lvc:PieSeries Title="Maria" Values="3" />
-                        <lvc:PieSeries Title="Charles" Values="4" />
-                        <lvc:PieSeries Title="Frida" Values="6" />
-                        <lvc:PieSeries Title="Frederic" Values="2" />
+                        <lvc:PieSeries
+                            Title="Late"
+                            DataLabels="True"
+                            Fill="{DynamicResource CancleButtonBrush}"
+                            FontSize="24"
+                            Values="4" />
+                        <lvc:PieSeries
+                            Title="On time"
+                            DataLabels="True"
+                            Fill="{DynamicResource UpdateButtonBrush}"
+                            FontSize="24"
+                            Values="4" />
+                        <lvc:PieSeries
+                            Title="Early"
+                            DataLabels="True"
+                            Fill="{DynamicResource ConfirmButtonBrush}"
+                            FontSize="24"
+                            Values="4" />
                     </lvc:PieChart.Series>
                 </lvc:PieChart>
             </Grid>
@@ -227,22 +279,45 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Label
-                    HorizontalAlignment="Center"
-                    Content="Pie chart 2"
-                    Foreground="{DynamicResource LightForeground}" />
+                <Label HorizontalAlignment="Center" Foreground="{DynamicResource LightForeground}">
+                    <Label.Content>
+                        <TextBlock>
+                            <Run Text="Check-Outs in" />
+                            <Run Text="{Binding TimeSpanText}" />
+                        </TextBlock>
+                    </Label.Content>
+                </Label>
 
                 <lvc:PieChart
+                    x:Name="checkOutPieChart"
                     Grid.Row="1"
                     Margin="10,0,10,10"
                     DataTooltip="{x:Null}"
+                    FontFamily="Tahoma"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource LightForeground}"
                     Hoverable="False"
                     LegendLocation="Bottom">
                     <lvc:PieChart.Series>
-                        <lvc:PieSeries Title="Maria" Values="3" />
-                        <lvc:PieSeries Title="Charles" Values="4" />
-                        <lvc:PieSeries Title="Frida" Values="6" />
-                        <lvc:PieSeries Title="Frederic" Values="2" />
+                        <lvc:PieSeries
+                            Title="Early"
+                            DataLabels="True"
+                            Fill="{DynamicResource CancleButtonBrush}"
+                            FontSize="24"
+                            Values="3" />
+                        <lvc:PieSeries
+                            Title="On time"
+                            DataLabels="True"
+                            Fill="{DynamicResource UpdateButtonBrush}"
+                            FontSize="24"
+                            Values="4" />
+                        <lvc:PieSeries
+                            Title="Work over time"
+                            DataLabels="True"
+                            Fill="{DynamicResource ConfirmButtonBrush}"
+                            FontSize="24"
+                            Values="6" />
                     </lvc:PieChart.Series>
                 </lvc:PieChart>
             </Grid>
