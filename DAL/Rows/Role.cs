@@ -13,6 +13,7 @@ namespace DAL.Rows
         public float TienLuongMoiGio { get; set; }
         public float TienLuongMoiThang { get; set; }
         public float PhanTramLuongNgoaiGio { get; set; }
+        public string NhomTaiKhoan { get; set; }
         public int DaXoa { get; set; }
 
         public Role() { }
@@ -23,6 +24,7 @@ namespace DAL.Rows
             TienLuongMoiGio = role.TienLuongMoiGio;
             TienLuongMoiThang = role.TienLuongMoiThang;
             PhanTramLuongNgoaiGio = role.PhanTramLuongNgoaiGio;
+            NhomTaiKhoan = role.NhomTaiKhoan;
             DaXoa = role.DaXoa;
         }
 
