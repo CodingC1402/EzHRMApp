@@ -78,7 +78,8 @@
                 Grid.Column="1"
                 Width="200"
                 Height="35"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                FocusedOutterColor="{DynamicResource AccentBright}" />
         </Grid>
 
         <Border

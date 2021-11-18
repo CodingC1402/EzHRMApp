@@ -165,14 +165,14 @@
                                         Width="*"
                                         MinWidth="100"
                                         MaxWidth="200" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30" />
                                     <RowDefinition Height="30" />
-                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
@@ -189,58 +189,79 @@
                                     </Ellipse.Fill>
                                 </Ellipse>
 
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_idText, Path=Visibility}" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_nameText, Path=Visibility}" />
+                                <Rectangle
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_roleText, Path=Visibility}" />
+
+
                                 <Label
                                     x:Name="idTextLabel"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="nameTextLabel"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="roleTextLabel"
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
 
                                 <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
-                                    Margin="10,0"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="ID: " />
+                                    Content="ID: "
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    Margin="10,0"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="Name: " />
+                                    Content="Name: "
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="PART_roleText"
                                     Grid.Row="2"
                                     Grid.Column="1"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="Role: " />
-
-                                <Rectangle
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="2"
-                                    Fill="{DynamicResource Accent}"
-                                    RadiusX="5"
-                                    RadiusY="5" />
-                                <Rectangle
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="2"
-                                    Fill="{DynamicResource Accent}"
-                                    RadiusX="5"
-                                    RadiusY="5" />
+                                    Content="Role: "
+                                    Foreground="{DynamicResource LightForeground}" />
 
                                 <Label
                                     x:Name="messageLabel"
@@ -289,9 +310,9 @@
                 <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
                 <Setter TargetName="profilePicture" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed"/>
-                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed"/>
-                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="true">
                 <Setter Property="OutterColor" Value="{DynamicResource Accent}" />
@@ -356,62 +377,83 @@
                                     </Ellipse.Fill>
                                 </Ellipse>
 
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_idText, Path=Visibility}" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_nameText, Path=Visibility}" />
+                                <Rectangle
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    Fill="{DynamicResource Accent}"
+                                    RadiusX="5"
+                                    RadiusY="5"
+                                    Visibility="{Binding ElementName=PART_roleText, Path=Visibility}" />
+
+
                                 <Label
                                     x:Name="idTextLabel"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding IDText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="nameTextLabel"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding NameText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="roleTextLabel"
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}" />
+                                    Content="{Binding RoleText, RelativeSource={RelativeSource AncestorType=controls:CheckIDBox}}"
+                                    Foreground="{DynamicResource LightForeground}" />
 
                                 <Label
                                     x:Name="PART_idText"
                                     Grid.Column="1"
-                                    Margin="10,0"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="ID: " />
+                                    Content="ID: "
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="PART_nameText"
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    Margin="10,0"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="Name: " />
+                                    Content="Name: "
+                                    Foreground="{DynamicResource LightForeground}" />
                                 <Label
                                     x:Name="PART_roleText"
                                     Grid.Row="2"
                                     Grid.Column="1"
+                                    Margin="20,0"
                                     VerticalAlignment="Center"
-                                    Content="Role: " />
-
-                                <Rectangle
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="2"
-                                    Fill="{DynamicResource Accent}"
-                                    RadiusX="5"
-                                    RadiusY="5" />
-                                <Rectangle
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Fill="{DynamicResource Accent}"
-                                    RadiusX="5"
-                                    RadiusY="5" />
+                                    Content="Role: "
+                                    Foreground="{DynamicResource LightForeground}" />
 
                                 <Label
                                     x:Name="messageLabel"
                                     Grid.Row="3"
-                                    Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
@@ -454,9 +496,9 @@
                 <Setter TargetName="messageLabel" Property="Grid.RowSpan" Value="3" />
                 <Setter TargetName="messageLabel" Property="VerticalAlignment" Value="Center" />
                 <Setter TargetName="profilePicture" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed"/>
-                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed"/>
-                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_idText" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_nameText" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_roleText" Property="Visibility" Value="Collapsed" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
