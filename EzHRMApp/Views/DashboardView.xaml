@@ -135,5 +135,13 @@
             IconPath="{DynamicResource hourGlassMoney}"
             NumberText="0"
             Text="Late" />
+
+        <Border
+            Grid.Row="3"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            Margin="10"
+            Background="{DynamicResource Accent}"
+            CornerRadius="10" />
     </Grid>
 </UserControl>
