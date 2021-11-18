@@ -85,7 +85,9 @@ namespace CornControls.CustomControl
         protected override void OnClick()
         {
             base.OnClick();
-            Selected = !Selected;
+            BindingExpression be = BindingOperations.GetBindingExpression(this, SelectedProperty);
+            if (be == null)
+                Selected = !Selected;
         }
     }
 }
