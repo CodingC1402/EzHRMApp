@@ -10,50 +10,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     d:DataContext="{d:DesignInstance Type=viewModel:DashboardViewModel}"
-    d:DesignHeight="650"
-    d:DesignWidth="800"
+    d:DesignHeight="1200"
+    d:DesignWidth="1200"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:DailyReportAboutCheckOutListToChart x:Key="CheckOutsConverter" />
         <converter:DailyReportAboutCheckInListToChart x:Key="CheckInsConverter" />
     </UserControl.Resources>
 
-    <Grid Margin="10">
+    <Grid ClipToBounds="True">
         <Grid.Resources>
-            <ResourceDictionary>
-                <Style TargetType="controls:NumberDisplay">
-                    <Setter Property="Margin" Value="10" />
-                    <Setter Property="NumberFontSize" Value="36" />
-                    <Setter Property="IconBrush" Value="#88000000" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="Padding" Value="5" />
-                    <Setter Property="NumberMargin" Value="0, -10, 0, 0" />
-                    <Setter Property="IconSize" Value="48" />
-                    <Setter Property="CornerRadius" Value="5" />
-                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                </Style>
-                <Style TargetType="Label">
-                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                </Style>
-            </ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontFamily" Value="Tahoma" />
+            </Style>
         </Grid.Resources>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -69,7 +45,6 @@
             RadiusY="60" />
 
         <StackPanel
-            Grid.ColumnSpan="3"
             Width="Auto"
             Height="50"
             Margin="10,0"
@@ -104,6 +79,7 @@
                 Content="Viewing date: "
                 Foreground="{DynamicResource LightForeground}" />
             <controls:DatePickerEx
+                x:Name="datePicker"
                 Grid.Column="1"
                 Width="200"
                 Height="35"
@@ -115,215 +91,280 @@
                 SelectedDateChanged="UpdatePieChart" />
         </StackPanel>
 
-        <Border
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="3"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10" />
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid MinHeight="1200" Margin="10">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                        </Style>
+                        <Style TargetType="controls:NumberDisplay">
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="NumberFontSize" Value="36" />
+                            <Setter Property="IconBrush" Value="#88000000" />
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="NumberMargin" Value="0, -10, 0, 0" />
+                            <Setter Property="IconSize" Value="48" />
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                        </Style>
+                        <Style TargetType="lvc:PieChart">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Hoverable" Value="False" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="LegendLocation" Value="Bottom" />
+                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
 
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Background="{DynamicResource CancleButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVDenTre, FallbackValue='0'}"
-            Text="Check in late" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Grid.Column="1"
-            Background="{DynamicResource UpdateButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVDenDungGio, FallbackValue='0'}"
-            Text="Check in on time" />
-
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Grid.Column="2"
-            Background="{DynamicResource ConfirmButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVDenSom, FallbackValue='0'}"
-            Text="Check in early" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Background="{DynamicResource CancleButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVTanLamSom, FallbackValue='0'}"
-            Text="Check out early" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Grid.Column="1"
-            Background="{DynamicResource UpdateButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVTanLamDungGio, FallbackValue='0'}"
-            Text="Check out on time" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Grid.Column="2"
-            Background="{DynamicResource ConfirmButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
-            Text="Work over time" />
-
-        <Border
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            Margin="0,20,10,10"
-            Padding="10,20,10,0"
-            Background="{DynamicResource BackColor}"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10">
-            <lvc:CartesianChart
-                x:Name="test"
-                Grid.Row="2"
-                LegendLocation="Right"
-                Series="{Binding Reports, Converter={StaticResource CheckInsConverter}}">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </Border>
-
-        <Border
-            Grid.Row="4"
-            Grid.ColumnSpan="2"
-            Margin="0,10,10,20"
-            Padding="10,20,10,0"
-            Background="{DynamicResource BackColor}"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10">
-            <lvc:CartesianChart
-                x:Name="test2"
-                Grid.Row="2"
-                LegendLocation="Right"
-                Series="{Binding Reports, Converter={StaticResource CheckOutsConverter}}">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </Border>
-        <Border
-            Grid.Row="3"
-            Grid.Column="2"
-            Margin="10,20,0,10"
-            Background="{DynamicResource Accent}"
-            CornerRadius="10">
-            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="70" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Label HorizontalAlignment="Center" Foreground="{DynamicResource LightForeground}">
-                    <Label.Content>
-                        <TextBlock>
-                            <Run Text="Check-Ins in" />
-                            <Run Text="{Binding TimeSpanText}" />
-                        </TextBlock>
-                    </Label.Content>
-                </Label>
-
-                <lvc:PieChart
-                    x:Name="checkInPieChart"
+                <TextBlock
                     Grid.Row="1"
-                    Margin="10,0,10,10"
-                    DataTooltip="{x:Null}"
-                    FontFamily="Tahoma"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="{DynamicResource LightForeground}"
-                    Hoverable="False"
-                    LegendLocation="Bottom">
-                    <lvc:PieChart.Series>
-                        <lvc:PieSeries
-                            Title="Late"
-                            DataLabels="True"
-                            Fill="{DynamicResource CancleButtonBrush}"
-                            FontSize="24"
-                            Values="4" />
-                        <lvc:PieSeries
-                            Title="On time"
-                            DataLabels="True"
-                            Fill="{DynamicResource UpdateButtonBrush}"
-                            FontSize="24"
-                            Values="4" />
-                        <lvc:PieSeries
-                            Title="Early"
-                            DataLabels="True"
-                            Fill="{DynamicResource ConfirmButtonBrush}"
-                            FontSize="24"
-                            Values="4" />
-                    </lvc:PieChart.Series>
-                </lvc:PieChart>
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Run Text="Report of" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                </TextBlock>
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+                    <Run Text="Reports from" />
+                    <Run Text="{Binding EarliestDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                    <Run Text="to" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                </TextBlock>
+
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+                    <Run Text="Human resource report of the year" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:yyyy}'}" />
+                </TextBlock>
+
+                <Border
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="3"
+                    BorderThickness="5"
+                    CornerRadius="10" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Background="{DynamicResource CancleButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenTre, FallbackValue='0'}"
+                    Text="Check in late" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Background="{DynamicResource UpdateButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenDungGio, FallbackValue='0'}"
+                    Text="Check in on time" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Background="{DynamicResource ConfirmButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenSom, FallbackValue='0'}"
+                    Text="Check in early" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Background="{DynamicResource CancleButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVTanLamSom, FallbackValue='0'}"
+                    Text="Check out early" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Background="{DynamicResource UpdateButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVTanLamDungGio, FallbackValue='0'}"
+                    Text="Check out on time" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Background="{DynamicResource ConfirmButtonBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
+                    Text="Work over time" />
+
+                <Border
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,10,10"
+                    Padding="10,20,10,0"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        x:Name="test"
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding Reports, Converter={StaticResource CheckInsConverter}}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <Border
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,10,10"
+                    Padding="10,20,10,0"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        x:Name="test2"
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding Reports, Converter={StaticResource CheckOutsConverter}}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <Border
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Margin="10,10,0,10"
+                    Background="{DynamicResource Accent}"
+                    CornerRadius="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            HorizontalAlignment="Center"
+                            Content="Check-Ins"
+                            Foreground="{DynamicResource LightForeground}" />
+
+                        <lvc:PieChart
+                            x:Name="checkInPieChart"
+                            Grid.Row="1"
+                            Margin="10,0,10,10"
+                            DataTooltip="{x:Null}">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries
+                                    Title="Late"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource CancleButtonBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="On time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource UpdateButtonBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="Early"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource ConfirmButtonBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+                    </Grid>
+                </Border>
+
+                <Border
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    Margin="10,10,0,10"
+                    Background="{DynamicResource Accent}"
+                    CornerRadius="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            HorizontalAlignment="Center"
+                            Content="Check-Outs"
+                            Foreground="{DynamicResource LightForeground}" />
+
+                        <lvc:PieChart
+                            x:Name="checkOutPieChart"
+                            Grid.Row="1"
+                            Margin="10,0,10,10"
+                            DataTooltip="{x:Null}">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries
+                                    Title="Early"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource CancleButtonBrush}"
+                                    FontSize="24"
+                                    Values="3" />
+                                <lvc:PieSeries
+                                    Title="On time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource UpdateButtonBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="Work over time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource ConfirmButtonBrush}"
+                                    FontSize="24"
+                                    Values="6" />
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+                    </Grid>
+                </Border>
             </Grid>
-        </Border>
-
-        <Border
-            Grid.Row="4"
-            Grid.Column="2"
-            Margin="10,10,0,20"
-            Background="{DynamicResource Accent}"
-            CornerRadius="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Label HorizontalAlignment="Center" Foreground="{DynamicResource LightForeground}">
-                    <Label.Content>
-                        <TextBlock>
-                            <Run Text="Check-Outs in" />
-                            <Run Text="{Binding TimeSpanText}" />
-                        </TextBlock>
-                    </Label.Content>
-                </Label>
-
-                <lvc:PieChart
-                    x:Name="checkOutPieChart"
-                    Grid.Row="1"
-                    Margin="10,0,10,10"
-                    DataTooltip="{x:Null}"
-                    FontFamily="Tahoma"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="{DynamicResource LightForeground}"
-                    Hoverable="False"
-                    LegendLocation="Bottom">
-                    <lvc:PieChart.Series>
-                        <lvc:PieSeries
-                            Title="Early"
-                            DataLabels="True"
-                            Fill="{DynamicResource CancleButtonBrush}"
-                            FontSize="24"
-                            Values="3" />
-                        <lvc:PieSeries
-                            Title="On time"
-                            DataLabels="True"
-                            Fill="{DynamicResource UpdateButtonBrush}"
-                            FontSize="24"
-                            Values="4" />
-                        <lvc:PieSeries
-                            Title="Work over time"
-                            DataLabels="True"
-                            Fill="{DynamicResource ConfirmButtonBrush}"
-                            FontSize="24"
-                            Values="6" />
-                    </lvc:PieChart.Series>
-                </lvc:PieChart>
-            </Grid>
-        </Border>
+        </ScrollViewer>
     </Grid>
 </UserControl>

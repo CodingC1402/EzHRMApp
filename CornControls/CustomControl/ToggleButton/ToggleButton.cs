@@ -16,7 +16,7 @@ namespace CornControls.CustomControl
 {
     public class ToggleButton : ButtonEx
     {
-        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(bool), typeof(ToggleButton), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedChangedCallback));
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register(nameof(Selected), typeof(bool), typeof(ToggleButton), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedChangedCallback));
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Brush), typeof(ToggleButton), new PropertyMetadata(Brushes.LightGray));
 
         public static readonly DependencyProperty SelectedHoverColorProperty = DependencyProperty.Register(nameof(SelectedHoverColor), typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.LightGray));
