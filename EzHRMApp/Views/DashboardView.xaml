@@ -204,7 +204,8 @@
             <lvc:CartesianChart
                 x:Name="test2"
                 Grid.Row="2"
-                LegendLocation="Right">
+                LegendLocation="Right"
+                Series="{Binding Reports, Converter={StaticResource CheckOutsConverter}}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
                 </lvc:CartesianChart.AxisX>
