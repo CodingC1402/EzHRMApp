@@ -103,11 +103,6 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>-->
-
                 <ScrollViewer
                     Margin="30, 0, 25, 0"
                     VerticalScrollBarVisibility="Auto">
@@ -117,15 +112,20 @@
                         Orientation="Vertical">
                         <StackPanel.Resources>
                             <ResourceDictionary>
-                                <Style TargetType="controls:ToggleButton">
+                                <Style x:Key="ToggleButtonStyle" TargetType="controls:ToggleButton">
                                     <Style.Setters>
                                         <Setter Property="Margin" Value="0, 10"/>
                                         <Setter Property="IsEnabled" Value="{Binding IsInCRUDMode}"/>
-                                        <Setter Property="DisabledColor" Value="DimGray"/>
+                                        <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledBrush}"/>
                                         <Setter Property="SelectedPath" Value="{StaticResource checkIcon}"/>
                                         <Setter Property="CornerRadius" Value="5"/>
                                         <Setter Property="Height" Value="60"/>
                                     </Style.Setters>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup}" Value="{x:Null}">
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonUnsetBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
                                 </Style>
                             </ResourceDictionary>
                         </StackPanel.Resources>
@@ -135,47 +135,172 @@
                             Selected="{Binding CurrentAccountGroup.DashboardViewPermission}"
                             Command="{Binding DashboardToggleCommand}"
                             Path="{StaticResource dashboardIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.DashboardViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
                         </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Check-in View Permission"
                             Selected="{Binding CurrentAccountGroup.CheckInViewPermission}"
                             Command="{Binding CheckInToggleCommand}"
-                            Path="{StaticResource clockIcon}"/>
+                            Path="{StaticResource clockIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.CheckInViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Schedule View Permission"
                             Selected="{Binding CurrentAccountGroup.ScheduleViewPermission}"
                             Command="{Binding ScheduleToggleCommand}"
-                            Path="{StaticResource calendarIcon}"/>
+                            Path="{StaticResource calendarIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.ScheduleViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Staff View Permission"
                             Selected="{Binding CurrentAccountGroup.StaffViewPermission}"
                             Command="{Binding StaffToggleCommand}"
-                            Path="{DynamicResource staffsIcon}"/>
+                            Path="{DynamicResource staffsIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.StaffViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Departments View Permission"
                             Selected="{Binding CurrentAccountGroup.DepartmentsViewPermission}"
                             Command="{Binding DepartmentToggleCommand}"
-                            Path="{DynamicResource CompanyIcon}"/>
+                            Path="{DynamicResource CompanyIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.DepartmentsViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Positions View Permission"
                             Selected="{Binding CurrentAccountGroup.PositionsViewPermission}"
                             Command="{Binding PositionToggleCommand}"
-                            Path="{DynamicResource suitcaseIcon}"/>
+                            Path="{DynamicResource suitcaseIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.PositionsViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Account Groups View Permission"
                             Selected="{Binding CurrentAccountGroup.AccountGroupsViewPermission}"
                             Command="{Binding AccountGroupToggleCommand}"
-                            Path="{DynamicResource accountGroup}"/>
+                            Path="{DynamicResource accountGroup}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.AccountGroupsViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Payrolls View Permission"
                             Selected="{Binding CurrentAccountGroup.PayrollViewPermission}"
                             Command="{Binding PayrollToggleCommand}"
-                            Path="{DynamicResource moneyIcon}"/>
+                            Path="{DynamicResource moneyIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.PayrollViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Reports View Permission"
                             Selected="{Binding CurrentAccountGroup.ReportsViewPermission}"
                             Command="{Binding ReportToggleCommand}"
-                            Path="{DynamicResource reportIcon}"/>
+                            Path="{DynamicResource reportIcon}">
+                            <controls:ToggleButton.Style>
+                                <Style BasedOn="{StaticResource ToggleButtonStyle}" TargetType="controls:ToggleButton">
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup.ReportsViewPermission}" Value="True"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsEnabled}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ToggleButton.Style>
+                        </controls:ToggleButton>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
