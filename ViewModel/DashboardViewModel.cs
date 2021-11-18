@@ -53,6 +53,7 @@ namespace ViewModel
                 Compile();
             }
         }
+        public DateTime EarliestDate { get; set; }
         public TimeSpan[] AvailableTimeSpan { get; } = new TimeSpan[] {
             TimeSpan.OneWeek,
             TimeSpan.OneMonth,
@@ -121,27 +122,58 @@ namespace ViewModel
                     dayToCheck = 365;
                     break;
             }
+            EarliestDate = _viewingDate.AddDays(-dayToCheck + 1);
+
+            var queriedReports = DailyReportModel.GetDailyReportsInTimeSpan(EarliestDate, _viewingDate);
+
+            int queriedIndex = 0;
+
+            int lateSum = 0, earlySum = 0, onTimeSum = 0, overTimeSum = 0, outEarly = 0, outOnTime = 0;
 
             for (int i = dayToCheck - 1; i >= 0; i--)
             {
-                var checkingDate = _viewingDate.Date.AddDays(-i);
-                var dailyReport = DailyReportModel.GetReportOfDate(checkingDate);
-
-                if (dailyReport != null)
+                DateTime checkingDate = _viewingDate.AddDays(-i);
+                var checkingReport = queriedReports[queriedIndex];
+                if (checkingDate == checkingReport.NgayBaoCao)
                 {
-                    BeingEarlySum += dailyReport.SoNVDenSom;
-                    BeingLateSum += dailyReport.SoNVDenTre;
-                    BeingOnTimeSum += dailyReport.SoNVDenDungGio;
+                    newReports.Add(checkingReport);
 
-                    WorkOverTimeSum += dailyReport.SoNVLamThemGio;
-                    CheckOutEarly += dailyReport.SoNVTanLamSom;
-                    CheckOutOnTime += dailyReport.SoNVTanLamDungGio;
+                    lateSum += checkingReport.SoNVDenTre;
+                    earlySum += checkingReport.SoNVDenSom;
+                    onTimeSum += checkingReport.SoNVDenDungGio;
+
+                    overTimeSum += checkingReport.SoNVLamThemGio;
+                    outEarly += checkingReport.SoNVTanLamSom;
+                    outOnTime += checkingReport.SoNVTanLamDungGio;
+
+                    queriedIndex++;
                 }
                 else
                 {
-                    dailyReport = new DailyReportModel { NgayBaoCao = checkingDate };
+                    newReports.Add(new DailyReportModel { NgayBaoCao = checkingDate });
                 }
-                newReports.Add(dailyReport);
+            }
+
+            BeingLateSum = lateSum;
+            BeingEarlySum = earlySum;
+            BeingOnTimeSum = onTimeSum;
+
+            WorkOverTimeSum = overTimeSum;
+            CheckOutEarly = outEarly;
+            CheckOutOnTime = outOnTime;
+
+            // This is to remove small detail in yearly reports, like remove 5 day from the report to reduce lags
+            if (_compilingTimeSpan == TimeSpan.OneYear)
+            {
+                var filteringReports = newReports;
+                newReports = new ObservableCollection<DailyReportModel>();
+                for (int i = 0; i < dayToCheck; i++)
+                {
+                    if (i % 7 == 0)
+                    {
+                        newReports.Add(filteringReports[i]);
+                    }
+                }
             }
 
             Reports = newReports;

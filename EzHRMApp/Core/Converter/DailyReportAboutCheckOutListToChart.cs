@@ -9,7 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace EzHRMApp.Core.Converter
 {
@@ -22,23 +24,26 @@ namespace EzHRMApp.Core.Converter
                 SeriesCollection series;
                 var dailyReports = value as ObservableCollection<DailyReportModel>;
 
-                StackedAreaSeries workOverTime = new()
-                {
-                    Title = "Work overtime",
-                    LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
-                };
                 StackedAreaSeries checkOutEarly = new()
                 {
                     Title = "Check out early",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("CancleButtonBrush")
                 };
                 StackedAreaSeries checkOutOnTime = new()
                 {
                     Title = "Check out on time",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("UpdateButtonBrush")
+                };
+                StackedAreaSeries workOverTime = new()
+                {
+                    Title = "Work overtime",
+                    LineSmoothness = 0,
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("ConfirmButtonBrush")
                 };
 
                 foreach (var report in dailyReports)
@@ -50,9 +55,9 @@ namespace EzHRMApp.Core.Converter
 
                 series = new()
                 {
-                    checkOutEarly,
+                    workOverTime,
                     checkOutOnTime,
-                    workOverTime
+                    checkOutEarly
                 };
 
                 return series;
