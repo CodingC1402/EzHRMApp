@@ -46,15 +46,15 @@ namespace Model
 
         public override string Add(UnitOfWork uow = null)
         {
+            QuyenHan = ConvertQuyenHanToInt();
             AccountGroup ag = new AccountGroup(this);
-            ag.QuyenHan = ConvertQuyenHanToInt();
             return ag.Add(uow);
         }
 
         public override string Save(UnitOfWork uow = null)
         {
+            QuyenHan = ConvertQuyenHanToInt();
             AccountGroup ag = new AccountGroup(this);
-            ag.QuyenHan = ConvertQuyenHanToInt();
             return ag.Save(uow);
         }
 

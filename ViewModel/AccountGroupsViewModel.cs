@@ -30,12 +30,22 @@ namespace ViewModel
             set
             {
                 _selectedAG = value;
-                CurrentAccountGroup = value;
+                if (value != null)
+                    CurrentAccountGroup = value;
+            }
+        }
+        public int SelectedGroupIndex
+        {
+            get => _selectedAGIndex;
+            set
+            {
+                _selectedAGIndex = value;
             }
         }
 
         private AccountGroupModel _currentAG;
         private AccountGroupModel _selectedAG;
+        private int _selectedAGIndex;
 
         public AccountGroupsViewModel()
         {
@@ -82,7 +92,7 @@ namespace ViewModel
                 base.ExecuteConfirmUpdate(param);
                 var found = AccountGroups.FirstOrDefault(x => x.TenNhomTaiKhoan == SelectedAccountGroup.TenNhomTaiKhoan);
                 AccountGroups[AccountGroups.IndexOf(found)] = CurrentAccountGroup;
-                CurrentAccountGroup = SelectedAccountGroup;
+                SelectedAccountGroup = CurrentAccountGroup;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
             }
             else

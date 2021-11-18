@@ -74,6 +74,7 @@
                 ItemsSource="{Binding AccountGroups}"
                 SearchChanged="searchChanged"
                 SearchComboboxWidth="75"
+                SelectedIndex="{Binding SelectedGroupIndex}"
                 SelectedItem="{Binding SelectedAccountGroup}">
                 <controls:DatagridEx.Columns>
                     <DataGridTextColumn
