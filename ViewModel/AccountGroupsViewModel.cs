@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using ViewModel;
 using System.Linq;
+using ViewModel.Helper;
 using Model;
 
 namespace ViewModel
@@ -41,6 +42,7 @@ namespace ViewModel
             AccountGroups = AccountGroupModel.LoadAll();
         }
 
+        #region Overriden command methods
         public override void ExecuteAdd(object param)
         {
             CurrentAccountGroup = new AccountGroupModel("", 0);
@@ -110,5 +112,50 @@ namespace ViewModel
         {
             return base.CanExecuteUpdateStart(param) && CurrentAccountGroup != null;
         }
+        #endregion
+
+        #region Toggle commands
+        private RelayCommand<object> _dashboardCommand;
+        private RelayCommand<object> _checkInCommand;
+        private RelayCommand<object> _scheduleCommand;
+        private RelayCommand<object> _staffCommand;
+        private RelayCommand<object> _departmentCommand;
+        private RelayCommand<object> _positionCommand;
+        private RelayCommand<object> _payrollCommand;
+        private RelayCommand<object> _accountGroupCommand;
+        private RelayCommand<object> _reportCommand;
+
+        public RelayCommand<object> DashboardToggleCommand => _dashboardCommand ?? (_dashboardCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.DashboardViewPermission = !CurrentAccountGroup.DashboardViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> CheckInToggleCommand => _checkInCommand ?? (_checkInCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.CheckInViewPermission = !CurrentAccountGroup.CheckInViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> ScheduleToggleCommand => _scheduleCommand ?? (_scheduleCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.ScheduleViewPermission = !CurrentAccountGroup.ScheduleViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> StaffToggleCommand => _staffCommand ?? (_staffCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.StaffViewPermission = !CurrentAccountGroup.StaffViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> DepartmentToggleCommand => _departmentCommand ?? (_departmentCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.DepartmentsViewPermission = !CurrentAccountGroup.DepartmentsViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> PositionToggleCommand => _positionCommand ?? (_positionCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.PositionsViewPermission = !CurrentAccountGroup.PositionsViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> PayrollToggleCommand => _payrollCommand ?? (_payrollCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.PayrollViewPermission = !CurrentAccountGroup.PayrollViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> AccountGroupToggleCommand => _accountGroupCommand ?? (_accountGroupCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.AccountGroupsViewPermission = !CurrentAccountGroup.AccountGroupsViewPermission, canExecuteTogglePermissions));
+
+        public RelayCommand<object> ReportToggleCommand => _reportCommand ?? (_reportCommand =
+            new RelayCommand<object>(obj => CurrentAccountGroup.ReportsViewPermission = !CurrentAccountGroup.ReportsViewPermission, canExecuteTogglePermissions));
+
+        private bool canExecuteTogglePermissions(object param)
+        {
+            return IsInCRUDMode;
+        }
+        #endregion
     }
 }

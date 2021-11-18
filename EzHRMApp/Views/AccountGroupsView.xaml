@@ -97,15 +97,84 @@
                 <controls:TextBoxEx
                     Grid.Column="1"
                     MaxWidth="300"
-                    IsReadOnly="True"
+                    IsReadOnly="{Binding IsInNormalAndUpdateMode}"
                     Text="{Binding CurrentAccountGroup.TenNhomTaiKhoan}" />
             </Grid>
 
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>-->
+
+                <ScrollViewer
+                    Margin="30, 0, 25, 0"
+                    VerticalScrollBarVisibility="Auto">
+
+                    <StackPanel 
+                        Margin="0, 0, 3, 0"
+                        Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="controls:ToggleButton">
+                                    <Style.Setters>
+                                        <Setter Property="Margin" Value="0, 10"/>
+                                        <Setter Property="NormalColor" Value="DimGray"/>
+                                        <Setter Property="DisabledColor" Value="DarkGray" />
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                        <Setter Property="Height" Value="60"/>
+                                    </Style.Setters>
+                                </Style>
+                            </ResourceDictionary>
+                        </StackPanel.Resources>
+                        
+                        <controls:ToggleButton
+                            Content="Dashboard View Permission"
+                            Selected="{Binding CurrentAccountGroup.DashboardViewPermission}"
+                            Command="{Binding DashboardToggleCommand}"
+                            Path="{StaticResource dashboardIcon}"/>
+                        <controls:ToggleButton
+                            Content="Check-in View Permission"
+                            Selected="{Binding CurrentAccountGroup.CheckInViewPermission}"
+                            Command="{Binding CheckInToggleCommand}"
+                            Path="{StaticResource clockIcon}"/>
+                        <controls:ToggleButton
+                            Content="Schedule View Permission"
+                            Selected="{Binding CurrentAccountGroup.ScheduleViewPermission}"
+                            Command="{Binding ScheduleToggleCommand}"
+                            Path="{StaticResource calendarIcon}"/>
+                        <controls:ToggleButton
+                            Content="Staff View Permission"
+                            Selected="{Binding CurrentAccountGroup.StaffViewPermission}"
+                            Command="{Binding StaffToggleCommand}"
+                            Path="{DynamicResource staffsIcon}"/>
+                        <controls:ToggleButton
+                            Content="Departments View Permission"
+                            Selected="{Binding CurrentAccountGroup.DepartmentsViewPermission}"
+                            Command="{Binding DepartmentToggleCommand}"
+                            Path="{DynamicResource CompanyIcon}"/>
+                        <controls:ToggleButton
+                            Content="Positions View Permission"
+                            Selected="{Binding CurrentAccountGroup.PositionsViewPermission}"
+                            Command="{Binding PositionToggleCommand}"
+                            Path="{DynamicResource suitcaseIcon}"/>
+                        <controls:ToggleButton
+                            Content="Account Groups View Permission"
+                            Selected="{Binding CurrentAccountGroup.AccountGroupsViewPermission}"
+                            Command="{Binding AccountGroups}"
+                            />
+                        <controls:ToggleButton
+                            Content="Payrolls View Permission"
+                            Selected="{Binding CurrentAccountGroup.PayrollViewPermission}"
+                            Command="{Binding PayrollToggleCommand}"
+                            Path="{DynamicResource moneyIcon}"/>
+                        <controls:ToggleButton
+                            Content="Reports View Permission"
+                            Selected="{Binding CurrentAccountGroup.ReportsViewPermission}"
+                            Command="{Binding ReportToggleCommand}"
+                            Path="{DynamicResource reportIcon}"/>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
 
             <StackPanel
