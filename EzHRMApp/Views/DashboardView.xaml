@@ -97,13 +97,13 @@
                     <ResourceDictionary>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource AccentDark}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
                         </Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontFamily" Value="Tahoma" />
                             <Setter Property="FontSize" Value="24" />
                             <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentDark}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
                         </Style>
                         <Style TargetType="controls:NumberDisplay">
                             <Setter Property="Margin" Value="10" />
@@ -277,7 +277,7 @@
                     Grid.Row="5"
                     Grid.Column="2"
                     Margin="10,10,0,10"
-                    Background="{DynamicResource AccentDark}"
+                    Background="{DynamicResource Accent}"
                     CornerRadius="10">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -323,7 +323,7 @@
                     Grid.Row="6"
                     Grid.Column="2"
                     Margin="10,10,0,10"
-                    Background="{DynamicResource AccentDark}"
+                    Background="{DynamicResource Accent}"
                     CornerRadius="10">
                     <Grid>
                         <Grid.RowDefinitions>
