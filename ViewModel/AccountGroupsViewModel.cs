@@ -125,32 +125,35 @@ namespace ViewModel
         private RelayCommand<object> _accountGroupCommand;
         private RelayCommand<object> _reportCommand;
 
-        public RelayCommand<object> DashboardToggleCommand => _dashboardCommand ?? (_dashboardCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.DashboardViewPermission = !CurrentAccountGroup.DashboardViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> DashboardToggleCommand => _dashboardCommand ??=
+            new RelayCommand<object>(obj => {
+                CurrentAccountGroup.DashboardViewPermission = !CurrentAccountGroup.DashboardViewPermission;
+                System.Diagnostics.Debug.WriteLine($"Dashboard: {CurrentAccountGroup.DashboardViewPermission}");
+            } , null);
 
-        public RelayCommand<object> CheckInToggleCommand => _checkInCommand ?? (_checkInCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.CheckInViewPermission = !CurrentAccountGroup.CheckInViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> CheckInToggleCommand => _checkInCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.CheckInViewPermission = !CurrentAccountGroup.CheckInViewPermission, null);
 
-        public RelayCommand<object> ScheduleToggleCommand => _scheduleCommand ?? (_scheduleCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.ScheduleViewPermission = !CurrentAccountGroup.ScheduleViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> ScheduleToggleCommand => _scheduleCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.ScheduleViewPermission = !CurrentAccountGroup.ScheduleViewPermission, null);
 
-        public RelayCommand<object> StaffToggleCommand => _staffCommand ?? (_staffCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.StaffViewPermission = !CurrentAccountGroup.StaffViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> StaffToggleCommand => _staffCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.StaffViewPermission = !CurrentAccountGroup.StaffViewPermission, null);
 
-        public RelayCommand<object> DepartmentToggleCommand => _departmentCommand ?? (_departmentCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.DepartmentsViewPermission = !CurrentAccountGroup.DepartmentsViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> DepartmentToggleCommand => _departmentCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.DepartmentsViewPermission = !CurrentAccountGroup.DepartmentsViewPermission, null);
 
-        public RelayCommand<object> PositionToggleCommand => _positionCommand ?? (_positionCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.PositionsViewPermission = !CurrentAccountGroup.PositionsViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> PositionToggleCommand => _positionCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.PositionsViewPermission = !CurrentAccountGroup.PositionsViewPermission, null);
 
-        public RelayCommand<object> PayrollToggleCommand => _payrollCommand ?? (_payrollCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.PayrollViewPermission = !CurrentAccountGroup.PayrollViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> PayrollToggleCommand => _payrollCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.PayrollViewPermission = !CurrentAccountGroup.PayrollViewPermission, null);
 
-        public RelayCommand<object> AccountGroupToggleCommand => _accountGroupCommand ?? (_accountGroupCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.AccountGroupsViewPermission = !CurrentAccountGroup.AccountGroupsViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> AccountGroupToggleCommand => _accountGroupCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.AccountGroupsViewPermission = !CurrentAccountGroup.AccountGroupsViewPermission, null);
 
-        public RelayCommand<object> ReportToggleCommand => _reportCommand ?? (_reportCommand =
-            new RelayCommand<object>(obj => CurrentAccountGroup.ReportsViewPermission = !CurrentAccountGroup.ReportsViewPermission, canExecuteTogglePermissions));
+        public RelayCommand<object> ReportToggleCommand => _reportCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.ReportsViewPermission = !CurrentAccountGroup.ReportsViewPermission, null);
 
         private bool canExecuteTogglePermissions(object param)
         {

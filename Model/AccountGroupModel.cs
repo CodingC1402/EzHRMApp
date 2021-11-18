@@ -34,18 +34,32 @@ namespace Model
 
         public AccountGroupModel(AccountGroup ag) : base(ag)
         {
-            SetAndConvertQuyenHan(QuyenHan);
+            ConvertQuyenHanToBoolsAndSet();
         }
 
         public AccountGroupModel(string ten, int quyenHan) : base()
         {
             TenNhomTaiKhoan = ten;
-            SetAndConvertQuyenHan(quyenHan);
+            QuyenHan = quyenHan;
+            ConvertQuyenHanToBoolsAndSet();
         }
 
-        public void SetAndConvertQuyenHan(int quyenHan)
+        public override string Add(UnitOfWork uow = null)
         {
-            QuyenHan = quyenHan;
+            AccountGroup ag = new AccountGroup(this);
+            ag.QuyenHan = ConvertQuyenHanToInt();
+            return ag.Add(uow);
+        }
+
+        public override string Save(UnitOfWork uow = null)
+        {
+            AccountGroup ag = new AccountGroup(this);
+            ag.QuyenHan = ConvertQuyenHanToInt();
+            return ag.Save(uow);
+        }
+
+        public void ConvertQuyenHanToBoolsAndSet()
+        {
             DashboardViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Dashboard);
             CheckInViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.CheckIn);
             ScheduleViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Schedule);
@@ -55,6 +69,22 @@ namespace Model
             AccountGroupsViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.AccountGroups);
             PayrollViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Payroll);
             ReportsViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Reports);
+        }
+
+        private int ConvertQuyenHanToInt()
+        {
+            int quyenHan = 0;
+            if (DashboardViewPermission) quyenHan |= QuyenHanBitmask.Dashboard;
+            if (CheckInViewPermission) quyenHan |= QuyenHanBitmask.CheckIn;
+            if (ScheduleViewPermission) quyenHan |= QuyenHanBitmask.Schedule;
+            if (StaffViewPermission) quyenHan |= QuyenHanBitmask.Staff;
+            if (DepartmentsViewPermission) quyenHan |= QuyenHanBitmask.Departments;
+            if (PositionsViewPermission) quyenHan |= QuyenHanBitmask.Positions;
+            if (AccountGroupsViewPermission) quyenHan |= QuyenHanBitmask.AccountGroups;
+            if (PayrollViewPermission) quyenHan |= QuyenHanBitmask.Payroll;
+            if (ReportsViewPermission) quyenHan |= QuyenHanBitmask.Reports;
+
+            return quyenHan;
         }
 
         private bool CheckFlag(int quyenHan, int mask)

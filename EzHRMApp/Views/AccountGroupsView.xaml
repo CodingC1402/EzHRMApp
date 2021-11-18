@@ -119,20 +119,22 @@
                                 <Style TargetType="controls:ToggleButton">
                                     <Style.Setters>
                                         <Setter Property="Margin" Value="0, 10"/>
-                                        <Setter Property="NormalColor" Value="DimGray"/>
-                                        <Setter Property="DisabledColor" Value="DarkGray" />
+                                        <Setter Property="IsEnabled" Value="{Binding IsInCRUDMode}"/>
+                                        <Setter Property="DisabledColor" Value="DimGray"/>
+                                        <Setter Property="SelectedPath" Value="{StaticResource checkIcon}"/>
                                         <Setter Property="CornerRadius" Value="5"/>
                                         <Setter Property="Height" Value="60"/>
                                     </Style.Setters>
                                 </Style>
                             </ResourceDictionary>
                         </StackPanel.Resources>
-                        
+
                         <controls:ToggleButton
                             Content="Dashboard View Permission"
                             Selected="{Binding CurrentAccountGroup.DashboardViewPermission}"
                             Command="{Binding DashboardToggleCommand}"
-                            Path="{StaticResource dashboardIcon}"/>
+                            Path="{StaticResource dashboardIcon}">
+                        </controls:ToggleButton>
                         <controls:ToggleButton
                             Content="Check-in View Permission"
                             Selected="{Binding CurrentAccountGroup.CheckInViewPermission}"
@@ -161,8 +163,8 @@
                         <controls:ToggleButton
                             Content="Account Groups View Permission"
                             Selected="{Binding CurrentAccountGroup.AccountGroupsViewPermission}"
-                            Command="{Binding AccountGroups}"
-                            />
+                            Command="{Binding AccountGroupToggleCommand}"
+                            Path="{DynamicResource accountGroup}"/>
                         <controls:ToggleButton
                             Content="Payrolls View Permission"
                             Selected="{Binding CurrentAccountGroup.PayrollViewPermission}"
