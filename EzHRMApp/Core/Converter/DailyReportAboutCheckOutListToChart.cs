@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,10 @@ namespace EzHRMApp.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType == typeof(SeriesCollection) && value.GetType() == typeof(List<DailyReportModel>))
+            if (targetType == typeof(SeriesCollection) && value.GetType() == typeof(ObservableCollection<DailyReportModel>))
             {
                 SeriesCollection series;
-                var dailyReports = value as List<DailyReportModel>;
+                var dailyReports = value as ObservableCollection<DailyReportModel>;
 
                 StackedAreaSeries workOverTime = new()
                 {

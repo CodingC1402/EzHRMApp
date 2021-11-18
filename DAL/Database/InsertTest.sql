@@ -120,3 +120,9 @@ VALUES ('NV00000001', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tham gia hoi nghi 3N 
 
 INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
 VALUES ('NV00000002', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tai nan giao thong', 1);
+
+INSERT INTO baocaochamcong (NgayBaoCao, SoNVDenSom, SoNVDenDungGio, SoNVDenTre, SoNVTanLamSom, SoNVTanLamDungGio, SoNVLamThemGio)
+VALUES ('2021/11/15', 10, 40, 12, 0, 45, 17),
+('2021/11/16', 14, 35, 13, 5, 40, 17),
+('2021/11/17', 13, 42, 7, 4, 40, 18),
+('2021/11/18', 13, 37, 12, 20, 25, 16)
