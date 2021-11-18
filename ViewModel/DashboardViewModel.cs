@@ -10,47 +10,142 @@ namespace ViewModel
 {
     public class DashboardViewModel : Navigation.ViewModelBase
     {
+        public enum TimeSpan
+        {
+            OneWeek,
+            OneMonth,
+            OneYear
+        }
+
+        private TimeSpan _compilingTimeSpan = TimeSpan.OneMonth;
+        private DateTime _viewingDate = DateTime.Today;
+
+        public static DashboardViewModel Instance { get; private set; }
         public override string ViewName => "Dashboard";
 
-        public int ViewingDatIndex {
-            get => _viewingDateIndex;
+        public TimeSpan CompilingTimeSpan
+        {
+            get => _compilingTimeSpan;
             set
             {
-                _viewingDateIndex = value;
-                CurrentReport = InWeekReports[_viewingDateIndex];
+                _compilingTimeSpan = value;
+                switch (value)
+                {
+                    case TimeSpan.OneWeek:
+                        TimeSpanText = "a week";
+                        break;
+                    case TimeSpan.OneMonth:
+                        TimeSpanText = "a month";
+                        break;
+                    case TimeSpan.OneYear:
+                        TimeSpanText = "a year";
+                        break;
+                }
+                Compile();
             }
         }
-
-        public DailyReportModel CurrentReport
+        public DateTime ViewingDate
         {
-            get => _currentReport;
-            set => _currentReport = value;
+            get => _viewingDate;
+            set
+            {
+                _viewingDate = value;
+                Compile();
+            }
         }
+        public TimeSpan[] AvailableTimeSpan { get; } = new TimeSpan[] {
+            TimeSpan.OneWeek,
+            TimeSpan.OneMonth,
+            TimeSpan.OneYear
+        };
 
-        public ObservableCollection<DateTime> InWeekDates { get; set; }
-        public ObservableCollection<DailyReportModel> InWeekReports { get; set; }
+        public DailyReportModel CurrentReport { get; set; }
+        public ObservableCollection<DailyReportModel> Reports { get; set; }
 
-        private int _viewingDateIndex = 0;
-        private DailyReportModel _currentReport;
+        public int BeingLateSum { get; set; }
+        public int BeingEarlySum { get; set; }
+        public int BeingOnTimeSum { get; set; }
+
+        public int WorkOverTimeSum { get; set; }
+        public int CheckOutEarly { get; set; }
+        public int CheckOutOnTime { get; set; }
+
+        public string TimeSpanText { get; set; }
+
+        // For the charts
+        public Func<double, string> XFormatter { get; set; }
+        public Func<double, string> YFormatter { get; set; }
 
         public DashboardViewModel()
         {
-            InWeekDates = new ObservableCollection<DateTime>();
-            InWeekReports = new ObservableCollection<DailyReportModel>();
-            for (int i = 0; i < 7; i++)
+            Instance = this;
+            CompilingTimeSpan = TimeSpan.OneWeek;
+
+            XFormatter = val => {
+                string result = "";
+                switch (_compilingTimeSpan)
+                {
+                    case TimeSpan.OneWeek:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.OneMonth:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.OneYear:
+                        result = new DateTime ((long)val).ToString("M/yyyy");
+                        break;
+                }
+
+                return result;
+            };
+            YFormatter = val => val.ToString();
+
+            Compile();
+        }
+
+        protected void Compile()
+        {
+            BeingEarlySum = BeingLateSum = BeingOnTimeSum = WorkOverTimeSum = CheckOutEarly = CheckOutOnTime = 0;
+            var newReports = new ObservableCollection<DailyReportModel>();
+
+            int dayToCheck = 0;
+            switch (_compilingTimeSpan)
             {
-                InWeekDates.Add(DateTime.Now.AddDays(-i));
-                var dailyReport = DailyReportModel.GetReportOfDate(InWeekDates[i]);
+                case TimeSpan.OneWeek:
+                    dayToCheck = 7;
+                    break;
+                case TimeSpan.OneMonth:
+                    dayToCheck = 30;
+                    break;
+                case TimeSpan.OneYear:
+                    dayToCheck = 365;
+                    break;
+            }
+
+            for (int i = dayToCheck - 1; i >= 0; i--)
+            {
+                var checkingDate = _viewingDate.Date.AddDays(-i);
+                var dailyReport = DailyReportModel.GetReportOfDate(checkingDate);
+
                 if (dailyReport != null)
                 {
-                    InWeekReports.Add(dailyReport);
+                    BeingEarlySum += dailyReport.SoNVDenSom;
+                    BeingLateSum += dailyReport.SoNVDenTre;
+                    BeingOnTimeSum += dailyReport.SoNVDenDungGio;
+
+                    WorkOverTimeSum += dailyReport.SoNVLamThemGio;
+                    CheckOutEarly += dailyReport.SoNVTanLamSom;
+                    CheckOutOnTime += dailyReport.SoNVTanLamDungGio;
                 }
                 else
                 {
-                    InWeekDates.RemoveAt(InWeekDates.Count - 1);
-                    break;
+                    dailyReport = new DailyReportModel { NgayBaoCao = checkingDate };
                 }
+                newReports.Add(dailyReport);
             }
+
+            Reports = newReports;
+            CurrentReport = Reports.Last();
         }
     }
 }

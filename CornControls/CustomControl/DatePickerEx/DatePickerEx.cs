@@ -99,8 +99,8 @@ namespace CornControls.CustomControl
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        private event EventHandler _selectedDateChanged = null;
-        public event EventHandler SelectedDateChanged
+        private event RoutedEventHandler _selectedDateChanged = null;
+        public event RoutedEventHandler SelectedDateChanged
         {
             add { _selectedDateChanged += value; }
             remove { _selectedDateChanged -= value; }
@@ -142,7 +142,7 @@ namespace CornControls.CustomControl
         {
             UpdateText();
             if (_selectedDateChanged != null)
-                _selectedDateChanged(this, new EventArgs());
+                _selectedDateChanged(this, new RoutedEventArgs());
         }
 
         static DatePickerEx()
