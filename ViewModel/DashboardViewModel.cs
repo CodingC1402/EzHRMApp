@@ -80,8 +80,25 @@ namespace ViewModel
         {
             Instance = this;
             CompilingTimeSpan = TimeSpan.OneWeek;
-            XFormatter = val => new DateTime((long)val).ToString("yyyy");
-            YFormatter = val => val.ToString("N") + " M";
+
+            XFormatter = val => {
+                string result = "";
+                switch (_compilingTimeSpan)
+                {
+                    case TimeSpan.OneWeek:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.OneMonth:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.OneYear:
+                        result = new DateTime ((long)val).ToString("M/yyyy");
+                        break;
+                }
+
+                return result;
+            };
+            YFormatter = val => val.ToString();
 
             Compile();
         }
@@ -89,7 +106,7 @@ namespace ViewModel
         protected void Compile()
         {
             BeingEarlySum = BeingLateSum = BeingOnTimeSum = WorkOverTimeSum = CheckOutEarly = CheckOutOnTime = 0;
-            Reports = new ObservableCollection<DailyReportModel>();
+            var newReports = new ObservableCollection<DailyReportModel>();
 
             int dayToCheck = 0;
             switch (_compilingTimeSpan)
@@ -124,9 +141,10 @@ namespace ViewModel
                 {
                     dailyReport = new DailyReportModel { NgayBaoCao = checkingDate };
                 }
-                Reports.Add(dailyReport);
+                newReports.Add(dailyReport);
             }
 
+            Reports = newReports;
             CurrentReport = Reports.Last();
         }
     }
