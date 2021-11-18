@@ -9,7 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace EzHRMApp.Core.Converter
 {
@@ -22,23 +24,26 @@ namespace EzHRMApp.Core.Converter
                 SeriesCollection series;
                 var dailyReports = value as ObservableCollection<DailyReportModel>;
 
-                StackedAreaSeries checkInLate = new()
-                {
-                    Title = "Check in late",
-                    LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
-                };
                 StackedAreaSeries checkInEarly = new()
                 {
                     Title = "Check in early",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("ConfirmButtonBrush")
                 };
                 StackedAreaSeries checkInOnTime = new()
                 {
                     Title = "Check in on time",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("UpdateButtonBrush")
+                };
+                StackedAreaSeries checkInLate = new()
+                {
+                    Title = "Check in late",
+                    LineSmoothness = 0,
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("CancleButtonBrush")
                 };
 
                 foreach (var report in dailyReports)
@@ -53,9 +58,9 @@ namespace EzHRMApp.Core.Converter
 
                 series = new()
                 {
-                    checkInLate,
+                    checkInEarly,
                     checkInOnTime,
-                    checkInEarly
+                    checkInLate,
                 };
 
                 return series;

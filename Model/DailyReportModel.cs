@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
 
 namespace Model
 {
@@ -33,6 +34,18 @@ namespace Model
             {
                 return new DailyReportModel(report);
             }
+        }
+
+        public static List<DailyReportModel> GetDailyReportsInTimeSpan(DateTime start, DateTime end)
+        {
+            var queryResult = DailyReportRepo.Instance.GetAllReportInTimeSpan(start, end);
+            List<DailyReportModel> result = new List<DailyReportModel>();
+            foreach (var report in queryResult)
+            {
+                result.Add(new DailyReportModel(report));
+            }
+
+            return new List<DailyReportModel>(result.OrderBy(p => p.NgayBaoCao));
         }
     }
 }
