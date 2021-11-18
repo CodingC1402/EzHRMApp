@@ -14,5 +14,6 @@
         <ResourceDictionary Source="PopUpMessage/PopUpMessage.xaml" />
         <ResourceDictionary Source="CheckIDBox/CheckIDBox.xaml" />
         <ResourceDictionary Source="NumberDisplay/NumberDisplay.xaml" />
+        <ResourceDictionary Source="ToggleButton/ToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
