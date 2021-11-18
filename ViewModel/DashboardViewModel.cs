@@ -107,7 +107,7 @@ namespace ViewModel
         protected void Compile()
         {
             BeingEarlySum = BeingLateSum = BeingOnTimeSum = WorkOverTimeSum = CheckOutEarly = CheckOutOnTime = 0;
-            var newReports = new ObservableCollection<DailyReportModel>();
+            ObservableCollection<DailyReportModel> newReports = null;
 
             int dayToCheck = 0;
             switch (_compilingTimeSpan)
@@ -127,30 +127,34 @@ namespace ViewModel
             var queriedReports = DailyReportModel.GetDailyReportsInTimeSpan(EarliestDate, _viewingDate);
 
             int queriedIndex = 0;
-
             int lateSum = 0, earlySum = 0, onTimeSum = 0, overTimeSum = 0, outEarly = 0, outOnTime = 0;
 
-            for (int i = dayToCheck - 1; i >= 0; i--)
+            if (queriedReports.Count > 0)
             {
-                DateTime checkingDate = _viewingDate.AddDays(-i);
-                var checkingReport = queriedReports[queriedIndex];
-                if (checkingDate == checkingReport.NgayBaoCao)
+                newReports = new ObservableCollection<DailyReportModel>();
+                for (int i = dayToCheck - 1; i >= 0; i--)
                 {
-                    newReports.Add(checkingReport);
+                    DateTime checkingDate = _viewingDate.AddDays(-i);
 
-                    lateSum += checkingReport.SoNVDenTre;
-                    earlySum += checkingReport.SoNVDenSom;
-                    onTimeSum += checkingReport.SoNVDenDungGio;
+                    var checkingReport = queriedReports[queriedIndex];
+                    if (checkingDate == checkingReport.NgayBaoCao)
+                    {
+                        newReports.Add(checkingReport);
 
-                    overTimeSum += checkingReport.SoNVLamThemGio;
-                    outEarly += checkingReport.SoNVTanLamSom;
-                    outOnTime += checkingReport.SoNVTanLamDungGio;
+                        lateSum += checkingReport.SoNVDenTre;
+                        earlySum += checkingReport.SoNVDenSom;
+                        onTimeSum += checkingReport.SoNVDenDungGio;
 
-                    queriedIndex++;
-                }
-                else
-                {
-                    newReports.Add(new DailyReportModel { NgayBaoCao = checkingDate });
+                        overTimeSum += checkingReport.SoNVLamThemGio;
+                        outEarly += checkingReport.SoNVTanLamSom;
+                        outOnTime += checkingReport.SoNVTanLamDungGio;
+
+                        queriedIndex++;
+                    }
+                    else
+                    {
+                        newReports.Add(new DailyReportModel { NgayBaoCao = checkingDate });
+                    }
                 }
             }
 
@@ -177,7 +181,7 @@ namespace ViewModel
             }
 
             Reports = newReports;
-            CurrentReport = Reports.Last();
+            CurrentReport = Reports?.Last();
         }
     }
 }
