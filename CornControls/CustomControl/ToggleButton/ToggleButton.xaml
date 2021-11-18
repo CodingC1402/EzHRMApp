@@ -1,0 +1,114 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:CornControls.CustomControl">
+    <!--  Used in main window for tabs  -->
+    <Style x:Key="{x:Type controls:ToggleButton}" TargetType="{x:Type controls:ToggleButton}">
+        <Setter Property="Margin" Value="0,3,0,0" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="IconPad" Value="50" />
+        <Setter Property="IconSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource BackColor}" />
+
+        <Setter Property="NormalColor" Value="{DynamicResource Accent}" />
+        <Setter Property="PressedColor" Value="{DynamicResource AccentReallyBright}" />
+        <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
+
+        <Setter Property="SelectedColor" Value="{DynamicResource ConfirmButtonBrush}" />
+        <Setter Property="SelectedPressedColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+        <Setter Property="SelectedHoverColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ToggleButton}">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NormalColor}" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Selected}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HoverColor}" />
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Selected}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedColor}" />
+                                    </MultiDataTrigger>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Selected}" Value="True">
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor}" />
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMouseOver}" Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Selected}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedHoverColor}" />
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPressed}" Value="True" />
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Selected}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPressedColor}" />
+                                    </MultiDataTrigger>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}" Value="False">
+                                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisabledColor}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{TemplateBinding IconPad}" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Path
+                                Width="{TemplateBinding IconSize}"
+                                Height="{TemplateBinding IconSize}"
+                                Fill="{TemplateBinding Foreground}"
+                                RenderTransformOrigin="0.5, 0.5">
+                                <Path.Style>
+                                    <Style TargetType="Path">
+                                        <Setter Property="Data" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Path}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Selected}" Value="True">
+                                                <Setter Property="Data" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedPath}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
+                            <ContentPresenter
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                TextBlock.TextAlignment="Left" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DisabledOpacity}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -30,7 +30,7 @@ namespace ViewModel
             _currentTimeUpdateTimer.Interval = 1000;
             _currentTimeUpdateTimer.Elapsed += (s, e) =>
             {
-                ShowPapaFranku = (DateTime.Now - _papaTime).Seconds % 5 == 2;
+                ShowPapaFranku = (DateTime.Now - _papaTime).Minutes % 5 == 2;
                 RaisePropertyChanged(nameof(CurrentTime));
             };
             _currentTimeUpdateTimer.Start();
