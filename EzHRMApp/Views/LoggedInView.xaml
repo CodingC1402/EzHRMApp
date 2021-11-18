@@ -16,6 +16,9 @@
         <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
             <view:HomeView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PersonalViewModel}">
+            <view:PersonalView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
             <view:DashboardView />
         </DataTemplate>
@@ -160,8 +163,16 @@
                         </StackPanel.Resources>
 
                         <controls:RadioButtonEx
-                            x:Name="dashboardBtn"
+                            x:Name="personalBtn"
                             Margin="0,35,0,0"
+                            Click="TabButtonClicked"
+                            Command="{Binding ToPersonal}"
+                            Content="Personal Info"
+                            GroupName="TabButtons"
+                            Path="{StaticResource staffsIcon}" />
+
+                        <controls:RadioButtonEx
+                            x:Name="dashboardBtn"
                             Click="TabButtonClicked"
                             Command="{Binding ToDashboard}"
                             Content="Dashboard"
