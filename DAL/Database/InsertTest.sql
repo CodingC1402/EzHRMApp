@@ -62,13 +62,17 @@ INSERT INTO cachtinhluong (Ten, LanTraLuongCuoi, NgayTinhLuongThangNay)
 INSERT INTO cachtinhluong (Ten, KyHanTraLuongTheoNgay, LanTraLuongCuoi)
     VALUES ('TheoGio', 1, CURRENT_DATE() - INTERVAL 1 DAY);
 
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Designer', 'TheoThang', 0, 1500, 1.5);
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Programmer', 'TheoThang', 0, 1600, 1.5);
-INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio)
-    VALUES ('Cleaner', 'TheoGio', 4, 0, 1.5);
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio, NhomTaiKhoan)
+    VALUES ('HR Manager', 'TheoThang', 0, 1800, 1.5, 'hrm');
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio, NhomTaiKhoan)
+    VALUES ('Designer', 'TheoThang', 0, 1500, 1.5, 'employee');
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio, NhomTaiKhoan)
+    VALUES ('Programmer', 'TheoThang', 0, 1600, 1.5, 'employee');
+INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio, NhomTaiKhoan)
+    VALUES ('Cleaner', 'TheoGio', 4, 0, 1.5, 'employee');
 
+INSERT INTO PHONGBAN (TenPhong, TruongPhong)
+    VALUES ('HR Department', null);
 INSERT INTO PHONGBAN (TenPhong, TruongPhong)
     VALUES ('Design Department', null);
 INSERT INTO PHONGBAN (TenPhong, TruongPhong)
@@ -76,6 +80,8 @@ INSERT INTO PHONGBAN (TenPhong, TruongPhong)
 INSERT INTO PHONGBAN (TenPhong, TruongPhong)
     VALUES ('Coding Department', null);
 
+INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
+    VALUES ('NV00000000', 'Thundercok', 'Chad', '111111111111', '2069/4/20', 'NV000000000@gmail.com', 'Chad@gmail.com', '0969069420', '0969069420', '2020/04/20', null, 'HR Department', 'HR Manager', 'hrm0');
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
     VALUES ('NV00000001', 'Pham Phuc', 'Nguyen', '000000101010', '2001/02/14', 'NV000000001@gmail.com', 'Nguyen@gmail.com', '0938516968', '09384206968', '2021/04/04', null, 'Cleaning Department', 'Cleaner', 'employee0');
 INSERT INTO NHANVIEN (ID, Ho, Ten, CMND, NgaySinh, EmailVanPhong, EmailCaNhan, SDTVanPhong, SDTCaNhan, NgayVaoLam, NgayThoiViec, PhongBan, ChucVu, TaiKhoan)
