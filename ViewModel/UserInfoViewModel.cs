@@ -16,12 +16,23 @@ namespace ViewModel
 
         public Image ProfilePicture { get; set; }
 
+        public bool IsAvailable { get; set; }
+
         public UserInfoViewModel()
         {
+            IsAvailable = true;
             Instance = this;
             UserInfo = EmployeeModel.GetEmployeeByID(LoginInfo.EmployeeID);
-            var profile = UserInfo != null ? UserInfo.GetProfilePicture() : null;
-            ProfilePicture = profile != null ? new Image(profile) : null;
+            
+            if (UserInfo == null)
+            {
+                IsAvailable = false;
+            }
+            else
+            {
+                var profile = UserInfo.GetProfilePicture();
+                ProfilePicture = profile != null ? new Image(profile) : null;
+            }
         }
     }
 }
