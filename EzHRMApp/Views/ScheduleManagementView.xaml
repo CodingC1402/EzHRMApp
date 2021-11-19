@@ -341,6 +341,7 @@
                 IsEnabled="{Binding IsInCRUDMode}"
                 PressedColor="{DynamicResource ConfirmButtonPressedBrush}" />
             <controls:ButtonEx
+                Margin="10,0,0,0"
                 Background="{DynamicResource CancleButtonBrush}"
                 Command="{Binding CancleUpdateCommand}"
                 Content="Cancel"
