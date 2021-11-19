@@ -18,9 +18,30 @@ select * from chamcong;
 select * from chucvu;
 select * from truluong;
 select * from luong;
+show events;
+show create event START_BUSINESS_HOURS_EVENT;
+
+ALTER EVENT START_BUSINESS_HOURS_EVENT
+ON SCHEDULE
+EVERY 1 DAY
+STARTS NOW() + INTERVAL 10 SECOND
+ENABLE;
+
+select * from eventlog;
+
+select * from thamso;
+select * from cacloaivipham;
+select * from thoigianbieutuan;
+select * from cachtinhluong;
+select * from nhanvien;
+select * from chamcong;
+select * from chucvu;
+select * from truluong;
+select * from luong;
 select * from nghiphep;
 select * from sogiolamtrongngay;
 select * from baocaochamcong;
+select * from baocaonhansu;
 
 DELETE FROM sogiolamtrongngay;
 DELETE FROM nghiphep;
@@ -37,16 +58,26 @@ UPDATE chamcong
 SET ThoiGianTanLam = '2021-11-15 18:00:00'
 WHERE IDNhanVien = 'NV00000001';
 
+UPDATE sogiolamtrongngay
+SET SoGioLamTrongGio = 6.5
+WHERE IDNhanVien = 'NV00000001';
+
 INSERT INTO baocaochamcong (NgayBaoCao,
                             SoNVDenSom,
                             SoNVDenDungGio,
                             SoNVDenTre,
                             SoNVTanLamSom,
                             SoNVTanLamDungGio,
-                            SoNVLamThemGio)
-VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 0, 0, 0, 0, 0, 0);
+                            SoNVLamThemGio,
+                            SoNVVangMat)
+VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 0, 0, 0, 0, 0, 0, 0);
+
+INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
+VALUES (MONTH(CURRENT_DATE()), YEAR(CURRENT_DATE()), 0, 0);
+
 
 /*   test queries   */
+
 
 
 DELIMITER  $$

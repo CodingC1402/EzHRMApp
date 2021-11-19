@@ -437,8 +437,9 @@ DO
                                        SoNVDenTre,
                                        SoNVTanLamSom,
                                        SoNVTanLamDungGio,
-                                       SoNVLamThemGio)
-            VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0);
+                                       SoNVLamThemGio,
+                                       SoNVVangMat)
+            VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0, 0);
         END;
         END IF;
 
@@ -494,7 +495,11 @@ DO
                 ORDER BY ThoiGianTanLam DESC
                 LIMIT 1
             )
-        )
+        ), SoNVVangMat = (
+            SELECT COUNT(*)
+            FROM nghiphep
+            WHERE NgayBatDauNghi = homQua AND CoPhep = 0
+            )
         WHERE NgayBaoCao = homQua;
 
         /* !!!!LOG!!!! */
