@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for CompanyRulesView.xaml
+    /// Interaction logic for ScheduleManagementView.xaml
     /// </summary>
-    public partial class CompanyRulesView : UserControl
+    public partial class ScheduleManagementView : UserControl
     {
-        public CompanyRulesView()
+        public ScheduleManagementView()
         {
             InitializeComponent();
         }

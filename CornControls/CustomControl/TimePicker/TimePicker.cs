@@ -48,6 +48,8 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty TimeProperty = DependencyProperty.Register(nameof(Time), typeof(DateTime), typeof(TimePicker), new FrameworkPropertyMetadata(DateTime.Today, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTimeChangedCallBack));
         public static readonly DependencyProperty IsPressedProperty = DependencyProperty.Register(nameof(IsPressed), typeof(bool), typeof(TimePicker));
 
+        public static readonly DependencyProperty DisabledOpacityProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(double), typeof(TimePicker), new PropertyMetadata(0.8));
+
         [Browsable(true), Category("Appearance")]
         public CornerRadius CornerRadius
         {
@@ -130,6 +132,17 @@ namespace CornControls.CustomControl
         public int Minute
         {
             get => Time.Minute;
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public double DisabledOpacity
+        {
+            get => (double)GetValue(DisabledOpacityProperty);
+            set
+            {
+                value = Math.Clamp(value, 0, 1);
+                SetValue(DisabledOpacityProperty, value);
+            }
         }
 
         private event RoutedEventHandler _timeChanged;

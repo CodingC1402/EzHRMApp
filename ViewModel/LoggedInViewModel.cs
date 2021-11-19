@@ -51,7 +51,7 @@ namespace ViewModel
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToDashboard.ViewModel);
 
-            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 1);
+            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 0);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
 
             ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
@@ -74,9 +74,6 @@ namespace ViewModel
 
             ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
             ViewModels.Add(ToAccountGroupsView.ViewModel);
-
-            ToCompanyRulesView = new NavigationCommand<CompanyRulesViewModel>(new CompanyRulesViewModel(), this, 0);
-            ViewModels.Add(ToCompanyRulesView.ViewModel);
 
             ToHomeView.Execute(null);
         }
@@ -106,6 +103,5 @@ namespace ViewModel
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
-        public NavigationCommand<CompanyRulesViewModel> ToCompanyRulesView { get; set; }
     }
 }
