@@ -1,0 +1,400 @@
+﻿<UserControl x:Class="EzHRMApp.Views.WeeklyScheduleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             xmlns:conv="clr-namespace:EzHRMApp.Core.Converter"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1300">
+    <UserControl.DataContext>
+        <viewModel:WeeklyScheduleViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="30,0,20,0">
+        <Grid.Resources>
+            <Style x:Key="TextBlockBaseStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Tahoma"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{StaticResource LightForeground}"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" MaxHeight="320"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+
+        <Grid 
+            Grid.Row="1"
+            Margin="0,0,0,40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Background="{DynamicResource Accent}"/>
+                <Border Grid.Column="1"
+                        Margin="5,0,0,0"
+                        Background="{DynamicResource Accent}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                            Style="{StaticResource TextBlockBaseStyle}"
+                            Grid.Column="0"
+                            Text="Weekdays"/>
+                        <TextBlock 
+                            Style="{StaticResource TextBlockBaseStyle}"
+                            Grid.Column="1"
+                            Text="Saturday"/>
+                        <TextBlock 
+                            Style="{StaticResource TextBlockBaseStyle}"
+                            Grid.Column="2"
+                            Text="Sunday"/>
+                    </Grid>
+                </Border>
+
+
+                <Border 
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Margin="0,5,0,0"
+                    Background="{DynamicResource Accent}"/>
+                <TextBlock 
+                    Style="{StaticResource TextBlockBaseStyle}"
+                    Grid.Row="1"
+                    Text="Start work time"/>
+                <TextBlock 
+                    Style="{StaticResource TextBlockBaseStyle}"
+                    Grid.Row="2"
+                    Text="End work time"/>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,5,0,0"
+                    Background="{DynamicResource GrayFadeBrush}">
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonHoverBrush}"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Text="{Binding CurrentTimetable.GioVaoLamCacNgayTrongTuan}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{Binding CurrentTimetable.GioVaoLamThuBay}"/>
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="{Binding CurrentTimetable.GioVaoLamChuNhat}"/>
+                    </Grid>
+                </Border>
+
+                <Border 
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="7,0,0,0"
+                    Background="{DynamicResource LightForeground}">
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Text="{Binding CurrentTimetable.GioTanLamCacNgayTrongTuan}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{Binding CurrentTimetable.GioTanLamThuBay}"/>
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="{Binding CurrentTimetable.GioTanLamChuNhat}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1"
+                  Margin="40,10,0,0">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="Normal"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                        <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="FontWeight" Value="ExtraBold"/>
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Allowed late"
+                               Style="{StaticResource HeaderTextBlockStyle}"
+                               Foreground="{DynamicResource ConfirmButtonBrush}">
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="{Binding CurrentRules.ThoiGianChoPhepDiTre, StringFormat={}{0:%h}}"/>
+                        <Run Text="hours"/>
+                        <Run Text="{Binding CurrentRules.ThoiGianChoPhepDiTre, StringFormat={}{0:%m}}"/>
+                        <Run Text="minutes"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel 
+                    Grid.Row="1"
+                    Orientation="Vertical">
+                    <TextBlock Text="Maximum late"
+                               Style="{StaticResource HeaderTextBlockStyle}"
+                               Foreground="{DynamicResource CancleButtonBrush}">
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="{Binding CurrentRules.ThoiGianDiTreToiDa, StringFormat={}{0:%h}}"/>
+                        <Run Text="hours"/>
+                        <Run Text="{Binding CurrentRules.ThoiGianDiTreToiDa, StringFormat={}{0:%m}}"/>
+                        <Run Text="minutes"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel 
+                    Grid.Row="2"
+                    Orientation="Vertical">
+                    <TextBlock Text="Allowed early leave"
+                               Style="{StaticResource HeaderTextBlockStyle}"
+                               Foreground="{DynamicResource ConfirmButtonBrush}">
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="{Binding CurrentRules.ThoiGianChoPhepVeSom, StringFormat={}{0:%h}}"/>
+                        <Run Text="hours"/>
+                        <Run Text="{Binding CurrentRules.ThoiGianChoPhepVeSom, StringFormat={}{0:%m}}"/>
+                        <Run Text="minutes"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel 
+                    Grid.Row="3"
+                    Orientation="Vertical">
+                    <TextBlock Text="Maximum early leave"
+                               Style="{StaticResource HeaderTextBlockStyle}"
+                               Foreground="{DynamicResource CancleButtonBrush}">
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="{Binding CurrentRules.ThoiGianVeSomToiDa, StringFormat={}{0:%h}}"/>
+                        <Run Text="hours"/>
+                        <Run Text="{Binding CurrentRules.ThoiGianVeSomToiDa, StringFormat={}{0:%m}}"/>
+                        <Run Text="minutes"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Margin="0,30,0,20">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <conv:ScheduleBoolToWorkdayConverter x:Key="WorkDayoffConv"/>
+                    <Style TargetType="Grid">
+                        <Setter Property="Margin" Value="5,10,10,20"/>
+                    </Style>
+                    <Style x:Key="WorkTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                        <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}" Value="Work">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Monday"/>
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuHai, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Tuesday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuBa, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Wednesday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuTu, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Thursday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuNam, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Friday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuSau, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Saturday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamThuBay, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{DynamicResource Accent}">
+                    <TextBlock 
+                        Style="{StaticResource TextBlockBaseStyle}"
+                        Text="Sunday"/>
+                </Border>
+                <Border 
+                    Grid.Row="1"
+                    Background="{DynamicResource LightForeground}">
+                    <TextBlock 
+                        Style="{StaticResource WorkTextBlockStyle}"
+                        Text="{Binding CurrentRules.CoLamChuNhat, Converter={StaticResource WorkDayoffConv}}"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

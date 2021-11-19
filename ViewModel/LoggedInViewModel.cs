@@ -51,7 +51,7 @@ namespace ViewModel
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToDashboard.ViewModel);
 
-            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 1);
+            ToScheduleManagementView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, 1);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
 
             ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
@@ -98,7 +98,7 @@ namespace ViewModel
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
         public NavigationCommand<UserInfoViewModel> ToUserInfo{ get; set; }
         public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
-        public NavigationCommand<ScheduleManagementViewModel> ToScheduleManagementView { get; set; }
+        public NavigationCommand<WeeklyScheduleViewModel> ToScheduleManagementView { get; set; }
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
         public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
         public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
