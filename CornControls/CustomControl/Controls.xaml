@@ -15,5 +15,6 @@
         <ResourceDictionary Source="CheckIDBox/CheckIDBox.xaml" />
         <ResourceDictionary Source="NumberDisplay/NumberDisplay.xaml" />
         <ResourceDictionary Source="ToggleButton/ToggleButton.xaml" />
+        <ResourceDictionary Source="TimePicker/TimePicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
