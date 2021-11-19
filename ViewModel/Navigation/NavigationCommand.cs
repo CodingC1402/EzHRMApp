@@ -29,7 +29,9 @@ namespace ViewModel.Navigation
 
         public virtual void Execute(object parameter)
         {
-           _owner.CurrentViewModel = _viewModel;
+            _owner.CurrentViewModel?.CleanUp();
+            _owner.CurrentViewModel = _viewModel;
+            _viewModel.OnGetTo();
         }
     }
 }

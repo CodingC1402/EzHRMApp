@@ -36,7 +36,7 @@ namespace ViewModel
             _currentTimeUpdateTimer.Start();
         }
 
-        protected override void CleanUp()
+        public override void CleanUp()
         {
             _currentTimeUpdateTimer.Stop();   
         }

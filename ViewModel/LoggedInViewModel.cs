@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ViewModel.Helper;
 using ViewModel.Navigation;
+using ViewModel.Structs;
 
 namespace ViewModel
 {
@@ -15,10 +16,14 @@ namespace ViewModel
         public override string ViewName => "Main";
 
         private static LoggedInViewModel __instance = null;
+        public static LoggedInViewModel Instance { get => __instance; }
         public static LoggedInViewModel GetInstance()
         {
             return __instance;
         }
+
+        public Image ProfilePicture { get; set; }
+        public EmployeeModel EmployeeModel { get; set; }
 
         protected RelayCommand<object> _logoutCommand = null;
         public RelayCommand<object> LogOutCommand => _logoutCommand ?? (_logoutCommand = new RelayCommand<object>(param => ExecuteLogout()));
@@ -36,8 +41,6 @@ namespace ViewModel
                 throw new Exception("There is another MainViewModel");
             }
             __instance = this;
-
-            
 
             ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
@@ -73,6 +76,15 @@ namespace ViewModel
             ViewModels.Add(ToAccountGroupsView.ViewModel);
 
             CurrentViewModel = ToHomeView.ViewModel;
+        }
+
+        public override void OnGetTo()
+        {
+            EmployeeModel = LoginInfo.Employee;
+            if (LoginInfo.Employee != null)
+            {
+                ProfilePicture = new Image(LoginInfo.Employee.GetProfilePicture());
+            }
         }
 
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }

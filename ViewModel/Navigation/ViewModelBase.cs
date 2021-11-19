@@ -23,7 +23,12 @@ namespace ViewModel.Navigation
             }
         }
 
-        protected virtual void CleanUp()
+        public virtual void CleanUp()
+        {
+
+        }
+
+        public virtual void OnGetTo()
         {
 
         }
