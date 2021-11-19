@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ViewModel.Helper;
 using ViewModel.Navigation;
+using ViewModel.Structs;
 
 namespace ViewModel
 {
@@ -15,10 +16,14 @@ namespace ViewModel
         public override string ViewName => "Main";
 
         private static LoggedInViewModel __instance = null;
+        public static LoggedInViewModel Instance { get => __instance; }
         public static LoggedInViewModel GetInstance()
         {
             return __instance;
         }
+
+        public Image ProfilePicture { get; set; }
+        public EmployeeModel EmployeeModel { get; set; }
 
         protected RelayCommand<object> _logoutCommand = null;
         public RelayCommand<object> LogOutCommand => _logoutCommand ?? (_logoutCommand = new RelayCommand<object>(param => ExecuteLogout()));
@@ -37,10 +42,11 @@ namespace ViewModel
             }
             __instance = this;
 
-            
-
             ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
+
+            ToUserInfo = new NavigationCommand<UserInfoViewModel>(new UserInfoViewModel(), this, 0);
+            ViewModels.Add(ToUserInfo.ViewModel);
 
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToDashboard.ViewModel);
@@ -72,7 +78,22 @@ namespace ViewModel
             CurrentViewModel = ToHomeView.ViewModel;
         }
 
+        public override void OnGetTo()
+        {
+            UpdateToEmployee();
+        }
+
+        public void UpdateToEmployee()
+        {
+            EmployeeModel = LoginInfo.Employee;
+            if (LoginInfo.Employee != null)
+            {
+                ProfilePicture = new Image(LoginInfo.Employee.GetProfilePicture());
+            }
+        }
+
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
+        public NavigationCommand<UserInfoViewModel> ToUserInfo{ get; set; }
         public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
         public NavigationCommand<ScheduleManagementViewModel> ToScheduleManagementView { get; set; }
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
