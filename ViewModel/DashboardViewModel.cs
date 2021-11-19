@@ -14,6 +14,8 @@ namespace ViewModel
         {
             OneWeek,
             OneMonth,
+            TwoMonths,
+            SixMonths,
             OneYear
         }
 
@@ -36,6 +38,12 @@ namespace ViewModel
                         break;
                     case TimeSpan.OneMonth:
                         TimeSpanText = "a month";
+                        break;
+                    case TimeSpan.TwoMonths:
+                        TimeSpanText = "two months";
+                        break;
+                    case TimeSpan.SixMonths:
+                        TimeSpanText = "six months";
                         break;
                     case TimeSpan.OneYear:
                         TimeSpanText = "a year";
@@ -61,7 +69,8 @@ namespace ViewModel
         public TimeSpan[] AvailableTimeSpan { get; } = new TimeSpan[] {
             TimeSpan.OneWeek,
             TimeSpan.OneMonth,
-            TimeSpan.OneYear
+            TimeSpan.TwoMonths,
+            TimeSpan.SixMonths
         };
 
         public DailyReportModel CurrentReport { get; set; }
@@ -100,6 +109,12 @@ namespace ViewModel
                     case TimeSpan.OneMonth:
                         result = new DateTime((long)val).ToString("d/M/yyyy");
                         break;
+                    case TimeSpan.TwoMonths:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.SixMonths:
+                        result = new DateTime((long)val).ToString("M/yyyy");
+                        break;
                     case TimeSpan.OneYear:
                         result = new DateTime ((long)val).ToString("M/yyyy");
                         break;
@@ -130,6 +145,12 @@ namespace ViewModel
                     break;
                 case TimeSpan.OneMonth:
                     dayToCheck = 30;
+                    break;
+                case TimeSpan.TwoMonths:
+                    dayToCheck = 60;
+                    break;
+                case TimeSpan.SixMonths:
+                    dayToCheck = 182;
                     break;
                 case TimeSpan.OneYear:
                     dayToCheck = 365;

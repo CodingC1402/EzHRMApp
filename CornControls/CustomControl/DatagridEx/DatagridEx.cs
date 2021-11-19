@@ -103,6 +103,7 @@ namespace CornControls.CustomControl
         {
             base.OnApplyTemplate();
             _combobox = (ComboBox)Template.FindName("filterComboboxs", this);
+
             _combobox.SelectionChanged += (s, e) =>
             {
                 SearchFilter = (_combobox.SelectedItem as DataGridColumn).Header.ToString();
