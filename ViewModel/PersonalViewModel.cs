@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,9 +11,12 @@ namespace ViewModel
 
         public static PersonalViewModel Instance { get; private set; }
 
+        public EmployeeModel UserInfo { get; set; }
+
         public PersonalViewModel()
         {
             Instance = this;
+            UserInfo = EmployeeModel.GetEmployeeByID(LoginInfo.EmployeeID);
         }
     }
 }

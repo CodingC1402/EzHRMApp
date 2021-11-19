@@ -57,7 +57,8 @@ namespace Model
                 {
                     _accessToken = result.AccessToken;
                     _privilegeMask = result.PrivilegesMask;
-                    _employeeID = result.EmployeeID;
+                    var e = EmployeeRepo.Instance.FindBy("TaiKhoan", userName).FirstOrDefault();
+                    _employeeID = e != null ? e.ID : null;
                     _username = userName;
                 }
                 success = result.Valid;

@@ -3,11 +3,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:local="clr-namespace:EzHRMApp.Views" 
+             xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel" 
+             xmlns:converter="clr-namespace:EzHRMApp.Core.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="288,107,0,0" VerticalAlignment="Top"/>
 
+    <UserControl.DataContext>
+        <viewmodels:PersonalViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <converter:ByteImageConverter x:Key="byteImageConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                <Setter Property="FontFamily" Value="Tahoma" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Ellipse
+                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                Margin="20"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Stroke="{DynamicResource Accent}"
+                StrokeThickness="10">
+                <Ellipse.Fill>
+                    <ImageBrush
+                        x:Name="profile"
+                        ImageSource="{Binding ProfilePicture, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource byteImageConverter}}"
+                        Stretch="Uniform" />
+                </Ellipse.Fill>
+            </Ellipse>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Name:" />
+                <Label Grid.Row="1" Content="DOB:" />
+                <Label Grid.Row="2" Content="Email:" />
+                <Label Grid.Row="3" Content="Phone number:" />
+                <Label Grid.Row="4" Content="CMND:" />
+
+                <Label Grid.Column = "1">
+                    <AccessText>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="UserInfo.Ho" />
+                            <Binding Path="UserInfo.Ten" />
+                        </MultiBinding>
+                    </AccessText>
+                </Label>
+                <Label Grid.Column = "1" Grid.Row="1" Content="{Binding UserInfo.NgaySinh}" />
+                <Label Grid.Column = "1" Grid.Row="2" Content="{Binding UserInfo.EmailCaNhan}" />
+                <Label Grid.Column = "1" Grid.Row="3" Content="{Binding UserInfo.SDTCaNhan}" />
+                <Label Grid.Column = "1" Grid.Row="4" Content="{Binding UserInfo.CMND}" />
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
