@@ -10,12 +10,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     d:DataContext="{d:DesignInstance Type=viewModel:DashboardViewModel}"
-    d:DesignHeight="1200"
-    d:DesignWidth="1200"
+    d:DesignHeight="1800"
+    d:DesignWidth="1920"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:DailyReportAboutCheckOutListToChart x:Key="CheckOutsConverter" />
         <converter:DailyReportAboutCheckInListToChart x:Key="CheckInsConverter" />
+        <converter:MonthlyReportToChart x:Key="HRConverter" />
     </UserControl.Resources>
 
     <Grid ClipToBounds="True">
@@ -92,7 +93,7 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid MinHeight="1200" Margin="10">
+            <Grid MinHeight="1400" Margin="10">
                 <Grid.Resources>
                     <ResourceDictionary>
                         <Style TargetType="Border">
@@ -104,6 +105,20 @@
                             <Setter Property="FontSize" Value="24" />
                             <Setter Property="FontWeight" Value="Bold" />
                             <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                        </Style>
+                        <Style x:Key="NoDataTextBlock" TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                         <Style TargetType="controls:NumberDisplay">
                             <Setter Property="Margin" Value="10" />
@@ -141,10 +156,10 @@
                     <RowDefinition Height="90" />
                     <RowDefinition Height="90" />
                     <RowDefinition Height="70" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
                     <RowDefinition Height="70" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
@@ -185,7 +200,7 @@
 
                 <controls:NumberDisplay
                     Grid.Row="2"
-                    Background="{DynamicResource CancleButtonBrush}"
+                    Background="{DynamicResource CancleButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVDenTre, FallbackValue='0'}"
                     Text="Check in late" />
@@ -193,7 +208,7 @@
                 <controls:NumberDisplay
                     Grid.Row="2"
                     Grid.Column="1"
-                    Background="{DynamicResource UpdateButtonBrush}"
+                    Background="{DynamicResource UpdateButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVDenDungGio, FallbackValue='0'}"
                     Text="Check in on time" />
@@ -201,14 +216,14 @@
                 <controls:NumberDisplay
                     Grid.Row="2"
                     Grid.Column="2"
-                    Background="{DynamicResource ConfirmButtonBrush}"
+                    Background="{DynamicResource ConfirmButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVDenSom, FallbackValue='0'}"
                     Text="Check in early" />
 
                 <controls:NumberDisplay
                     Grid.Row="3"
-                    Background="{DynamicResource CancleButtonBrush}"
+                    Background="{DynamicResource CancleButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVTanLamSom, FallbackValue='0'}"
                     Text="Check out early" />
@@ -216,7 +231,7 @@
                 <controls:NumberDisplay
                     Grid.Row="3"
                     Grid.Column="1"
-                    Background="{DynamicResource UpdateButtonBrush}"
+                    Background="{DynamicResource UpdateButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVTanLamDungGio, FallbackValue='0'}"
                     Text="Check out on time" />
@@ -224,7 +239,7 @@
                 <controls:NumberDisplay
                     Grid.Row="3"
                     Grid.Column="2"
-                    Background="{DynamicResource ConfirmButtonBrush}"
+                    Background="{DynamicResource ConfirmButtonHoverBrush}"
                     IconPath="{DynamicResource hourGlassMoney}"
                     NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
                     Text="Work over time" />
@@ -242,6 +257,15 @@
                         Grid.Row="2"
                         LegendLocation="Right"
                         Series="{Binding Reports, Converter={StaticResource CheckInsConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
                         </lvc:CartesianChart.AxisX>
@@ -250,6 +274,12 @@
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Border>
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource NoDataTextBlock}"
+                    Text="No data to show" />
 
                 <Border
                     Grid.Row="6"
@@ -260,10 +290,19 @@
                     BorderThickness="5"
                     CornerRadius="10">
                     <lvc:CartesianChart
-                        x:Name="test2"
+                        x:Name="checkInChart"
                         Grid.Row="2"
                         LegendLocation="Right"
                         Series="{Binding Reports, Converter={StaticResource CheckOutsConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
                         </lvc:CartesianChart.AxisX>
@@ -272,6 +311,12 @@
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Border>
+
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource NoDataTextBlock}"
+                    Text="No data to show" />
 
                 <Border
                     Grid.Row="5"
@@ -299,19 +344,19 @@
                                 <lvc:PieSeries
                                     Title="Late"
                                     DataLabels="True"
-                                    Fill="{DynamicResource CancleButtonBrush}"
+                                    Fill="{DynamicResource CancleButtonHoverBrush}"
                                     FontSize="24"
                                     Values="4" />
                                 <lvc:PieSeries
                                     Title="On time"
                                     DataLabels="True"
-                                    Fill="{DynamicResource UpdateButtonBrush}"
+                                    Fill="{DynamicResource UpdateButtonHoverBrush}"
                                     FontSize="24"
                                     Values="4" />
                                 <lvc:PieSeries
                                     Title="Early"
                                     DataLabels="True"
-                                    Fill="{DynamicResource ConfirmButtonBrush}"
+                                    Fill="{DynamicResource ConfirmButtonHoverBrush}"
                                     FontSize="24"
                                     Values="4" />
                             </lvc:PieChart.Series>
@@ -345,25 +390,79 @@
                                 <lvc:PieSeries
                                     Title="Early"
                                     DataLabels="True"
-                                    Fill="{DynamicResource CancleButtonBrush}"
+                                    Fill="{DynamicResource CancleButtonHoverBrush}"
                                     FontSize="24"
                                     Values="3" />
                                 <lvc:PieSeries
                                     Title="On time"
                                     DataLabels="True"
-                                    Fill="{DynamicResource UpdateButtonBrush}"
+                                    Fill="{DynamicResource UpdateButtonHoverBrush}"
                                     FontSize="24"
                                     Values="4" />
                                 <lvc:PieSeries
                                     Title="Work over time"
                                     DataLabels="True"
-                                    Fill="{DynamicResource ConfirmButtonBrush}"
+                                    Fill="{DynamicResource ConfirmButtonHoverBrush}"
                                     FontSize="24"
                                     Values="6" />
                             </lvc:PieChart.Series>
                         </lvc:PieChart>
                     </Grid>
                 </Border>
+
+                <Border
+                    Grid.Row="8"
+                    Grid.ColumnSpan="3"
+                    Margin="10"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding MonthlyReports, Converter={StaticResource HRConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MonthlyReports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis
+                                Title="Month"
+                                LabelFormatter="{Binding MonthlyXFormatter}"
+                                Labels="{Binding XAxisLabels}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.ColumnSpan="3"
+                    Text="No data to show">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MonthlyReports}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
         </ScrollViewer>
     </Grid>
