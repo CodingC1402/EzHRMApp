@@ -10,8 +10,6 @@ namespace DAL.Repos
     {
         public static VariablesRepo Instance { get; private set; } = new VariablesRepo();
 
-        public static Variables CurrentVariables { get; private set; }
-
         public VariablesRepo()
         {
             TableName = "thamso";
@@ -19,12 +17,11 @@ namespace DAL.Repos
             {
                 "ThoiDiemTao"
             };
-            FindLatestVariables();
         }
 
-        public Variables FindLatestVariables()
+        public Variables GetLatestVariables()
         {
-            return CurrentVariables = DatabaseConnector.Database.Query(TableName).OrderByDesc(PKColsName).Limit(1).First<Variables>();
+            return DatabaseConnector.Database.Query(TableName).OrderByDesc(PKColsName).Limit(1).First<Variables>();
         }
     }
 }

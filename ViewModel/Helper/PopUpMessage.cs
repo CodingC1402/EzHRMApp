@@ -30,16 +30,36 @@ namespace ViewModel.Helper
             Error
         }
 
+        public enum Icons
+        {
+            Warning,
+            Error,
+            Info,
+            Nothing
+        }
+
         private string _message = "";
         private bool _isOpened = false;
         private string _title = "";
         private Result _messageResult = Result.Ok;
+        private Icons _icon = Icons.Nothing;
         private ButtonStyleEnum _buttonStyle = ButtonStyleEnum.ConfirmButton | ButtonStyleEnum.CancleButton;
 
         public Result MessageResult
         {
             get => _messageResult;
             set => _messageResult = value;
+        }
+
+        public Icons Icon
+        {
+            get => _icon;
+            set
+            {
+                _icon = value;
+                RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
+            }
         }
 
         public string Message {
