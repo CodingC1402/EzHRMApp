@@ -60,10 +60,13 @@
                 <Style TargetType="controls:ToggleButton">
                     <Setter Property="Margin" Value="5,10,5,5" />
                     <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="DisabledOpacity" Value="0.7" />
+                    <Setter Property="SelectedDisabledColor" Value="{DynamicResource ConfirmButtonBrush}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
                     <Setter Property="IconPad" Value="0" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                 </Style>
-                <Style TargetType="controls:TimePicker">
+                <Style x:Key="timePickerStyle" TargetType="controls:TimePicker">
                     <Setter Property="Margin" Value="5" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -75,6 +78,11 @@
                     <Setter Property="DisabledOpacity" Value="0.6" />
                     <Setter Property="OutterColor" Value="{DynamicResource Accent}" />
                     <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInCRUDMode}" Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="FontFamily" Value="Tahoma" />
@@ -128,115 +136,192 @@
             <controls:ToggleButton
                 x:Name="sunBtn"
                 Grid.Column="1"
-                Content="Sunday" />
+                Content="Sunday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="monBtn"
                 Grid.Column="2"
-                Content="Monday" />
+                Content="Monday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="tueBtn"
                 Grid.Column="3"
-                Content="Tuesday" />
+                Content="Tuesday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="wedBtn"
                 Grid.Column="4"
-                Content="Wednesday" />
+                Content="Wednesday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="thuBtn"
                 Grid.Column="5"
-                Content="Thursday" />
+                Content="Thursday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="friBtn"
                 Grid.Column="6"
-                Content="Friday" />
+                Content="Friday"
+                IsEnabled="{Binding IsInCRUDMode}" />
             <controls:ToggleButton
                 x:Name="satBtn"
                 Grid.Column="7"
-                Content="Saturday" />
+                Content="Saturday"
+                IsEnabled="{Binding IsInCRUDMode}" />
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="5"
-                IsEnabled="{Binding ElementName=sunBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=sunBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="5"
-                IsEnabled="{Binding ElementName=sunBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=sunBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="2"
-                Margin="5"
-                IsEnabled="{Binding ElementName=monBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=monBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="2"
-                Margin="5"
-                IsEnabled="{Binding ElementName=monBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=monBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="3"
-                Margin="5"
-                IsEnabled="{Binding ElementName=tueBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=tueBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="3"
-                Margin="5"
-                IsEnabled="{Binding ElementName=tueBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=tueBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="4"
-                Margin="5"
-                IsEnabled="{Binding ElementName=wedBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=wedBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="4"
-                Margin="5"
-                IsEnabled="{Binding ElementName=wedBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=wedBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="5"
-                Margin="5"
-                IsEnabled="{Binding ElementName=thuBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=thuBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="5"
-                Margin="5"
-                IsEnabled="{Binding ElementName=thuBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=thuBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="6"
-                Margin="5"
-                IsEnabled="{Binding ElementName=friBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=friBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="6"
-                Margin="5"
-                IsEnabled="{Binding ElementName=friBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=friBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="1"
                 Grid.Column="7"
-                Margin="5"
-                IsEnabled="{Binding ElementName=satBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=satBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
 
             <controls:TimePicker
                 Grid.Row="2"
                 Grid.Column="7"
-                Margin="5"
-                IsEnabled="{Binding ElementName=satBtn, Path=Selected}" />
+                Margin="5">
+                <controls:TimePicker.Style>
+                    <Style BasedOn="{StaticResource timePickerStyle}" TargetType="controls:TimePicker">
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=satBtn, Path=Selected}" />
+                    </Style>
+                </controls:TimePicker.Style>
+            </controls:TimePicker>
         </Grid>
 
         <StackPanel
