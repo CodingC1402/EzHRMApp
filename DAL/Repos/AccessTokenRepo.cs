@@ -51,8 +51,14 @@ namespace DAL.Repos
                 Account = account.TaiKhoan,
                 Bitmask = AccountGroupRepo.Instance.FindByID(new object[] { account.NhomTaiKhoan }).QuyenHan
             };
-            Add(newToken, uow);
 
+            var newTokenList = new List<Employee>(EmployeeRepo.Instance.FindBy(nameof(Employee.TaiKhoan), account.TaiKhoan));
+            if (newTokenList.Count > 0)
+            {
+                newToken.NhanVienID = newTokenList[0].ID;
+            }
+
+            Add(newToken, uow);
             return newToken;
         }
 

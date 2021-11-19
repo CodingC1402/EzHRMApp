@@ -193,6 +193,10 @@ namespace ViewModel
                 base.ExecuteConfirmUpdate(param);
                 Employees[SelectedEmployeeIndex] = CurrentEmployee;
                 SelectedEmployee = CurrentEmployee;
+                if (SelectedEmployee.ID == LoginInfo.EmployeeID)
+                {
+                    LoginInfo.UpdateEmployee();
+                }
                 SetCurrentModelBack();
             }
             else
