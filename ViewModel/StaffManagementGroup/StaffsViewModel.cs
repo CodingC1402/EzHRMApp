@@ -196,6 +196,7 @@ namespace ViewModel
                 if (SelectedEmployee.ID == LoginInfo.EmployeeID)
                 {
                     LoginInfo.UpdateEmployee();
+                    LoggedInViewModel.Instance.UpdateToEmployee();
                 }
                 SetCurrentModelBack();
             }

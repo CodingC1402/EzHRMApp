@@ -254,16 +254,15 @@
 
                             <controls:RadioButtonEx
                                 x:Name="personalBtn"
-                                Margin="0,35,0,0"
+                                Margin="0,25,0,0"
                                 Click="TabButtonClicked"
                                 Command="{Binding ToUserInfo}"
                                 Content="User Info"
                                 GroupName="TabButtons"
                                 Path="{StaticResource staffsIcon}" />
-                          
+
                             <controls:RadioButtonEx
                                 x:Name="dashboardBtn"
-                                Margin="0,25,0,0"
                                 Click="TabButtonClicked"
                                 Command="{Binding ToDashboard}"
                                 Content="Dashboard"

@@ -80,6 +80,11 @@ namespace ViewModel
 
         public override void OnGetTo()
         {
+            UpdateToEmployee();
+        }
+
+        public void UpdateToEmployee()
+        {
             EmployeeModel = LoginInfo.Employee;
             if (LoginInfo.Employee != null)
             {

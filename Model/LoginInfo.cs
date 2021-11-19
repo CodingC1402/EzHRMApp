@@ -85,6 +85,12 @@ namespace Model
 
         public static void UpdateEmployee()
         {
+            if (EmployeeID == null)
+            {
+                Employee = null;
+                return;
+            }
+
             var employee = EmployeeRepo.Instance.FindByID(new object[] { EmployeeID });
             if (employee != null)
                 Employee = new EmployeeModel(employee);
