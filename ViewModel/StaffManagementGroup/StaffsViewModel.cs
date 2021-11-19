@@ -248,5 +248,10 @@ namespace ViewModel
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
         }
         #endregion
+
+        protected override void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            base.PopUpMessageClosed(sender, e);
+        }
     }
 }

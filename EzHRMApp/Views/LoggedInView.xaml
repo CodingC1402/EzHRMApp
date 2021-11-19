@@ -49,6 +49,9 @@
         <DataTemplate DataType="{x:Type viewModel:AccountGroupsViewModel}">
             <view:AccountGroupsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CompanyRulesViewModel}">
+            <view:CompanyRulesView />
+        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -327,6 +330,12 @@
                                 GroupName="TabButtons"
                                 Path="{DynamicResource reportIcon}" />
 
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
+                                Command="{Binding ToCompanyRulesView}"
+                                Content="Company Rules"
+                                GroupName="TabButtons"
+                                Path="{StaticResource companyRuleIcon}" />
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
