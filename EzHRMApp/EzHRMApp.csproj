@@ -14,6 +14,7 @@
     <None Remove="Icons\PapaFranku.png" />
     <None Remove="Icons\time.ico" />
     <None Remove="Themes\user.png" />
+    <None Remove="Themes\userFilled.png" />
     <None Remove="Views\13192721-mc.png" />
   </ItemGroup>
 
@@ -35,6 +36,7 @@
     <Resource Include="Icons\PapaFranku.png" />
     <Resource Include="Icons\time.ico" />
     <Resource Include="Themes\user.png" />
+    <Resource Include="Themes\userFilled.png" />
   </ItemGroup>
 
   <ItemGroup>

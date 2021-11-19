@@ -75,7 +75,10 @@ namespace ViewModel
             ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
             ViewModels.Add(ToAccountGroupsView.ViewModel);
 
-            CurrentViewModel = ToHomeView.ViewModel;
+            ToCompanyRulesView = new NavigationCommand<CompanyRulesViewModel>(new CompanyRulesViewModel(), this, 0);
+            ViewModels.Add(ToCompanyRulesView.ViewModel);
+
+            ToHomeView.Execute(null);
         }
 
         public override void OnGetTo()
@@ -103,5 +106,6 @@ namespace ViewModel
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
+        public NavigationCommand<CompanyRulesViewModel> ToCompanyRulesView { get; set; }
     }
 }

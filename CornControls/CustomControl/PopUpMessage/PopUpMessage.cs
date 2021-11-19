@@ -178,7 +178,7 @@ namespace CornControls.CustomControl
                     Visibility = Visibility.Hidden;
                     IsOpened = false;
                     CanClose = false;
-                    RaiseMessageClosedEvent();
+                    OnMessageClosed(new RoutedEventArgs());
                 });
 
                 _border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
@@ -225,6 +225,7 @@ namespace CornControls.CustomControl
                     Show();
                 else
                     Close();
+
                 SetValue(IsOpenedProperty, value);
                 ViewModel.Helper.PopUpMessage.Instance.IsOpened = value;
             }
@@ -291,12 +292,11 @@ namespace CornControls.CustomControl
             set => SetValue(IconPathProperty, value);
         }
 
-        public static readonly RoutedEvent MessageClosedEvent = EventManager.RegisterRoutedEvent(nameof(MessageClosed), RoutingStrategy.Tunnel, typeof(RoutedEventHandler), typeof(PopUpMessage));
-
+        private event RoutedEventHandler _messageClosed;
         public event RoutedEventHandler MessageClosed
         {
-            add { AddHandler(MessageClosedEvent, value); }
-            remove { RemoveHandler(MessageClosedEvent, value); }
+            add { _messageClosed += value; }
+            remove { _messageClosed -= value; }
         }
 
         private Border _border;
@@ -330,15 +330,25 @@ namespace CornControls.CustomControl
             }
         }
 
-        protected virtual void RaiseMessageClosedEvent()
+        protected virtual void OnMessageClosed(RoutedEventArgs e)
         {
-            RoutedEventArgs args = new RoutedEventArgs(MessageClosedEvent);
-            RaiseEvent(args);
-            OnMessageClosed(Instance);
-        }
+            switch (MessageResult)
+            {
+                case Result.Ok:
+                    ViewModel.Helper.PopUpMessage.Instance.MessageResult = ViewModel.Helper.PopUpMessage.Result.Ok;
+                    break;
+                case Result.Cancled:
+                    ViewModel.Helper.PopUpMessage.Instance.MessageResult = ViewModel.Helper.PopUpMessage.Result.Cancled;
+                    break;
+                case Result.Error:
+                    ViewModel.Helper.PopUpMessage.Instance.MessageResult = ViewModel.Helper.PopUpMessage.Result.Error;
+                    break;
+            }
+            ViewModel.Helper.PopUpMessage.Instance.PropagatePopupMessageClosedEvent();
 
-        protected virtual void OnMessageClosed(PopUpMessage instances)
-        {}
+            if (_messageClosed != null)
+                _messageClosed(this, new RoutedEventArgs());
+        }
 
         public override void OnApplyTemplate()
         {

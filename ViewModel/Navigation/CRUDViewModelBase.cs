@@ -19,6 +19,7 @@ namespace ViewModel.Navigation
             {
                 if (value)
                 {
+                    PopUpMessage.Instance.PopUpMessageClosed += PopUpMessageClosed;
                     PopUpMessage.Instance.Title = "Error!";
                     PopUpMessage.Instance.ButtonStyle = PopUpMessage.ButtonStyleEnum.ConfirmButton;
                 }
@@ -31,6 +32,10 @@ namespace ViewModel.Navigation
             {
                 PopUpMessage.Instance.Message = value;
             }
+        }
+        public PopUpMessage.Result MessageResult
+        {
+            get => PopUpMessage.Instance.MessageResult;
         }
 
         public bool IsInNormalMode
@@ -134,6 +139,13 @@ namespace ViewModel.Navigation
         public virtual bool CanExecuteUpdateConfirm(object param)
         {
             return IsInUpdateMode;
+        }
+
+
+        // when override this please call the base method!!!
+        protected virtual void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            PopUpMessage.Instance.PopUpMessageClosed -= PopUpMessageClosed;
         }
     }
 }
