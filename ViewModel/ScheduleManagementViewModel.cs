@@ -1,17 +1,20 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ViewModel.Helper;
+using ViewModel.Navigation;
 
 namespace ViewModel
 {
-    public class CompanyRulesViewModel : Navigation.CRUDViewModelBase
+    public class ScheduleManagementViewModel : CRUDViewModelBase
     {
-        public override string ViewName => "Company Rules";
+        public override string ViewName => "Schedule management";
 
-        private static CompanyRulesViewModel _instance = null;
-        public static CompanyRulesViewModel Instance { get => _instance; }
+        private static ScheduleManagementViewModel _instance = null;
+        public static ScheduleManagementViewModel Instance { get => _instance; }
 
         // The actual rule that is referencing
         public CompanyRuleModel CurrentRule { get; set; }
@@ -58,7 +61,7 @@ namespace ViewModel
             ViewingRule = CurrentRule;
         }
 
-        public CompanyRulesViewModel()
+        public ScheduleManagementViewModel()
         {
             _instance = this;
         }

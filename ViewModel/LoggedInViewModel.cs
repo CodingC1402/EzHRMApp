@@ -51,8 +51,11 @@ namespace ViewModel
             ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
             ViewModels.Add(ToDashboard.ViewModel);
 
-            ToScheduleManagementView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, 1);
+            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 0);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
+
+            ToWeeklyScheduleView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, 0);
+            ViewModels.Add(ToWeeklyScheduleView.ViewModel);
 
             ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
             ViewModels.Add(ToStaffView.ViewModel);
@@ -75,9 +78,6 @@ namespace ViewModel
             ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
             ViewModels.Add(ToAccountGroupsView.ViewModel);
 
-            ToCompanyRulesView = new NavigationCommand<CompanyRulesViewModel>(new CompanyRulesViewModel(), this, 0);
-            ViewModels.Add(ToCompanyRulesView.ViewModel);
-
             ToHomeView.Execute(null);
         }
 
@@ -98,7 +98,8 @@ namespace ViewModel
         public NavigationCommand<HomeViewModel> ToHomeView { get; set; }
         public NavigationCommand<UserInfoViewModel> ToUserInfo{ get; set; }
         public NavigationCommand<DashboardViewModel> ToDashboard { get; set; }
-        public NavigationCommand<WeeklyScheduleViewModel> ToScheduleManagementView { get; set; }
+        public NavigationCommand<ScheduleManagementViewModel> ToScheduleManagementView { get; set; }
+        public NavigationCommand<WeeklyScheduleViewModel> ToWeeklyScheduleView { get; set; }
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
         public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
         public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
@@ -106,6 +107,5 @@ namespace ViewModel
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
-        public NavigationCommand<CompanyRulesViewModel> ToCompanyRulesView { get; set; }
     }
 }

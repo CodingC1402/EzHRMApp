@@ -32,7 +32,7 @@ namespace EzHRMApp.Views
         protected override void OnGetWindowParent()
         {
             base.OnGetWindowParent();
-            SetWindowSize(1000, 800, double.PositiveInfinity, double.PositiveInfinity, 1000, 800);
+            SetWindowSize(1200, 800, double.PositiveInfinity, double.PositiveInfinity, 1200, 800);
 
             OwnerWindow.ResizeMode = ResizeMode.CanResize;
             OwnerWindow.WindowStateChanged += (s, e) =>

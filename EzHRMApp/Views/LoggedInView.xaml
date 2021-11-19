@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type viewModel:WeeklyScheduleViewModel}">
             <view:WeeklyScheduleView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ScheduleManagementViewModel}">
+            <view:ScheduleManagementView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StaffsViewModel}">
             <view:StaffsView />
         </DataTemplate>
@@ -48,9 +51,6 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AccountGroupsViewModel}">
             <view:AccountGroupsView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CompanyRulesViewModel}">
-            <view:CompanyRulesView />
         </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
@@ -273,20 +273,20 @@
                                 Path="{StaticResource dashboardIcon}" />
 
                             <controls:RadioButtonEx
+                                x:Name="weeklySchedule"
+                                Click="TabButtonClicked"
+                                Command="{Binding ToWeeklyScheduleView}"
+                                Content="Weekly Schedule"
+                                GroupName="TabButtons"
+                                Path="{StaticResource calendarIcon}" />
+
+                            <controls:RadioButtonEx
                                 x:Name="checkInBtn"
                                 Click="TabButtonClicked"
                                 Command="{Binding ToCheckInManagementView}"
                                 Content="Check-Ins"
                                 GroupName="TabButtons"
                                 Path="{StaticResource clockIcon}" />
-
-                            <controls:RadioButtonEx
-                                x:Name="schedule"
-                                Click="TabButtonClicked"
-                                Command="{Binding ToScheduleManagementView}"
-                                Content="Schedule"
-                                GroupName="TabButtons"
-                                Path="{StaticResource calendarIcon}" />
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
@@ -331,9 +331,10 @@
                                 Path="{DynamicResource reportIcon}" />
 
                             <controls:RadioButtonEx
+                                x:Name="schedule"
                                 Click="TabButtonClicked"
-                                Command="{Binding ToCompanyRulesView}"
-                                Content="Company Rules"
+                                Command="{Binding ToScheduleManagementView}"
+                                Content="Schedule"
                                 GroupName="TabButtons"
                                 Path="{StaticResource companyRuleIcon}" />
                         </StackPanel>
