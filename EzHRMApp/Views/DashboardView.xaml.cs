@@ -42,6 +42,20 @@ namespace EzHRMApp.Views
             checkOutPieChart.Series[0].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.CheckOutEarly });
             checkOutPieChart.Series[1].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.CheckOutOnTime });
             checkOutPieChart.Series[2].Values = new ChartValues<int>(new int[] { DashboardViewModel.Instance.WorkOverTimeSum });
+
+            HidePieChartIfZero(checkInPieChart);
+            HidePieChartIfZero(checkOutPieChart);
+        }
+
+        protected void HidePieChartIfZero(PieChart pieChart)
+        {
+            bool needToHide = false;
+            foreach (var serie in pieChart.Series)
+            {
+                needToHide |= (int)serie.Values[0] == 0;
+            }
+
+            pieChart.Visibility = needToHide ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }
