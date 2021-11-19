@@ -22,6 +22,7 @@ namespace ViewModel
             {
                 _currentAG = value;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
+                DeleteCommand.RaiseCanExecuteChangeEvent();
             }
         }
         public AccountGroupModel SelectedAccountGroup
@@ -34,18 +35,9 @@ namespace ViewModel
                     CurrentAccountGroup = value;
             }
         }
-        public int SelectedGroupIndex
-        {
-            get => _selectedAGIndex;
-            set
-            {
-                _selectedAGIndex = value;
-            }
-        }
 
         private AccountGroupModel _currentAG;
         private AccountGroupModel _selectedAG;
-        private int _selectedAGIndex;
 
         public AccountGroupsViewModel()
         {
@@ -55,8 +47,8 @@ namespace ViewModel
         #region Overriden command methods
         public override void ExecuteAdd(object param)
         {
-            CurrentAccountGroup = new AccountGroupModel("", 0);
             base.ExecuteAdd(param);
+            CurrentAccountGroup = new AccountGroupModel("", 0, false);
         }
 
         public override void ExecuteUpdate(object param)
@@ -69,12 +61,13 @@ namespace ViewModel
         {
             var result = CurrentAccountGroup.Add();
 
-            if (result == "")
+            if (result == "" || result == "group-exists")
             {
                 base.ExecuteConfirmAdd(param);
                 AccountGroups.Add(CurrentAccountGroup);
                 SelectedAccountGroup = CurrentAccountGroup;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
+                DeleteCommand.RaiseCanExecuteChangeEvent();
             }
             else
             {
@@ -94,6 +87,7 @@ namespace ViewModel
                 AccountGroups[AccountGroups.IndexOf(found)] = CurrentAccountGroup;
                 SelectedAccountGroup = CurrentAccountGroup;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
+                DeleteCommand.RaiseCanExecuteChangeEvent();
             }
             else
             {
@@ -122,6 +116,27 @@ namespace ViewModel
         {
             return base.CanExecuteUpdateStart(param) && CurrentAccountGroup != null;
         }
+
+        private void ExecuteDelete(object param)
+        {
+            CurrentAccountGroup.DaXoa = true;
+            var result = CurrentAccountGroup.Save();
+            if (result != "")
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
+            else
+            {
+                AccountGroups.Remove(CurrentAccountGroup);
+                CurrentAccountGroup = null;
+            }
+        }
+
+        private bool CanExecuteDelete(object param)
+        {
+            return SelectedAccountGroup != null && !IsInCRUDMode;
+        }
         #endregion
 
         #region Toggle commands
@@ -134,6 +149,7 @@ namespace ViewModel
         private RelayCommand<object> _payrollCommand;
         private RelayCommand<object> _accountGroupCommand;
         private RelayCommand<object> _reportCommand;
+        private RelayCommand<object> _deleteCommand;
 
         public RelayCommand<object> DashboardToggleCommand => _dashboardCommand ??=
             new RelayCommand<object>(obj => {
@@ -165,10 +181,8 @@ namespace ViewModel
         public RelayCommand<object> ReportToggleCommand => _reportCommand ??=
             new RelayCommand<object>(obj => CurrentAccountGroup.ReportsViewPermission = !CurrentAccountGroup.ReportsViewPermission, null);
 
-        private bool canExecuteTogglePermissions(object param)
-        {
-            return IsInCRUDMode;
-        }
+        public RelayCommand<object> DeleteCommand => _deleteCommand ??=
+            new RelayCommand<object>(ExecuteDelete, CanExecuteDelete);
         #endregion
     }
 }

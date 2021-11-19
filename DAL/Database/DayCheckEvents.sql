@@ -437,8 +437,9 @@ DO
                                        SoNVDenTre,
                                        SoNVTanLamSom,
                                        SoNVTanLamDungGio,
-                                       SoNVLamThemGio)
-            VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0);
+                                       SoNVLamThemGio,
+                                       SoNVVangMat)
+            VALUES (CURRENT_DATE(), 0, 0, 0, 0, 0, 0, 0);
         END;
         END IF;
 

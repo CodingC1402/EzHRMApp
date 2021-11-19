@@ -47,7 +47,7 @@
             </ResourceDictionary>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" MaxWidth="350" />
+            <ColumnDefinition Width="5.2*" MaxWidth="350" />
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
 
@@ -88,6 +88,25 @@
                     Header="Name" />
             </controls:DatagridEx.Columns>
         </controls:DatagridEx>
+
+        <controls:ButtonEx 
+            Margin="5,10,0,0"
+            Grid.Column="0"
+            Grid.Row="3"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Command="{Binding DeleteCommand}"
+            Content="Delete">
+            <controls:ButtonEx.Style>
+                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}"/>
+                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}"/>
+                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}"/>
+                    <Setter Property="DisabledColor" Value="{DynamicResource CancleButtonBrush}"/>
+                    <Setter Property="DisabledOpacity" Value="0.6"/>
+                </Style>
+            </controls:ButtonEx.Style>
+        </controls:ButtonEx>
 
         <Border
             Grid.Row="1"
