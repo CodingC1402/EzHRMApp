@@ -495,7 +495,11 @@ DO
                 ORDER BY ThoiGianTanLam DESC
                 LIMIT 1
             )
-        )
+        ), SoNVVangMat = (
+            SELECT COUNT(*)
+            FROM nghiphep
+            WHERE NgayBatDauNghi = homQua AND CoPhep = 0
+            )
         WHERE NgayBaoCao = homQua;
 
         /* !!!!LOG!!!! */
