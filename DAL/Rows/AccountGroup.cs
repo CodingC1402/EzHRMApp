@@ -69,9 +69,9 @@ namespace DAL.Rows
         public override string CheckForError()
         {
             if (String.IsNullOrWhiteSpace(TenNhomTaiKhoan))
-                return "Ten nhom tai khoan khong duoc trong";
+                return "Account group name cannot be empty.";
             if (QuyenHan == 0)
-                return "Quyen han khong the trong";
+                return "Permission cannot be empty.";
 
             return "";
         }

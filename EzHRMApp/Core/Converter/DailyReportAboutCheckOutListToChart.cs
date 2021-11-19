@@ -4,11 +4,14 @@ using LiveCharts.Wpf;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace EzHRMApp.Core.Converter
 {
@@ -16,28 +19,34 @@ namespace EzHRMApp.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType == typeof(SeriesCollection) && value.GetType() == typeof(List<DailyReportModel>))
+            if (value == null)
+                return null;
+
+            if (targetType == typeof(SeriesCollection) && value.GetType() == typeof(ObservableCollection<DailyReportModel>))
             {
                 SeriesCollection series;
-                var dailyReports = value as List<DailyReportModel>;
+                var dailyReports = value as ObservableCollection<DailyReportModel>;
 
-                StackedAreaSeries workOverTime = new()
-                {
-                    Title = "Work overtime",
-                    LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
-                };
                 StackedAreaSeries checkOutEarly = new()
                 {
                     Title = "Check out early",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("CancleButtonHoverBrush")
                 };
                 StackedAreaSeries checkOutOnTime = new()
                 {
                     Title = "Check out on time",
                     LineSmoothness = 0,
-                    Values = new ChartValues<DateTimePoint>()
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("UpdateButtonHoverBrush")
+                };
+                StackedAreaSeries workOverTime = new()
+                {
+                    Title = "Work overtime",
+                    LineSmoothness = 0,
+                    Values = new ChartValues<DateTimePoint>(),
+                    Fill = (Brush)Application.Current.FindResource("ConfirmButtonHoverBrush")
                 };
 
                 foreach (var report in dailyReports)
@@ -49,9 +58,9 @@ namespace EzHRMApp.Core.Converter
 
                 series = new()
                 {
-                    checkOutEarly,
+                    workOverTime,
                     checkOutOnTime,
-                    workOverTime
+                    checkOutEarly
                 };
 
                 return series;

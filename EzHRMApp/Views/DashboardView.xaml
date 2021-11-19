@@ -3,55 +3,40 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+    xmlns:converter="clr-namespace:EzHRMApp.Core.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:EzHRMApp.Views"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="650"
-    d:DesignWidth="800"
+    xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewModel:DashboardViewModel}"
+    d:DesignHeight="1800"
+    d:DesignWidth="1920"
     mc:Ignorable="d">
-    <Grid Margin="10">
-        <Grid.Resources>
-            <ResourceDictionary>
-                <Style TargetType="controls:NumberDisplay">
-                    <Setter Property="Margin" Value="10" />
-                    <Setter Property="NumberFontSize" Value="36" />
-                    <Setter Property="IconBrush" Value="#88000000" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="Padding" Value="5" />
-                    <Setter Property="NumberMargin" Value="0, -10, 0, 0" />
-                    <Setter Property="IconSize" Value="48" />
-                    <Setter Property="CornerRadius" Value="5" />
-                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                </Style>
-                <Style TargetType="Label">
-                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                </Style>
-            </ResourceDictionary>
-        </Grid.Resources>
+    <UserControl.Resources>
+        <converter:DailyReportAboutCheckOutListToChart x:Key="CheckOutsConverter" />
+        <converter:DailyReportAboutCheckInListToChart x:Key="CheckInsConverter" />
+        <converter:MonthlyReportToChart x:Key="HRConverter" />
+    </UserControl.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid ClipToBounds="True">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontFamily" Value="Tahoma" />
+            </Style>
+        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Rectangle
             Grid.ColumnSpan="3"
-            Width="440"
+            Width="740"
             Height="130"
             Margin="-80,-75,-80,0"
             HorizontalAlignment="Right"
@@ -60,192 +45,425 @@
             RadiusX="60"
             RadiusY="60" />
 
-        <Grid
-            Grid.ColumnSpan="3"
+        <StackPanel
+            Width="Auto"
             Height="50"
             Margin="10,0"
             HorizontalAlignment="Right"
-            VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
 
             <Label
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                Content="Timespan: "
+                Foreground="{DynamicResource LightForeground}" />
+            <controls:ComboBoxEx
+                Width="150"
+                Height="35"
+                Padding="10"
+                VerticalContentAlignment="Center"
+                FocusedOutterColor="{DynamicResource AccentBright}"
+                FocusedPadding="5, 1"
+                FontFamily="Tahoma"
+                FontSize="14"
+                ItemCornerRadius="0"
+                ItemsSource="{Binding AvailableTimeSpan}"
+                NormalPadding="5, 1"
+                SelectedIndex="0"
+                SelectedItem="{Binding CompilingTimeSpan}"
+                SelectionChanged="UpdatePieChart" />
+
+            <Label
+                Margin="20,0,0,0"
                 VerticalAlignment="Center"
                 Content="Viewing date: "
                 Foreground="{DynamicResource LightForeground}" />
             <controls:DatePickerEx
+                x:Name="datePicker"
                 Grid.Column="1"
                 Width="200"
                 Height="35"
                 HorizontalAlignment="Left"
-                FocusedOutterColor="{DynamicResource AccentBright}" />
-        </Grid>
+                FocusedOutterColor="{DynamicResource AccentBright}"
+                FontFamily="Tahoma"
+                FontSize="14"
+                SelectedDate="{Binding ViewingDate}"
+                SelectedDateChanged="UpdatePieChart" />
+        </StackPanel>
 
-        <Border
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="3"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10" />
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid MinHeight="1400" Margin="10">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                        </Style>
+                        <Style x:Key="NoDataTextBlock" TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style TargetType="controls:NumberDisplay">
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="NumberFontSize" Value="36" />
+                            <Setter Property="IconBrush" Value="#88000000" />
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="NumberMargin" Value="0, -10, 0, 0" />
+                            <Setter Property="IconSize" Value="48" />
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                        </Style>
+                        <Style TargetType="lvc:PieChart">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Hoverable" Value="False" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="LegendLocation" Value="Bottom" />
+                            <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
 
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Background="{DynamicResource CancleButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Grid.Column="1"
-            Background="{DynamicResource UpdateButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
-
-        <controls:NumberDisplay
-            Grid.Row="1"
-            Grid.Column="2"
-            Background="{DynamicResource ConfirmButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Background="{DynamicResource CancleButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Grid.Column="1"
-            Background="{DynamicResource UpdateButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
-
-        <controls:NumberDisplay
-            Grid.Row="2"
-            Grid.Column="2"
-            Background="{DynamicResource ConfirmButtonBrush}"
-            IconPath="{DynamicResource hourGlassMoney}"
-            NumberText="0"
-            Text="Late" />
-
-        <Border
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            Margin="0,20,10,10"
-            Padding="10,20,10,0"
-            Background="{DynamicResource BackColor}"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10">
-            <lvc:CartesianChart
-                x:Name="test"
-                Grid.Row="2"
-                LegendLocation="Right"
-                Series="{Binding ChartCollections}">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Year" LabelFormatter="{Binding XFormatter}" />
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Population" LabelFormatter="{Binding YFormatter}" />
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </Border>
-
-        <Border
-            Grid.Row="4"
-            Grid.ColumnSpan="2"
-            Margin="0,10,10,20"
-            Padding="10,20,10,0"
-            Background="{DynamicResource BackColor}"
-            BorderBrush="{DynamicResource Accent}"
-            BorderThickness="5"
-            CornerRadius="10">
-            <lvc:CartesianChart
-                x:Name="test2"
-                Grid.Row="2"
-                LegendLocation="Right"
-                Series="{Binding ChartCollections}">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Year" LabelFormatter="{Binding XFormatter}" />
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Population" LabelFormatter="{Binding YFormatter}" />
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </Border>
-        <Border
-            Grid.Row="3"
-            Grid.Column="2"
-            Margin="10,20,0,10"
-            Background="{DynamicResource Accent}"
-            CornerRadius="10">
-            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
 
-                <Label
-                    HorizontalAlignment="Center"
-                    Content="Pie chart 2"
-                    Foreground="{DynamicResource LightForeground}" />
-
-                <lvc:PieChart
+                <TextBlock
                     Grid.Row="1"
-                    Margin="10,0,10,10"
-                    DataTooltip="{x:Null}"
-                    Hoverable="False"
-                    LegendLocation="Bottom">
-                    <lvc:PieChart.Series>
-                        <lvc:PieSeries Title="Maria" Values="3" />
-                        <lvc:PieSeries Title="Charles" Values="4" />
-                        <lvc:PieSeries Title="Frida" Values="6" />
-                        <lvc:PieSeries Title="Frederic" Values="2" />
-                    </lvc:PieChart.Series>
-                </lvc:PieChart>
-            </Grid>
-        </Border>
-
-        <Border
-            Grid.Row="4"
-            Grid.Column="2"
-            Margin="10,10,0,20"
-            Background="{DynamicResource Accent}"
-            CornerRadius="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Label
+                    Grid.ColumnSpan="3"
                     HorizontalAlignment="Center"
-                    Content="Pie chart 2"
-                    Foreground="{DynamicResource LightForeground}" />
+                    VerticalAlignment="Center">
+                    <Run Text="Report of" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                </TextBlock>
 
-                <lvc:PieChart
-                    Grid.Row="1"
-                    Margin="10,0,10,10"
-                    DataTooltip="{x:Null}"
-                    Hoverable="False"
-                    LegendLocation="Bottom">
-                    <lvc:PieChart.Series>
-                        <lvc:PieSeries Title="Maria" Values="3" />
-                        <lvc:PieSeries Title="Charles" Values="4" />
-                        <lvc:PieSeries Title="Frida" Values="6" />
-                        <lvc:PieSeries Title="Frederic" Values="2" />
-                    </lvc:PieChart.Series>
-                </lvc:PieChart>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+                    <Run Text="Reports from" />
+                    <Run Text="{Binding EarliestDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                    <Run Text="to" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                </TextBlock>
+
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+                    <Run Text="Human resource report of the year" />
+                    <Run Text="{Binding ElementName=datePicker, Path=SelectedDate, StringFormat='{}{0:yyyy}'}" />
+                </TextBlock>
+
+                <Border
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="3"
+                    BorderThickness="5"
+                    CornerRadius="10" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Background="{DynamicResource CancleButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenTre, FallbackValue='0'}"
+                    Text="Check in late" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Background="{DynamicResource UpdateButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenDungGio, FallbackValue='0'}"
+                    Text="Check in on time" />
+
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Background="{DynamicResource ConfirmButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVDenSom, FallbackValue='0'}"
+                    Text="Check in early" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Background="{DynamicResource CancleButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVTanLamSom, FallbackValue='0'}"
+                    Text="Check out early" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Background="{DynamicResource UpdateButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVTanLamDungGio, FallbackValue='0'}"
+                    Text="Check out on time" />
+
+                <controls:NumberDisplay
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Background="{DynamicResource ConfirmButtonHoverBrush}"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
+                    Text="Work over time" />
+
+                <Border
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,10,10"
+                    Padding="10,20,10,0"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        x:Name="test"
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding Reports, Converter={StaticResource CheckInsConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource NoDataTextBlock}"
+                    Text="No data to show" />
+
+                <Border
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,10,10"
+                    Padding="10,20,10,0"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        x:Name="checkInChart"
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding Reports, Converter={StaticResource CheckOutsConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource NoDataTextBlock}"
+                    Text="No data to show" />
+
+                <Border
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Margin="10,10,0,10"
+                    Background="{DynamicResource Accent}"
+                    CornerRadius="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            HorizontalAlignment="Center"
+                            Content="Check-Ins"
+                            Foreground="{DynamicResource LightForeground}" />
+
+                        <lvc:PieChart
+                            x:Name="checkInPieChart"
+                            Grid.Row="1"
+                            Margin="10,0,10,10"
+                            DataTooltip="{x:Null}">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries
+                                    Title="Late"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource CancleButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="On time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource UpdateButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="Early"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource ConfirmButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+                    </Grid>
+                </Border>
+
+                <Border
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    Margin="10,10,0,10"
+                    Background="{DynamicResource Accent}"
+                    CornerRadius="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            HorizontalAlignment="Center"
+                            Content="Check-Outs"
+                            Foreground="{DynamicResource LightForeground}" />
+
+                        <lvc:PieChart
+                            x:Name="checkOutPieChart"
+                            Grid.Row="1"
+                            Margin="10,0,10,10"
+                            DataTooltip="{x:Null}">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries
+                                    Title="Early"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource CancleButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="3" />
+                                <lvc:PieSeries
+                                    Title="On time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource UpdateButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="4" />
+                                <lvc:PieSeries
+                                    Title="Work over time"
+                                    DataLabels="True"
+                                    Fill="{DynamicResource ConfirmButtonHoverBrush}"
+                                    FontSize="24"
+                                    Values="6" />
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+                    </Grid>
+                </Border>
+
+                <Border
+                    Grid.Row="8"
+                    Grid.ColumnSpan="3"
+                    Margin="0,10"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding MonthlyReports, Converter={StaticResource HRConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MonthlyReports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis
+                                Title="Months"
+                                LabelFormatter="{Binding MonthlyXFormatter}"
+                                Labels="{Binding XAxisLabels}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.ColumnSpan="3"
+                    Text="No data to show">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MonthlyReports}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
-        </Border>
+        </ScrollViewer>
     </Grid>
 </UserControl>
