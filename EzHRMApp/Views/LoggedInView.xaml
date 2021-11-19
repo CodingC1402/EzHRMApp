@@ -49,9 +49,6 @@
         <DataTemplate DataType="{x:Type viewModel:AccountGroupsViewModel}">
             <view:AccountGroupsView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CompanyRulesViewModel}">
-            <view:CompanyRulesView />
-        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -281,14 +278,6 @@
                                 Path="{StaticResource clockIcon}" />
 
                             <controls:RadioButtonEx
-                                x:Name="schedule"
-                                Click="TabButtonClicked"
-                                Command="{Binding ToScheduleManagementView}"
-                                Content="Schedule"
-                                GroupName="TabButtons"
-                                Path="{StaticResource calendarIcon}" />
-
-                            <controls:RadioButtonEx
                                 Click="TabButtonClicked"
                                 Command="{Binding ToStaffView}"
                                 Content="Staffs"
@@ -331,9 +320,10 @@
                                 Path="{DynamicResource reportIcon}" />
 
                             <controls:RadioButtonEx
+                                x:Name="schedule"
                                 Click="TabButtonClicked"
-                                Command="{Binding ToCompanyRulesView}"
-                                Content="Company Rules"
+                                Command="{Binding ToScheduleManagementView}"
+                                Content="Schedule"
                                 GroupName="TabButtons"
                                 Path="{StaticResource companyRuleIcon}" />
                         </StackPanel>
