@@ -43,9 +43,9 @@ VALUES (NOW() - INTERVAL 1 DAY,
 INSERT INTO cacloaivipham (TenViPham, TruLuongTheoPhanTram, TruLuongTrucTiep)
 VALUES ('DiTre', 2.0, 0), ('VeSom', 1.5, 0), ('VangMat', 5.0, 0);
 
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('boss',    0x0FFFFF);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('hrm',     0x0000FF);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('employee',0xF00000);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('boss',    0x0FFFFF, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('hrm',     0x0000FF, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('employee',0xF00000, 0);
 
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('boss0', SHA2('0', 256), 'boss');
 
@@ -121,11 +121,11 @@ VALUES ('NV00000001', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tham gia hoi nghi 3N 
 INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
 VALUES ('NV00000002', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tai nan giao thong', 1);
 
-INSERT INTO baocaochamcong (NgayBaoCao, SoNVDenSom, SoNVDenDungGio, SoNVDenTre, SoNVTanLamSom, SoNVTanLamDungGio, SoNVLamThemGio)
-VALUES ('2021/11/15', 10, 40, 12, 0, 45, 17),
-('2021/11/16', 14, 35, 13, 5, 40, 17),
-('2021/11/17', 13, 42, 7, 4, 40, 18),
-('2021/11/18', 13, 37, 12, 20, 25, 16);
+INSERT INTO baocaochamcong (NgayBaoCao, SoNVDenSom, SoNVDenDungGio, SoNVDenTre, SoNVTanLamSom, SoNVTanLamDungGio, SoNVLamThemGio, SoNVVangMat)
+VALUES ('2021/11/15', 10, 40, 12, 0, 45, 17, 0),
+('2021/11/16', 14, 35, 13, 5, 40, 17, 5),
+('2021/11/17', 13, 42, 7, 4, 40, 18, 6),
+('2021/11/18', 13, 37, 12, 20, 25, 16, 2);
 
 INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
 VALUES (1, 2021, 10, 20),
