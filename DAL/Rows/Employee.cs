@@ -115,7 +115,7 @@ namespace DAL.Rows
                 }, uow);
                 
                 var checkReport = CheckReportRepo.Instance.FindCurrentDateReport();
-                var variables = VariablesRepo.Instance.FindLatestVariables();
+                var variables = VariablesRepo.Instance.GetLatestVariables();
                 DateTime gioVaoLam = checkInStamp.Date;
                 if (gioVaoLam.DayOfWeek == DayOfWeek.Saturday)
                     time = TimetableRepo.CurrentTimetable.GioVaoLamThuBay;

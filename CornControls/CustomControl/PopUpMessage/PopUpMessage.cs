@@ -30,13 +30,27 @@ namespace CornControls.CustomControl
             Error
         }
 
+        public enum Icons
+        {
+            Warning,
+            Error,
+            Info,
+            Nothing
+        }
+
         private static PopUpMessage _instance;
         public static PopUpMessage Instance => _instance ??= new PopUpMessage();
+        private static Geometry[] _availableIcons = new Geometry[]
+        {
+            (Geometry)Application.Current.FindResource("warningIcon"),
+            (Geometry)Application.Current.FindResource("errorIcon"),
+            (Geometry)Application.Current.FindResource("warningIcon")
+        };
 
         public static bool ShowErrorMessage(string title, string message)
         {
             Instance.Margin = new Thickness(7);
-            Instance.IconPath = (Geometry)Application.Current.FindResource("errorIcon");
+            Instance.IconPath = _availableIcons[(int)Icons.Error];
             Instance.IconHeight = 24;
             Instance.IconWidth = 24;
             Instance.Title = title;
@@ -95,96 +109,6 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty IconHeightProperty = DependencyProperty.Register(nameof(IconHeight), typeof(double), typeof(PopUpMessage), new PropertyMetadata(50.0));
         public static readonly DependencyProperty IconWidthProperty = DependencyProperty.Register(nameof(IconWidth), typeof(double), typeof(PopUpMessage), new PropertyMetadata(50.0));
         public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register(nameof(IconPath), typeof(Geometry), typeof(PopUpMessage));
-        
-        public PopUpMessage()
-        {
-            //Timer timer = new Timer();
-            //timer.Interval = 250;
-            //timer.Elapsed += (s, e) =>
-            //{
-            //    this.Dispatcher.Invoke(() =>
-            //    {
-            //        this.IsOpened = ViewModel.Helper.PopUpMessage.Instance.IsOpened;
-            //        this.Message = ViewModel.Helper.PopUpMessage.Instance.Message;
-            //    });
-            //};
-            //timer.Start();
-            // Fucking stupid ass solution ~~
-
-            // Better solution but still stupid
-            ViewModel.Helper.PopUpMessage.Instance.WhenPropertyChanged += (s, e) =>
-            {
-                var vmInstance = ViewModel.Helper.PopUpMessage.Instance;
-                IsOpened = vmInstance.IsOpened;
-                Message = vmInstance.Message;
-                Title = vmInstance.Title;
-                ButtonStyle = (ButtonStyleEnum)vmInstance.ButtonStyle;
-            };
-
-            //DataContext = ViewModel.Helper.PopUpMessage.Instance;
-            //Binding bindingIsOpen = new Binding(nameof(ViewModel.Helper.PopUpMessage.IsOpened));
-            //Binding bindingMessage = new Binding(nameof(ViewModel.Helper.PopUpMessage.Message));
-            //bindingIsOpen.Source = ViewModel.Helper.PopUpMessage.Instance;
-            //bindingMessage.Source = ViewModel.Helper.PopUpMessage.Instance;
-            //SetBinding(IsOpenedProperty, bindingIsOpen);
-            //SetBinding(MessageProperty, bindingMessage);
-        }
-
-        protected bool Show()
-        {
-            if (IsOpened)
-            {
-                CloseMessage();
-                return false;
-            }
-
-            Instance.Dispatcher.Invoke(() =>
-            {
-                CanClose = true;
-                SetToCurrentMainWindow();
-
-                AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
-                AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
-
-                if (Instance._border != null)
-                {
-                    Instance._border.Opacity = 0;
-                    Instance._border.BeginAnimation(OpacityProperty, inBackgroundAnim);
-                }
-
-                if (Instance._innerPanel != null)
-                {
-                    Instance._innerPanel.Height = 0;
-                    Instance._innerPanel.BeginAnimation(HeightProperty, inPanelAnim);
-                }
-
-                Instance.Visibility = Visibility.Visible;
-            }, DispatcherPriority.Background);
-
-            return true;
-        }
-
-        protected void Close()
-        {
-            if (!CanClose || !IsOpened)
-            {
-                return;
-            }
-
-            Instance.Dispatcher.Invoke(() =>
-            {
-                AnimationTimeline outBackgroundAnim = CreateAnimation(BackgroundOpacity, 0, OutAnimTime, 0, EasingMode.EaseOut);
-                AnimationTimeline outPanelAnim = CreateAnimation(PanelHeight, 0, OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
-                    Visibility = Visibility.Hidden;
-                    IsOpened = false;
-                    CanClose = false;
-                    OnMessageClosed(new RoutedEventArgs());
-                });
-
-                _border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
-                _innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
-            }, DispatcherPriority.Background);
-        }
 
         public string Title
         {
@@ -301,6 +225,85 @@ namespace CornControls.CustomControl
 
         private Border _border;
         private Grid _innerPanel;
+
+        public PopUpMessage()
+        {
+            // Better solution but still stupid
+            ViewModel.Helper.PopUpMessage.Instance.WhenPropertyChanged += (s, e) =>
+            {
+                var vmInstance = ViewModel.Helper.PopUpMessage.Instance;
+                IsOpened = vmInstance.IsOpened;
+                Message = vmInstance.Message;
+                Title = vmInstance.Title;
+                SetToIcon((Icons)vmInstance.Icon);
+                ButtonStyle = (ButtonStyleEnum)vmInstance.ButtonStyle;
+            };
+        }
+
+        protected bool Show()
+        {
+            if (IsOpened)
+            {
+                CloseMessage();
+                return false;
+            }
+
+            Instance.Dispatcher.Invoke(() =>
+            {
+                CanClose = true;
+                SetToCurrentMainWindow();
+
+                AnimationTimeline inBackgroundAnim = CreateAnimation(0, Instance.BackgroundOpacity, Instance.InAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline inPanelAnim = CreateAnimation(0, Instance.PanelHeight, Instance.InAnimTime, 0, EasingMode.EaseOut);
+
+                if (Instance._border != null)
+                {
+                    Instance._border.Opacity = 0;
+                    Instance._border.BeginAnimation(OpacityProperty, inBackgroundAnim);
+                }
+
+                if (Instance._innerPanel != null)
+                {
+                    Instance._innerPanel.Height = 0;
+                    Instance._innerPanel.BeginAnimation(HeightProperty, inPanelAnim);
+                }
+
+                Instance.Visibility = Visibility.Visible;
+            }, DispatcherPriority.Background);
+
+            return true;
+        }
+
+        protected void Close()
+        {
+            if (!CanClose || !IsOpened)
+            {
+                return;
+            }
+
+            Instance.Dispatcher.Invoke(() =>
+            {
+                AnimationTimeline outBackgroundAnim = CreateAnimation(BackgroundOpacity, 0, OutAnimTime, 0, EasingMode.EaseOut);
+                AnimationTimeline outPanelAnim = CreateAnimation(PanelHeight, 0, OutAnimTime, 0, EasingMode.EaseOut, (s, e) => {
+                    Visibility = Visibility.Hidden;
+                    IsOpened = false;
+                    CanClose = false;
+                    OnMessageClosed(new RoutedEventArgs());
+                });
+
+                _border?.BeginAnimation(OpacityProperty, outBackgroundAnim);
+                _innerPanel?.BeginAnimation(HeightProperty, outPanelAnim);
+            }, DispatcherPriority.Background);
+        }
+
+        public void SetToIcon(Icons icon)
+        {
+            try
+            {
+                IconPath = _availableIcons[(int)icon];
+            }
+            catch { IconPath = Geometry.Empty; }
+        }
 
         public void SetToCurrentMainWindow()
         {
