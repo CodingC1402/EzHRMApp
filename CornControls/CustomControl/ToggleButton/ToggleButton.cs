@@ -19,10 +19,11 @@ namespace CornControls.CustomControl
         public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register(nameof(Selected), typeof(bool), typeof(ToggleButton), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedChangedCallback));
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Brush), typeof(ToggleButton), new PropertyMetadata(Brushes.LightGray));
 
-        public static readonly DependencyProperty SelectedHoverColorProperty = DependencyProperty.Register(nameof(SelectedHoverColor), typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty SelectedPressedColorProperty = DependencyProperty.Register(nameof(SelectedPressedColor), typeof(Brush), typeof(ButtonEx), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty SelectedHoverColorProperty = DependencyProperty.Register(nameof(SelectedHoverColor), typeof(Brush), typeof(ToggleButton), new PropertyMetadata(Brushes.LightGray));
+        public static readonly DependencyProperty SelectedPressedColorProperty = DependencyProperty.Register(nameof(SelectedPressedColor), typeof(Brush), typeof(ToggleButton), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty SelectedDisabledColorProperty = DependencyProperty.Register(nameof(SelectedDisabledColor), typeof(Brush), typeof(ToggleButton), new PropertyMetadata(Brushes.Gray));
 
-        public static readonly DependencyProperty SelectedPathProperty = DependencyProperty.Register(nameof(SelectedPath), typeof(Geometry), typeof(ButtonEx));
+        public static readonly DependencyProperty SelectedPathProperty = DependencyProperty.Register(nameof(SelectedPath), typeof(Geometry), typeof(ToggleButton));
 
         public static void SelectedChangedCallback (DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -49,6 +50,12 @@ namespace CornControls.CustomControl
         {
             get => (Brush)GetValue(SelectedPressedColorProperty);
             set => SetValue(SelectedPressedColorProperty, value);
+        }
+        [Browsable(true), Category("Appearance")]
+        public Brush SelectedDisabledColor
+        {
+            get => (Brush)GetValue(SelectedDisabledColorProperty);
+            set => SetValue(SelectedDisabledColorProperty, value);
         }
 
         [Browsable(true), Category("Appearance")]
