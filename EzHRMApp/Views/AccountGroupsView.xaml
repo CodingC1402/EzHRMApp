@@ -131,10 +131,11 @@
                             <Style.Setters>
                                 <Setter Property="Margin" Value="30,20,10,0" />
                                 <Setter Property="IsEnabled" Value="{Binding IsInCRUDMode}" />
-                                <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonDisabledBrush}" />
+                                <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
                                 <Setter Property="SelectedPath" Value="{StaticResource checkIcon}" />
                                 <Setter Property="CornerRadius" Value="5" />
-                                <Setter Property="SelectedDisabledColor" Value="{DynamicResource ToggleButtonDisabledHighlightBrush}" />
+                                <Setter Property="SelectedDisabledColor" Value="{DynamicResource ConfirmButtonBrush}" />
+                                <Setter Property="DisabledOpacity" Value="0.7" />
                                 <Setter Property="Height" Value="60" />
                             </Style.Setters>
                             <Style.Triggers>

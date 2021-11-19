@@ -10,9 +10,11 @@ using System.Data;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using DAL.Repos;
+using PropertyChanged;
 
 namespace Model
 {
+    [AddINotifyPropertyChangedInterface]
     public class LoginInfo
     {
         public static int PrivilegeMask
@@ -27,10 +29,18 @@ namespace Model
         {
             get => _employeeID;
         }
+        public static EmployeeModel Employee 
+        {
+            get => _employee;
+            set => _employee = value;
+        }
+
+
         private static string _accessToken = "";
         private static int _privilegeMask = 0;
         private static string _employeeID = "";
         private static string _username = "";
+        private static EmployeeModel _employee = null;
 
         public static uint MinPasswordLength { get => 1; }
         public static uint MaxPasswordLength { get => 16; }
@@ -60,10 +70,25 @@ namespace Model
                     _employeeID = result.EmployeeID;
                     _username = userName;
                 }
-                success = result.Valid;
 
+                UpdateEmployee();
+                if (_employee != null && _employee.NgayThoiViec.HasValue)
+                {
+                    return false;
+                }
+
+                success = result.Valid;
                 return success;
             }
+        }
+
+        public static void UpdateEmployee()
+        {
+            var employee = EmployeeRepo.Instance.FindByID(new object[] { EmployeeID });
+            if (employee != null)
+                Employee = new EmployeeModel(employee);
+            else
+                Employee = null;
         }
 
         public static void Logout()

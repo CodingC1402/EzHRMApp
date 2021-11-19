@@ -34,7 +34,7 @@ namespace ViewModel
             if (LoginInfo.Login(UserName, param as SecureString))
             {
                 var mainVM = MainViewModel.GetInstance();
-                mainVM.CurrentViewModel = mainVM.ToLoggedIn.ViewModel;
+                mainVM.ToLoggedIn.Execute(param);
             }
             else
             {
