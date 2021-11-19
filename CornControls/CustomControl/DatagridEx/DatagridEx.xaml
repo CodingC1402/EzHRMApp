@@ -97,7 +97,7 @@
 
                                 <StackPanel
                                     Grid.Column="1"
-                                    Margin="5,0,5,0"
+                                    Margin="5,0,17,0"
                                     Orientation="Horizontal">
                                     <Path
                                         x:Name="SortIcon"

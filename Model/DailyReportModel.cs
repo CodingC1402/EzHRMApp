@@ -47,5 +47,15 @@ namespace Model
 
             return new List<DailyReportModel>(result.OrderBy(p => p.NgayBaoCao));
         }
+
+        public bool CompareData(DailyReportModel model)
+        {
+            return !(model.SoNVDenDungGio == SoNVDenDungGio || 
+                model.SoNVDenSom == SoNVDenSom || 
+                model.SoNVDenTre == SoNVDenTre || 
+                model.SoNVLamThemGio == SoNVLamThemGio ||
+                model.SoNVTanLamDungGio == SoNVTanLamDungGio ||
+                model.SoNVTanLamSom == SoNVTanLamSom);
+        }
     }
 }

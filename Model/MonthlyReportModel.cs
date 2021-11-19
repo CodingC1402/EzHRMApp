@@ -23,5 +23,17 @@ namespace Model
         public MonthlyReportModel() { }
         public MonthlyReportModel(MonthlyReport report) : base(report) { }
         public MonthlyReportModel(MonthlyReportModel report) : base(report) { }
+
+        public static ObservableCollection<MonthlyReportModel> GetAllReportOfYear(int year)
+        {
+            var reports = MonthlyReportRepo.Instance.GetAllInYear(year);
+            var resultList = new ObservableCollection<MonthlyReportModel>();
+
+            foreach (var report in reports)
+            {
+                resultList.Add(new MonthlyReportModel(report));
+            }
+            return resultList;
+        }
     }
 }

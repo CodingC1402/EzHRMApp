@@ -14,6 +14,8 @@ namespace ViewModel
         {
             OneWeek,
             OneMonth,
+            TwoMonths,
+            SixMonths,
             OneYear
         }
 
@@ -37,6 +39,12 @@ namespace ViewModel
                     case TimeSpan.OneMonth:
                         TimeSpanText = "a month";
                         break;
+                    case TimeSpan.TwoMonths:
+                        TimeSpanText = "two months";
+                        break;
+                    case TimeSpan.SixMonths:
+                        TimeSpanText = "six months";
+                        break;
                     case TimeSpan.OneYear:
                         TimeSpanText = "a year";
                         break;
@@ -49,6 +57,10 @@ namespace ViewModel
             get => _viewingDate;
             set
             {
+                if (value.Year != _viewingDate.Year)
+                {
+                    CompileMonthlyReport(value.Year);
+                }
                 _viewingDate = value;
                 Compile();
             }
@@ -57,11 +69,13 @@ namespace ViewModel
         public TimeSpan[] AvailableTimeSpan { get; } = new TimeSpan[] {
             TimeSpan.OneWeek,
             TimeSpan.OneMonth,
-            TimeSpan.OneYear
+            TimeSpan.TwoMonths,
+            TimeSpan.SixMonths
         };
 
         public DailyReportModel CurrentReport { get; set; }
         public ObservableCollection<DailyReportModel> Reports { get; set; }
+        public ObservableCollection<MonthlyReportModel> MonthlyReports { get; set; }
 
         public int BeingLateSum { get; set; }
         public int BeingEarlySum { get; set; }
@@ -76,6 +90,9 @@ namespace ViewModel
         // For the charts
         public Func<double, string> XFormatter { get; set; }
         public Func<double, string> YFormatter { get; set; }
+
+        public string[] XAxisLabels { get; set; } = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+        public Func<double, string> MonthlyXFormatter { get; set; }
 
         public DashboardViewModel()
         {
@@ -92,6 +109,12 @@ namespace ViewModel
                     case TimeSpan.OneMonth:
                         result = new DateTime((long)val).ToString("d/M/yyyy");
                         break;
+                    case TimeSpan.TwoMonths:
+                        result = new DateTime((long)val).ToString("d/M/yyyy");
+                        break;
+                    case TimeSpan.SixMonths:
+                        result = new DateTime((long)val).ToString("M/yyyy");
+                        break;
                     case TimeSpan.OneYear:
                         result = new DateTime ((long)val).ToString("M/yyyy");
                         break;
@@ -100,8 +123,13 @@ namespace ViewModel
                 return result;
             };
             YFormatter = val => val.ToString();
+            MonthlyXFormatter = val =>
+            {
+                return $"{val} {_viewingDate.Year}";
+            };
 
             Compile();
+            CompileMonthlyReport(_viewingDate.Year);
         }
 
         protected void Compile()
@@ -117,6 +145,12 @@ namespace ViewModel
                     break;
                 case TimeSpan.OneMonth:
                     dayToCheck = 30;
+                    break;
+                case TimeSpan.TwoMonths:
+                    dayToCheck = 60;
+                    break;
+                case TimeSpan.SixMonths:
+                    dayToCheck = 182;
                     break;
                 case TimeSpan.OneYear:
                     dayToCheck = 365;
@@ -136,9 +170,9 @@ namespace ViewModel
                 {
                     DateTime checkingDate = _viewingDate.AddDays(-i);
 
-                    var checkingReport = queriedReports[queriedIndex];
-                    if (checkingDate == checkingReport.NgayBaoCao)
+                    if (queriedIndex < queriedReports.Count && checkingDate == queriedReports[queriedIndex].NgayBaoCao)
                     {
+                        var checkingReport = queriedReports[queriedIndex];
                         newReports.Add(checkingReport);
 
                         lateSum += checkingReport.SoNVDenTre;
@@ -173,7 +207,7 @@ namespace ViewModel
                 newReports = new ObservableCollection<DailyReportModel>();
                 for (int i = 0; i < dayToCheck; i++)
                 {
-                    if (i % 7 == 0)
+                    if (newReports.Count == 0 || !newReports.Last().CompareData(filteringReports[i]))
                     {
                         newReports.Add(filteringReports[i]);
                     }
@@ -182,6 +216,32 @@ namespace ViewModel
 
             Reports = newReports;
             CurrentReport = Reports?.Last();
+        }
+
+        protected void CompileMonthlyReport(int year)
+        {
+            var result = MonthlyReportModel.GetAllReportOfYear(year);
+            if (result != null && result.Count > 0)
+            {
+                var fillingInArray = new ObservableCollection<MonthlyReportModel>();
+
+                int resultIndex = 0;
+                for (int i = 0; i < 12; i++)
+                {
+                    if (resultIndex < result.Count && result[resultIndex].Thang == i + 1)
+                    {
+                        fillingInArray.Add(result[resultIndex]);
+                        resultIndex++;
+                    }
+                    else
+                    {
+                        fillingInArray.Add(new MonthlyReportModel { Thang = i + 1, Nam = year });
+                    }
+                }
+                MonthlyReports = fillingInArray;
+            }
+            else
+                MonthlyReports = null;
         }
     }
 }

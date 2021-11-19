@@ -32,21 +32,21 @@ namespace EzHRMApp.Core.Converter
                     Title = "Check out early",
                     LineSmoothness = 0,
                     Values = new ChartValues<DateTimePoint>(),
-                    Fill = (Brush)Application.Current.FindResource("CancleButtonBrush")
+                    Fill = (Brush)Application.Current.FindResource("CancleButtonHoverBrush")
                 };
                 StackedAreaSeries checkOutOnTime = new()
                 {
                     Title = "Check out on time",
                     LineSmoothness = 0,
                     Values = new ChartValues<DateTimePoint>(),
-                    Fill = (Brush)Application.Current.FindResource("UpdateButtonBrush")
+                    Fill = (Brush)Application.Current.FindResource("UpdateButtonHoverBrush")
                 };
                 StackedAreaSeries workOverTime = new()
                 {
                     Title = "Work overtime",
                     LineSmoothness = 0,
                     Values = new ChartValues<DateTimePoint>(),
-                    Fill = (Brush)Application.Current.FindResource("ConfirmButtonBrush")
+                    Fill = (Brush)Application.Current.FindResource("ConfirmButtonHoverBrush")
                 };
 
                 foreach (var report in dailyReports)
