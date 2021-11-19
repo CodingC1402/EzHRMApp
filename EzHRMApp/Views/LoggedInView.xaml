@@ -16,8 +16,8 @@
         <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
             <view:HomeView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PersonalViewModel}">
-            <view:PersonalView />
+        <DataTemplate DataType="{x:Type viewModel:UserInfoViewModel}">
+            <view:UserInfoView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
             <view:DashboardView />
@@ -166,8 +166,8 @@
                             x:Name="personalBtn"
                             Margin="0,35,0,0"
                             Click="TabButtonClicked"
-                            Command="{Binding ToPersonal}"
-                            Content="Personal Info"
+                            Command="{Binding ToUserInfo}"
+                            Content="User Info"
                             GroupName="TabButtons"
                             Path="{StaticResource staffsIcon}" />
 

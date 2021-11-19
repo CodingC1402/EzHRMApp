@@ -18,9 +18,9 @@ namespace EzHRMApp.Views
     /// <summary>
     /// Interaction logic for PersonalView.xaml
     /// </summary>
-    public partial class PersonalView : UserControl
+    public partial class UserInfoView : UserControl
     {
-        public PersonalView()
+        public UserInfoView()
         {
             InitializeComponent();
         }
