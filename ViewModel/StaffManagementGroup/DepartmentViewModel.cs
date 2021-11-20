@@ -14,6 +14,7 @@ namespace ViewModel
     {
         public override string ViewName => "Departments";
         public ObservableCollection<DepartmentModel> Departments { get; set; }
+        public ObservableCollection<EmployeeModel> Employees { get; set; }
 
         private DepartmentModel _selectedDepartment = null;
         private DepartmentModel _currentDepartment = null;
@@ -64,6 +65,9 @@ namespace ViewModel
                 var profile = value != null ? value.GetProfilePicture() : null;
 
                 ProfilePicture = profile != null ? new Image(profile) : null;
+
+                if (CurrentDepartment != null && _manager != null)
+                    CurrentDepartment.TruongPhong = _manager.ID;
             }
         }
 
@@ -81,6 +85,15 @@ namespace ViewModel
         {
             base.ExecuteUpdate(param);
             CurrentDepartment = new DepartmentModel(SelectedDepartment);
+            Employees.Clear();
+
+            foreach (var employee in EmployeeModel.LoadAll())
+            {
+                if (employee.PhongBan == CurrentDepartment.TenPhong)
+                {
+                    Employees.Add(employee);
+                }
+            }
         }
 
         public override void ExecuteConfirmAdd(object param)
@@ -148,6 +161,7 @@ namespace ViewModel
         public DepartmentViewModel()
         {
             Departments = DepartmentModel.LoadAll();
+            Employees = new ObservableCollection<EmployeeModel>();
             OnlyMessage = true;
             Message = "No manager here!";
         }

@@ -90,6 +90,30 @@
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="FocusedPadding" Value="5, 1" />
                     <Setter Property="NormalPadding" Value="5, 1" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="controls:ComboBoxEx">
+                    <Setter Property="Padding" Value="10,0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource DarkerBackColor}" />
+                    <Setter Property="Height" Value="35" />
+                    <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="ItemCornerRadius" Value="0" />
+                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="FocusedPadding" Value="5, 1" />
+                    <Setter Property="NormalPadding" Value="5, 1" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </Grid.Resources>
 
@@ -150,6 +174,13 @@
                                 </MultiBinding>
                             </controls:CheckIDBox.NameText>
                         </controls:CheckIDBox>
+
+                        <controls:ComboBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            DisplayMemberPath="ID"
+                            ItemsSource="{Binding Employees}"
+                            SelectedItem="{Binding Manager}" />
                     </Grid>
 
                     <Grid
