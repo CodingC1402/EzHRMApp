@@ -22,7 +22,7 @@ namespace DAL.Repos
             var result = new List<Penalty>();
             foreach (Penalty deduct in deductions)
             {
-                if (deduct.IDNhanVien == employee.ID && deduct.Ngay >= start && deduct.Ngay < end)
+                if (deduct.IDNhanVien == employee.ID && deduct.Ngay >= start && deduct.Ngay <= end)
                 {
                     result.Add(deduct);
                 }

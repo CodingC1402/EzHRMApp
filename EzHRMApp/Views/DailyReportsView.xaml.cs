@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using Model;
 
 namespace EzHRMApp.Views
@@ -60,11 +61,40 @@ namespace EzHRMApp.Views
                             return dailyReport.SoNVTanLamDungGio == result;
                         case "Worked overtime":
                             return dailyReport.SoNVLamThemGio == result;
+                        case "Absent":
+                            return dailyReport.SoNVVangMat == result;
                     }
                 }
 
                 return true;
             });
+        }
+
+        private void ButtonEx_Click(object sender, RoutedEventArgs e)
+        {
+            if (!endDatepicker.SelectedDate.HasValue || !startDatepicker.SelectedDate.HasValue)
+            {
+                exportBtn.CommandParameter = "date-picker-empty";
+                return;
+            }
+            else if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
+            {
+                exportBtn.CommandParameter = "date-picker-end-date-earlier";
+                return;
+            }
+
+            var save = new SaveFileDialog()
+            {
+                AddExtension = true,
+                DefaultExt = ".csv",
+                Filter = "Comma separated values file (.csv)|*.csv"
+            };
+
+            var result = save.ShowDialog();
+            if (result == true)
+            {
+                exportBtn.CommandParameter = save.FileName;
+            }
         }
     }
 }

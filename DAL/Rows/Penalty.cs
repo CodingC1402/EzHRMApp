@@ -19,6 +19,18 @@ namespace DAL.Rows
         public float SoPhanTramTru { get; set; }
         public string GhiChu { get; set; }
 
+        public Penalty() { }
+        public Penalty(Penalty penalty)
+        {
+            ID = penalty.ID;
+            Ngay = penalty.Ngay;
+            IDNhanVien = penalty.IDNhanVien;
+            TenViPham = penalty.TenViPham;
+            SoTienTru = penalty.SoTienTru;
+            SoPhanTramTru = penalty.SoPhanTramTru;
+            GhiChu = penalty.GhiChu;
+        }
+
         public override string Add(UnitOfWork uow = null)
         {
             if (uow == null)
@@ -51,6 +63,19 @@ namespace DAL.Rows
                 return "";
             else
                 return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            if (string.IsNullOrEmpty(GhiChu))
+                return "Reason can't be empty!";
+
+            if (Ngay > DateTime.Today)
+                return "Can't add penalty in the future!";
+
+            // Check for payroll
+
+            return "";
         }
     }
 }
