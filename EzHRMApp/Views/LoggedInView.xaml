@@ -25,6 +25,9 @@
         <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
             <view:DashboardView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:WeeklyScheduleViewModel}">
+            <view:WeeklyScheduleView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ScheduleManagementViewModel}">
             <view:ScheduleManagementView />
         </DataTemplate>
@@ -268,6 +271,14 @@
                                 Content="Dashboard"
                                 GroupName="TabButtons"
                                 Path="{StaticResource dashboardIcon}" />
+
+                            <controls:RadioButtonEx
+                                x:Name="weeklySchedule"
+                                Click="TabButtonClicked"
+                                Command="{Binding ToWeeklyScheduleView}"
+                                Content="Weekly Schedule"
+                                GroupName="TabButtons"
+                                Path="{StaticResource calendarIcon}" />
 
                             <controls:RadioButtonEx
                                 x:Name="checkInBtn"
