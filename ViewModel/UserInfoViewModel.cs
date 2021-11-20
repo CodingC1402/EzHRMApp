@@ -40,6 +40,38 @@ namespace ViewModel
             employeeProfile.Type = ProfilePicture.FileType;
         }
 
+        public override void ExecuteUpdate(object param)
+        {
+            base.ExecuteUpdate(param);
+        }
+
+        public override void ExecuteConfirmUpdate(object param)
+        {
+            var result = UserInfo.Save();
+
+            if (result == "")
+            {
+                base.ExecuteConfirmUpdate(param);
+                StartUpdateCommand.RaiseCanExecuteChangeEvent();
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
+        }
+
+        public override void ExecuteCancleUpdate(object param)
+        {
+            base.ExecuteCancleUpdate(param);
+            StartUpdateCommand.RaiseCanExecuteChangeEvent();
+        }
+
+        public override bool CanExecuteUpdateStart(object param)
+        {
+            return base.CanExecuteUpdateStart(param) && UserInfo != null;
+        }
+
         public UserInfoViewModel()
         {
             IsAvailable = true;

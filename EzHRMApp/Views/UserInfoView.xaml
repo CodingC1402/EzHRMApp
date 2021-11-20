@@ -246,8 +246,6 @@
                         <controls:ButtonEx Margin="10,5">
                             <controls:ButtonEx.Style>
                                 <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
-                                    <Setter Property="Content" Value="New" />
-                                    <Setter Property="Command" Value="{Binding StartAddCommand}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
                                             <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
