@@ -90,10 +90,27 @@ namespace Model
                 }
                 EmployeeRepo.Instance.Add(employee, uow);
 
-                result = uow.Complete() ? "" : "Transaction failed! Unknow reason";
+                result = uow.Complete() ? "" : "Transaction failed! Unknow reason!";
             }
             else
-                result = Save();
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    result = Save(uow);
+                    if (result != "")
+                        return result;
+
+                    RoleModel roleModel = RoleModel.GetRole(ChucVu);
+                    Account account = AccountRepo.Instance.FindByID(new object[] { TaiKhoan });
+                    account.NhomTaiKhoan = roleModel.NhomTaiKhoan;
+
+                    result = account.Save(uow);
+                    if (result != "")
+                        return result;
+
+                    return uow.Complete() ? "" : "Transaction failed! Unknow reason!";
+                }
+            }
 
             if (result == "" && ProfilePicture != null)
             {
