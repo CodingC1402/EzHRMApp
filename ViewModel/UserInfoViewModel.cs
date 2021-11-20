@@ -41,16 +41,17 @@ namespace ViewModel
 
             UserInfo.ProfilePicture = employeeProfile;
 
-            var result = UserInfo.Save();
+            var result = UserInfo.Save(false);
 
             if (result == "")
             {
                 base.ExecuteConfirmUpdate(param);
-                StartUpdateCommand.RaiseCanExecuteChangeEvent();
                 LoggedInViewModel.Instance.UpdateToEmployee();
+                StartUpdateCommand.RaiseCanExecuteChangeEvent();
             }
             else
             {
+                SetCurrentModelBack();
                 ErrorString = result;
                 HaveError = true;
             }
@@ -63,7 +64,7 @@ namespace ViewModel
 
         public override void ExecuteConfirmUpdate(object param)
         {
-            var result = UserInfo.Save();
+            var result = UserInfo.Save(false);
 
             if (result == "")
             {
@@ -80,8 +81,7 @@ namespace ViewModel
         public override void ExecuteCancleUpdate(object param)
         {
             base.ExecuteCancleUpdate(param);
-            UserInfo = new EmployeeModel(LoginInfo.Employee);
-            StartUpdateCommand.RaiseCanExecuteChangeEvent();
+            SetCurrentModelBack();
         }
 
         public override bool CanExecuteUpdateStart(object param)
@@ -89,11 +89,19 @@ namespace ViewModel
             return base.CanExecuteUpdateStart(param) && UserInfo != null;
         }
 
+        private void SetCurrentModelBack()
+        {
+            UserInfo = EmployeeModel.GetEmployeeByID(UserInfo.ID);
+            ProfilePicture = UserInfo != null ? new Image(UserInfo.ProfilePicture) : null;
+            SelectProfileCommand.RaiseCanExecuteChangeEvent();
+            StartUpdateCommand.RaiseCanExecuteChangeEvent();
+        }
+
         public UserInfoViewModel()
         {
             IsAvailable = true;
             Instance = this;
-            UserInfo = LoginInfo.Employee != null ? new EmployeeModel(LoginInfo.Employee) : null;
+            UserInfo = LoginInfo.Employee;
             
             if (UserInfo == null)
             {
