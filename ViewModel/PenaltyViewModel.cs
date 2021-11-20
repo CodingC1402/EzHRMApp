@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ViewModel
 {
-    class PenaltyViewModel : Navigation.CRUDViewModelBase
+    public class PenaltyViewModel : Navigation.CRUDViewModelBase
     {
         public override string ViewName => "Penalty";
 
