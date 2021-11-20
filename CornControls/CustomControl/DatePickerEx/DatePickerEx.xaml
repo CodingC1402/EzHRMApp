@@ -80,6 +80,10 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
 
+                                <Grid.Resources>
+                                    <Style TargetType="controls:ButtonEx"/>
+                                </Grid.Resources>
+                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{TemplateBinding IconPad}" />
                                     <ColumnDefinition Width="*" />

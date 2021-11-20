@@ -19,7 +19,7 @@ namespace DAL.Rows
         public string NhomTaiKhoan { get; set; }
         public int DangLogin { get; set; }
 
-        public static Account CreateAccount(string accountName)
+        public static Account CreateAccount(string accountName, string accountGroup)
         {
             var account = AccountRepo.Instance.FindByID(new object[] { accountName });
             if (account != null)
@@ -32,7 +32,7 @@ namespace DAL.Rows
                 var hash = sh256.ComputeHash(Encoding.UTF8.GetBytes(DefaultPassword));
                 account.Password = ToHex(ref hash, false);
             }
-            account.NhomTaiKhoan = "employee";
+            account.NhomTaiKhoan = accountGroup;
 
             return account;
         }
