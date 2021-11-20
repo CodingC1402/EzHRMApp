@@ -63,6 +63,18 @@ namespace DAL.Rows
             }
         }
 
+        public bool ChangeAccountGroup(string accountGroup)
+        {
+            var account = AccountRepo.Instance.FindByID(new object[] { this.TaiKhoan });
+            account.NhomTaiKhoan = accountGroup;
+
+            using (var uow = new UnitOfWork())
+            {
+                account.Save(uow);
+                return uow.Complete();
+            }
+        }
+
         public bool Leave(DateTime leaveDate, string reason, int numberOfDays)
         {
             using (var uow = new UnitOfWork())

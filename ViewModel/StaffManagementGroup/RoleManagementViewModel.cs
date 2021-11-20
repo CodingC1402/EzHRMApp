@@ -125,6 +125,20 @@ namespace ViewModel
             {
                 base.ExecuteConfirmUpdate(param);
                 var found = Roles.FirstOrDefault(x => x.TenChucVu == SelectedRole.TenChucVu);
+
+                if (Roles[Roles.IndexOf(found)].NhomTaiKhoan != CurrentRole.NhomTaiKhoan)
+                {
+                    var list = EmployeeModel.LoadAll();
+
+                    foreach (EmployeeModel employee in list)
+                    {
+                        if (employee.ChucVu == CurrentRole.TenChucVu)
+                        {
+                            employee.ChangeAccountGroup(CurrentRole.NhomTaiKhoan);
+                        }
+                    }
+                }
+
                 Roles[Roles.IndexOf(found)] = CurrentRole;
                 SetCurrentModelBack();
             }
