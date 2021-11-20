@@ -16,6 +16,7 @@
     <UserControl.Resources>
         <converter:DailyReportAboutCheckOutListToChart x:Key="CheckOutsConverter" />
         <converter:DailyReportAboutCheckInListToChart x:Key="CheckInsConverter" />
+        <converter:DailyReportAboutAbsenceConverter x:Key="AbsenceConverter" />
         <converter:MonthlyReportToChart x:Key="HRConverter" />
     </UserControl.Resources>
 
@@ -148,6 +149,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -158,13 +160,14 @@
                     <RowDefinition Height="70" />
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
                     <RowDefinition Height="70" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
                     Grid.Row="1"
-                    Grid.ColumnSpan="3"
+                    Grid.ColumnSpan="4"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <Run Text="Report of" />
@@ -173,7 +176,7 @@
 
                 <TextBlock
                     Grid.Row="4"
-                    Grid.ColumnSpan="3"
+                    Grid.ColumnSpan="4"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Text="Reports from" />
@@ -183,8 +186,8 @@
                 </TextBlock>
 
                 <TextBlock
-                    Grid.Row="7"
-                    Grid.ColumnSpan="3"
+                    Grid.Row="8"
+                    Grid.ColumnSpan="4"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom">
                     <Run Text="Human resource report of the year" />
@@ -194,7 +197,7 @@
                 <Border
                     Grid.Row="2"
                     Grid.RowSpan="2"
-                    Grid.ColumnSpan="3"
+                    Grid.ColumnSpan="4"
                     BorderThickness="5"
                     CornerRadius="10" />
 
@@ -244,9 +247,20 @@
                     NumberText="{Binding CurrentReport.SoNVLamThemGio, FallbackValue='0'}"
                     Text="Work over time" />
 
+                <controls:NumberDisplay
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Background="{DynamicResource CancleButtonHoverBrush}"
+                    FontSize="20"
+                    IconPath="{DynamicResource hourGlassMoney}"
+                    NumberFontSize="72"
+                    NumberText="{Binding CurrentReport.SoNVVangMat, FallbackValue='0'}"
+                    Text="Absence" />
+
                 <Border
                     Grid.Row="5"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Margin="0,10,10,10"
                     Padding="10,20,10,0"
                     Background="{DynamicResource BackColor}"
@@ -277,13 +291,13 @@
 
                 <TextBlock
                     Grid.Row="5"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Style="{StaticResource NoDataTextBlock}"
                     Text="No data to show" />
 
                 <Border
                     Grid.Row="6"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Margin="0,10,10,10"
                     Padding="10,20,10,0"
                     Background="{DynamicResource BackColor}"
@@ -312,15 +326,46 @@
                     </lvc:CartesianChart>
                 </Border>
 
+                <Border
+                    Grid.Row="7"
+                    Grid.ColumnSpan="4"
+                    Margin="0,10,0,10"
+                    Padding="10,20,10,0"
+                    Background="{DynamicResource BackColor}"
+                    BorderThickness="5"
+                    CornerRadius="10">
+                    <lvc:CartesianChart
+                        x:Name="absenceChart"
+                        Grid.Row="2"
+                        LegendLocation="Right"
+                        Series="{Binding Reports, Converter={StaticResource AbsenceConverter}}">
+                        <lvc:CartesianChart.Style>
+                            <Style TargetType="lvc:CartesianChart">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reports}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </lvc:CartesianChart.Style>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Time line" LabelFormatter="{Binding XFormatter}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Employees" LabelFormatter="{Binding YFormatter}" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+
                 <TextBlock
-                    Grid.Row="6"
-                    Grid.ColumnSpan="2"
+                    Grid.Row="7"
+                    Grid.ColumnSpan="4"
                     Style="{StaticResource NoDataTextBlock}"
                     Text="No data to show" />
 
                 <Border
                     Grid.Row="5"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Margin="10,10,0,10"
                     Background="{DynamicResource Accent}"
                     CornerRadius="10">
@@ -366,7 +411,7 @@
 
                 <Border
                     Grid.Row="6"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Margin="10,10,0,10"
                     Background="{DynamicResource Accent}"
                     CornerRadius="10">
@@ -411,8 +456,8 @@
                 </Border>
 
                 <Border
-                    Grid.Row="8"
-                    Grid.ColumnSpan="3"
+                    Grid.Row="9"
+                    Grid.ColumnSpan="4"
                     Margin="0,10"
                     Background="{DynamicResource BackColor}"
                     BorderThickness="5"
@@ -443,8 +488,8 @@
                 </Border>
 
                 <TextBlock
-                    Grid.Row="8"
-                    Grid.ColumnSpan="3"
+                    Grid.Row="9"
+                    Grid.ColumnSpan="4"
                     Text="No data to show">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">

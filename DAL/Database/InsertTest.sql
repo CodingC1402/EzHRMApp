@@ -43,9 +43,9 @@ VALUES (NOW() - INTERVAL 1 DAY,
 INSERT INTO cacloaivipham (TenViPham, TruLuongTheoPhanTram, TruLuongTrucTiep)
 VALUES ('DiTre', 2.0, 0), ('VeSom', 1.5, 0), ('VangMat', 5.0, 0);
 
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('boss',    0x0FFFFF, 0);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('hrm',     0x0000FF, 0);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('employee',0xF00000, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('boss',    0x0FFFFF);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('hrm',     0x0000FF);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan) VALUES ('employee',0xF00000);
 
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('boss0', SHA2('0', 256), 'boss');
 
