@@ -78,6 +78,9 @@ namespace ViewModel
             ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
             ViewModels.Add(ToAccountGroupsView.ViewModel);
 
+            ToLeavesView = new NavigationCommand<LeavesViewModel>(new LeavesViewModel(), this, 0);
+            ViewModels.Add(ToLeavesView.ViewModel);
+
             ToHomeView.Execute(null);
         }
 
@@ -107,5 +110,6 @@ namespace ViewModel
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
+        public NavigationCommand<LeavesViewModel> ToLeavesView { get; set; }
     }
 }

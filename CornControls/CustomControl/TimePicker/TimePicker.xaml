@@ -74,7 +74,7 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Background="Transparent"
-                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Time, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:HH:mm}'}" />
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Time, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:hh}:{0:mm}}" />
 
                                 <Popup x:Name="PART_popUP" Focusable="False">
                                     <Border
@@ -136,14 +136,14 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Focusable="False"
-                                                Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePicker}, Path=Time, StringFormat='{}{0:HH}'}" />
+                                                Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePicker}, Path=Time, StringFormat={}{0:hh}}" />
                                             <TextBlock
                                                 Grid.RowSpan="2"
                                                 Grid.Column="2"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Focusable="False"
-                                                Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePicker}, Path=Time, StringFormat='{}{0:mm}'}" />
+                                                Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePicker}, Path=Time, StringFormat={}{0:mm}}" />
 
                                             <Rectangle Grid.RowSpan="2" Grid.Column="1" />
                                             <Rectangle Grid.RowSpan="2" Grid.Column="3" />
