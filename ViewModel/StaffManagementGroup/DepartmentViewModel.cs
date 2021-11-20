@@ -86,6 +86,7 @@ namespace ViewModel
             base.ExecuteUpdate(param);
             CurrentDepartment = new DepartmentModel(SelectedDepartment);
             Employees.Clear();
+            Employees.Add(new EmployeeModel());
 
             foreach (var employee in EmployeeModel.LoadAll())
             {
@@ -93,6 +94,11 @@ namespace ViewModel
                 {
                     Employees.Add(employee);
                 }
+
+                if (employee.ID == CurrentDepartment.TruongPhong)
+                {
+                    Manager = employee;
+                }    
             }
         }
 
