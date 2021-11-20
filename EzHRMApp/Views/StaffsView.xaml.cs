@@ -175,5 +175,20 @@ namespace EzHRMApp.Views
                 changeOrCancleBtn.Visibility = newOrConfirmBtn.Visibility = infoView.Visibility = Visibility.Visible;
             }
         }
+
+        private void importBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var op = new OpenFileDialog()
+            {
+                Filter = "CSV file (.csv)|*.csv"
+            };
+
+            var result = op.ShowDialog();
+            if (result == true)
+            {
+                importBtn.CommandParameter = op.FileName;
+            }
+            else importBtn.CommandParameter = null;
+        }
     }
 }

@@ -701,6 +701,31 @@
                 Content="Show resigned employee"
                 IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
                 Unchecked="searchChanged" />
+            <controls:ButtonEx
+                x:Name="importBtn"
+                Content="Import from CSV"
+                Click="importBtn_Click"
+                Command="{Binding ImportCommand}">
+                <controls:ButtonEx.Style>
+                    <Style TargetType="controls:ButtonEx">
+                        <Setter Property="Width" Value="140" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="Margin" Value="10,7,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                        <Setter Property="Background" Value="{DynamicResource DarkerBackColor}" />
+                        <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
+                        <Setter Property="Content" Value="Change profile" />
+                        <Setter Property="CornerRadius" Value="5" />
+                        <Setter Property="HoverColor" Value="{DynamicResource BackColor}" />
+                        <Setter Property="IconPad" Value="0" />
+                        <Setter Property="PressedColor" Value="{DynamicResource DarkestBackColor}" />
+                        <Setter Property="Panel.ZIndex" Value="1" />
+                    </Style>
+                </controls:ButtonEx.Style>
+            </controls:ButtonEx>
         </Grid>
     </Grid>
 </UserControl>

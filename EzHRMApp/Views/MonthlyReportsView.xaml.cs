@@ -77,7 +77,7 @@ namespace EzHRMApp.Views
             {
                 AddExtension = true,
                 DefaultExt = ".csv",
-                Filter = "Comma separated values file (.csv)|*.csv"
+                Filter = "CSV file (.csv)|*.csv"
             };
 
             var result = save.ShowDialog();
