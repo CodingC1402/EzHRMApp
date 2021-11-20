@@ -23,10 +23,45 @@ namespace ViewModel.Helper
             NoButton = 8
         }
 
+        public enum Result
+        {
+            Ok,
+            Cancled,
+            Error
+        }
+
+        public enum Icons
+        {
+            Warning,
+            Error,
+            Info,
+            Nothing
+        }
+
         private string _message = "";
         private bool _isOpened = false;
         private string _title = "";
+        private Result _messageResult = Result.Ok;
+        private Icons _icon = Icons.Nothing;
         private ButtonStyleEnum _buttonStyle = ButtonStyleEnum.ConfirmButton | ButtonStyleEnum.CancleButton;
+
+        public Result MessageResult
+        {
+            get => _messageResult;
+            set => _messageResult = value;
+        }
+
+        public Icons Icon
+        {
+            get => _icon;
+            set
+            {
+                _icon = value;
+                RaisePropertyChanged();
+                OnPropertyChanged(new EventArgs());
+            }
+        }
+
         public string Message {
             get => _message;
             set
@@ -66,11 +101,26 @@ namespace ViewModel.Helper
             }
         }
 
+        // DONT USE ANY OF THIS!!! 
         private event EventHandler _whenPropertyChanged = null;
+        // DONT USE ANY OF THIS!!! 
         public event EventHandler WhenPropertyChanged
         {
             add { _whenPropertyChanged += value; }
             remove { _whenPropertyChanged -= value; }
+        }
+
+        // Don't call this!!! this is only for the view to call : ^)
+        public void PropagatePopupMessageClosedEvent()
+        {
+            _popUpMessageClosed(this, new EventArgs());
+        }
+
+        private event EventHandler _popUpMessageClosed = null;
+        public event EventHandler PopUpMessageClosed
+        {
+            add { _popUpMessageClosed += value; }
+            remove { _popUpMessageClosed -= value; }
         }
 
         protected void OnPropertyChanged(EventArgs e)

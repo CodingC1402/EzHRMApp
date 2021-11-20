@@ -39,6 +39,7 @@
     <Color x:Key="ToggleButtonColorDisabled">#548da8</Color>
     <Color x:Key="ToggleButtonColorDisabledHighlight">#35a15e</Color>
 
+    <Color x:Key="GrayFade">#d4d4d4</Color>
 
     <!--  Brushes  -->
     <!--  Idiotic naming  -->
@@ -87,4 +88,6 @@
     <SolidColorBrush x:Key="ToggleButtonDisabledBrush" Color="{DynamicResource ToggleButtonColorDisabled}"/>
     <SolidColorBrush x:Key="ToggleButtonDisabledHighlightBrush" Color="{DynamicResource ToggleButtonColorDisabledHighlight}"/>
     <SolidColorBrush x:Key="ToggleButtonUnsetBrush" Color="{DynamicResource ToggleButtonColorUnset}"/>
+
+    <SolidColorBrush x:Key="GrayFadeBrush" Color="{DynamicResource GrayFade}"/>
 </ResourceDictionary>

@@ -9,6 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="{x:Type controls:PopUpMessage}" TargetType="{x:Type controls:PopUpMessage}">
+        <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:PopUpMessage}">

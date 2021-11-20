@@ -27,7 +27,8 @@ namespace Model
 
             foreach (var item in list)
             {
-                resultList.Add(new AccountGroupModel(item));
+                if (!item.DaXoa)
+                    resultList.Add(new AccountGroupModel(item));
             }
             return resultList;
         }
@@ -37,10 +38,11 @@ namespace Model
             ConvertQuyenHanToBoolsAndSet();
         }
 
-        public AccountGroupModel(string ten, int quyenHan) : base()
+        public AccountGroupModel(string ten, int quyenHan, bool daXoa) : base()
         {
             TenNhomTaiKhoan = ten;
             QuyenHan = quyenHan;
+            DaXoa = daXoa;
             ConvertQuyenHanToBoolsAndSet();
         }
 

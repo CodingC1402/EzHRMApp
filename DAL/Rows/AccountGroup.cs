@@ -10,11 +10,13 @@ namespace DAL.Rows
     {
         public string TenNhomTaiKhoan { get; set; }
         public int QuyenHan { get; set; }
+        public bool DaXoa { get; set; }
 
         public AccountGroup(AccountGroup ag)
         {
             TenNhomTaiKhoan = ag.TenNhomTaiKhoan;
             QuyenHan = ag.QuyenHan;
+            DaXoa = ag.DaXoa;
         }
         public AccountGroup() { }
 
@@ -25,8 +27,12 @@ namespace DAL.Rows
             if (result != "")
                 return result;
 
-            if (AccountGroupRepo.Instance.FindByID(new object[] { TenNhomTaiKhoan }) != null)
-                return "Account group name is already taken.";
+            result = CheckForDuplicate();
+            if (result == "group-deleted")
+                return this.Save();
+
+            if (result != "")
+                return result;
 
             if (uow == null)
             {
@@ -72,6 +78,17 @@ namespace DAL.Rows
                 return "Account group name cannot be empty.";
             if (QuyenHan == 0)
                 return "Permission cannot be empty.";
+
+            return "";
+        }
+
+        private string CheckForDuplicate()
+        {
+            var item = AccountGroupRepo.Instance.FindByID(new object[] { TenNhomTaiKhoan });
+            if (item != null && item.DaXoa)
+                return "group-deleted";
+            else if (item != null)
+                return "Account group name is already taken.";
 
             return "";
         }

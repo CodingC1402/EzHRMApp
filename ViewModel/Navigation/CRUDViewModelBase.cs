@@ -19,18 +19,41 @@ namespace ViewModel.Navigation
             {
                 if (value)
                 {
+                    PopUpMessage.Instance.Icon = PopUpMessage.Icons.Error;
+                    PopUpMessage.Instance.PopUpMessageClosed += PopUpMessageClosed;
                     PopUpMessage.Instance.Title = "Error!";
                     PopUpMessage.Instance.ButtonStyle = PopUpMessage.ButtonStyleEnum.ConfirmButton;
                 }
                 PopUpMessage.Instance.IsOpened = value;
             }
         }
+
+        public bool ShowConfirmation
+        {
+            get => PopUpMessage.Instance.IsOpened;
+            set
+            {
+                if (value)
+                {
+                    PopUpMessage.Instance.Icon = PopUpMessage.Icons.Warning;
+                    PopUpMessage.Instance.PopUpMessageClosed += PopUpMessageClosed;
+                    PopUpMessage.Instance.Title = "Confirmation!";
+                    PopUpMessage.Instance.ButtonStyle = PopUpMessage.ButtonStyleEnum.ConfirmButton | PopUpMessage.ButtonStyleEnum.CancleButton;
+                }
+                PopUpMessage.Instance.IsOpened = value;
+            }
+        }
+
         public string ErrorString {
             get => PopUpMessage.Instance.Message;
             set
             {
                 PopUpMessage.Instance.Message = value;
             }
+        }
+        public PopUpMessage.Result MessageResult
+        {
+            get => PopUpMessage.Instance.MessageResult;
         }
 
         public bool IsInNormalMode
@@ -102,19 +125,23 @@ namespace ViewModel.Navigation
         public virtual void ExecuteConfirmAdd(object param)
         {
             IsInAddMode = false;
+            OnModeChangeBack();
         }
         public virtual void ExecuteConfirmUpdate(object param)
         {
             IsInUpdateMode = false;
+            OnModeChangeBack();
         }
 
         public virtual void ExecuteCancleAdd(object param)
         {
             IsInAddMode = false;
+            OnModeChangeBack();
         }
         public virtual void ExecuteCancleUpdate(object param)
         {
             IsInUpdateMode = false;
+            OnModeChangeBack();
         }
 
         public virtual bool CanExecuteAddStart(object param)
@@ -134,6 +161,18 @@ namespace ViewModel.Navigation
         public virtual bool CanExecuteUpdateConfirm(object param)
         {
             return IsInUpdateMode;
+        }
+
+        // Get called when canceled or at the end of the update or cancel
+        protected virtual void OnModeChangeBack()
+        {
+
+        }
+
+        // when override this please call the base method!!!
+        protected virtual void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            PopUpMessage.Instance.PopUpMessageClosed -= PopUpMessageClosed;
         }
     }
 }

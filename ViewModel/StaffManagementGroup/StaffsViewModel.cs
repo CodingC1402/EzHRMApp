@@ -174,10 +174,9 @@ namespace ViewModel
             var result = CurrentEmployee.Save(true);
             if (result == "")
             {
-                base.ExecuteConfirmAdd(param);
                 Employees.Add(CurrentEmployee);
                 SelectedEmployeeIndex = Employees.Count - 1;
-                SetCurrentModelBack();
+                base.ExecuteConfirmAdd(param);
             }
             else
             {
@@ -190,31 +189,20 @@ namespace ViewModel
             var result = CurrentEmployee.Save(false);
             if (result == "")
             {
-                base.ExecuteConfirmUpdate(param);
                 Employees[SelectedEmployeeIndex] = CurrentEmployee;
                 SelectedEmployee = CurrentEmployee;
                 if (SelectedEmployee.ID == LoginInfo.EmployeeID)
                 {
                     LoginInfo.UpdateEmployee();
+                    LoggedInViewModel.Instance.UpdateToEmployee();
                 }
-                SetCurrentModelBack();
+                base.ExecuteConfirmUpdate(param);
             }
             else
             {
                 ErrorString = result;
                 HaveError = true;
             }
-        }
-
-        public override void ExecuteCancleAdd(object param)
-        {
-            base.ExecuteCancleAdd(param);
-            SetCurrentModelBack();
-        }
-        public override void ExecuteCancleUpdate(object param)
-        {
-            base.ExecuteCancleUpdate(param);
-            SetCurrentModelBack();
         }
 
         public override bool CanExecuteAddStart(object param)
@@ -225,6 +213,11 @@ namespace ViewModel
         public override bool CanExecuteUpdateStart(object param)
         {
             return base.CanExecuteUpdateStart(param) && CurrentEmployee != null;
+        }
+
+        protected override void OnModeChangeBack()
+        {
+            SetCurrentModelBack();
         }
 
         public bool CanExecuteSelectProfile(object param)
@@ -247,5 +240,10 @@ namespace ViewModel
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
         }
         #endregion
+
+        protected override void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            base.PopUpMessageClosed(sender, e);
+        }
     }
 }
