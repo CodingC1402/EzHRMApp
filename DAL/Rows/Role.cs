@@ -84,6 +84,12 @@ namespace DAL.Rows
                 if (!IsValidRoletName(TenChucVu))
                     return "Role's name can't be empty!";
 
+                if (CachTinhLuong == null)
+                    return "Salary by can't be empty!";
+
+                if (NhomTaiKhoan == null)
+                    return "Account group can't be empty!";
+
                 return "";
             }
             catch (Exception e)
