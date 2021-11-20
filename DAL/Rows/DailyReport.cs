@@ -13,6 +13,7 @@ namespace DAL.Rows
         public int SoNVTanLamSom { get; set; }
         public int SoNVTanLamDungGio { get; set; }
         public int SoNVLamThemGio { get; set; }
+        public int SoNVVangMat { get; set; }
 
         public DailyReport() { }
         public DailyReport(DailyReport report)
@@ -24,6 +25,7 @@ namespace DAL.Rows
             SoNVTanLamSom = report.SoNVTanLamSom;
             SoNVTanLamDungGio = report.SoNVTanLamDungGio;
             SoNVLamThemGio = report.SoNVLamThemGio;
+            SoNVVangMat = report.SoNVVangMat;
         }
     }
 }

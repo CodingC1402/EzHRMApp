@@ -12,6 +12,11 @@
         <viewModel:DailyReportViewModel/>
     </UserControl.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="145"/>
+        </Grid.RowDefinitions>
+        
         <controls:DatagridEx
             x:Name="datagridEx"
             AutoGenerateColumns="False"
@@ -85,7 +90,107 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn
+                    Width="*"
+                    MinWidth="100"
+                    Binding="{Binding SoNVVangMat}"
+                    FontWeight="Bold"
+                    Header="Absent" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
+                            <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
             </controls:DatagridEx.Columns>
         </controls:DatagridEx>
+
+        <Border 
+            Grid.Row="1"
+            Margin="0,20,0,10"
+            Padding="12"
+            Background="{DynamicResource Accent}"
+            CornerRadius="5">
+            <Grid>
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Tahoma"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BackColor}"/>
+                        </Style>
+                        <Style TargetType="controls:ButtonEx">
+                            <Setter Property="Width" Value="135" />
+                            <Setter Property="Height" Value="38" />
+                            <Setter Property="HorizontalAlignment" Value="Left" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                            <Setter Property="Background" Value="{DynamicResource DarkerBackColor}" />
+                            <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
+                            <Setter Property="Content" Value="Change profile" />
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="HoverColor" Value="{DynamicResource BackColor}" />
+                            <Setter Property="IconPad" Value="0" />
+                            <Setter Property="PressedColor" Value="{DynamicResource DarkestBackColor}" />
+                            <Setter Property="Panel.ZIndex" Value="1" />
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    FontSize="16"
+                    Text="Export reports"/>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        Text="Timespan:"/>
+                    <controls:ComboBoxEx
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Width="100"
+                        Height="35"
+                        Padding="10"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left"
+                        FocusedOutterColor="{DynamicResource AccentBright}"
+                        FocusedPadding="5, 1"
+                        FontFamily="Tahoma"
+                        FontSize="14"
+                        ItemCornerRadius="0"
+                        NormalPadding="5, 1"
+                        ItemsSource="{Binding TimespanCollection}"
+                        SelectedIndex="0"/>
+
+                    <TextBlock 
+                        Grid.Row="1"
+                        Margin="25,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="Start date:"/>
+                    <controls:DatePickerEx
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        x:Name="datePicker"
+                        Margin="10,0,0,0"
+                        Width="200"
+                        Height="35"
+                        FocusedOutterColor="{DynamicResource AccentBright}"
+                        FontFamily="Tahoma"
+                        FontSize="14"/>
+                    <controls:ButtonEx
+                        Margin="30,0,15,0"
+                        Content="Export to CSV"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
