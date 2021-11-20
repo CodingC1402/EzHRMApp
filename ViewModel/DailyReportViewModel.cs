@@ -21,7 +21,7 @@ namespace ViewModel
         public DailyReportViewModel()
         {
             DailyReports = DailyReportModel.LoadAll();
-            StartDate = EndDate = DateTime.Now;
+            StartDate = EndDate = DateTime.Now.Date;
         }
 
         private void ExportToCSV(object param)

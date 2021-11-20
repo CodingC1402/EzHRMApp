@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,22 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Win32;
-using Model;
 
 namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for DailyReportsView.xaml
+    /// Interaction logic for EmployeePayrollManagementView.xaml
     /// </summary>
-    public partial class DailyReportsView : UserControl
+    public partial class EmployeePayrollManagementView : UserControl
     {
-        public DailyReportsView()
+        public EmployeePayrollManagementView()
         {
             InitializeComponent();
         }
 
-        protected void filterTextChanged(object sender, RoutedEventArgs e)
+        private void DatagridEx_SearchChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
@@ -36,33 +36,30 @@ namespace EzHRMApp.Views
         {
             datagridEx.SetCollectionFilter(obj =>
             {
-                DailyReportModel dailyReport = obj as DailyReportModel;
+                var salary = obj as SalaryModel;
 
                 if (datagridEx.SearchText != "")
                 {
                     var searchText = datagridEx.SearchText;
-                    if (datagridEx.SearchFilter == "Report date")
-                        return dailyReport.NgayBaoCao.ToString("dd/MM/yyyy").Contains(searchText);
+                    if (datagridEx.SearchFilter == "Pay date")
+                        return salary.NgayTinhLuong.ToString("dd/MM/yyyy").Contains(searchText);
 
-                    if (!int.TryParse(searchText, out int result))
+                    if (datagridEx.SearchFilter == "Employee ID")
+                        return salary.IDNhanVien.Contains(searchText);
+
+                    if (!float.TryParse(searchText, out float result))
                         return false;
 
                     switch (datagridEx.SearchFilter)
                     {
-                        case "Came early":
-                            return dailyReport.SoNVDenSom == result;
-                        case "Came on time":
-                            return dailyReport.SoNVDenDungGio == result;
-                        case "Came late":
-                            return dailyReport.SoNVDenTre == result;
-                        case "Left early":
-                            return dailyReport.SoNVTanLamSom == result;
-                        case "Left on time":
-                            return dailyReport.SoNVTanLamDungGio == result;
-                        case "Worked overtime":
-                            return dailyReport.SoNVLamThemGio == result;
-                        case "Absent":
-                            return dailyReport.SoNVVangMat == result;
+                        case "Base salary":
+                            return salary.TienLuong == result;
+                        case "Deduction":
+                            return salary.TienTruLuong == result;
+                        case "Bonus":
+                            return salary.TienThuong == result;
+                        case "Total salary":
+                            return salary.TongTienLuong == result;
                     }
                 }
 
@@ -70,7 +67,17 @@ namespace EzHRMApp.Views
             });
         }
 
-        private void ButtonEx_Click(object sender, RoutedEventArgs e)
+        private void allEmployeesCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            idTxt.IsEnabled = false;
+        }
+
+        private void allEmployeesCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            idTxt.IsEnabled = true;
+        }
+
+        private void exportBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!endDatepicker.SelectedDate.HasValue || !startDatepicker.SelectedDate.HasValue)
             {

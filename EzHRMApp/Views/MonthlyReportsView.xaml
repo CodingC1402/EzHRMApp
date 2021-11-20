@@ -125,7 +125,7 @@
                     </StackPanel.Resources>
                     <TextBlock 
                         VerticalAlignment="Center"
-                        Text="Start date:"/>
+                        Text="Start month:"/>
                     <controls:DatePickerEx
                         x:Name="startDatepicker"
                         SelectedDate="{Binding StartDate}"/>
@@ -134,7 +134,7 @@
                         Grid.Row="1"
                         Margin="25,0,0,0"
                         VerticalAlignment="Center"
-                        Text="End date:"/>
+                        Text="End month:"/>
                     <controls:DatePickerEx
                         x:Name="endDatepicker"
                         SelectedDate="{Binding EndDate}"/>
