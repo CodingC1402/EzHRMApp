@@ -129,26 +129,26 @@
                             VerticalAlignment="Center"
                             Content="Salary by:" />
                         <controls:ComboBoxEx
-                            Grid.Column="1"
                             Grid.Row="1"
-                            IsReadOnly="True"
+                            Grid.Column="1"
                             DisplayMemberPath="Ten"
                             IsEnabled="{Binding IsInCRUDMode}"
-                            SelectedItem="{Binding SelectedCalculateSalary}"
-                            ItemsSource="{Binding CalculateSalary}"/>
+                            IsReadOnly="True"
+                            ItemsSource="{Binding CalculateSalary}"
+                            SelectedItem="{Binding SelectedCalculateSalary}" />
 
                         <Label
                             Grid.Row="2"
                             VerticalAlignment="Center"
                             Content="Account group:" />
                         <controls:ComboBoxEx
-                            Grid.Column="1"
                             Grid.Row="2"
-                            IsReadOnly="True"
-                            IsEnabled="{Binding IsInCRUDMode}"
+                            Grid.Column="1"
                             DisplayMemberPath="TenNhomTaiKhoan"
-                            SelectedItem="{Binding SelectedAccountGroup}"
-                            ItemsSource="{Binding AccountGroups}"/>
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding AccountGroups}"
+                            SelectedItem="{Binding SelectedAccountGroup}" />
                     </Grid>
                     <Grid
                         Grid.Column="1"
@@ -178,8 +178,8 @@
                             VerticalAlignment="Center"
                             Content="Monthly wage:" />
                         <controls:TextBoxEx
-                            Grid.Column="1"
                             Grid.Row="1"
+                            Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalMode}"
                             Text="{Binding CurrentRole.TienLuongMoiThang}" />
 
@@ -188,10 +188,10 @@
                             VerticalAlignment="Center"
                             Content="Overtime %:" />
                         <controls:TextBoxEx
-                            Grid.Column="1"
                             Grid.Row="2"
+                            Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}"/>
+                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}" />
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -212,7 +212,7 @@
                 <controls:ButtonEx Margin="10,5" IsEnabled="{Binding IsInCRUDMode}">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
-                            <Setter Property="Command" Value="{Binding DeleteCommand}"/>
+                            <Setter Property="Command" Value="{Binding DeleteCommand}" />
                             <Setter Property="Content" Value="Delete" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="0">
@@ -344,12 +344,12 @@
                         Header="Overtime %" />
                     <DataGridTextColumn
                         Width="100"
-                        MinWidth="100" 
+                        MinWidth="100"
                         Binding="{Binding NhomTaiKhoan}"
                         Header="Account Group" />
                     <DataGridTextColumn
-                        Width="100"
-                        MinWidth="100" 
+                        Width="*"
+                        MinWidth="100"
                         Binding="{Binding DaXoa}"
                         Header="Deleted" />
                 </controls:DatagridEx.Columns>

@@ -24,16 +24,11 @@ namespace ViewModel
 
         public ObservableCollection<EmployeeModel> Employees { get; set; }
         public ObservableCollection<DepartmentModel> AvailableDepartment { get; set; }
-
-        private ObservableCollection<RoleModel> _availableRoles;
-        public ObservableCollection<RoleModel> AvailableRole {
-            get => _availableRoles;
-            set => _availableRoles = value;
-        }
+        public ObservableCollection<RoleModel> AvailableRole { get; set; }
 
         public EmployeeReportModel Report { get; set; }
         public ReportTimeSpanEnum ReportTimeSpan { get; set; }
-        public ReportTimeSpanEnum[] AvailableTimeSpan { get; } ={ 
+        public ReportTimeSpanEnum[] AvailableTimeSpan { get; } ={
             ReportTimeSpanEnum.InMonth,
             ReportTimeSpanEnum.InWeek,
             ReportTimeSpanEnum.InYear
@@ -47,17 +42,36 @@ namespace ViewModel
             {
                 _selectedDepartmentIndex = value;
                 if (_currentEmployee != null && _selectedDepartmentIndex >= 0)
+                {
                     _currentEmployee.PhongBan = AvailableDepartment[_selectedDepartmentIndex].TenPhong;
+                }
             }
         }
 
         // Use index to make it easier in search for department
-        public int SelectedEmployeeIndex {get; set;}
+        public int SelectedEmployeeIndex { get; set; }
         private EmployeeModel _selectedEmployee = null;
         private EmployeeModel _currentEmployee = null;
         private RoleModel _selectedRole = null;
 
-        public EmployeeModel CurrentEmployee {
+        public PenaltyModel ViewingPenalty { get; set; }
+        public ObservableCollection<PenaltyTypeModel> PenaltyTypeModels { get; set; }
+        private int _penaltyTypeIndex = 0;
+        public int PenaltyTypeIndex
+        {
+            get => _penaltyTypeIndex;
+            set
+            {
+                _penaltyTypeIndex = value;
+                if (ViewingPenalty != null && PenaltyTypeModels != null && PenaltyTypeModels.Count > 0)
+                {
+                    ViewingPenalty.TenViPham = PenaltyTypeModels[_penaltyTypeIndex].TenViPham;
+                }
+            }
+        }
+
+        public EmployeeModel CurrentEmployee
+        {
             get => _currentEmployee;
             set
             {
@@ -89,9 +103,12 @@ namespace ViewModel
                 AddPenaltyCommand.RaiseCanExecuteChangeEvent();
 
                 if (_selectedEmployee == null)
+                {
                     return;
+                }
+
                 UpdateReport();
-                var profile = value.GetProfilePicture();
+                DAL.Rows.ProfilePicture profile = value.GetProfilePicture();
                 ProfilePicture = profile != null ? new Image(profile) : null;
                 CurrentEmployee = value;
             }
@@ -104,16 +121,29 @@ namespace ViewModel
             {
                 _selectedRole = value;
                 if (_currentEmployee != null && _selectedRole != null)
-                _currentEmployee.ChucVu = _selectedRole.TenChucVu;
+                {
+                    _currentEmployee.ChucVu = _selectedRole.TenChucVu;
+                }
             }
         }
 
+        public bool IsViewingReport { get; set; }
+
         #region Commands
         private RelayCommand<object> _selectProfileCommand;
-        public RelayCommand<object> SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new RelayCommand<object>(ExecuteSelectProfile, CanExecuteSelectProfile));
+        public RelayCommand<object> SelectProfileCommand => _selectProfileCommand ??= new RelayCommand<object>(ExecuteSelectProfile, CanExecuteSelectProfile);
 
         private RelayCommand<object> _addPenaltyCommand;
-        public RelayCommand<object> AddPenaltyCommand => _addPenaltyCommand ?? (_addPenaltyCommand = new RelayCommand<object>(ExecuteAddPenalty, CanExecuteAddPenalty));
+        public RelayCommand<object> AddPenaltyCommand => _addPenaltyCommand ??= new RelayCommand<object>(ExecuteAddPenalty, CanExecuteAddPenalty);
+
+        private RelayCommand<object> _viewChangeCommand;
+        public RelayCommand<object> ViewChangeCommand => _viewChangeCommand ??= new RelayCommand<object>(ExecuteChangeView, CanExecuteChangeView);
+
+        private RelayCommand<object> _confirmAddPenaltyCommand;
+        public RelayCommand<object> ConfirmAddPenaltyCommand => _confirmAddPenaltyCommand ??= new RelayCommand<object>(ExecuteAddPenaltyConfirm, CanExecuteAddPenaltyConfirm);
+
+        private RelayCommand<object> _cancelAddPenaltyCommand;
+        public RelayCommand<object> CancelAddPenaltyCommand => _cancelAddPenaltyCommand ??= new RelayCommand<object>(ExecuteAddPenaltyCancel, CanExecuteAddPenaltyCancel);
 
         private RelayCommand<string> _importCommand;
         public RelayCommand<string> ImportCommand => _importCommand ??= new RelayCommand<string>(ExecuteImport);
@@ -122,8 +152,8 @@ namespace ViewModel
         #region Functions
         private void UpdateReport()
         {
-            var endTime = DateTime.Today;
-            var startTime = DateTime.Today;
+            DateTime endTime = DateTime.Today;
+            DateTime startTime = DateTime.Today;
             switch (ReportTimeSpan)
             {
                 case ReportTimeSpanEnum.InWeek:
@@ -131,9 +161,11 @@ namespace ViewModel
                     break;
                 case ReportTimeSpanEnum.InMonth:
                     startTime = startTime.AddMonths(-1);
-                        break;
+                    break;
                 case ReportTimeSpanEnum.InYear:
                     startTime = startTime.AddYears(-1);
+                    break;
+                default:
                     break;
             }
             Report = EmployeeReportModel.Compile(_selectedEmployee, startTime, endTime);
@@ -190,22 +222,15 @@ namespace ViewModel
             }
         }
 
-        public void ExecuteAddPenalty(object param)
-        {
-
-        }
-        public bool CanExecuteAddPenalty(object param)
-        {
-            return _selectedEmployee != null;
-        }
-
         public void ExecuteSelectProfile(object param)
         {
             if (param == null)
+            {
                 return;
+            }
 
             ProfilePicture = new Image(param as Image);
-            var employeeProfile = CurrentEmployee.GetProfilePicture();
+            DAL.Rows.ProfilePicture employeeProfile = CurrentEmployee.GetProfilePicture();
 
             employeeProfile.Image = ProfilePicture.ImageBytes;
             employeeProfile.Width = ProfilePicture.Width;
@@ -215,29 +240,35 @@ namespace ViewModel
         public override void ExecuteAdd(object param)
         {
             base.ExecuteAdd(param);
-            var newEmployee = new EmployeeModel();
-            newEmployee.ID = EmployeeModel.GetNextEmployeeID();
+            EmployeeModel newEmployee = new EmployeeModel
+            {
+                ID = EmployeeModel.GetNextEmployeeID(),
 
-            newEmployee.NgaySinh = DateTime.Today;
-            newEmployee.NgayVaoLam = DateTime.Today;
+                NgaySinh = DateTime.Today,
+                NgayVaoLam = DateTime.Today
+            };
 
             SelectedDepartmentIndex = -1;
             SelectedRole = null;
 
             CurrentEmployee = newEmployee;
             ProfilePicture = new Image(CurrentEmployee.GetProfilePicture());
+
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
+            ViewChangeCommand.RaiseCanExecuteChangeEvent();
         }
         public override void ExecuteUpdate(object param)
         {
             base.ExecuteUpdate(param);
             CurrentEmployee = new EmployeeModel(SelectedEmployee);
+
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
+            ViewChangeCommand.RaiseCanExecuteChangeEvent();
         }
 
         public override void ExecuteConfirmAdd(object param)
         {
-            var result = CurrentEmployee.Save(true);
+            string result = CurrentEmployee.Save(true);
             if (result == "")
             {
                 Employees.Add(CurrentEmployee);
@@ -252,7 +283,7 @@ namespace ViewModel
         }
         public override void ExecuteConfirmUpdate(object param)
         {
-            var result = CurrentEmployee.Save(false);
+            string result = CurrentEmployee.Save(false);
             if (result == "")
             {
                 Employees[SelectedEmployeeIndex] = CurrentEmployee;
@@ -281,9 +312,84 @@ namespace ViewModel
             return base.CanExecuteUpdateStart(param) && CurrentEmployee != null;
         }
 
+        #region Penalty
+        public void ExecuteAddPenaltyConfirm(object param)
+        {
+            string result = ViewingPenalty.Add();
+            if (result == "")
+            {
+                IsInAddMode = false;
+
+                Report.NumberOfPenalty++;
+                switch (ViewingPenalty.TenViPham)
+                {
+                    case PenaltyModel.Absence:
+                        Report.BeingAbsence++;
+                        break;
+                    case PenaltyModel.BeingLate:
+                        Report.BeingLate++;
+                        break;
+                }
+
+                ViewingPenalty = null;
+                RaiseCanRecheck();
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
+        }
+        public void ExecuteAddPenaltyCancel(object param)
+        {
+            IsInAddMode = false;
+
+            ViewingPenalty = null;
+            RaiseCanRecheck();
+        }
+
+        public bool CanExecuteAddPenaltyConfirm(object param)
+        {
+            return IsInCRUDMode && IsViewingReport;
+        }
+        public bool CanExecuteAddPenaltyCancel(object param)
+        {
+            return IsInCRUDMode && IsViewingReport;
+        }
+
+        public void ExecuteAddPenalty(object param)
+        {
+            IsInAddMode = true;
+
+            PenaltyTypeIndex = 0;
+            PenaltyTypeModels = PenaltyTypeModel.LoadAll();
+
+            ViewingPenalty = new PenaltyModel
+            {
+                Ngay = DateTime.Today,
+                IDNhanVien = SelectedEmployee.ID
+            };
+
+            RaiseCanRecheck();
+        }
+        public bool CanExecuteAddPenalty(object param)
+        {
+            return _selectedEmployee != null && IsInNormalMode && IsViewingReport;
+        }
+        #endregion
+
         protected override void OnModeChangeBack()
         {
             SetCurrentModelBack();
+            RaiseCanRecheck();
+        }
+
+        protected void RaiseCanRecheck()
+        {
+            AddPenaltyCommand.RaiseCanExecuteChangeEvent();
+            ViewChangeCommand.RaiseCanExecuteChangeEvent();
+            CancelAddPenaltyCommand.RaiseCanExecuteChangeEvent();
+            ConfirmAddPenaltyCommand.RaiseCanExecuteChangeEvent();
         }
 
         public bool CanExecuteSelectProfile(object param)
@@ -304,6 +410,17 @@ namespace ViewModel
             ProfilePicture = CurrentEmployee != null ? new Image(CurrentEmployee.ProfilePicture) : null;
             SelectProfileCommand.RaiseCanExecuteChangeEvent();
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
+        }
+
+        private void ExecuteChangeView(object param)
+        {
+            IsViewingReport = !IsViewingReport;
+            RaiseCanRecheck();
+        }
+
+        private bool CanExecuteChangeView(object param)
+        {
+            return !IsInCRUDMode;
         }
         #endregion
 

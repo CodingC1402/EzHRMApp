@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,7 +36,6 @@ namespace EzHRMApp.Views
         public static readonly DependencyProperty StartWorkingWidthProperty = DependencyProperty.Register(nameof(StartWorkingWidth), typeof(GridLength), typeof(StaffsView), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
 
         private OpenFileDialog openFileDialog;
-        private bool viewingReport = false;
 
         public GridLength IDWidth {
             get => (GridLength)GetValue(IDWidthProperty);
@@ -65,8 +65,6 @@ namespace EzHRMApp.Views
         public StaffsView()
         {
             InitializeComponent();
-            reportView.Visibility = Visibility.Collapsed;
-            infoView.Visibility = Visibility.Visible;
             openFileDialog = new OpenFileDialog();
             UpdateFilter();
         }
@@ -157,22 +155,38 @@ namespace EzHRMApp.Views
             }
         }
 
-        private void changeModeBtn_Click(object sender, RoutedEventArgs e)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            viewingReport = !viewingReport;
-            if (viewingReport)
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void PercentValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        // Clamp value
+        private void TextBoxEx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            float value = 0;
+            bool isFloat = float.TryParse(textBox.Text, out value);
+            if (!isFloat)
             {
-                viewLabel.Text = "Report";
-                changeModeBtn.Content = "View Infos";
-                addPenaltyBtn.Visibility = reportView.Visibility = Visibility.Visible;
-                changeOrCancleBtn.Visibility = newOrConfirmBtn.Visibility = infoView.Visibility = Visibility.Collapsed;
+                textBox.Text = "0";
             }
             else
             {
-                viewLabel.Text = "Infos";
-                changeModeBtn.Content = "View Report";
-                addPenaltyBtn.Visibility = reportView.Visibility = Visibility.Collapsed;
-                changeOrCancleBtn.Visibility = newOrConfirmBtn.Visibility = infoView.Visibility = Visibility.Visible;
+                if (value > 1)
+                {
+                    textBox.Text = "1";
+                }
+                else if (value < 0)
+                {
+                    textBox.Text = "0";
+                }
             }
         }
 

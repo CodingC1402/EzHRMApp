@@ -17,6 +17,8 @@
 
     <UserControl.Resources>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
+        <converter:FloatToTextConverter x:Key="FloatToText" />
+        <converter:IntToTextConverter x:Key="IntToText" />
     </UserControl.Resources>
 
     <Grid>
@@ -108,15 +110,37 @@
             <TextBlock
                 x:Name="viewLabel"
                 Grid.Column="1"
-                Grid.ColumnSpan="20"
-                Text="Infos:" />
+                Grid.ColumnSpan="20">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                        <Setter Property="Text" Value="Infos" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                <Setter Property="Text" Value="Report" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <ScrollViewer
                 x:Name="reportView"
                 Grid.Row="1"
                 Grid.Column="1"
+                d:Visibility="Visible"
                 HorizontalScrollBarVisibility="Auto">
-                <Grid MinWidth="800">
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+
+                <Grid Width="800" MinWidth="1200">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="3*" />
@@ -149,19 +173,38 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Penalty:" />
-                        <controls:ComboBoxEx Grid.Column="1" />
+                        <controls:ComboBoxEx
+                            Grid.Column="1"
+                            DisplayMemberPath="TenViPham"
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            ItemsSource="{Binding PenaltyTypeModels}"
+                            SelectedIndex="{Binding PenaltyTypeIndex}" />
 
                         <TextBlock Grid.Column="2" Text="Date:" />
-                        <controls:DatePickerEx Grid.Column="3" Margin="5,10" />
+                        <controls:DatePickerEx
+                            Grid.Column="3"
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            SelectedDate="{Binding ViewingPenalty.Ngay}" />
 
                         <TextBlock Grid.Row="1" Text="Flat penalty:" />
-                        <controls:TextBoxEx Grid.Row="1" Grid.Column="1" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            PreviewTextInput="NumberValidationTextBox"
+                            Text="{Binding ViewingPenalty.SoTienTru, Converter={StaticResource FloatToText}}" />
 
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="2"
                             Text="Percentage penalty:" />
-                        <controls:TextBoxEx Grid.Row="1" Grid.Column="3" />
+                        <controls:TextBoxEx
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            PreviewTextInput="PercentValidationTextBox"
+                            Text="{Binding ViewingPenalty.SoPhanTramTru, Converter={StaticResource FloatToText}}"
+                            TextChanged="TextBoxEx_TextChanged" />
 
                         <TextBlock
                             Grid.Row="2"
@@ -177,8 +220,8 @@
                             VerticalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             AcceptsReturn="True"
-                            IsReadOnly="False"
-                            Text=""
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding ViewingPenalty.GhiChu}"
                             TextWrapping="Wrap" />
                     </Grid>
 
@@ -274,8 +317,19 @@
                 x:Name="infoView"
                 Grid.Row="1"
                 Grid.Column="1"
-                HorizontalScrollBarVisibility="Auto"
-                Visibility="Collapsed">
+                d:Visibility="Collapsed"
+                HorizontalScrollBarVisibility="Auto">
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+
                 <Grid MinWidth="1200">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -545,21 +599,20 @@
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <controls:ButtonEx
-                    x:Name="changeModeBtn"
-                    Margin="10,5"
-                    Click="changeModeBtn_Click"
-                    Command="{Binding ViewingReport}">
+                <controls:ButtonEx Margin="10,5" Command="{Binding ViewChangeCommand}">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
                             <Setter Property="Content" Value="View Report" />
-                            <Setter Property="IsEnabled" Value="{Binding IsInNormalMode}" />
+                            <Setter Property="Visibility" Value="Visible" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </Trigger>
                                 <DataTrigger Binding="{Binding Report}" Value="{x:Null}">
                                     <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                    <Setter Property="Content" Value="View Infos" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -585,6 +638,9 @@
                                     <Setter Property="Command" Value="{Binding ConfirmAddCommand}" />
                                     <Setter Property="Content" Value="Confirm" />
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </controls:ButtonEx.Style>
@@ -609,6 +665,9 @@
                                     <Setter Property="Command" Value="{Binding CancleAddCommand}" />
                                     <Setter Property="Content" Value="Cancle" />
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding IsViewingReport}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </controls:ButtonEx.Style>
@@ -616,11 +675,49 @@
                 <controls:ButtonEx
                     x:Name="addPenaltyBtn"
                     Margin="10,5"
-                    Command="{Binding AddPenaltyCommand}"
-                    Visibility="Collapsed">
+                    Command="{Binding AddPenaltyCommand}">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
                             <Setter Property="Content" Value="Add Penalty" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
+                <controls:ButtonEx
+                    Margin="10,5"
+                    Background="{DynamicResource ConfirmButtonBrush}"
+                    Command="{Binding ConfirmAddPenaltyCommand}"
+                    HoverColor="{DynamicResource ConfirmButtonHoverBrush}"
+                    PressedColor="{DynamicResource ConfirmButtonPressedBrush}">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="Confirm" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
+                <controls:ButtonEx
+                    Margin="10,5"
+                    Background="{DynamicResource CancleButtonBrush}"
+                    Command="{Binding CancelAddPenaltyCommand}"
+                    HoverColor="{DynamicResource CancleButtonHoverBrush}"
+                    PressedColor="{DynamicResource CancleButtonPressedBrush}">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Content" Value="Cancel" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </controls:ButtonEx.Style>
                 </controls:ButtonEx>
