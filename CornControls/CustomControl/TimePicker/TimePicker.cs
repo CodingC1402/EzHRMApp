@@ -45,7 +45,7 @@ namespace CornControls.CustomControl
 
         public static readonly DependencyProperty ReadOnlyBackgroundProperty = DependencyProperty.Register(nameof(ReadOnlyBackground), typeof(Brush), typeof(TimePicker), new PropertyMetadata(Brushes.Gray));
 
-        public static readonly DependencyProperty TimeProperty = DependencyProperty.Register(nameof(Time), typeof(DateTime), typeof(TimePicker), new FrameworkPropertyMetadata(DateTime.Today, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTimeChangedCallBack));
+        public static readonly DependencyProperty TimeProperty = DependencyProperty.Register(nameof(Time), typeof(TimeSpan), typeof(TimePicker), new FrameworkPropertyMetadata(new TimeSpan(0, 0, 0), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTimeChangedCallBack));
         public static readonly DependencyProperty IsPressedProperty = DependencyProperty.Register(nameof(IsPressed), typeof(bool), typeof(TimePicker));
 
         public static readonly DependencyProperty DisabledOpacityProperty = DependencyProperty.Register(nameof(DisabledOpacity), typeof(double), typeof(TimePicker), new PropertyMetadata(0.8));
@@ -109,9 +109,9 @@ namespace CornControls.CustomControl
         }
 
         [Browsable(true), Category("Appearance")]
-        public DateTime Time
+        public TimeSpan Time
         {
-            get => (DateTime)GetValue(TimeProperty);
+            get => (TimeSpan)GetValue(TimeProperty);
             set => SetValue(TimeProperty, value);
         }
 
@@ -125,13 +125,13 @@ namespace CornControls.CustomControl
         [Browsable(true), Category("Appearance")]
         public int Hour
         {
-            get => Time.Hour;
+            get => Time.Hours;
         }
 
         [Browsable(true), Category("Appearance")]
         public int Minute
         {
-            get => Time.Minute;
+            get => Time.Minutes;
         }
 
         [Browsable(true), Category("Appearance")]
@@ -245,19 +245,19 @@ namespace CornControls.CustomControl
         {
             if (sender == _hourUp)
             {
-                Time = Time.AddHours(1);
+                Time = Time.Add(new TimeSpan(1, 0, 0));
             }
             else if (sender == _hourDown)
             {
-                Time = Time.AddHours(-1);
+                Time = Time.Add(new TimeSpan(-1, 0, 0));
             }
             else if (sender == _minuteUp)
             {
-                Time = Time.AddMinutes(1);
+                Time = Time.Add(new TimeSpan(0, 1, 0));
             }
             else if (sender == _minuteDown)
             {
-                Time = Time.AddMinutes(-1);
+                Time = Time.Add(new TimeSpan(0, -1, 0));
             }
         }
 

@@ -52,6 +52,9 @@
         <DataTemplate DataType="{x:Type viewModel:AccountGroupsViewModel}">
             <view:AccountGroupsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:LeavesViewModel}">
+            <view:LeavesView />
+        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -329,6 +332,13 @@
                                 Content="Reports"
                                 GroupName="TabButtons"
                                 Path="{DynamicResource reportIcon}" />
+
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
+                                Command="{Binding ToLeavesView}"
+                                Content="Leaves"
+                                GroupName="TabButtons"
+                                Path="{DynamicResource leaveIcon}" />
 
                             <controls:RadioButtonEx
                                 x:Name="schedule"

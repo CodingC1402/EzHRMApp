@@ -184,13 +184,14 @@
 
                     <Border
                         Width="200"
-                        Margin="10"
+                        Margin="10,0"
                         Background="{DynamicResource BackColor}"
                         BorderBrush="{DynamicResource Accent}"
                         BorderThickness="5"
                         CornerRadius="5">
                         <Grid Margin="10">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -208,42 +209,59 @@
 
                             <TextBlock
                                 Grid.Row="0"
-                                HorizontalAlignment="Right"
-                                Foreground="{DynamicResource UpdateButtonBrush}"
-                                Text="{Binding Report.BeingLate, FallbackValue=0}" />
+                                HorizontalAlignment="Left"
+                                Foreground="{DynamicResource Accent}"
+                                Text="Span:" />
+
+                            <controls:ComboBoxEx
+                                Height="30"
+                                Margin="50,0,0,0"
+                                VerticalAlignment="Stretch"
+                                Foreground="{DynamicResource Accent}"
+                                IconColor="{DynamicResource Accent}"
+                                IconHoverColor="{DynamicResource AccentBright}"
+                                ItemsSource="{Binding AvailableTimeSpan}"
+                                SelectedIndex="0"
+                                SelectedItem="{Binding ReportTimeSpan}" />
+
                             <TextBlock
                                 Grid.Row="1"
                                 HorizontalAlignment="Right"
                                 Foreground="{DynamicResource UpdateButtonBrush}"
-                                Text="{Binding Report.BeingAbsenceWithLeave, FallbackValue=0}" />
+                                Text="{Binding Report.BeingLate, FallbackValue=0}" />
                             <TextBlock
                                 Grid.Row="2"
+                                HorizontalAlignment="Right"
+                                Foreground="{DynamicResource UpdateButtonBrush}"
+                                Text="{Binding Report.BeingAbsenceWithLeave, FallbackValue=0}" />
+                            <TextBlock
+                                Grid.Row="3"
                                 HorizontalAlignment="Right"
                                 Foreground="{DynamicResource CancleButtonBrush}"
                                 Text="{Binding Report.BeingAbsence, FallbackValue=0}" />
                             <TextBlock
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 HorizontalAlignment="Right"
                                 Foreground="{DynamicResource CancleButtonBrush}"
                                 Text="{Binding Report.NumberOfPenalty, FallbackValue=0}" />
 
                             <TextBlock
-                                Grid.Row="0"
+                                Grid.Row="1"
                                 HorizontalAlignment="Left"
                                 Foreground="{DynamicResource UpdateButtonBrush}"
                                 Text="Late:" />
                             <TextBlock
-                                Grid.Row="1"
+                                Grid.Row="2"
                                 HorizontalAlignment="Left"
                                 Foreground="{DynamicResource UpdateButtonBrush}"
                                 Text="Leave:" />
                             <TextBlock
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 HorizontalAlignment="Left"
                                 Foreground="{DynamicResource CancleButtonBrush}"
                                 Text="Absence:" />
                             <TextBlock
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 HorizontalAlignment="Left"
                                 Foreground="{DynamicResource CancleButtonBrush}"
                                 Text="Penalty:" />
