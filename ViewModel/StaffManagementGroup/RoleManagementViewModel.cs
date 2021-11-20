@@ -68,7 +68,7 @@ namespace ViewModel
             {
                 _selectedAccountGroup = value;
                 if (_currentRole != null && _selectedRole != null)
-                    _currentRole.NhomTaiKhoan = _selectedRole.NhomTaiKhoan;
+                    _currentRole.NhomTaiKhoan = _selectedAccountGroup.TenNhomTaiKhoan;
             }
         }
 
@@ -79,7 +79,7 @@ namespace ViewModel
             {
                 _selectedCalculateSalary = value;
                 if (_currentRole != null && _selectedRole != null)
-                    _currentRole.CachTinhLuong = _selectedRole.CachTinhLuong;
+                    _currentRole.CachTinhLuong = _selectedCalculateSalary.Ten;
             }
         }
 
