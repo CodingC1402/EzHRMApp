@@ -152,42 +152,38 @@
                     Orientation="Horizontal">
                     <TextBlock 
                         VerticalAlignment="Center"
-                        Text="Timespan:"/>
-                    <controls:ComboBoxEx
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        Width="100"
-                        Height="35"
-                        Padding="10"
-                        VerticalContentAlignment="Center"
-                        HorizontalAlignment="Left"
-                        FocusedOutterColor="{DynamicResource AccentBright}"
-                        FocusedPadding="5, 1"
-                        FontFamily="Tahoma"
-                        FontSize="14"
-                        ItemCornerRadius="0"
-                        NormalPadding="5, 1"
-                        ItemsSource="{Binding TimespanCollection}"
-                        SelectedIndex="0"/>
-
-                    <TextBlock 
-                        Grid.Row="1"
-                        Margin="25,0,0,0"
-                        VerticalAlignment="Center"
                         Text="Start date:"/>
                     <controls:DatePickerEx
-                        Grid.Row="1"
-                        Grid.Column="1"
+                        x:Name="startDatepicker"
                         HorizontalAlignment="Left"
-                        x:Name="datePicker"
                         Margin="10,0,0,0"
                         Width="200"
                         Height="35"
                         FocusedOutterColor="{DynamicResource AccentBright}"
                         FontFamily="Tahoma"
-                        FontSize="14"/>
+                        FontSize="14"
+                        SelectedDate="{Binding StartDate}"/>
+
+                    <TextBlock 
+                        Grid.Row="1"
+                        Margin="25,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="End date:"/>
+                    <controls:DatePickerEx
+                        x:Name="endDatepicker"
+                        HorizontalAlignment="Left"
+                        Margin="10,0,0,0"
+                        Width="200"
+                        Height="35"
+                        FocusedOutterColor="{DynamicResource AccentBright}"
+                        FontFamily="Tahoma"
+                        FontSize="14"
+                        SelectedDate="{Binding EndDate}"/>
                     <controls:ButtonEx
+                        x:Name="exportBtn"
                         Margin="30,0,15,0"
+                        Click="ButtonEx_Click"
+                        Command="{Binding ExportCSVCommand}"
                         Content="Export to CSV"/>
                 </StackPanel>
             </Grid>
