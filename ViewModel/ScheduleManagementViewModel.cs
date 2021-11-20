@@ -18,8 +18,11 @@ namespace ViewModel
 
         // The actual rule that is referencing
         public CompanyRuleModel CurrentRule { get; set; }
+        public CompanyScheduleModel CurrentSchedule { get; set; }
+
         // The rule that go rendered
         public CompanyRuleModel ViewingRule { get; set; }
+        public CompanyScheduleModel ViewingSchedule { get; set; }
 
         private bool _isWaitingForConfirmation = false;
 
@@ -27,6 +30,10 @@ namespace ViewModel
         {
             _isWaitingForConfirmation = true;
             ViewingRule = new CompanyRuleModel(CurrentRule);
+            ViewingSchedule = new CompanyScheduleModel(CurrentSchedule);
+
+            ViewingRule.ThoiDiemTao = DateTime.Now;
+            ViewingSchedule.ThoiDiemTao = DateTime.Now;
 
             ErrorString = "Are you sure you want to update the company rules?";
             ShowConfirmation = true;
@@ -41,9 +48,10 @@ namespace ViewModel
                 _isWaitingForConfirmation = false;
                 if (MessageResult == PopUpMessage.Result.Ok)
                 {
-                    var result = CompanyRuleModel.UpdateCompanyRule(ViewingRule);
+                    var result = CompanyRuleModel.UpdateBothRuleAndSchedule(ViewingSchedule, ViewingRule);
                     if (result == "")
                     {
+                        CurrentSchedule = ViewingSchedule;
                         CurrentRule = ViewingRule;
                         base.ExecuteConfirmUpdate(null);
                     }
@@ -59,6 +67,7 @@ namespace ViewModel
         protected override void OnModeChangeBack()
         {
             ViewingRule = CurrentRule;
+            ViewingSchedule = CurrentSchedule;
         }
 
         public ScheduleManagementViewModel()
@@ -69,6 +78,36 @@ namespace ViewModel
         public override void OnGetTo()
         {
             ViewingRule = CurrentRule = CompanyRuleModel.GetLastestRule();
+            ViewingSchedule = CurrentSchedule = CompanyScheduleModel.GetLastestSchedule();
         }
+
+        private RelayCommand<object> _toggleWorkCommand;
+        public RelayCommand<object> ToggleWorkCommand => _toggleWorkCommand ?? (_toggleWorkCommand = new RelayCommand<object>(param => {
+            string paramStr = (string)param;
+            switch (paramStr)
+            {
+                case "mon":
+                    ViewingRule.CoLamThuHai = !ViewingRule.CoLamThuHai;
+                    break;
+                case "tue":
+                    ViewingRule.CoLamThuBa = !ViewingRule.CoLamThuBa;
+                    break;
+                case "wed":
+                    ViewingRule.CoLamThuTu = !ViewingRule.CoLamThuTu;
+                    break;
+                case "thu":
+                    ViewingRule.CoLamThuNam = !ViewingRule.CoLamThuNam;
+                    break;
+                case "fri":
+                    ViewingRule.CoLamThuSau = !ViewingRule.CoLamThuSau;
+                    break;
+                case "sat":
+                    ViewingRule.CoLamThuBay = !ViewingRule.CoLamThuBay;
+                    break;
+                case "sun":
+                    ViewingRule.CoLamChuNhat = !ViewingRule.CoLamChuNhat;
+                    break;
+            }
+        }));
     }
 }
