@@ -203,9 +203,9 @@
                                 <Setter.Value>
                                     <TextDecorationCollection>
                                         <TextDecoration
-                                                    Location="Underline"
-                                                    PenOffset="2"
-                                                    PenThicknessUnit="FontRecommended" />
+                                            Location="Underline"
+                                            PenOffset="2"
+                                            PenThicknessUnit="FontRecommended" />
                                     </TextDecorationCollection>
                                 </Setter.Value>
                             </Setter>

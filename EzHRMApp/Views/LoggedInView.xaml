@@ -263,14 +263,6 @@
                                 Content="User Info"
                                 GroupName="TabButtons"
                                 Path="{StaticResource staffsIcon}" />
-                          
-                            <controls:RadioButtonEx
-                                x:Name="dashboardBtn"
-                                Click="TabButtonClicked"
-                                Command="{Binding ToUserInfo}"
-                                Content="User Info"
-                                GroupName="TabButtons"
-                                Path="{StaticResource staffsIcon}" />
 
                             <controls:RadioButtonEx
                                 x:Name="dashboardBtn"

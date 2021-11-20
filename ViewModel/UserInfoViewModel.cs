@@ -38,6 +38,22 @@ namespace ViewModel
             employeeProfile.Image = ProfilePicture.ImageBytes;
             employeeProfile.Width = ProfilePicture.Width;
             employeeProfile.Type = ProfilePicture.FileType;
+
+            UserInfo.ProfilePicture = employeeProfile;
+
+            var result = UserInfo.Save();
+
+            if (result == "")
+            {
+                base.ExecuteConfirmUpdate(param);
+                StartUpdateCommand.RaiseCanExecuteChangeEvent();
+                LoggedInViewModel.Instance.UpdateToEmployee();
+            }
+            else
+            {
+                ErrorString = result;
+                HaveError = true;
+            }
         }
 
         public override void ExecuteUpdate(object param)
@@ -64,6 +80,7 @@ namespace ViewModel
         public override void ExecuteCancleUpdate(object param)
         {
             base.ExecuteCancleUpdate(param);
+            UserInfo = new EmployeeModel(LoginInfo.Employee);
             StartUpdateCommand.RaiseCanExecuteChangeEvent();
         }
 
@@ -76,7 +93,7 @@ namespace ViewModel
         {
             IsAvailable = true;
             Instance = this;
-            UserInfo = EmployeeModel.GetEmployeeByID(LoginInfo.EmployeeID);
+            UserInfo = LoginInfo.Employee != null ? new EmployeeModel(LoginInfo.Employee) : null;
             
             if (UserInfo == null)
             {
