@@ -204,16 +204,21 @@
                             Text="{Binding SelectedPenalty.SoPhanTramTru}" />
 
                         <controls:ButtonEx 
+                            x:Name="deleteBtn"
                             Grid.Row="3"
                             Grid.RowSpan="2"
                             Grid.ColumnSpan="2"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
+                            Click="deleteBtn_Click"
                             Margin="10,5">
                             <controls:ButtonEx.Style>
                                 <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
                                     <Setter Property="Command" Value="{Binding DeleteCommand}" />
                                     <Setter Property="Content" Value="Delete" />
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
                                 </Style>
                             </controls:ButtonEx.Style>
                         </controls:ButtonEx>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CornControls.CustomControl;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,6 +68,17 @@ namespace EzHRMApp.Views
                 //    return true;
                 //});
             }
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Popup message not work like messagebox || Need changing
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this penalty?", "Warning", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+                deleteBtn.CommandParameter = true;
+            else
+                deleteBtn.CommandParameter = false;
         }
     }
 }
