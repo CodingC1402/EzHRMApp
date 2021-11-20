@@ -113,7 +113,8 @@ namespace ViewModel.Helper
         // Don't call this!!! this is only for the view to call : ^)
         public void PropagatePopupMessageClosedEvent()
         {
-            _popUpMessageClosed(this, new EventArgs());
+            if (_popUpMessageClosed != null)
+                _popUpMessageClosed(this, new EventArgs());
         }
 
         private event EventHandler _popUpMessageClosed = null;
