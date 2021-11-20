@@ -26,6 +26,9 @@ namespace ViewModel
 
         private void ExportToCSV(object param)
         {
+            if (param == null)
+                return;
+
             var msg = param.ToString();
             if (msg == "date-picker-empty")
             {
