@@ -15,12 +15,24 @@ namespace ViewModel
         private static RoleManagementViewModel _instance = null;
         public static RoleManagementViewModel Instance { get => _instance; }
 
-        public List<string> CachTinhLuong { get; set; }
-
+        public ObservableCollection<CalculateSalaryModel> CalculateSalary { get; set; }
+        public ObservableCollection<AccountGroupModel> AccountGroups { get; set; }
         public ObservableCollection<RoleModel> Roles { get; set; }
 
         private RoleModel _selectedRole = null;
         private RoleModel _currentRole = null;
+        private CalculateSalaryModel _selectedCalculateSalary = null;
+        private AccountGroupModel _selectedAccountGroup = null;
+
+        public RoleModel SelectedRole
+        {
+            get => _selectedRole;
+            set
+            {
+                _selectedRole = value;
+                CurrentRole = value;
+            }
+        }
 
         public RoleModel CurrentRole
         {
@@ -28,17 +40,57 @@ namespace ViewModel
             set
             {
                 _currentRole = value;
+
+                foreach (CalculateSalaryModel cs in CalculateSalary)
+                {
+                    if (_currentRole != null && cs.Ten == _currentRole.CachTinhLuong)
+                    {
+                        SelectedCalculateSalary = cs;
+                    }
+                }
+
+                foreach (AccountGroupModel ag in AccountGroups)
+                {
+                    if (_currentRole != null && ag.TenNhomTaiKhoan == _currentRole.NhomTaiKhoan)
+                    {
+                        SelectedAccountGroup = ag;
+                    }
+                }
+
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
+            }
+        }
+
+        public AccountGroupModel SelectedAccountGroup
+        {
+            get => _selectedAccountGroup;
+            set
+            {
+                _selectedAccountGroup = value;
+                if (_currentRole != null && _selectedRole != null)
+                    _currentRole.NhomTaiKhoan = _selectedAccountGroup.TenNhomTaiKhoan;
+            }
+        }
+
+        public CalculateSalaryModel SelectedCalculateSalary
+        {
+            get => _selectedCalculateSalary;
+            set
+            {
+                _selectedCalculateSalary = value;
+                if (_currentRole != null && _selectedRole != null)
+                    _currentRole.CachTinhLuong = _selectedCalculateSalary.Ten;
             }
         }
 
         #region Function
         public override void ExecuteAdd(object param)
         {
-            var newRole = new RoleModel();
-            newRole.CachTinhLuong = "TheoGio";
-            CurrentRole = newRole;
-            
+            CurrentRole = new RoleModel();
+
+            SelectedAccountGroup = null;
+            SelectedCalculateSalary = null;
+
             base.ExecuteAdd(param);
         }
         public override void ExecuteUpdate(object param)
@@ -73,6 +125,20 @@ namespace ViewModel
             {
                 base.ExecuteConfirmUpdate(param);
                 var found = Roles.FirstOrDefault(x => x.TenChucVu == SelectedRole.TenChucVu);
+
+                if (Roles[Roles.IndexOf(found)].NhomTaiKhoan != CurrentRole.NhomTaiKhoan)
+                {
+                    var list = EmployeeModel.LoadAll();
+
+                    foreach (EmployeeModel employee in list)
+                    {
+                        if (employee.ChucVu == CurrentRole.TenChucVu)
+                        {
+                            employee.ChangeAccountGroup(CurrentRole.NhomTaiKhoan);
+                        }
+                    }
+                }
+
                 Roles[Roles.IndexOf(found)] = CurrentRole;
                 SetCurrentModelBack();
             }
@@ -121,23 +187,12 @@ namespace ViewModel
         }
         #endregion
 
-        public RoleModel SelectedRole
-        {
-            get => _selectedRole;
-            set
-            {
-                _selectedRole = value;
-                CurrentRole = value;
-            }
-        }
-
         public RoleManagementViewModel()
         {
             _instance = this;
+            AccountGroups = AccountGroupModel.LoadAll();
             Roles = RoleModel.LoadAll();
-            CachTinhLuong = new List<string>();
-            CachTinhLuong.Add("TheoGio");
-            CachTinhLuong.Add("TheoThang");
+            CalculateSalary = CalculateSalaryModel.LoadAll();
         }
 
         private void SetCurrentModelBack()
