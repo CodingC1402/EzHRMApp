@@ -81,7 +81,7 @@
                     <Setter Property="FontFamily" Value="Time New Roman" />
                     <Setter Property="CornerRadius" Value="5" />
                     <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontSize" Value="14" />
                     <Setter Property="ItemCornerRadius" Value="0" />
                     <Setter Property="Margin" Value="5,0" />
                     <Setter Property="FocusedPadding" Value="5, 1" />
@@ -132,22 +132,24 @@
                             Grid.Column="1"
                             Grid.Row="1"
                             IsReadOnly="True"
+                            DisplayMemberPath="Ten"
                             IsEnabled="{Binding IsInCRUDMode}"
-                            SelectedItem="{Binding CurrentRole.CachTinhLuong}"
-                            ItemsSource="{Binding CachTinhLuong}"/>
-                        
+                            SelectedItem="{Binding SelectedCalculateSalary}"
+                            ItemsSource="{Binding CalculateSalary}"/>
+
                         <Label
                             Grid.Row="2"
                             VerticalAlignment="Center"
-                            Content="Overtime %:" />
-                        <controls:TextBoxEx
+                            Content="Account group:" />
+                        <controls:ComboBoxEx
                             Grid.Column="1"
                             Grid.Row="2"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}"/>
-
+                            IsReadOnly="True"
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            DisplayMemberPath="TenNhomTaiKhoan"
+                            SelectedItem="{Binding SelectedAccountGroup}"
+                            ItemsSource="{Binding AccountGroups}"/>
                     </Grid>
-
                     <Grid
                         Grid.Column="1"
                         MinWidth="300"
@@ -181,31 +183,15 @@
                             IsReadOnly="{Binding IsInNormalMode}"
                             Text="{Binding CurrentRole.TienLuongMoiThang}" />
 
-                        <controls:ButtonEx Margin="5,5,5,0"
-                                           Grid.Column="1"
-                                           Grid.Row="2"
-                                           IsEnabled="{Binding IsInCRUDMode}">
-                            <controls:ButtonEx.Style>
-                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
-                                    <Setter Property="Command" Value="{Binding DeleteCommand}"/>
-                                    <Setter Property="Content" Value="Delete" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="0">
-                                            <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
-                                            <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
-                                            <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
-                                            <Setter Property="Content" Value="Delete" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="1">
-                                            <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
-                                            <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
-                                            <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
-                                            <Setter Property="Content" Value="Retore" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </controls:ButtonEx.Style>
-                        </controls:ButtonEx>
+                        <Label
+                            Grid.Row="2"
+                            VerticalAlignment="Center"
+                            Content="Overtime %:" />
+                        <controls:TextBoxEx
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -223,6 +209,28 @@
                 Grid.Row="2"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
+                <controls:ButtonEx Margin="10,5" IsEnabled="{Binding IsInCRUDMode}">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Command" Value="{Binding DeleteCommand}"/>
+                            <Setter Property="Content" Value="Delete" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="0">
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                    <Setter Property="Content" Value="Delete" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CurrentRole.DaXoa}" Value="1">
+                                    <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                    <Setter Property="Content" Value="Retore" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
                 <controls:ButtonEx Margin="10,5">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
@@ -315,8 +323,8 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn
-                        Width="120"
-                        MinWidth="120"
+                        Width="110"
+                        MinWidth="110"
                         Binding="{Binding CachTinhLuong}"
                         Header="Salary by" />
                     <DataGridTextColumn
@@ -330,10 +338,15 @@
                         Binding="{Binding TienLuongMoiThang}"
                         Header="Monthly Wage" />
                     <DataGridTextColumn
-                        Width="150"
-                        MinWidth="150"
+                        Width="140"
+                        MinWidth="140"
                         Binding="{Binding PhanTramLuongNgoaiGio}"
                         Header="Overtime %" />
+                    <DataGridTextColumn
+                        Width="100"
+                        MinWidth="100" 
+                        Binding="{Binding NhomTaiKhoan}"
+                        Header="Account Group" />
                     <DataGridTextColumn
                         Width="100"
                         MinWidth="100" 

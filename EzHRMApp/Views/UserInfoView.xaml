@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EzHRMApp.Views" 
              xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel" 
-             xmlns:converter="clr-namespace:EzHRMApp.Core.Converter"
+             xmlns:converter="clr-namespace:EzHRMApp.Core.Converter" 
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -54,32 +55,165 @@
                     <Setter Property="HorizontalAlignment" Value="Left" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
+                <Style x:Key="ButtonExStyle" TargetType="controls:ButtonEx">
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Background" Value="{DynamicResource Accent}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
+                    <Setter Property="Content" Value="Change profile" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="PressedColor" Value="{DynamicResource AccentReallyBright}" />
+                </Style>
             </Grid.Resources>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
                 <RowDefinition Height="250" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Ellipse
-                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                Margin="20"
-                RenderOptions.BitmapScalingMode="HighQuality"
-                Stroke="{DynamicResource Accent}"
-                StrokeThickness="10">
-                    <Ellipse.Fill>
-                        <ImageBrush
-                        x:Name="profile"
-                        ImageSource="{Binding ProfilePicture, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource byteImageConverter}}"
-                        Stretch="Uniform" />
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Grid Grid.Column="1" Margin="20">
+
+            <Border
+                Margin="10"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="5"
+                CornerRadius="10">
+                <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Ellipse
+                        Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                        Margin="20"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stroke="{DynamicResource Accent}"
+                        StrokeThickness="10">
+                            <Ellipse.Fill>
+                                <ImageBrush
+                                x:Name="profile"
+                                ImageSource="{Binding ProfilePicture, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource byteImageConverter}}"
+                                Stretch="Uniform" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <controls:ButtonEx
+                            x:Name="profileBtn"
+                            Grid.Row="1"
+                            Margin="0,5"
+                            HorizontalAlignment="Center"
+                            Click="profileBtn_Click"
+                            Command="{Binding SelectProfileCommand}"
+                            Content="Change profile"
+                            Style="{DynamicResource ButtonExStyle}" />
+                    </Grid>
+
+                    <Grid Grid.Column="1" Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!--For some reasons textblock style affect name and dob label-->
+                        <TextBlock Text="Profile">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                                    <Setter Property="FontFamily" Value="Tahoma" />
+                                    <Setter Property="FontSize" Value="16" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextDecorations">
+                                        <Setter.Value>
+                                            <TextDecorationCollection>
+                                                <TextDecoration
+                                                    Location="Underline"
+                                                    PenOffset="2"
+                                                    PenThicknessUnit="FontRecommended" />
+                                            </TextDecorationCollection>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <Label Grid.Row="1" Content="Username:" />
+                        <Label Grid.Row="2" Content="Name:" />
+                        <Label Grid.Row="3" Content="DOB:" />
+                        <Label Grid.Row="4" Content="CMND:" />
+
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding UserInfo.TaiKhoan}" />
+                        <Label Grid.Column="1" Grid.Row="2">
+                            <AccessText>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="UserInfo.Ho" />
+                                    <Binding Path="UserInfo.Ten" />
+                                </MultiBinding>
+                            </AccessText>
+                        </Label>
+                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding UserInfo.NgaySinh}" />
+                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding UserInfo.CMND}" />
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border
+                Margin="10"
+                Padding="10"
+                Grid.Row="1"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="5"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="controls:TextBoxEx">
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Setter Property="IconPad" Value="0" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                            <Setter Property="FontFamily" Value="Time New Roman" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
+                            <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
+                            <Setter Property="Margin" Value="5,0" />
+                            <Setter Property="Padding" Value="5,0" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                            <Setter Property="FontFamily" Value="Tahoma" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="TextDecorations">
+                                <Setter.Value>
+                                    <TextDecorationCollection>
+                                        <TextDecoration
+                                            Location="Underline"
+                                            PenOffset="2"
+                                            PenThicknessUnit="FontRecommended" />
+                                    </TextDecorationCollection>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -88,57 +222,65 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Label Content="Username:" />
-                    <Label Grid.Row="1" Content="Name:" />
-                    <Label Grid.Row="2" Content="DOB:" />
-                    <Label Grid.Row="3" Content="Email:" />
-                    <Label Grid.Row="4" Content="Phone number:" />
-                    <Label Grid.Row="5" Content="CMND:" />
+                    <TextBlock Text="Contact" />
 
-                    <Label Grid.Column="1" Content="{Binding UserInfo.TaiKhoan}" />
-                    <Label Grid.Column="1" Grid.Row="1">
-                        <AccessText>
-                            <MultiBinding StringFormat="{}{0} {1}">
-                                <Binding Path="UserInfo.Ho" />
-                                <Binding Path="UserInfo.Ten" />
-                            </MultiBinding>
-                        </AccessText>
-                    </Label>
-                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding UserInfo.NgaySinh}" />
-                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding UserInfo.EmailCaNhan}" />
-                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding UserInfo.SDTCaNhan}" />
-                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding UserInfo.CMND}" />
+                    <Label Grid.Row="1" Content="Office email:" />
+                    <Label Grid.Row="2" Content="Office phone number:" />
+
+                    <controls:TextBoxEx Grid.Column="1" Grid.Row="1" Text="{Binding UserInfo.EmailVanPhong}" IsReadOnly="{Binding IsInNormalMode}" />
+                    <controls:TextBoxEx Grid.Column="1" Grid.Row="2" Text="{Binding UserInfo.SDTVanPhong}" IsReadOnly="{Binding IsInNormalMode}" />
+
+                    <Label Grid.Column="2" Grid.Row="1" Content="Private email:" />
+                    <Label Grid.Column="2" Grid.Row="2" Content="Private phone number:" />
+
+                    <controls:TextBoxEx Grid.Column="3" Grid.Row="1" Text="{Binding UserInfo.EmailCaNhan}" IsReadOnly="{Binding IsInNormalMode}" />
+                    <controls:TextBoxEx Grid.Column="3" Grid.Row="2" Text="{Binding UserInfo.SDTCaNhan}" IsReadOnly="{Binding IsInNormalMode}" />
+
+                    <StackPanel
+                        Grid.ColumnSpan="4"
+                        Grid.Row="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
+                                            <Setter Property="Content" Value="Confirm" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsInNormalMode}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Setter Property="Content" Value="Change" />
+                                    <Setter Property="Command" Value="{Binding StartUpdateCommand}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
+                                            <Setter Property="Content" Value="Cancel" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                    </StackPanel>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="1" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Label Content="Office email:" />
-                <Label Grid.Row="1" Content="Office phone number:" />
-                <Label Grid.Row="2" Content="Role:" />
-                <Label Grid.Row="3" Content="Department:" />
-                <Label Grid.Row="4" Content="Working since:" />
-
-                <Label Grid.Column="1" Content="{Binding UserInfo.EmailVanPhong}" />
-                <Label Grid.Column="1" Grid.Row="1" Content="{Binding UserInfo.SDTVanPhong}" />
-                <Label Grid.Column="1" Grid.Row="2" Content="{Binding UserInfo.ChucVu}" />
-                <Label Grid.Column="1" Grid.Row="3" Content="{Binding UserInfo.PhongBan}" />
-                <Label Grid.Column="1" Grid.Row="4" Content="{Binding UserInfo.NgayVaoLam}" />
-            </Grid>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>
