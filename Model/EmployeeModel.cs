@@ -78,12 +78,12 @@ namespace Model
                 Employee employee = new Employee(this);
                 employee.TaiKhoan = employee.ID;
 
-                Account account = Account.CreateAccount(employee.ID);
-                
                 result = employee.CheckForError();
                 if (result != "")
                     return result;
 
+                RoleModel role = RoleModel.GetRole(employee.ChucVu);
+                Account account = Account.CreateAccount(employee.ID, role.NhomTaiKhoan);
                 if (account != null)
                 {
                     AccountRepo.Instance.Add(account, uow);

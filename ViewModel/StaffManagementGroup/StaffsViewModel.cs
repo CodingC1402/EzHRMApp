@@ -27,6 +27,11 @@ namespace ViewModel
 
         public EmployeeReportModel Report { get; set; }
         public ReportTimeSpanEnum ReportTimeSpan { get; set; }
+        public ReportTimeSpanEnum[] AvailableTimeSpan { get; } ={ 
+            ReportTimeSpanEnum.InMonth,
+            ReportTimeSpanEnum.InWeek,
+            ReportTimeSpanEnum.InYear
+        };
 
         private int _selectedDepartmentIndex = 0;
         public int SelectedDepartmentIndex

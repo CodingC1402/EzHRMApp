@@ -1,4 +1,5 @@
-﻿using DAL.Rows;
+﻿using DAL.Repos;
+using DAL.Rows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,5 +25,14 @@ namespace Model
         public RoleModel() { }
         public RoleModel(Role role) : base(role) { }
         public RoleModel(RoleModel roleModel) : base(roleModel) { }
+
+        public static RoleModel GetRole(string roleName)
+        {
+            var result = RoleRepo.Instance.FindByID(new object[] { roleName }); ;
+            if (result == null)
+                return null;
+            else
+                return new RoleModel(result);
+        }
     }
 }

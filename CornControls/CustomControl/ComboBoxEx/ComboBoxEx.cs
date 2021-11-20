@@ -132,15 +132,15 @@ namespace CornControls.CustomControl
         }
 
         [Browsable(true), Category("Appearance")]
-        public double IconColor
+        public Brush IconColor
         {
-            get => (double)GetValue(IconColorProperty);
+            get => (Brush)GetValue(IconColorProperty);
             set => SetValue(IconColorProperty, value);
         }
         [Browsable(true), Category("Appearance")]
-        public double IconHoverColor
+        public Brush IconHoverColor
         {
-            get => (double)GetValue(IconColorProperty);
+            get => (Brush)GetValue(IconColorProperty);
             set => SetValue(IconColorProperty, value);
         }
         [Browsable(true), Category("Appearance")]
