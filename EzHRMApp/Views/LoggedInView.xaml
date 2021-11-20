@@ -263,7 +263,6 @@
                           
                             <controls:RadioButtonEx
                                 x:Name="dashboardBtn"
-                                Margin="0,25,0,0"
                                 Click="TabButtonClicked"
                                 Command="{Binding ToDashboard}"
                                 Content="Dashboard"
