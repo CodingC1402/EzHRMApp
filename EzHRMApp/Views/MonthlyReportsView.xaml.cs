@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using Model;
 
 namespace EzHRMApp.Views
@@ -57,6 +58,39 @@ namespace EzHRMApp.Views
 
                 return true;
             });
+        }
+
+        private void exportBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!endDatepicker.SelectedDate.HasValue || !startDatepicker.SelectedDate.HasValue)
+            {
+                exportBtn.CommandParameter = "date-picker-empty";
+                return;
+            }
+            else if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
+            {
+                exportBtn.CommandParameter = "date-picker-end-date-earlier";
+                return;
+            }
+
+            var save = new SaveFileDialog()
+            {
+                AddExtension = true,
+                DefaultExt = ".csv",
+                Filter = "Comma separated values file (.csv)|*.csv"
+            };
+
+            var result = save.ShowDialog();
+            if (result == true)
+            {
+                exportBtn.CommandParameter = save.FileName;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            startDatepicker.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1);
+            endDatepicker.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1);
         }
     }
 }
