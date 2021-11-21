@@ -25,10 +25,14 @@ namespace ViewModel
             ToLoggedIn = new NavigationCommand<LoggedInViewModel>(new LoggedInViewModel(), this, 0);
             ViewModels.Add(ToLoggedIn.ViewModel);
 
+            ToForgotPassword = new NavigationCommand<ForgotPasswordViewModel>(new ForgotPasswordViewModel(), this, 0);
+            ViewModels.Add(ToForgotPassword.ViewModel);
+
             CurrentViewModel = ToLogin.ViewModel;
         }
 
         public NavigationCommand<LoginViewModel> ToLogin { get; set; }
         public NavigationCommand<LoggedInViewModel> ToLoggedIn { get; set; }
+        public NavigationCommand<ForgotPasswordViewModel> ToForgotPassword { get; set; }
     }
 }

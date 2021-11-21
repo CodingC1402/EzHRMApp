@@ -29,6 +29,9 @@
                 <DataTemplate DataType="{x:Type viewModel:LoggedInViewModel}">
                     <view:LoggedInView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:ForgotPasswordViewModel}">
+                    <view:ForgotPasswordView />
+                </DataTemplate>
             </ContentControl.Resources>
         </controls:AnimatedContentControlOpacity>
     </Grid>
