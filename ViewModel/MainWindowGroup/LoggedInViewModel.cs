@@ -90,13 +90,12 @@ namespace ViewModel
 
             ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, QuyenHanBitmask.ScheduleManagement);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
-
-            ToHomeView.Execute(null);
         }
 
         public override void OnGetTo()
         {
             UpdateToEmployee();
+            ToHomeView.Execute(null);
         }
 
         public void UpdateToEmployee()
