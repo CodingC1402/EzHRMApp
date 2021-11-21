@@ -43,9 +43,9 @@ VALUES (NOW() - INTERVAL 1 DAY,
 INSERT INTO cacloaivipham (TenViPham, TruLuongTheoPhanTram, TruLuongTrucTiep)
 VALUES ('DiTre', 2.0, 0), ('VeSom', 1.5, 0), ('VangMat', 5.0, 0);
 
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('boss',    0x0FFFFF, 0);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('hrm',     0x0000FF, 0);
-INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('employee',0xF00000, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('boss',    0x00FFFF, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('hrm',     0xF0FF00, 0);
+INSERT INTO NHOMTAIKHOAN (TenNhomTaiKHoan, QuyenHan, DaXoa) VALUES ('employee',0xFF0000, 0);
 
 INSERT INTO TAIKHOAN (TaiKhoan, Password, NhomTaiKhoan) VALUES ('boss0', SHA2('0', 256), 'boss');
 
@@ -114,6 +114,9 @@ VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 'NV00000001', 'VangMat', 100, 15, 'Test
 
 INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000002', 'VangMat', 80, 5, 'Testing...');
+
+INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
+VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000003', 'VangMat', 80, 5, 'Testing a very very very very very very long paragraph for checking the text box if it works or not');
 
 INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
 VALUES ('NV00000001', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tham gia hoi nghi 3N Quoc Te', 1);

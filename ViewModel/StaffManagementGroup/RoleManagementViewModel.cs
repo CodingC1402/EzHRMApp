@@ -15,13 +15,13 @@ namespace ViewModel
         private static RoleManagementViewModel _instance = null;
         public static RoleManagementViewModel Instance { get => _instance; }
 
-        public ObservableCollection<CalculateSalaryModel> CalculateSalary { get; set; }
+        public ObservableCollection<PaymentMethodModel> CalculateSalary { get; set; }
         public ObservableCollection<AccountGroupModel> AccountGroups { get; set; }
         public ObservableCollection<RoleModel> Roles { get; set; }
 
         private RoleModel _selectedRole = null;
         private RoleModel _currentRole = null;
-        private CalculateSalaryModel _selectedCalculateSalary = null;
+        private PaymentMethodModel _selectedCalculateSalary = null;
         private AccountGroupModel _selectedAccountGroup = null;
 
         public RoleModel SelectedRole
@@ -41,7 +41,7 @@ namespace ViewModel
             {
                 _currentRole = value;
 
-                foreach (CalculateSalaryModel cs in CalculateSalary)
+                foreach (PaymentMethodModel cs in CalculateSalary)
                 {
                     if (_currentRole != null && cs.Ten == _currentRole.CachTinhLuong)
                     {
@@ -72,7 +72,7 @@ namespace ViewModel
             }
         }
 
-        public CalculateSalaryModel SelectedCalculateSalary
+        public PaymentMethodModel SelectedCalculateSalary
         {
             get => _selectedCalculateSalary;
             set
@@ -192,7 +192,7 @@ namespace ViewModel
             _instance = this;
             AccountGroups = AccountGroupModel.LoadAll();
             Roles = RoleModel.LoadAll();
-            CalculateSalary = CalculateSalaryModel.LoadAll();
+            CalculateSalary = PaymentMethodModel.LoadAll();
         }
 
         private void SetCurrentModelBack()

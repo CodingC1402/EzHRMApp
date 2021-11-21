@@ -21,7 +21,7 @@ namespace ViewModel
             CurrentViewModel = ToEmployeePayroll.ViewModel;
         }
 
-        public NavigationCommand<EmployeePayrollManagementViewModel> ToEmployeePayroll;
-        public NavigationCommand<PayrollTypesViewModel> ToPayrollTypes;
+        public NavigationCommand<EmployeePayrollManagementViewModel> ToEmployeePayroll { get; set; }
+        public NavigationCommand<PayrollTypesViewModel> ToPayrollTypes { get; set; }
     }
 }
