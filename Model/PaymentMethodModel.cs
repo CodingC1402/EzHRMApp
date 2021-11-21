@@ -37,6 +37,11 @@ namespace Model
             NgayTinhLuongThangNay = ngayTinhLuongThangNay;
         }
 
+        public static PaymentMethodModel GetMethodModel(string name)
+        {
+            return new PaymentMethodModel(PaymentMethodRepo.Instance.FindByID(new object[] { name }));
+        }
+
         //public string Delete()
         //{
         //    if (IsSpecialType)

@@ -32,28 +32,5 @@ namespace EzHRMApp.Views
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-        // Clamp value
-        private void TextBoxEx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            float value = 0;
-            bool isFloat = float.TryParse(textBox.Text, out value);
-            if (!isFloat)
-            {
-                textBox.Text = "0";
-            }
-            else
-            {
-                if (value > 30)
-                {
-                    textBox.Text = "30";
-                }
-                else if (value < 0)
-                {
-                    textBox.Text = "0";
-                }
-            }
-        }
     }
 }
