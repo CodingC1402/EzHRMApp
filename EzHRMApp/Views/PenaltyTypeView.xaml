@@ -272,6 +272,7 @@
                 IsReadOnly="True"
                 ItemsSource="{Binding Collections}"
                 SearchChanged="searchChanged"
+                SearchComboboxWidth="150"
                 SelectedItem="{Binding SelectedPenalty}">
                 <controls:DatagridEx.Columns>
                     <DataGridTextColumn

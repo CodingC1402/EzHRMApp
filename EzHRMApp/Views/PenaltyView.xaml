@@ -280,7 +280,7 @@
                         Binding="{Binding SoTienTru, StringFormat={}{0:N2}}"
                         Header="Flat deduction" />
                     <DataGridTextColumn
-                        Width="110"
+                        Width="*"
                         MinWidth="110"
                         Binding="{Binding SoPhanTramTru, StringFormat={}{0:N2}%}"
                         Header="Percentage deduction" />
