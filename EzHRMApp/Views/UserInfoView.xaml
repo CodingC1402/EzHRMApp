@@ -119,6 +119,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -168,6 +170,14 @@
                         </Label>
                         <Label Grid.Column="1" Grid.Row="3" Content="{Binding UserInfo.NgaySinh}" />
                         <Label Grid.Column="1" Grid.Row="4" Content="{Binding UserInfo.CMND}" />
+
+                        <Label Grid.Column="2" Grid.Row="1" Content="Working since:" />
+                        <Label Grid.Column="2" Grid.Row="2" Content="Role:" />
+                        <Label Grid.Column="2" Grid.Row="3" Content="Department:" />
+
+                        <Label Grid.Column="3" Grid.Row="1" Content="{Binding UserInfo.NgayVaoLam}" />
+                        <Label Grid.Column="3" Grid.Row="2" Content="{Binding UserInfo.ChucVu}" />
+                        <Label Grid.Column="3" Grid.Row="3" Content="{Binding UserInfo.PhongBan}" />
                     </Grid>
                 </Grid>
             </Border>
