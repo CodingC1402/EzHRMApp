@@ -40,8 +40,11 @@
         <DataTemplate DataType="{x:Type viewModel:RoleManagementViewModel}">
             <view:RoleManagementView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PayRollManagementViewModel}">
-            <view:PayRollMangementView />
+        <DataTemplate DataType="{x:Type viewModel:EmployeePayrollManagementViewModel}">
+            <view:EmployeePayrollManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PayrollTypesViewModel}">
+            <view:PayrollTypesView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:PenaltyViewModel}">
             <view:PenaltyView />
@@ -287,20 +290,19 @@
                                 Path="{StaticResource dashboardIcon}" />
 
                             <controls:RadioButtonEx
-                                x:Name="weeklySchedule"
-                                Click="TabButtonClicked"
-                                Command="{Binding ToWeeklyScheduleView}"
-                                Content="Weekly Schedule"
-                                GroupName="TabButtons"
-                                Path="{StaticResource calendarIcon}" />
-
-                            <controls:RadioButtonEx
                                 x:Name="checkInBtn"
                                 Click="TabButtonClicked"
                                 Command="{Binding ToCheckInManagementView}"
                                 Content="Check-Ins"
                                 GroupName="TabButtons"
                                 Path="{StaticResource clockIcon}" />
+
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
+                                Command="{Binding ToLeavesView}"
+                                Content="Leaves"
+                                GroupName="TabButtons"
+                                Path="{DynamicResource leaveIcon}" />
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
@@ -311,31 +313,17 @@
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
-                                Command="{Binding ToDepartmentView}"
-                                Content="Departments"
-                                GroupName="TabButtons"
-                                Path="{DynamicResource CompanyIcon}" />
-
-                            <controls:RadioButtonEx
-                                Click="TabButtonClicked"
                                 Command="{Binding ToRoleManagementView}"
                                 Content="Positions"
                                 GroupName="TabButtons"
                                 Path="{DynamicResource suitcaseIcon}" />
-
+                            
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
-                                Command="{Binding ToAccountGroupsView}"
-                                Content="Account Groups"
+                                Command="{Binding ToDepartmentView}"
+                                Content="Departments"
                                 GroupName="TabButtons"
-                                Path="{DynamicResource accountGroup}" />
-
-                            <controls:RadioButtonEx
-                                Click="TabButtonClicked"
-                                Command="{Binding ToPayRollManagementView}"
-                                Content="Payrolls"
-                                GroupName="TabButtons"
-                                Path="{DynamicResource payRollIcon}" />
+                                Path="{DynamicResource CompanyIcon}" />
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
@@ -353,6 +341,20 @@
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
+                                Command="{Binding ToEmployeePayrollManagementView}"
+                                Content="Payroll"
+                                GroupName="TabButtons"
+                                Path="{DynamicResource payRollIcon}" />
+
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
+                                Command="{Binding ToPayrollTypesView}"
+                                Content="Payroll Types"
+                                GroupName="TabButtons"
+                                Path="{DynamicResource payRollIcon}" />
+
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
                                 Command="{Binding ToReportsView}"
                                 Content="Reports"
                                 GroupName="TabButtons"
@@ -360,10 +362,10 @@
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
-                                Command="{Binding ToLeavesView}"
-                                Content="Leaves"
+                                Command="{Binding ToAccountGroupsView}"
+                                Content="Account Groups"
                                 GroupName="TabButtons"
-                                Path="{DynamicResource leaveIcon}" />
+                                Path="{DynamicResource accountGroup}" />
 
                             <controls:RadioButtonEx
                                 x:Name="schedule"
@@ -372,6 +374,14 @@
                                 Content="Schedule"
                                 GroupName="TabButtons"
                                 Path="{StaticResource companyRuleIcon}" />
+
+                            <controls:RadioButtonEx
+                                x:Name="weeklySchedule"
+                                Click="TabButtonClicked"
+                                Command="{Binding ToWeeklyScheduleView}"
+                                Content="Weekly Schedule"
+                                GroupName="TabButtons"
+                                Path="{StaticResource calendarIcon}" />
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

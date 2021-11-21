@@ -9,7 +9,7 @@ namespace DAL.Rows
     public class AccountGroup : Row
     {
         public string TenNhomTaiKhoan { get; set; }
-        public int QuyenHan { get; set; }
+        public uint QuyenHan { get; set; }
         public bool DaXoa { get; set; }
 
         public AccountGroup(AccountGroup ag)

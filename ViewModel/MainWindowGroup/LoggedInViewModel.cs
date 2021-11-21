@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Model;
+using Model.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using ViewModel.Structs;
 
 namespace ViewModel
 {
-    public class LoggedInViewModel : Navigation.NavigationViewModel
+    public class LoggedInViewModel : NavigationViewModel
     {
         public override string ViewName => "Main";
 
@@ -45,47 +46,50 @@ namespace ViewModel
             ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
 
-            ToUserInfo = new NavigationCommand<UserInfoViewModel>(new UserInfoViewModel(), this, 0);
+            ToUserInfo = new NavigationCommand<UserInfoViewModel>(new UserInfoViewModel(), this, QuyenHanBitmask.UserInfo);
             ViewModels.Add(ToUserInfo.ViewModel);
 
-            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, 0);
-            ViewModels.Add(ToDashboard.ViewModel);
-
-            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, 0);
-            ViewModels.Add(ToScheduleManagementView.ViewModel);
-
-            ToWeeklyScheduleView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, 0);
+            ToWeeklyScheduleView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, QuyenHanBitmask.WeeklySchedule);
             ViewModels.Add(ToWeeklyScheduleView.ViewModel);
 
-            ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, 0);
+            ToDashboard = new NavigationCommand<DashboardViewModel>(new DashboardViewModel(), this, QuyenHanBitmask.Dashboard);
+            ViewModels.Add(ToDashboard.ViewModel);
+
+            ToStaffView = new NavigationCommand<StaffsViewModel>(new StaffsViewModel(), this, QuyenHanBitmask.Staff);
             ViewModels.Add(ToStaffView.ViewModel);
 
-            ToDepartmentView = new NavigationCommand<DepartmentViewModel>(new DepartmentViewModel(), this, 0);
-            ViewModels.Add(ToDepartmentView.ViewModel);
-
-            ToRoleManagementView = new NavigationCommand<RoleManagementViewModel>(new RoleManagementViewModel(), this, 0);
-            ViewModels.Add(ToRoleManagementView.ViewModel);
-
-            ToPayRollManagementView = new NavigationCommand<PayRollManagementViewModel>(new PayRollManagementViewModel(), this, 0);
-            ViewModels.Add(ToPayRollManagementView.ViewModel);
-
-            ToPenaltyView = new NavigationCommand<PenaltyViewModel>(new PenaltyViewModel(), this, 0);
-            ViewModels.Add(ToPenaltyView.ViewModel);
-
-            ToReportsView = new NavigationCommand<ReportsViewModel>(new ReportsViewModel(), this, 0);
-            ViewModels.Add(ToReportsView.ViewModel);
-
-            ToCheckInManagementView = new NavigationCommand<CheckInManagementViewModel>(new CheckInManagementViewModel(), this, 0);
+            ToCheckInManagementView = new NavigationCommand<CheckInManagementViewModel>(new CheckInManagementViewModel(), this, QuyenHanBitmask.CheckInManagement);
             ViewModels.Add(ToCheckInManagementView.ViewModel);
 
-            ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, 0);
-            ViewModels.Add(ToAccountGroupsView.ViewModel);
-
-            ToLeavesView = new NavigationCommand<LeavesViewModel>(new LeavesViewModel(), this, 0);
+            ToLeavesView = new NavigationCommand<LeavesViewModel>(new LeavesViewModel(), this, QuyenHanBitmask.Leaves);
             ViewModels.Add(ToLeavesView.ViewModel);
 
-            ToPenaltyTypeView = new NavigationCommand<PenaltyTypeViewModel>(new PenaltyTypeViewModel(), this, 0);
+            ToPenaltyView = new NavigationCommand<PenaltyViewModel>(new PenaltyViewModel(), this, QuyenHanBitmask.Penalty);
+            ViewModels.Add(ToPenaltyView.ViewModel);
+
+            ToEmployeePayrollManagementView = new NavigationCommand<EmployeePayrollManagementViewModel>(new EmployeePayrollManagementViewModel(), this, QuyenHanBitmask.EmployeePayroll);
+            ViewModels.Add(ToEmployeePayrollManagementView.ViewModel);
+
+            ToReportsView = new NavigationCommand<ReportsViewModel>(new ReportsViewModel(), this, QuyenHanBitmask.Reports);
+            ViewModels.Add(ToReportsView.ViewModel);
+
+            ToRoleManagementView = new NavigationCommand<RoleManagementViewModel>(new RoleManagementViewModel(), this, QuyenHanBitmask.Roles);
+            ViewModels.Add(ToRoleManagementView.ViewModel);
+
+            ToDepartmentView = new NavigationCommand<DepartmentViewModel>(new DepartmentViewModel(), this, QuyenHanBitmask.Departments);
+            ViewModels.Add(ToDepartmentView.ViewModel);
+
+            ToPayrollTypesView = new NavigationCommand<PayrollTypesViewModel>(new PayrollTypesViewModel(), this, QuyenHanBitmask.PayrollTypes);
+            ViewModels.Add(ToPayrollTypesView.ViewModel);
+
+            ToPenaltyTypeView = new NavigationCommand<PenaltyTypeViewModel>(new PenaltyTypeViewModel(), this, QuyenHanBitmask.PenaltyTypes);
             ViewModels.Add(ToPenaltyTypeView.ViewModel);
+
+            ToAccountGroupsView = new NavigationCommand<AccountGroupsViewModel>(new AccountGroupsViewModel(), this, QuyenHanBitmask.AccountGroups);
+            ViewModels.Add(ToAccountGroupsView.ViewModel);
+
+            ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, QuyenHanBitmask.ScheduleManagement);
+            ViewModels.Add(ToScheduleManagementView.ViewModel);
 
             ToHomeView.Execute(null);
         }
@@ -112,7 +116,8 @@ namespace ViewModel
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
         public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
         public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
-        public NavigationCommand<PayRollManagementViewModel> ToPayRollManagementView { get; set; }
+        public NavigationCommand<EmployeePayrollManagementViewModel> ToEmployeePayrollManagementView { get; set; }
+        public NavigationCommand<PayrollTypesViewModel> ToPayrollTypesView { get; set; }
         public NavigationCommand<PenaltyViewModel> ToPenaltyView { get; set; }
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }

@@ -158,10 +158,10 @@ namespace ViewModel
             } , null);
 
         public RelayCommand<object> CheckInToggleCommand => _checkInCommand ??=
-            new RelayCommand<object>(obj => CurrentAccountGroup.CheckInViewPermission = !CurrentAccountGroup.CheckInViewPermission, null);
+            new RelayCommand<object>(obj => CurrentAccountGroup.CheckInManagementViewPermission = !CurrentAccountGroup.CheckInManagementViewPermission, null);
 
         public RelayCommand<object> ScheduleToggleCommand => _scheduleCommand ??=
-            new RelayCommand<object>(obj => CurrentAccountGroup.ScheduleViewPermission = !CurrentAccountGroup.ScheduleViewPermission, null);
+            new RelayCommand<object>(obj => CurrentAccountGroup.WeeklyScheduleViewPermission = !CurrentAccountGroup.WeeklyScheduleViewPermission, null);
 
         public RelayCommand<object> StaffToggleCommand => _staffCommand ??=
             new RelayCommand<object>(obj => CurrentAccountGroup.StaffViewPermission = !CurrentAccountGroup.StaffViewPermission, null);
@@ -170,10 +170,10 @@ namespace ViewModel
             new RelayCommand<object>(obj => CurrentAccountGroup.DepartmentsViewPermission = !CurrentAccountGroup.DepartmentsViewPermission, null);
 
         public RelayCommand<object> PositionToggleCommand => _positionCommand ??=
-            new RelayCommand<object>(obj => CurrentAccountGroup.PositionsViewPermission = !CurrentAccountGroup.PositionsViewPermission, null);
+            new RelayCommand<object>(obj => CurrentAccountGroup.RolesViewPermission = !CurrentAccountGroup.RolesViewPermission, null);
 
         public RelayCommand<object> PayrollToggleCommand => _payrollCommand ??=
-            new RelayCommand<object>(obj => CurrentAccountGroup.PayrollViewPermission = !CurrentAccountGroup.PayrollViewPermission, null);
+            new RelayCommand<object>(obj => CurrentAccountGroup.EmployeePayrollViewPermission = !CurrentAccountGroup.EmployeePayrollViewPermission, null);
 
         public RelayCommand<object> AccountGroupToggleCommand => _accountGroupCommand ??=
             new RelayCommand<object>(obj => CurrentAccountGroup.AccountGroupsViewPermission = !CurrentAccountGroup.AccountGroupsViewPermission, null);
