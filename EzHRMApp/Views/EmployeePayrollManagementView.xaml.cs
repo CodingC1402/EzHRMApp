@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,22 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Win32;
-using Model;
 
 namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for MonthlyReportsView.xaml
+    /// Interaction logic for EmployeePayrollManagementView.xaml
     /// </summary>
-    public partial class MonthlyReportsView : UserControl
+    public partial class EmployeePayrollManagementView : UserControl
     {
-        public MonthlyReportsView()
+        public EmployeePayrollManagementView()
         {
             InitializeComponent();
         }
 
-        protected void filterTextChanged(object sender, RoutedEventArgs e)
+        private void DatagridEx_SearchChanged(object sender, RoutedEventArgs e)
         {
             UpdateFilter();
         }
@@ -36,28 +36,45 @@ namespace EzHRMApp.Views
         {
             datagridEx.SetCollectionFilter(obj =>
             {
-                MonthlyReportModel monthlyReport = obj as MonthlyReportModel;
+                var salary = obj as SalaryModel;
 
                 if (datagridEx.SearchText != "")
                 {
-                    if (!int.TryParse(datagridEx.SearchText, out int result))
+                    var searchText = datagridEx.SearchText;
+                    if (datagridEx.SearchFilter == "Pay date")
+                        return salary.NgayTinhLuong.ToString("dd/MM/yyyy").Contains(searchText);
+
+                    if (datagridEx.SearchFilter == "Employee ID")
+                        return salary.IDNhanVien.Contains(searchText);
+
+                    if (!float.TryParse(searchText, out float result))
                         return false;
 
                     switch (datagridEx.SearchFilter)
                     {
-                        case "Month":
-                            return monthlyReport.Thang == result;
-                        case "Year":
-                            return monthlyReport.Nam.ToString().Contains(datagridEx.SearchText);
-                        case "New employees":
-                            return monthlyReport.SoNhanVienMoi == result;
-                        case "Resigned employees":
-                            return monthlyReport.SoNhanVienThoiViec == result;
+                        case "Base salary":
+                            return salary.TienLuong == result;
+                        case "Deduction":
+                            return salary.TienTruLuong == result;
+                        case "Bonus":
+                            return salary.TienThuong == result;
+                        case "Total salary":
+                            return salary.TongTienLuong == result;
                     }
                 }
 
                 return true;
             });
+        }
+
+        private void allEmployeesCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            idTxt.IsEnabled = false;
+        }
+
+        private void allEmployeesCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            idTxt.IsEnabled = true;
         }
 
         private void exportBtn_Click(object sender, RoutedEventArgs e)
@@ -67,7 +84,7 @@ namespace EzHRMApp.Views
                 exportBtn.CommandParameter = "date-picker-empty";
                 return;
             }
-            else if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
+            if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
             {
                 exportBtn.CommandParameter = "date-picker-end-date-earlier";
                 return;
@@ -85,12 +102,6 @@ namespace EzHRMApp.Views
             {
                 exportBtn.CommandParameter = save.FileName;
             }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            startDatepicker.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1);
-            endDatepicker.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1);
         }
     }
 }

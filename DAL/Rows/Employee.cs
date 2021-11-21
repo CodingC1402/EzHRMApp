@@ -4,24 +4,52 @@ using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CsvHelper.Configuration.Attributes;
 
 namespace DAL.Rows
 {
     public class Employee : Row
     {
+        [Index(0)]
         public string ID { get; set; }
+
+        [Index(1)]
         public string Ho { get; set; }
+        
+        [Index(2)]
         public string Ten { get; set; }
+
+        [Index(3)]
         public string CMND { get; set; }
+
+        [Index(4)]
         public DateTime NgaySinh { get; set; }
+
+        [Index(5)]
         public string EmailVanPhong { get; set; }
+
+        [Index(6)]
         public string EmailCaNhan { get; set; }
+
+        [Index(7)]
         public string SDTVanPhong { get; set; }
+
+        [Index(8)]
         public string SDTCaNhan { get; set; }
+
+        [Index(9)]
         public DateTime NgayVaoLam { get; set; }
+
+        [Index(10)]
         public DateTime? NgayThoiViec { get; set; }
+
+        [Index(11)]
         public string PhongBan { get; set; }
+
+        [Index(12)]
         public string ChucVu { get; set; }
+
+        [Index(13)]
         public string TaiKhoan {get; set;}
 
         public Employee() { }
