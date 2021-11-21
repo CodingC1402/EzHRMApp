@@ -10,6 +10,7 @@ namespace DAL.Rows
     {
         public const string BeingLate = "DiTre";
         public const string Absence = "VangMat";
+        public const string GoHomeEarly = "VeSom";
 
         public int ID { get; set; }
         public DateTime Ngay { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CornControls.CustomControl;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,46 +40,33 @@ namespace EzHRMApp.Views
             }
             else
             {
-                //datagridEx.SetCollectionFilter(obj =>
-                //{
-                //    RoleModel role = obj as RoleModel;
-                //    if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && role.DaXoa == 1)
-                //    {
-                //        return false;
-                //    }
+                datagridEx.SetCollectionFilter(obj =>
+                {
+                    PenaltyModel role = obj as PenaltyModel;
 
-                //    if (datagridEx.SearchText != "")
-                //    {
-                //        var searchText = datagridEx.SearchText;
-                //        switch (datagridEx.SearchFilter)
-                //        {
-                //            case "Name":
-                //                return role.TenChucVu.Contains(searchText);
-                //            case "Salary by":
-                //                return role.CachTinhLuong.Contains(searchText);
-                //            case "Hourly Wage":
-                //                return role.TienLuongMoiGio.ToString().Contains(searchText);
-                //            case "Monthly Wage":
-                //                return role.TienLuongMoiThang.ToString().Contains(searchText);
-                //            case "Overtime %":
-                //                return role.PhanTramLuongNgoaiGio.ToString().Contains(searchText);
-                //        }
-                //    }
+                    if (datagridEx.SearchText != "")
+                    {
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
+                        {
+                            case "ID":
+                                return role.ID.ToString().Contains(searchText);
+                            case "Date":
+                                return role.Ngay.ToString("dd/MM/yyyy").Contains(searchText);
+                            case "Employee ID":
+                                return role.IDNhanVien.Contains(searchText);
+                            case "Penalty Type":
+                                return role.TenViPham.Contains(searchText);
+                            case "Flat deduction":
+                                return role.SoTienTru.ToString("N2").Contains(searchText);
+                            case "Percentage deduction":
+                                return $"{role.SoPhanTramTru.ToString("N2")}%".Contains(searchText);
+                        }
+                    }
 
-                //    return true;
-                //});
+                    return true;
+                });
             }
-        }
-
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // Popup message not work like messagebox || Need changing
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this penalty?", "Warning", MessageBoxButton.OKCancel);
-
-            if (result == MessageBoxResult.OK)
-                deleteBtn.CommandParameter = true;
-            else
-                deleteBtn.CommandParameter = false;
         }
     }
 }

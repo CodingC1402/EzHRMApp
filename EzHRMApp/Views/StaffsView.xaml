@@ -800,13 +800,13 @@
                 Unchecked="searchChanged" />
             <controls:ButtonEx
                 x:Name="importBtn"
-                Content="Import from CSV"
                 Click="importBtn_Click"
-                Command="{Binding ImportCommand}">
+                Command="{Binding ImportCommand}"
+                Content="Import from CSV">
                 <controls:ButtonEx.Style>
                     <Style TargetType="controls:ButtonEx">
                         <Setter Property="Width" Value="140" />
-                        <Setter Property="Height" Value="40" />
+                        <Setter Property="Height" Value="35" />
                         <Setter Property="Margin" Value="10,7,0,0" />
                         <Setter Property="HorizontalAlignment" Value="Left" />
                         <Setter Property="VerticalAlignment" Value="Top" />

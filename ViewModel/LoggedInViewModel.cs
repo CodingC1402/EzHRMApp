@@ -84,6 +84,9 @@ namespace ViewModel
             ToLeavesView = new NavigationCommand<LeavesViewModel>(new LeavesViewModel(), this, 0);
             ViewModels.Add(ToLeavesView.ViewModel);
 
+            ToPenaltyTypeView = new NavigationCommand<PenaltyTypeViewModel>(new PenaltyTypeViewModel(), this, 0);
+            ViewModels.Add(ToPenaltyTypeView.ViewModel);
+
             ToHomeView.Execute(null);
         }
 
@@ -115,5 +118,6 @@ namespace ViewModel
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
         public NavigationCommand<LeavesViewModel> ToLeavesView { get; set; }
+        public NavigationCommand<PenaltyTypeViewModel> ToPenaltyTypeView { get; set; }
     }
 }
