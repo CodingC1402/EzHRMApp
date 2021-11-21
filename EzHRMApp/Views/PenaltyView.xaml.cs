@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CornControls.CustomControl;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,48 @@ namespace EzHRMApp.Views
         public PenaltyView()
         {
             InitializeComponent();
+        }
+
+        protected void searchChanged(object sender, RoutedEventArgs e)
+        {
+            UpdateFilter();
+        }
+
+        protected virtual void UpdateFilter()
+        {
+            if (datagridEx.SearchText == "")
+            {
+                datagridEx.SetCollectionFilter(null);
+            }
+            else
+            {
+                datagridEx.SetCollectionFilter(obj =>
+                {
+                    PenaltyModel role = obj as PenaltyModel;
+
+                    if (datagridEx.SearchText != "")
+                    {
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
+                        {
+                            case "ID":
+                                return role.ID.ToString().Contains(searchText);
+                            case "Date":
+                                return role.Ngay.ToString("dd/MM/yyyy").Contains(searchText);
+                            case "Employee ID":
+                                return role.IDNhanVien.Contains(searchText);
+                            case "Penalty Type":
+                                return role.TenViPham.Contains(searchText);
+                            case "Flat deduction":
+                                return role.SoTienTru.ToString("N2").Contains(searchText);
+                            case "Percentage deduction":
+                                return $"{role.SoPhanTramTru.ToString("N2")}%".Contains(searchText);
+                        }
+                    }
+
+                    return true;
+                });
+            }
         }
     }
 }

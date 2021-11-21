@@ -7,42 +7,36 @@ using ViewModel.Helper;
 
 namespace ViewModel
 {
-    public class LeavesViewModel : Navigation.CRUDViewModelBase
+    public class PenaltyTypeViewModel : Navigation.CRUDViewModelBase
     {
-        public override string ViewName => "Leaves";
+        public override string ViewName => "Penalty tempaltes";
 
-        public ObservableCollection<LeaveModel> Collection { get; set; }
+        public ObservableCollection<PenaltyTypeModel> Collections { get; set; }
 
-        private LeaveModel _selectedModel = null;
-        public LeaveModel SelectedModel 
+        private PenaltyTypeModel _selectedPenalty;
+        public PenaltyTypeModel SelectedPenalty 
         {
-            get => _selectedModel;
+            get => _selectedPenalty;
             set
             {
-                _selectedModel = value;
-                ViewingModel = value;
+                _selectedPenalty = value;
                 StartUpdateCommand.RaiseCanExecuteChangeEvent();
                 DeleteCommand.RaiseCanExecuteChangeEvent();
+                CurrentPenalty = value;
             }
         }
-        public bool IsNotInAddMode { get => !IsInAddMode; }
+        public PenaltyTypeModel CurrentPenalty { get; set; }
+        public bool NameIsReadOnly { get; set; } = true;
 
-        private bool _waitingForDeleteConfirmation = false;
+        private bool _waitingForDeleteConfirmation;
         private RelayCommand<object> _deleteCommand;
         public RelayCommand<object> DeleteCommand => _deleteCommand ??= new RelayCommand<object>(param => {
             PopUpMessage.Instance.Message = "Are you sure you want to delete this?";
             _waitingForDeleteConfirmation = true;
             ShowConfirmation = true;
         }, param => {
-            return SelectedModel != null && SelectedModel.CanDelete();
+            return SelectedPenalty != null && !SelectedPenalty.IsSpecialType;
         });
-        public LeaveModel ViewingModel { get; set; }
-
-        public override void ExecuteUpdate(object param)
-        {
-            base.ExecuteUpdate(param);
-            ViewingModel = new LeaveModel(_selectedModel);
-        }
 
         protected override void PopUpMessageClosed(object sender, EventArgs e)
         {
@@ -52,12 +46,11 @@ namespace ViewModel
                 _waitingForDeleteConfirmation = false;
                 if (MessageResult == PopUpMessage.Result.Ok)
                 {
-                    string result = SelectedModel.Delete();
+                    string result = SelectedPenalty.Delete();
                     if (result == "")
                     {
-                        Collection.Remove(SelectedModel);
-                        SelectedModel = null;
-                        DeleteCommand.RaiseCanExecuteChangeEvent();
+                        Collections.Remove(SelectedPenalty);
+                        SelectedPenalty = null;
                     }
                     else
                     {
@@ -71,19 +64,22 @@ namespace ViewModel
         public override void ExecuteAdd(object param)
         {
             base.ExecuteAdd(param);
-            RaisePropertyChanged(nameof(IsNotInAddMode));
-            ViewingModel = new LeaveModel
-            {
-                NgayBatDauNghi = DateTime.Today
-            };
+            NameIsReadOnly = false;
+            CurrentPenalty = new PenaltyTypeModel();
+        }
+
+        public override void ExecuteUpdate(object param)
+        {
+            base.ExecuteUpdate(param);
+            CurrentPenalty = new PenaltyTypeModel(_selectedPenalty);
         }
 
         public override void ExecuteConfirmAdd(object param)
         {
-            string result = ViewingModel.Add();
+            string result = CurrentPenalty.Add();
             if (result == "")
             {
-                Collection.Add(ViewingModel);
+                Collections.Add(CurrentPenalty);
                 base.ExecuteConfirmAdd(param);
             }
             else
@@ -95,13 +91,13 @@ namespace ViewModel
 
         public override void ExecuteConfirmUpdate(object param)
         {
-            string result = ViewingModel.Save();
+            string result = CurrentPenalty.Save();
             if (result == "")
             {
-                SelectedModel.NgayBatDauNghi = ViewingModel.NgayBatDauNghi;
-                SelectedModel.IDNhanVien = ViewingModel.IDNhanVien;
-                SelectedModel.LyDoNghi = ViewingModel.LyDoNghi;
-                SelectedModel.SoNgayNghi = ViewingModel.SoNgayNghi;
+                SelectedPenalty.TenViPham = CurrentPenalty.TenViPham;
+                SelectedPenalty.TruLuongTheoPhanTram = CurrentPenalty.TruLuongTheoPhanTram;
+                SelectedPenalty.TruLuongTrucTiep = CurrentPenalty.TruLuongTrucTiep;
+
                 base.ExecuteConfirmUpdate(param);
             }
             else
@@ -111,24 +107,25 @@ namespace ViewModel
             }
         }
 
+        public override bool CanExecuteUpdateStart(object param)
+        {
+            return base.CanExecuteUpdateStart(param) && _selectedPenalty != null;
+        }
+
         protected override void OnModeChangeBack()
         {
             base.OnModeChangeBack();
-            ViewingModel = SelectedModel;
-        }
-
-        public override bool CanExecuteUpdateStart(object param)
-        {
-            return base.CanExecuteUpdateStart(param) && _selectedModel.CanDelete();
+            CurrentPenalty = SelectedPenalty;
+            NameIsReadOnly = true;
         }
 
         public override void OnGetTo()
         {
             base.OnGetTo();
-            Collection = LeaveModel.GetAll();
-            if (Collection.Count > 0)
+            Collections = PenaltyTypeModel.LoadAll();
+            if (Collections != null && Collections.Count > 0)
             {
-                 SelectedModel = Collection[0];
+                SelectedPenalty = Collections[0];
             }
         }
     }

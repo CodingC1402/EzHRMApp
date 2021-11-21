@@ -10,6 +10,7 @@ namespace DAL.Rows
     {
         public const string BeingLate = "DiTre";
         public const string Absence = "VangMat";
+        public const string GoHomeEarly = "VeSom";
 
         public int ID { get; set; }
         public DateTime Ngay { get; set; }
@@ -60,6 +61,23 @@ namespace DAL.Rows
             }
 
             if (PenaltyRepo.Instance.Update(new object[] { ID }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public string Delete(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    PenaltyRepo.Instance.Remove(new object[] { ID }, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (PenaltyRepo.Instance.Remove(new object[] { ID }, uow))
                 return "";
             else
                 return "Failed!";

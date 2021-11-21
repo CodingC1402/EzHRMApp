@@ -18,11 +18,11 @@ using System.Windows.Shapes;
 namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for LeavesView.xaml
+    /// Interaction logic for PenaltyTypeView.xaml
     /// </summary>
-    public partial class LeavesView : UserControl
+    public partial class PenaltyTypeView : UserControl
     {
-        public LeavesView()
+        public PenaltyTypeView()
         {
             InitializeComponent();
         }
@@ -42,20 +42,18 @@ namespace EzHRMApp.Views
             {
                 datagridEx.SetCollectionFilter(obj =>
                 {
-                    LeaveModel role = obj as LeaveModel;
+                    PenaltyTypeModel role = obj as PenaltyTypeModel;
                     if (datagridEx.SearchText != "")
                     {
                         var searchText = datagridEx.SearchText;
                         switch (datagridEx.SearchFilter)
                         {
-                            case "Employee ID":
-                                return role.IDNhanVien.Contains(searchText);
-                            case "Date":
-                                return role.NgayBatDauNghi.ToString("dd/MM/yyyy").Contains(searchText);
-                            case "Amount of days":
-                                return role.SoNgayNghi.ToString().Contains(searchText);
-                            case "Reasons":
-                                return role.LyDoNghi.ToString().Contains(searchText);
+                            case "Name":
+                                return role.TenViPham.Contains(searchText);
+                            case "Percentage deduction":
+                                return $"{role.TruLuongTheoPhanTram.ToString("N2")}%".Contains(searchText);
+                            case "Flat deduction":
+                                return role.TruLuongTrucTiep.ToString("N2").Contains(searchText);
                         }
                     }
 
