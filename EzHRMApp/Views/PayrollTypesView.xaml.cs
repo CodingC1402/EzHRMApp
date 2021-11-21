@@ -42,18 +42,23 @@ namespace EzHRMApp.Views
             {
                 datagridEx.SetCollectionFilter(obj =>
                 {
-                    PenaltyTypeModel role = obj as PenaltyTypeModel;
+                    PaymentMethodModel method = obj as PaymentMethodModel;
                     if (datagridEx.SearchText != "")
                     {
                         var searchText = datagridEx.SearchText;
                         switch (datagridEx.SearchFilter)
                         {
                             case "Name":
-                                return role.TenViPham.Contains(searchText);
-                            case "Percentage deduction":
-                                return $"{role.TruLuongTheoPhanTram.ToString("N2")}%".Contains(searchText);
-                            case "Flat deduction":
-                                return role.TruLuongTrucTiep.ToString("N2").Contains(searchText);
+                                return method.Ten.Contains(searchText);
+                            case "Payment term":
+                                return method.KyHanTraLuongTheoNgay.ToString().Contains(searchText);
+                            case "Payroll date":
+                                if (method.NgayTinhLuongThangNay.HasValue)
+                                    return method.NgayTinhLuongThangNay.Value.ToShortDateString().Contains(searchText);
+                                else
+                                    break;
+                            case "Latest date":
+                                return method.LanTraLuongCuoi.ToShortDateString().Contains(searchText);
                         }
                     }
 
@@ -68,12 +73,6 @@ namespace EzHRMApp.Views
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void PercentValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
         // Clamp value
         private void TextBoxEx_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -86,9 +85,9 @@ namespace EzHRMApp.Views
             }
             else
             {
-                if (value > 100)
+                if (value > 30)
                 {
-                    textBox.Text = "100";
+                    textBox.Text = "30";
                 }
                 else if (value < 0)
                 {

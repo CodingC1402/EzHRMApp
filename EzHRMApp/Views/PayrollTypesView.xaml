@@ -18,7 +18,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Margin="10">
+        <Grid Margin="20,10">
             <Grid.Resources>
                 <Style x:Key="ButtonExStyle" TargetType="controls:ButtonEx">
                     <Setter Property="Width" Value="140" />
@@ -120,9 +120,9 @@
 
             <Grid Grid.Row="1" MinWidth="500">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -142,34 +142,70 @@
                 </Grid.Resources>
 
                 <TextBlock Text="Name: " />
+                <TextBlock Grid.Row="1" Text="Payment term:" />
                 <TextBlock
-                    Grid.Row="0"
                     Grid.Column="2"
-                    Text="Flat deduction:" />
+                    Text="Lasted date:" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="2"
-                    Text="Percentage deduction:" />
+                    Text="Payroll date:" />
 
                 <controls:TextBoxEx
                     Grid.Column="1"
                     Margin="20,0"
-                    IsReadOnly="{Binding NameIsReadOnly}"
-                    Text="{Binding CurrentPenalty.TenViPham}" />
-                <controls:TextBoxEx
+                    IsReadOnly="{Binding IsInNormalAndUpdateMode}"
+                    Text="{Binding CurrentMethod.Ten}" />
+                <controls:DatePickerEx
                     Grid.Column="3"
+                    Margin="20,15"
+                    IsEnabled="{Binding IsInCRUDMode}"
+                    IsReadOnly="{Binding IsInNormalMode}"
+                    SelectedDate="{Binding CurrentMethod.LanTraLuongCuoi}" />
+                <controls:TextBoxEx
+                    Grid.Row="1"
+                    Grid.Column="1"
                     Margin="20,0"
                     IsReadOnly="{Binding IsInNormalMode}"
                     PreviewTextInput="NumberValidationTextBox"
-                    Text="{Binding CurrentPenalty.TruLuongTrucTiep}" />
-                <controls:TextBoxEx
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Margin="20,0"
-                    IsReadOnly="{Binding IsInNormalMode}"
-                    PreviewTextInput="PercentValidationTextBox"
-                    Text="{Binding CurrentPenalty.TruLuongTheoPhanTram}"
+                    Text="{Binding CurrentMethod.KyHanTraLuongTheoNgay}"
                     TextChanged="TextBoxEx_TextChanged" />
+                <Grid
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <controls:DatePickerEx
+                            x:Name="shutDownDatePicker"
+                            IsEnabled="{Binding IsInCRUDMode}"
+                            SelectedDate="{Binding CurrentMethod.NgayTinhLuongThangNay}" />
+                    <controls:ButtonEx
+                            Grid.Column="1"
+                            Width="20"
+                            Margin="0,5,5,5"
+                            HorizontalAlignment="Center"
+                            Background="{DynamicResource Accent}"
+                            Command="{Binding ElementName=shutDownDatePicker, Path=ClearCalendar}"
+                            CornerRadius="5"
+                            HoverColor="{DynamicResource AccentBright}"
+                            IconPad="20"
+                            IconSize="20"
+                            Path="{DynamicResource xCircleIconSM}"
+                            PressedColor="{DynamicResource AccentReallyBright}">
+                        <controls:ButtonEx.Style>
+                            <Style TargetType="controls:ButtonEx">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </controls:ButtonEx.Style>
+                    </controls:ButtonEx>
+                </Grid>
             </Grid>
 
             <StackPanel
@@ -246,16 +282,6 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,10">
-            <Grid.Resources>
-                <Style TargetType="CheckBox">
-                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                    <Setter Property="FontSize" Value="13" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-            </Grid.Resources>
-
             <controls:DatagridEx
                 x:Name="datagridEx"
                 Grid.Row="1"
@@ -264,26 +290,31 @@
                 Background="{DynamicResource DarkerBackColor}"
                 IsEnabled="{Binding IsInNormalMode}"
                 IsReadOnly="True"
-                ItemsSource="{Binding Collections}"
+                ItemsSource="{Binding PaymentMethods}"
                 SearchChanged="searchChanged"
-                SelectedItem="{Binding SelectedPenalty}">
+                SelectedItem="{Binding SelectedMethod}">
                 <controls:DatagridEx.Columns>
                     <DataGridTextColumn
                         Width="200"
                         MinWidth="200"
-                        Binding="{Binding TenViPham}"
+                        Binding="{Binding Ten}"
                         FontWeight="Bold"
                         Header="Name" />
                     <DataGridTextColumn
                         Width="200"
                         MinWidth="200"
-                        Binding="{Binding TruLuongTheoPhanTram, StringFormat={}{0:N2}%}"
-                        Header="Percentage deduction" />
+                        Binding="{Binding KyHanTraLuongTheoNgay}"
+                        Header="Payment Term" />
                     <DataGridTextColumn
                         Width="*"
                         MinWidth="200"
-                        Binding="{Binding TruLuongTrucTiep}"
-                        Header="Flat deduction" />
+                        Binding="{Binding LanTraLuongCuoi, StringFormat=d}"
+                        Header="Latest Date" />
+                    <DataGridTextColumn
+                        Width="*"
+                        MinWidth="200"
+                        Binding="{Binding NgayTinhLuongThangNay, StringFormat=d}"
+                        Header="Payroll date" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
         </Grid>
