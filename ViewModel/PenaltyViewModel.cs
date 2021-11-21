@@ -11,6 +11,7 @@ namespace ViewModel
     {
         public override string ViewName => "Penalty";
 
+        private bool _isWaitingForDeleteConfirmation = false;
         public static PenaltyViewModel Instance { get; private set; }
         public ObservableCollection<PenaltyModel> Penalties { get; set; }
         private PenaltyModel _selectedPenalty = null;
@@ -34,21 +35,30 @@ namespace ViewModel
 
         private void Delete(object param)
         {
-            if (param == null)
-                return;
+            _isWaitingForDeleteConfirmation = true;
+            PopUpMessage.Instance.Message = "Are you sure you wan't to delete this penalty";
+            ShowConfirmation = true;
+        }
 
-            if ((bool)param)
+        protected override void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            base.PopUpMessageClosed(sender, e);
+
+            if (_isWaitingForDeleteConfirmation)
             {
-                string result = SelectedPenalty.Delete();
-
-                if (result == "")
+                _isWaitingForDeleteConfirmation = false;
+                if (MessageResult == PopUpMessage.Result.Ok)
                 {
-                    Penalties.Remove(SelectedPenalty);
-                }
-                else
-                {
-                    ErrorString = result;
-                    HaveError = true;
+                    string result = SelectedPenalty.Delete();
+                    if (result == "")
+                    {
+                        Penalties.Remove(SelectedPenalty);
+                    }
+                    else
+                    {
+                        ErrorString = result;
+                        HaveError = true;
+                    }
                 }
             }
         }

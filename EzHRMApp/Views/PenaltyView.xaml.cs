@@ -69,16 +69,5 @@ namespace EzHRMApp.Views
                 //});
             }
         }
-
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // Popup message not work like messagebox || Need changing
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this penalty?", "Warning", MessageBoxButton.OKCancel);
-
-            if (result == MessageBoxResult.OK)
-                deleteBtn.CommandParameter = true;
-            else
-                deleteBtn.CommandParameter = false;
-        }
     }
 }

@@ -332,7 +332,7 @@
                                 Command="{Binding ToPayRollManagementView}"
                                 Content="Payrolls"
                                 GroupName="TabButtons"
-                                Path="{DynamicResource moneyIcon}" />
+                                Path="{DynamicResource payRollIcon}" />
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
