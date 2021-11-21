@@ -65,6 +65,23 @@ namespace DAL.Rows
                 return "Failed!";
         }
 
+        public string Delete(UnitOfWork uow = null)
+        {
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    PenaltyRepo.Instance.Remove(new object[] { ID }, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (PenaltyRepo.Instance.Remove(new object[] { ID }, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
         public override string CheckForError()
         {
             if (string.IsNullOrEmpty(GhiChu))
