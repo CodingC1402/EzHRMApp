@@ -11,6 +11,7 @@ namespace DAL.Rows
         public string TenViPham { get; set; }
         public float TruLuongTheoPhanTram { get; set; }
         public float TruLuongTrucTiep { get; set; }
+        public bool IsSpecialType { get => TenViPham == Penalty.GoHomeEarly || TenViPham == Penalty.BeingLate || TenViPham == Penalty.Absence; }
 
         public PenaltyType() { }
         public PenaltyType(PenaltyType penaltyType)
@@ -27,6 +28,13 @@ namespace DAL.Rows
                 using (var uowNew = new UnitOfWork())
                 {
                     PenaltyTypeRepo.Instance.Add(this, uowNew);
+
+                    PenaltyType penalty = PenaltyTypeRepo.Instance.FindByID(new object[] { TenViPham });
+                    if (penalty != null)
+                    {
+                        return "There is already a penalty of the same name!";
+                    }
+
                     return ExecuteAndReturn(uowNew);
                 }
             }
@@ -37,7 +45,7 @@ namespace DAL.Rows
                 return "Failed!";
         }
 
-        public override string Save(UnitOfWork uow = null)
+        public override string Save( UnitOfWork uow = null)
         {
             if (uow == null)
             {
@@ -52,6 +60,16 @@ namespace DAL.Rows
                 return "";
             else
                 return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            if (string.IsNullOrEmpty(TenViPham))
+            {
+                return "Penalty name can't be empty!";
+            }
+
+            return "";
         }
     }
 }

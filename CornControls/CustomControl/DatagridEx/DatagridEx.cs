@@ -119,7 +119,8 @@ namespace CornControls.CustomControl
         {
             base.OnItemsSourceChanged(oldValue, newValue);
             _collectionView = CollectionViewSource.GetDefaultView(newValue);
-            _collectionView.Filter = _filter;
+            if (_collectionView != null)
+                _collectionView.Filter = _filter;
         }
     }
 }

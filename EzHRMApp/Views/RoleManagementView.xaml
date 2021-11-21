@@ -97,104 +97,102 @@
 
             <TextBlock Text="Infos:" />
 
-            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto">
-                <Grid MinWidth="500">
+            <Grid Grid.Row="1" MinWidth="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid MinWidth="300" Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                    <Grid MinWidth="300" Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Label
-                            Grid.Row="0"
-                            VerticalAlignment="Center"
-                            Content="Name:" />
-                        <controls:TextBoxEx
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalAndUpdateMode}"
-                            Text="{Binding CurrentRole.TenChucVu}" />
-
-                        <Label
-                            Grid.Row="1"
-                            VerticalAlignment="Center"
-                            Content="Salary by:" />
-                        <controls:ComboBoxEx
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            DisplayMemberPath="Ten"
-                            IsEnabled="{Binding IsInCRUDMode}"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding CalculateSalary}"
-                            SelectedItem="{Binding SelectedCalculateSalary}" />
-
-                        <Label
-                            Grid.Row="2"
-                            VerticalAlignment="Center"
-                            Content="Account group:" />
-                        <controls:ComboBoxEx
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            DisplayMemberPath="TenNhomTaiKhoan"
-                            IsEnabled="{Binding IsInCRUDMode}"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding AccountGroups}"
-                            SelectedItem="{Binding SelectedAccountGroup}" />
-                    </Grid>
-                    <Grid
+                    <Label
+                        Grid.Row="0"
+                        VerticalAlignment="Center"
+                        Content="Name:" />
+                    <controls:TextBoxEx
                         Grid.Column="1"
-                        MinWidth="300"
-                        Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                        IsReadOnly="{Binding IsInNormalAndUpdateMode}"
+                        Text="{Binding CurrentRole.TenChucVu}" />
 
-                        <Label
-                            Grid.Row="0"
-                            VerticalAlignment="Center"
-                            Content="Hourly wage:" />
-                        <controls:TextBoxEx
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.TienLuongMoiGio}" />
+                    <Label
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        Content="Salary by:" />
+                    <controls:ComboBoxEx
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        DisplayMemberPath="Ten"
+                        IsEnabled="{Binding IsInCRUDMode}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding CalculateSalary}"
+                        SelectedItem="{Binding SelectedCalculateSalary}" />
 
-                        <Label
-                            Grid.Row="1"
-                            VerticalAlignment="Center"
-                            Content="Monthly wage:" />
-                        <controls:TextBoxEx
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.TienLuongMoiThang}" />
-
-                        <Label
-                            Grid.Row="2"
-                            VerticalAlignment="Center"
-                            Content="Overtime %:" />
-                        <controls:TextBoxEx
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}" />
-                    </Grid>
+                    <Label
+                        Grid.Row="2"
+                        VerticalAlignment="Center"
+                        Content="Account group:" />
+                    <controls:ComboBoxEx
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        DisplayMemberPath="TenNhomTaiKhoan"
+                        IsEnabled="{Binding IsInCRUDMode}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding AccountGroups}"
+                        SelectedItem="{Binding SelectedAccountGroup}" />
                 </Grid>
-            </ScrollViewer>
+                <Grid
+                    Grid.Column="1"
+                    MinWidth="300"
+                    Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        VerticalAlignment="Center"
+                        Content="Hourly wage:" />
+                    <controls:TextBoxEx
+                        Grid.Column="1"
+                        IsReadOnly="{Binding IsInNormalMode}"
+                        Text="{Binding CurrentRole.TienLuongMoiGio}" />
+
+                    <Label
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        Content="Monthly wage:" />
+                    <controls:TextBoxEx
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsReadOnly="{Binding IsInNormalMode}"
+                        Text="{Binding CurrentRole.TienLuongMoiThang}" />
+
+                    <Label
+                        Grid.Row="2"
+                        VerticalAlignment="Center"
+                        Content="Overtime %:" />
+                    <controls:TextBoxEx
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        IsReadOnly="{Binding IsInNormalMode}"
+                        Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}" />
+                </Grid>
+            </Grid>
 
             <Rectangle
                 x:Name="HideTheStupidSquare"

@@ -277,13 +277,13 @@
                     <DataGridTextColumn
                         Width="150"
                         MinWidth="150"
-                        Binding="{Binding SoTienTru}"
-                        Header="Minus Amount" />
+                        Binding="{Binding SoTienTru, StringFormat={}{0:N2}}"
+                        Header="Flat deduction" />
                     <DataGridTextColumn
                         Width="110"
                         MinWidth="110"
-                        Binding="{Binding SoPhanTramTru}"
-                        Header="Minus %" />
+                        Binding="{Binding SoPhanTramTru, StringFormat={}{0:N2}%}"
+                        Header="Percentage deduction" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
 

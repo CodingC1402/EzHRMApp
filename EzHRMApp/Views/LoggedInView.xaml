@@ -58,6 +58,9 @@
         <DataTemplate DataType="{x:Type viewModel:LeavesViewModel}">
             <view:LeavesView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PenaltyTypeViewModel}">
+            <view:PenaltyTypeView />
+        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -338,6 +341,13 @@
                                 Click="TabButtonClicked"
                                 Command="{Binding ToPenaltyView}"
                                 Content="Penalty"
+                                GroupName="TabButtons"
+                                Path="{DynamicResource moneyIcon}" />
+
+                            <controls:RadioButtonEx
+                                Click="TabButtonClicked"
+                                Command="{Binding ToPenaltyTypeView}"
+                                Content="Penalty Templates"
                                 GroupName="TabButtons"
                                 Path="{DynamicResource moneyIcon}" />
 

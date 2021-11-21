@@ -179,9 +179,9 @@ namespace EzHRMApp.Views
             }
             else
             {
-                if (value > 1)
+                if (value > 100)
                 {
-                    textBox.Text = "1";
+                    textBox.Text = "100";
                 }
                 else if (value < 0)
                 {

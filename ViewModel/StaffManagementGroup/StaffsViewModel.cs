@@ -66,6 +66,8 @@ namespace ViewModel
                 if (ViewingPenalty != null && PenaltyTypeModels != null && PenaltyTypeModels.Count > 0)
                 {
                     ViewingPenalty.TenViPham = PenaltyTypeModels[_penaltyTypeIndex].TenViPham;
+                    ViewingPenalty.SoPhanTramTru = PenaltyTypeModels[_penaltyTypeIndex].TruLuongTheoPhanTram;
+                    ViewingPenalty.SoTienTru = PenaltyTypeModels[_penaltyTypeIndex].TruLuongTrucTiep;
                 }
             }
         }
