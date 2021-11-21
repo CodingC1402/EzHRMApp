@@ -52,7 +52,7 @@
                 Grid.Column="0"
                 Command="{Binding ToPenaltyView}"
                 Content="Penalties"
-                IsChecked="True"/>
+                IsChecked="{Binding IsFirst, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
             <controls:RadioButtonEx
                 Grid.Column="1"
                 Content="Penalty Types" 

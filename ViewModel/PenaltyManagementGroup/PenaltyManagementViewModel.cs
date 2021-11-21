@@ -16,6 +16,17 @@ namespace ViewModel
             return __instance;
         }
 
+        private bool _isFirst = true;
+        public bool IsFirst
+        {
+            get
+            {
+                ToPenaltyView.Execute(null);
+                return _isFirst;
+            }
+            set => _isFirst = value;
+        }
+
         public PenaltyManagementViewModel()
         {
             __instance = this;
