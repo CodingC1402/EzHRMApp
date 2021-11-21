@@ -14,6 +14,9 @@ namespace DAL.Rows
     public class Account : Row
     {
         public const string DefaultPassword = "1";
+        public const int MinPasswordLength = 6;
+        public const int MaxPasswordLength = 20;
+
         public string TaiKhoan { get; set; }
         public string Password { get; set; }
         public string NhomTaiKhoan { get; set; }
@@ -35,6 +38,25 @@ namespace DAL.Rows
             account.NhomTaiKhoan = accountGroup;
 
             return account;
+        }
+
+        public Account() { }
+        public Account(Account account)
+        {
+            TaiKhoan = account.TaiKhoan;
+            Password = account.Password;
+            NhomTaiKhoan = account.NhomTaiKhoan;
+            DangLogin = account.DangLogin;
+        }
+
+        public void ChangePassword(string password)
+        {
+            using (var sh256 = SHA256.Create())
+            {
+                var hash = sh256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                Password = ToHex(ref hash, false);
+            }
+            Save();
         }
 
         public ConnectionResult Login(SecureString password)
