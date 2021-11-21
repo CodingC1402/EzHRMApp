@@ -77,7 +77,7 @@ namespace EzHRMApp.Views
                 exportBtn.CommandParameter = "date-picker-empty";
                 return;
             }
-            else if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
+            if (endDatepicker.SelectedDate.Value < startDatepicker.SelectedDate.Value)
             {
                 exportBtn.CommandParameter = "date-picker-end-date-earlier";
                 return;
@@ -87,7 +87,7 @@ namespace EzHRMApp.Views
             {
                 AddExtension = true,
                 DefaultExt = ".csv",
-                Filter = "Comma separated values file (.csv)|*.csv"
+                Filter = "CSV file (.csv)|*.csv"
             };
 
             var result = save.ShowDialog();

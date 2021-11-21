@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Model;
+using DAL.Rows;
 using ViewModel.Helper;
 using ViewModel.Structs;
+using CsvHelper;
+using System.IO;
+using System.Globalization;
+using CsvHelper.Configuration;
 
 namespace ViewModel
 {
@@ -139,7 +145,10 @@ namespace ViewModel
         private RelayCommand<object> _cancelAddPenaltyCommand;
         public RelayCommand<object> CancelAddPenaltyCommand => _cancelAddPenaltyCommand ??= new RelayCommand<object>(ExecuteAddPenaltyCancel, CanExecuteAddPenaltyCancel);
 
+        private RelayCommand<string> _importCommand;
+        public RelayCommand<string> ImportCommand => _importCommand ??= new RelayCommand<string>(ExecuteImport);
         #endregion
+
         #region Functions
         private void UpdateReport()
         {
@@ -160,6 +169,57 @@ namespace ViewModel
                     break;
             }
             Report = EmployeeReportModel.Compile(_selectedEmployee, startTime, endTime);
+        }
+
+        public void ExecuteImport(string path)
+        {
+            if (path == null)
+                return;
+
+            CultureInfo cinfo = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            cinfo.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            cinfo.DateTimeFormat.LongDatePattern = "dd/MM/yyyy";
+            cinfo.DateTimeFormat.FullDateTimePattern = "dd/MM/yyyy";
+
+            using (var streamReader = new StreamReader(path))
+            using (var reader = new CsvReader(streamReader, cinfo))
+            {
+                try
+                {
+                    var employees = reader.GetRecords<Employee>();
+                    foreach (var e in employees)
+                    {
+                        var existing = Employees.FirstOrDefault(eModel => eModel.ID == e.ID 
+                        || eModel.EmailCaNhan == e.EmailCaNhan 
+                        || eModel.EmailVanPhong == e.EmailVanPhong);
+
+                        if (existing != null)
+                        {
+                            if (existing.ID == e.ID)
+                                ErrorString = $"Employee with ID {existing.ID} already exists";
+                            else if (existing.EmailCaNhan == e.EmailCaNhan)
+                                ErrorString = $"Employee with personal email {existing.EmailCaNhan} already exists";
+                            else
+                                ErrorString = $"Employee with work email {existing.EmailVanPhong} already exists";
+
+                            HaveError = true;
+                            return;
+                        }
+
+                        var newEmployee = new EmployeeModel(e);
+                        string result = newEmployee.Save(true);
+                        if (result == "")
+                            Employees.Add(newEmployee);
+                        else
+                            throw new Exception(result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorString = ex.Message;
+                    HaveError = true;
+                }
+            }
         }
 
         public void ExecuteSelectProfile(object param)
