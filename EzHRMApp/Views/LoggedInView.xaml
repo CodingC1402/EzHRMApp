@@ -43,8 +43,8 @@
         <DataTemplate DataType="{x:Type viewModel:PayRollManagementViewModel}">
             <view:PayRollMangementView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PenaltyViewModel}">
-            <view:PenaltyView />
+        <DataTemplate DataType="{x:Type viewModel:PenaltyManagementViewModel}">
+            <view:PenaltyManagementView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ReportsViewModel}">
             <view:ReportsView />
@@ -336,7 +336,7 @@
 
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
-                                Command="{Binding ToPenaltyView}"
+                                Command="{Binding ToPenaltyManagementView}"
                                 Content="Penalty"
                                 GroupName="TabButtons"
                                 Path="{DynamicResource moneyIcon}" />

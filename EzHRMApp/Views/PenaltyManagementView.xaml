@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="EzHRMApp.Views.PenaltyManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:EzHRMApp.Views" 
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewModel:PenaltyManagementViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModel:PenaltyViewModel}">
+            <view:PenaltyView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PenaltyTypeViewModel}">
+            <view:PenaltyTypeView />
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="controls:RadioButtonEx">
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="SelectedPadding" Value="0, 0, 0, 5" />
+                    <Setter Property="NormalPadding" Value="0, 0, 0, 5" />
+                    <Setter Property="OutterColor" Value="{DynamicResource DarkerBackColor}" />
+                    <Setter Property="SelectedOutterColor" Value="{DynamicResource Accent}" />
+                    <Setter Property="SelectedColor" Value="{DynamicResource BackColor}" />
+                    <Setter Property="Background" Value="{DynamicResource BackColor}" />
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="HoverColor" Value="{DynamicResource DarkerBackColor}" />
+                    <Setter Property="PressedColor" Value="{DynamicResource DarkestBackColor}" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="IconPad" Value="50" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+            <controls:RadioButtonEx
+                Grid.Column="0"
+                Command="{Binding ToPenaltyView}"
+                Content="Penalties"
+                IsChecked="True"/>
+            <controls:RadioButtonEx
+                Grid.Column="1"
+                Content="Penalty Types" 
+                Command="{Binding ToPenaltyTypeView}" />
+        </Grid>
+        <Grid
+            x:Name="ContentPanel"
+            Grid.Row="1"
+            Background="{DynamicResource BackColor}">
+            <controls:AnimatedContentControlOpacity AnimationTime="0.5" Content="{Binding CurrentViewModel}" />
+        </Grid>
+    </Grid>
+</UserControl>

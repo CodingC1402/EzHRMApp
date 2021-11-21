@@ -1,4 +1,5 @@
 ﻿using CornControls.CustomControl;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,34 +40,32 @@ namespace EzHRMApp.Views
             }
             else
             {
-                //datagridEx.SetCollectionFilter(obj =>
-                //{
-                //    RoleModel role = obj as RoleModel;
-                //    if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && role.DaXoa == 1)
-                //    {
-                //        return false;
-                //    }
+                datagridEx.SetCollectionFilter(obj =>
+                {
+                    PenaltyModel penalty = obj as PenaltyModel;
 
-                //    if (datagridEx.SearchText != "")
-                //    {
-                //        var searchText = datagridEx.SearchText;
-                //        switch (datagridEx.SearchFilter)
-                //        {
-                //            case "Name":
-                //                return role.TenChucVu.Contains(searchText);
-                //            case "Salary by":
-                //                return role.CachTinhLuong.Contains(searchText);
-                //            case "Hourly Wage":
-                //                return role.TienLuongMoiGio.ToString().Contains(searchText);
-                //            case "Monthly Wage":
-                //                return role.TienLuongMoiThang.ToString().Contains(searchText);
-                //            case "Overtime %":
-                //                return role.PhanTramLuongNgoaiGio.ToString().Contains(searchText);
-                //        }
-                //    }
+                    if (datagridEx.SearchText != "")
+                    {
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
+                        {
+                            case "ID":
+                                return penalty.ID.ToString().Contains(searchText);
+                            case "Date":
+                                return penalty.Ngay.ToShortDateString().Contains(searchText);
+                            case "Employee ID":
+                                return penalty.IDNhanVien.Contains(searchText);
+                            case "Penalty Type":
+                                return penalty.TenViPham.Contains(searchText);
+                            case "Flat fine":
+                                return penalty.SoTienTru.ToString().Contains(searchText);
+                            case "Percent fine":
+                                return penalty.SoPhanTramTru.ToString().Contains(searchText);
+                        }
+                    }
 
-                //    return true;
-                //});
+                    return true;
+                });
             }
         }
 

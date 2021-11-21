@@ -186,7 +186,7 @@
                         <Label
                             Grid.Row="1"
                             VerticalAlignment="Center"
-                            Content="Flat File:" />
+                            Content="Flat Fine:" />
                         <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
@@ -283,12 +283,12 @@
                         Width="150"
                         MinWidth="150"
                         Binding="{Binding SoTienTru}"
-                        Header="Minus Amount" />
+                        Header="Flat fine" />
                     <DataGridTextColumn
-                        Width="110"
-                        MinWidth="110"
+                        Width="*"
+                        MinWidth="150"
                         Binding="{Binding SoPhanTramTru}"
-                        Header="Minus %" />
+                        Header="Percent fine" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
 
