@@ -61,8 +61,6 @@ INSERT INTO cachtinhluong (Ten, LanTraLuongCuoi, NgayTinhLuongThangNay)
     VALUES ('TheoThang', CURRENT_DATE() - INTERVAL 1 MONTH, CURRENT_DATE());
 INSERT INTO cachtinhluong (Ten, KyHanTraLuongTheoNgay, LanTraLuongCuoi)
     VALUES ('TheoGio', 1, CURRENT_DATE() - INTERVAL 1 DAY);
-INSERT INTO cachtinhluong (Ten, KyHanTraLuongTheoNgay, LanTraLuongCuoi, NgayTinhLuongThangNay)
-    VALUES ('TheoTuan', 1, CURRENT_DATE() - INTERVAL 7 DAY, CURRENT_DATE());
 
 INSERT INTO CHUCVU (TenChucVu, CachTinhLuong, TienLuongMoiGio, TienLuongMoiThang, PhanTramLuongNgoaiGio, NhomTaiKhoan)
     VALUES ('HR Manager', 'TheoThang', 0, 1800, 1.5, 'hrm');

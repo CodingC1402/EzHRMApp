@@ -27,46 +27,6 @@ namespace EzHRMApp.Views
             InitializeComponent();
         }
 
-        protected void searchChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateFilter();
-        }
-
-        protected virtual void UpdateFilter()
-        {
-            if (datagridEx.SearchText == "")
-            {
-                datagridEx.SetCollectionFilter(null);
-            }
-            else
-            {
-                datagridEx.SetCollectionFilter(obj =>
-                {
-                    PaymentMethodModel method = obj as PaymentMethodModel;
-                    if (datagridEx.SearchText != "")
-                    {
-                        var searchText = datagridEx.SearchText;
-                        switch (datagridEx.SearchFilter)
-                        {
-                            case "Name":
-                                return method.Ten.Contains(searchText);
-                            case "Payment term":
-                                return method.KyHanTraLuongTheoNgay.ToString().Contains(searchText);
-                            case "Payroll date":
-                                if (method.NgayTinhLuongThangNay.HasValue)
-                                    return method.NgayTinhLuongThangNay.Value.ToShortDateString().Contains(searchText);
-                                else
-                                    break;
-                            case "Latest date":
-                                return method.LanTraLuongCuoi.ToShortDateString().Contains(searchText);
-                        }
-                    }
-
-                    return true;
-                });
-            }
-        }
-
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

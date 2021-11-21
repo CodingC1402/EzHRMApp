@@ -22,29 +22,29 @@ namespace DAL.Rows
         }
         public PaymentMethod() { }
 
-        public override string Add(UnitOfWork uow = null)
-        {
-            if (uow == null)
-            {
-                using (var uowNew = new UnitOfWork())
-                {
-                    PaymentMethod method = PaymentMethodRepo.Instance.FindByID(new object[] { Ten });
-                    if (method != null)
-                    {
-                        return "There is already a penalty of the same name!";
-                    }
+        //public override string Add(UnitOfWork uow = null)
+        //{
+        //    if (uow == null)
+        //    {
+        //        using (var uowNew = new UnitOfWork())
+        //        {
+        //            PaymentMethod method = PaymentMethodRepo.Instance.FindByID(new object[] { Ten });
+        //            if (method != null)
+        //            {
+        //                return "There is already a penalty of the same name!";
+        //            }
 
-                    PaymentMethodRepo.Instance.Add(this, uowNew);
+        //            PaymentMethodRepo.Instance.Add(this, uowNew);
 
-                    return ExecuteAndReturn(uowNew);
-                }
-            }
+        //            return ExecuteAndReturn(uowNew);
+        //        }
+        //    }
 
-            if (PaymentMethodRepo.Instance.Add(this, uow))
-                return "";
-            else
-                return "Failed!";
-        }
+        //    if (PaymentMethodRepo.Instance.Add(this, uow))
+        //        return "";
+        //    else
+        //        return "Failed!";
+        //}
 
         public override string Save(UnitOfWork uow = null)
         {

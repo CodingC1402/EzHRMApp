@@ -10,7 +10,7 @@ namespace Model
 {
     public class PaymentMethodModel : PaymentMethod
     {
-        public bool IsSpecialType { get => Ten == "TheoThang" || Ten == "TheoGio"; }
+        //public bool IsSpecialType { get => Ten == "TheoThang" || Ten == "TheoGio"; }
 
         public static ObservableCollection<PaymentMethodModel> LoadAll()
         {
@@ -37,47 +37,27 @@ namespace Model
             NgayTinhLuongThangNay = ngayTinhLuongThangNay;
         }
 
-        public string Delete()
-        {
-            if (IsSpecialType)
-                return "You can't delete this template because it's a template used by the system!";
+        //public string Delete()
+        //{
+        //    if (IsSpecialType)
+        //        return "You can't delete this template because it's a template used by the system!";
 
-            //DB contraints perhaps ?
-            //var keys = new KeyValuePair<string, object>[2];
-            //keys[0] = new KeyValuePair<string, object>("CachTinhLuong", Ten);
-            //keys[1] = new KeyValuePair<string, object>("DaXoa", 0);
+        //    //DB contraints perhaps?
+        //    //var keys = new KeyValuePair<string, object>[2];
+        //    //keys[0] = new KeyValuePair<string, object>("CachTinhLuong", Ten);
+        //    //keys[1] = new KeyValuePair<string, object>("DaXoa", 0);
 
-            //var roles = new List<Role>(RoleRepo.Instance.FindBy(keys, false));
-            //if (roles.Count > 0)
-            //{
-            //    return "There is at least one role that is using this method!";
-            //}
+        //    //var roles = new List<Role>(RoleRepo.Instance.FindBy(keys, false));
+        //    //if (roles.Count > 0)
+        //    //{
+        //    //    return "There is at least one role that is using this method!";
+        //    //}
 
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                PaymentMethodRepo.Instance.Remove(new object[] { Ten }, uow);
-                return uow.Complete() ? "" : "Unknow error!";
-            }
-        }
-
-        public override string Add(UnitOfWork uow = null)
-        {
-            PaymentMethod method = new PaymentMethod();
-            method.Ten = Ten;
-            method.KyHanTraLuongTheoNgay = KyHanTraLuongTheoNgay;
-            method.NgayTinhLuongThangNay = NgayTinhLuongThangNay;
-            method.LanTraLuongCuoi = LanTraLuongCuoi;
-            return method.Add();
-        }
-
-        public override string Save(UnitOfWork uow = null)
-        {
-            PaymentMethod method = new PaymentMethod();
-            method.Ten = Ten;
-            method.KyHanTraLuongTheoNgay = KyHanTraLuongTheoNgay;
-            method.NgayTinhLuongThangNay = NgayTinhLuongThangNay;
-            method.LanTraLuongCuoi = LanTraLuongCuoi;
-            return method.Save();
-        }
+        //    using (UnitOfWork uow = new UnitOfWork())
+        //    {
+        //        PaymentMethodRepo.Instance.Remove(new object[] { Ten }, uow);
+        //        return uow.Complete() ? "" : "Unknow error!";
+        //    }
+        //}
     }
 }
