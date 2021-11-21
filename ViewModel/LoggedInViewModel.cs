@@ -66,8 +66,11 @@ namespace ViewModel
             ToRoleManagementView = new NavigationCommand<RoleManagementViewModel>(new RoleManagementViewModel(), this, 0);
             ViewModels.Add(ToRoleManagementView.ViewModel);
 
-            ToPayRollManagementView = new NavigationCommand<PayRollManagementViewModel>(new PayRollManagementViewModel(), this, 0);
-            ViewModels.Add(ToPayRollManagementView.ViewModel);
+            ToEmployeePayrollManagementView = new NavigationCommand<EmployeePayrollManagementViewModel>(new EmployeePayrollManagementViewModel(), this, 0);
+            ViewModels.Add(ToEmployeePayrollManagementView.ViewModel);
+
+            ToPayrollTypesView = new NavigationCommand<PayrollTypesViewModel>(new PayrollTypesViewModel(), this, 0);
+            ViewModels.Add(ToPayrollTypesView.ViewModel);
 
             ToPenaltyView = new NavigationCommand<PenaltyViewModel>(new PenaltyViewModel(), this, 0);
             ViewModels.Add(ToPenaltyView.ViewModel);
@@ -112,7 +115,8 @@ namespace ViewModel
         public NavigationCommand<StaffsViewModel> ToStaffView { get; set; }
         public NavigationCommand<DepartmentViewModel> ToDepartmentView { get; set; }
         public NavigationCommand<RoleManagementViewModel> ToRoleManagementView { get; set; }
-        public NavigationCommand<PayRollManagementViewModel> ToPayRollManagementView { get; set; }
+        public NavigationCommand<EmployeePayrollManagementViewModel> ToEmployeePayrollManagementView { get; set; }
+        public NavigationCommand<PayrollTypesViewModel> ToPayrollTypesView { get; set; }
         public NavigationCommand<PenaltyViewModel> ToPenaltyView { get; set; }
         public NavigationCommand<ReportsViewModel> ToReportsView { get; set; }
         public NavigationCommand<CheckInManagementViewModel> ToCheckInManagementView { get; set; }
