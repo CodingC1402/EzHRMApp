@@ -14,7 +14,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="270" />
+            <RowDefinition Height="230" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -110,7 +110,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <Label
@@ -120,33 +119,17 @@
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalAndUpdateMode}"
-                            Text="{Binding CurrentRole.TenChucVu}" />
+                            Text="{Binding CurrentPenaltyType.TenViPham}" />
 
                         <Label
                             Grid.Row="1"
                             VerticalAlignment="Center"
-                            Content="Salary by:" />
-                        <controls:ComboBoxEx
+                            Content="Percent fine:" />
+                        <controls:TextBoxEx
                             Grid.Row="1"
                             Grid.Column="1"
-                            DisplayMemberPath="Ten"
-                            IsEnabled="{Binding IsInCRUDMode}"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding CalculateSalary}"
-                            SelectedItem="{Binding SelectedCalculateSalary}" />
-
-                        <Label
-                            Grid.Row="2"
-                            VerticalAlignment="Center"
-                            Content="Account group:" />
-                        <controls:ComboBoxEx
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            DisplayMemberPath="TenNhomTaiKhoan"
-                            IsEnabled="{Binding IsInCRUDMode}"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding AccountGroups}"
-                            SelectedItem="{Binding SelectedAccountGroup}" />
+                            IsReadOnly="{Binding IsInNormalMode}"
+                            Text="{Binding CurrentPenaltyType.TruLuongTheoPhanTram}" />
                     </Grid>
                     <Grid
                         Grid.Column="1"
@@ -159,37 +142,16 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <Label
                             Grid.Row="0"
                             VerticalAlignment="Center"
-                            Content="Hourly wage:" />
+                            Content="Flat fine:" />
                         <controls:TextBoxEx
                             Grid.Column="1"
                             IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.TienLuongMoiGio}" />
-
-                        <Label
-                            Grid.Row="1"
-                            VerticalAlignment="Center"
-                            Content="Monthly wage:" />
-                        <controls:TextBoxEx
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.TienLuongMoiThang}" />
-
-                        <Label
-                            Grid.Row="2"
-                            VerticalAlignment="Center"
-                            Content="Overtime %:" />
-                        <controls:TextBoxEx
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            IsReadOnly="{Binding IsInNormalMode}"
-                            Text="{Binding CurrentRole.PhanTramLuongNgoaiGio}" />
+                            Text="{Binding CurrentPenaltyType.TruLuongTrucTiep}" />
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -259,16 +221,6 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,10">
-            <Grid.Resources>
-                <Style TargetType="CheckBox">
-                    <Setter Property="Foreground" Value="{DynamicResource LightForeground}" />
-                    <Setter Property="FontFamily" Value="Tahoma" />
-                    <Setter Property="FontSize" Value="13" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-            </Grid.Resources>
-
             <controls:DatagridEx
                 x:Name="datagridEx"
                 Grid.Row="1"
@@ -277,57 +229,26 @@
                 Background="{DynamicResource DarkerBackColor}"
                 IsEnabled="{Binding IsInNormalMode}"
                 IsReadOnly="True"
-                ItemsSource="{Binding Roles}"
+                ItemsSource="{Binding PenaltyTypes}"
                 SearchChanged="searchChanged"
-                SelectedItem="{Binding SelectedRole}">
+                SelectedItem="{Binding SelectedPenaltyType}">
                 <controls:DatagridEx.Columns>
                     <DataGridTextColumn
                         Width="150"
                         MinWidth="150"
-                        Binding="{Binding TenChucVu}"
+                        Binding="{Binding TenViPham}"
                         FontWeight="Bold"
-                        Header="Name">
-                        <DataGridTextColumn.CellStyle>
-                            <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
-                                <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DaXoa}" Value="0">
-                                        <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+                        Header="Name" />
                     <DataGridTextColumn
                         Width="110"
                         MinWidth="110"
-                        Binding="{Binding CachTinhLuong}"
-                        Header="Salary by" />
+                        Binding="{Binding TruLuongTrucTiep}"
+                        Header="Flat fine" />
                     <DataGridTextColumn
                         Width="150"
                         MinWidth="150"
-                        Binding="{Binding TienLuongMoiGio}"
-                        Header="Hourly Wage" />
-                    <DataGridTextColumn
-                        Width="150"
-                        MinWidth="150"
-                        Binding="{Binding TienLuongMoiThang}"
-                        Header="Monthly Wage" />
-                    <DataGridTextColumn
-                        Width="140"
-                        MinWidth="140"
-                        Binding="{Binding PhanTramLuongNgoaiGio}"
-                        Header="Overtime %" />
-                    <DataGridTextColumn
-                        Width="100"
-                        MinWidth="100"
-                        Binding="{Binding NhomTaiKhoan}"
-                        Header="Account Group" />
-                    <DataGridTextColumn
-                        Width="*"
-                        MinWidth="100"
-                        Binding="{Binding DaXoa}"
-                        Header="Deleted" />
+                        Binding="{Binding TruLuongTheoPhanTram}"
+                        Header="Percent fine" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
         </Grid>

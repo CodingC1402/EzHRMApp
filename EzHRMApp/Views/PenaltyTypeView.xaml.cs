@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,34 +39,26 @@ namespace EzHRMApp.Views
             }
             else
             {
-                //datagridEx.SetCollectionFilter(obj =>
-                //{
-                //    RoleModel role = obj as RoleModel;
-                //    if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && role.DaXoa == 1)
-                //    {
-                //        return false;
-                //    }
+                datagridEx.SetCollectionFilter(obj =>
+                {
+                    PenaltyTypeModel penaltyType = obj as PenaltyTypeModel;
 
-                //    if (datagridEx.SearchText != "")
-                //    {
-                //        var searchText = datagridEx.SearchText;
-                //        switch (datagridEx.SearchFilter)
-                //        {
-                //            case "Name":
-                //                return role.TenChucVu.Contains(searchText);
-                //            case "Salary by":
-                //                return role.CachTinhLuong.Contains(searchText);
-                //            case "Hourly Wage":
-                //                return role.TienLuongMoiGio.ToString().Contains(searchText);
-                //            case "Monthly Wage":
-                //                return role.TienLuongMoiThang.ToString().Contains(searchText);
-                //            case "Overtime %":
-                //                return role.PhanTramLuongNgoaiGio.ToString().Contains(searchText);
-                //        }
-                //    }
+                    if (datagridEx.SearchText != "")
+                    {
+                        var searchText = datagridEx.SearchText;
+                        switch (datagridEx.SearchFilter)
+                        {
+                            case "Name":
+                                return penaltyType.TenViPham.Contains(searchText);
+                            case "Flat fine":
+                                return penaltyType.TruLuongTrucTiep.ToString().Contains(searchText);
+                            case "Percent fine":
+                                return penaltyType.TruLuongTheoPhanTram.ToString().Contains(searchText);
+                        }
+                    }
 
-                //    return true;
-                //});
+                    return true;
+                });
             }
         }
     }
