@@ -5,10 +5,10 @@ using System.Text;
 
 namespace DAL.Repos
 {
-    public class CalculateSalaryRepo : Repo<CalculateSalary>
+    public class PaymentMethodRepo : Repo<PaymentMethod>
     {
-        public static CalculateSalaryRepo Instance { get; private set; } = new CalculateSalaryRepo();
-        private CalculateSalaryRepo()
+        public static PaymentMethodRepo Instance { get; private set; } = new PaymentMethodRepo();
+        private PaymentMethodRepo()
         {
             TableName = "CACHTINHLUONG";
             PKColsName = new string[]

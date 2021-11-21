@@ -4,9 +4,239 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EzHRMApp.Views"
+             xmlns:viewmodels="clr-namespace:ViewModel;assembly=ViewModel" 
+             xmlns:controls="clr-namespace:CornControls.CustomControl;assembly=CornControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+            <viewmodels:PayrollTypesViewModel/>
+    </UserControl.DataContext>
+
     <Grid>
-            
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style x:Key="ButtonExStyle" TargetType="controls:ButtonEx">
+                    <Setter Property="Width" Value="140" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Background" Value="{DynamicResource Accent}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource Accent}" />
+                    <Setter Property="Content" Value="Change profile" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="HoverColor" Value="{DynamicResource AccentBright}" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="PressedColor" Value="{DynamicResource AccentReallyBright}" />
+                </Style>
+                <Style TargetType="controls:TextBoxEx">
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="IconPad" Value="0" />
+                    <Setter Property="Height" Value="35" />
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Time New Roman" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="NormalPadding" Value="5, 1, 5, 1" />
+                    <Setter Property="FocusedPadding" Value="5, 1, 5, 1" />
+                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="Padding" Value="5,0" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{DynamicResource DarkForeground}" />
+                    <Setter Property="FontFamily" Value="Tahoma" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="TextDecorations">
+                        <Setter.Value>
+                            <TextDecorationCollection>
+                                <TextDecoration
+                                            Location="Underline"
+                                            PenOffset="2"
+                                            PenThicknessUnit="FontRecommended" />
+                            </TextDecorationCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+
+            <Border
+                Margin="10"
+                Padding="10"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="5"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Hourly" />
+
+                    <Label Grid.Row="1" Content="Payment term by day:" />
+
+                    <controls:TextBoxEx Grid.Column="1" Grid.Row="1" 
+                                        Text="{Binding HourlyMethod.KyHanTraLuongTheoNgay}" 
+                                        IsReadOnly="{Binding IsInNormalMode}"
+                                        PreviewTextInput="NumberValidationTextBox" />
+
+                    <Label Grid.Column="2" Grid.Row="1" Content="Latest Paid Date:" />
+
+                    <controls:DatePickerEx 
+                        Grid.Column="3" Grid.Row="1" 
+                        SelectedDate="{Binding HourlyMethod.LanTraLuongCuoi}" 
+                        Margin="5,7.5"
+                        IsEnabled="False"
+                        IsReadOnly="True" />
+
+                    <StackPanel
+                        Grid.ColumnSpan="4"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
+                                            <Setter Property="Content" Value="Confirm" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsInNormalMode}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Setter Property="Content" Value="Change" />
+                                    <Setter Property="Command" Value="{Binding StartUpdateCommand}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
+                                            <Setter Property="Content" Value="Cancel" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border
+                Margin="10"
+                Padding="10"
+                Grid.Row="1"
+                BorderBrush="{DynamicResource Accent}"
+                BorderThickness="5"
+                CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Monthly" />
+
+                    <Label Grid.Row="1" Content="Payroll date this month:" />
+
+                    <controls:DatePickerEx
+                        Grid.Column="1" Grid.Row="1" 
+                        Margin="5,7.5"
+                        SelectedDate="{Binding MonthlyMethod.NgayTinhLuongThangNay}" 
+                        IsEnabled="{Binding IsInUpdateMode}"
+                        IsReadOnly="{Binding IsInNormalMode}" />
+
+                    <Label Grid.Column="2" Grid.Row="1" Content="Latest Paid Date:" />
+
+                    <controls:DatePickerEx 
+                        Grid.Column="3" Grid.Row="1" 
+                        SelectedDate="{Binding MonthlyMethod.LanTraLuongCuoi}" 
+                        Margin="5,7.5"
+                        IsEnabled="False"
+                        IsReadOnly="True" />
+                    
+                    <StackPanel
+                        Grid.ColumnSpan="4"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource ConfirmButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource ConfirmButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource ConfirmButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding ConfirmUpdateCommand}" />
+                                            <Setter Property="Content" Value="Confirm" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsInNormalMode}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                        <controls:ButtonEx Margin="10,5">
+                            <controls:ButtonEx.Style>
+                                <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                                    <Setter Property="Content" Value="Change" />
+                                    <Setter Property="Command" Value="{Binding StartUpdateCommand}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInUpdateMode}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                            <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                            <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                            <Setter Property="Command" Value="{Binding CancleUpdateCommand}" />
+                                            <Setter Property="Content" Value="Cancel" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ButtonEx.Style>
+                        </controls:ButtonEx>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

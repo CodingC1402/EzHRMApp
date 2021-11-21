@@ -46,9 +46,11 @@
             <controls:RadioButtonEx
                 Grid.Column="0"
                 Content="Employee Payroll"
+                Command="{Binding ToEmployeePayroll}"
                 IsChecked="True"/>
             <controls:RadioButtonEx
                 Grid.Column="1"
+                Command="{Binding ToPayrollTypes}"
                 Content="Payroll Types" />
         </Grid>
 

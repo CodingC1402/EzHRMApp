@@ -115,6 +115,9 @@ VALUES (CURRENT_DATE() - INTERVAL 1 DAY, 'NV00000001', 'VangMat', 100, 15, 'Test
 INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
 VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000002', 'VangMat', 80, 5, 'Testing...');
 
+INSERT INTO truluong (Ngay, IDNhanVien, TenViPham, SoTienTru, SoPhanTramTru, GhiChu)
+VALUES (CURRENT_DATE() - INTERVAL 2 DAY, 'NV00000003', 'VangMat', 80, 5, 'Testing a very very very very very very long paragraph for checking the text box if it works or not');
+
 INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
 VALUES ('NV00000001', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tham gia hoi nghi 3N Quoc Te', 1);
 
