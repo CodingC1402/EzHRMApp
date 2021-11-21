@@ -4,16 +4,29 @@ using System.Text;
 
 namespace Model.Utils
 {
-    static class QuyenHanBitmask
+    public static class QuyenHanBitmask
     {
-        public static int Dashboard = 1;
-        public static int CheckIn = 2;
-        public static int Schedule = 4;
-        public static int Staff = 8;
-        public static int Departments = 16;
-        public static int Positions = 32;
-        public static int AccountGroups = 64;
-        public static int Payroll = 128;
-        public static int Reports = 256;
+        // hex digit 0 (BOSS)
+        public static uint Roles = 1;
+        public static uint Departments = 2;
+        public static uint PenaltyTypes = 4;
+        public static uint PayrollTypes = 8;
+        public static uint AccountGroups = 16;  // digit 1
+        public static uint ScheduleManagement = 32;
+
+        // hex digit 2 (HRM)
+        public static uint Dashboard = 256;
+        public static uint CheckInManagement = 512;
+        public static uint Leaves = 1024;
+        public static uint Staff = 2048;
+        public static uint Penalty = 4096;      // digit 3
+        public static uint EmployeePayroll = 8192;
+        public static uint Reports = 16384;
+
+        // hex digit 4 (EMPLOYEE)
+        public static uint WeeklySchedule = 65536;
+
+        // hex digit 5
+        public static uint UserInfo = 1048576;
     }
 }
