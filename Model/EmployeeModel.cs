@@ -53,6 +53,15 @@ namespace Model
             return new EmployeeModel(employee);
         }
 
+        public static EmployeeModel GetEmployeeFromAccount(string accountName)
+        {
+            var employee = new List<Employee>(EmployeeRepo.Instance.FindBy(nameof(Employee.TaiKhoan), accountName));
+            if (employee.Count > 0)
+                return new EmployeeModel(employee[0]);
+            else
+                return null;
+        }
+
         public static string GetNextEmployeeID()
         {
             return EmployeeRepo.Instance.GetNextID();

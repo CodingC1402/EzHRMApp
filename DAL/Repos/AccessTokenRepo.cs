@@ -49,7 +49,7 @@ namespace DAL.Repos
             {
                 Token = GenerateAccessToken(TokenSize),
                 Account = account.TaiKhoan,
-                Bitmask = AccountGroupRepo.Instance.FindByID(new object[] { account.NhomTaiKhoan }).QuyenHan
+                Bitmask = (int)AccountGroupRepo.Instance.FindByID(new object[] { account.NhomTaiKhoan }).QuyenHan
             };
 
             var newTokenList = new List<Employee>(EmployeeRepo.Instance.FindBy(nameof(Employee.TaiKhoan), account.TaiKhoan));

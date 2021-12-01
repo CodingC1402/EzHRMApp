@@ -7,6 +7,8 @@ namespace ViewModel
 {
     public class LoginViewModel : Navigation.ViewModelBase
     {
+        private static LoginViewModel _instance;
+        public static LoginViewModel Instance {get => _instance;}
         public override string ViewName => "Login";
 
         public string UserName { get; set; }
@@ -14,6 +16,29 @@ namespace ViewModel
 
         protected RelayCommand<object> _loginRelayCommand;
         public ICommand LoginCommand => _loginRelayCommand ?? (_loginRelayCommand = new RelayCommand<object>(ExecuteLogin, CanExecuteLogin)) ;
+
+        protected RelayCommand<object> _forgotPasswordCommand;
+        public ICommand ForgotPasswordCommand => _forgotPasswordCommand = new RelayCommand<object>(param => {
+            if (AccountModel.IsAccountExist(UserName))
+            {
+                if (EmployeeModel.GetEmployeeFromAccount(UserName) == null)
+                {
+                    Result = "This is an admin account,\nPlease contact the tech team!";
+                    return;
+                }
+
+                MainViewModel.Instance.ToForgotPassword.Execute(param);
+            }
+            else
+            {
+                Result = "Account doesn't exists";
+            }
+        });
+
+        public LoginViewModel()
+        {
+            _instance = this;
+        }
 
         // Send in password
         protected void ExecuteLogin(object param)

@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     xmlns:window="clr-namespace:CornControls.Window;assembly=CornControls"
+    d:DataContext="{d:DesignInstance Type=viewModel:LoginViewModel}"
     d:DesignHeight="510"
     d:DesignWidth="350"
     DelayBeforeSetWndSize="0"
@@ -142,6 +143,7 @@
                 <controls:ButtonEx
                     HorizontalAlignment="Center"
                     Background="Transparent"
+                    Command="{Binding ForgotPasswordCommand}"
                     FontFamily="Tahoma"
                     FontSize="13"
                     FontWeight="Bold"

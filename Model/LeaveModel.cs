@@ -22,5 +22,10 @@ namespace Model
             }
             return rValue;
         }
+
+        public bool CanDelete()
+        {
+            return NgayBatDauNghi >= DateTime.Today;
+        }
     }
 }

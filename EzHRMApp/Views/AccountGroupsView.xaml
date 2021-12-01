@@ -168,6 +168,17 @@
 
                 <controls:ToggleButton
                     Command="{Binding DashboardToggleCommand}"
+                    Content="User Info View Permission"
+                    Path="{StaticResource userIcon}"
+                    Selected="{Binding CurrentAccountGroup.UserInfoViewPermission}" />
+                <controls:ToggleButton
+                    Command="{Binding ScheduleToggleCommand}"
+                    Content="Weekly Schedule View Permission"
+                    Path="{StaticResource calendarIcon}"
+                    Selected="{Binding CurrentAccountGroup.WeeklyScheduleViewPermission}" />
+                
+                <controls:ToggleButton
+                    Command="{Binding DashboardToggleCommand}"
                     Content="Dashboard View Permission"
                     Path="{StaticResource dashboardIcon}"
                     Selected="{Binding CurrentAccountGroup.DashboardViewPermission}" />
@@ -175,42 +186,64 @@
                     Command="{Binding CheckInToggleCommand}"
                     Content="Check-in View Permission"
                     Path="{StaticResource clockIcon}"
-                    Selected="{Binding CurrentAccountGroup.CheckInViewPermission}" />
+                    Selected="{Binding CurrentAccountGroup.CheckInManagementViewPermission}" />
                 <controls:ToggleButton
-                    Command="{Binding ScheduleToggleCommand}"
-                    Content="Schedule View Permission"
-                    Path="{StaticResource calendarIcon}"
-                    Selected="{Binding CurrentAccountGroup.ScheduleViewPermission}" />
+                    Command="{Binding CheckInToggleCommand}"
+                    Content="Leaves View Permission"
+                    Path="{StaticResource leaveIcon}"
+                    Selected="{Binding CurrentAccountGroup.LeavesViewPermission}" />
                 <controls:ToggleButton
                     Command="{Binding StaffToggleCommand}"
                     Content="Staff View Permission"
                     Path="{DynamicResource staffsIcon}"
                     Selected="{Binding CurrentAccountGroup.StaffViewPermission}" />
                 <controls:ToggleButton
+                    Command="{Binding CheckInToggleCommand}"
+                    Content="Penalty View Permission"
+                    Path="{StaticResource moneyIcon}"
+                    Selected="{Binding CurrentAccountGroup.PenaltyViewPermission}" />
+                <controls:ToggleButton
+                    Command="{Binding PayrollToggleCommand}"
+                    Content="Payroll View Permission"
+                    Path="{DynamicResource moneyIcon}"
+                    Selected="{Binding CurrentAccountGroup.EmployeePayrollViewPermission}" />
+                <controls:ToggleButton
+                    Command="{Binding ReportToggleCommand}"
+                    Content="Reports View Permission"
+                    Path="{DynamicResource reportIcon}"
+                    Selected="{Binding CurrentAccountGroup.ReportsViewPermission}" />
+                
+                <controls:ToggleButton
+                    Command="{Binding PositionToggleCommand}"
+                    Content="Positions View Permission"
+                    Path="{DynamicResource suitcaseIcon}"
+                    Selected="{Binding CurrentAccountGroup.RolesViewPermission}" />
+                <controls:ToggleButton
                     Command="{Binding DepartmentToggleCommand}"
                     Content="Departments View Permission"
                     Path="{DynamicResource CompanyIcon}"
                     Selected="{Binding CurrentAccountGroup.DepartmentsViewPermission}" />
                 <controls:ToggleButton
-                    Command="{Binding PositionToggleCommand}"
-                    Content="Positions View Permission"
-                    Path="{DynamicResource suitcaseIcon}"
-                    Selected="{Binding CurrentAccountGroup.PositionsViewPermission}" />
+                    Command="{Binding DepartmentToggleCommand}"
+                    Content="Payroll Types View Permission"
+                    Path="{DynamicResource payRollIcon}"
+                    Selected="{Binding CurrentAccountGroup.PayrollTypesViewPermission}" />
+                <controls:ToggleButton
+                    Command="{Binding DepartmentToggleCommand}"
+                    Content="Penalty Types View Permission"
+                    Path="{DynamicResource moneyIcon}"
+                    Selected="{Binding CurrentAccountGroup.PenaltyTypesViewPermission}" />
                 <controls:ToggleButton
                     Command="{Binding AccountGroupToggleCommand}"
                     Content="Account Groups View Permission"
                     Path="{DynamicResource accountGroup}"
                     Selected="{Binding CurrentAccountGroup.AccountGroupsViewPermission}" />
                 <controls:ToggleButton
-                    Command="{Binding PayrollToggleCommand}"
-                    Content="Payrolls View Permission"
-                    Path="{DynamicResource moneyIcon}"
-                    Selected="{Binding CurrentAccountGroup.PayrollViewPermission}" />
-                <controls:ToggleButton
-                    Command="{Binding ReportToggleCommand}"
-                    Content="Reports View Permission"
-                    Path="{DynamicResource reportIcon}"
-                    Selected="{Binding CurrentAccountGroup.ReportsViewPermission}" />
+                    Command="{Binding DepartmentToggleCommand}"
+                    Content="Schedule Management View Permission"
+                    Path="{DynamicResource companyRuleIcon}"
+                    Selected="{Binding CurrentAccountGroup.ScheduleManagementViewPermission}" />
+                
             </StackPanel>
         </ScrollViewer>
 
