@@ -90,6 +90,9 @@ namespace ViewModel
 
             ToScheduleManagementView = new NavigationCommand<ScheduleManagementViewModel>(new ScheduleManagementViewModel(), this, QuyenHanBitmask.ScheduleManagement);
             ViewModels.Add(ToScheduleManagementView.ViewModel);
+
+            ToHolidayView = new NavigationCommand<HolidayViewModel>(new HolidayViewModel(), this, QuyenHanBitmask.Holiday);
+            ViewModels.Add(ToHolidayView.ViewModel);
         }
 
         public override void OnGetTo()
@@ -123,5 +126,6 @@ namespace ViewModel
         public NavigationCommand<AccountGroupsViewModel> ToAccountGroupsView { get; set; }
         public NavigationCommand<LeavesViewModel> ToLeavesView { get; set; }
         public NavigationCommand<PenaltyTypeViewModel> ToPenaltyTypeView { get; set; }
+        public NavigationCommand<HolidayViewModel> ToHolidayView { get; set; }
     }
 }

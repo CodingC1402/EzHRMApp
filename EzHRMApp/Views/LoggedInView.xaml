@@ -64,6 +64,9 @@
         <DataTemplate DataType="{x:Type viewModel:PenaltyTypeViewModel}">
             <view:PenaltyTypeView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:HolidayViewModel}">
+            <view:HolidayView />
+        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -380,6 +383,14 @@
                                 Click="TabButtonClicked"
                                 Command="{Binding ToWeeklyScheduleView}"
                                 Content="Weekly Schedule"
+                                GroupName="TabButtons"
+                                Path="{StaticResource calendarIcon}" />
+
+                            <controls:RadioButtonEx
+                                x:Name="holiday"
+                                Click="TabButtonClicked"
+                                Command="{Binding ToHolidayView}"
+                                Content="Holiday"
                                 GroupName="TabButtons"
                                 Path="{StaticResource calendarIcon}" />
                         </StackPanel>
