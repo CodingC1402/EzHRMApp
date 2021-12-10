@@ -2,6 +2,7 @@
 using DAL.Repos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DAL.Rows
@@ -22,6 +23,96 @@ namespace DAL.Rows
             Thang = h.Thang;
             SoNgayNghi = h.SoNgayNghi;
             TenDipNghiLe = h.TenDipNghiLe;
+        }
+
+        public override string Add(UnitOfWork uow = null)
+        {
+            var result = this.CheckForError();
+
+            if (result != "")
+                return result;
+
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    HolidayRepo.Instance.Add(this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (HolidayRepo.Instance.Add(this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string Save(UnitOfWork uow = null)
+        {
+            var result = this.CheckForError();
+
+            if (result != "")
+                return result;
+
+            if (uow == null)
+            {
+                using (var uowNew = new UnitOfWork())
+                {
+                    HolidayRepo.Instance.Update(new object[] { ID }, this, uowNew);
+                    return ExecuteAndReturn(uowNew);
+                }
+            }
+
+            if (HolidayRepo.Instance.Update(new object[] { ID }, this, uow))
+                return "";
+            else
+                return "Failed!";
+        }
+
+        public override string CheckForError()
+        {
+            try
+            {
+                if (!IsValidHolidayName(TenDipNghiLe))
+                    return "Holiday's name can't be empty!";
+
+                if (!IsNameTaken(TenDipNghiLe))
+                    return "Holiday's name is already taken!";
+
+                if (SoNgayNghi <= 0 || SoNgayNghi > 365)
+                {
+                    return "Number of holidays is invalid!";
+                }
+
+                return "";
+            }
+            catch (Exception e)
+            {
+                return $"Unknow error: {e.Message}";
+            }
+        }
+
+        public bool IsValidHolidayName(string ten)
+        {
+            if (ten == null || ten == "")
+                return false;
+
+            return true;
+        }
+
+        public bool IsNameTaken(string ten)
+        {
+            try
+            {
+                if (HolidayRepo.Instance.FindBy("TenDipNghiLe", ten).Count() != 0)
+                    return false;
+                else
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

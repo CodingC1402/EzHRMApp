@@ -18,6 +18,8 @@ DELETE FROM baocaochamcong;
 DELETE FROM baocaonhansu;
 DELETE FROM eventlog;
 
+INSERT INTO nghile (Ngay, Thang, SoNgayNghi, TenDipNghiLe)
+VALUE (1,1,1,'Năm mới');
 
 INSERT INTO thamso (ThoiDiemTao, CoLamThuHai, CoLamThuBa, CoLamThuTu,
                     CoLamThuNam, CoLamThuSau, CoLamThuBay, CoLamChuNhat,
