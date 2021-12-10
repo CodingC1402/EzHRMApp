@@ -76,8 +76,11 @@ namespace DAL.Rows
                 if (!IsValidHolidayName(TenDipNghiLe))
                     return "Holiday's name can't be empty!";
 
-                if (!IsNameTaken(TenDipNghiLe))
+                if (!IsNameTaken(TenDipNghiLe, ID))
                     return "Holiday's name is already taken!";
+
+                if (!IsDateTimeValid(Ngay, Thang))
+                    return "Day or month is invalid!";
 
                 if (SoNgayNghi <= 0 || SoNgayNghi > 365)
                 {
@@ -92,6 +95,13 @@ namespace DAL.Rows
             }
         }
 
+        public bool IsDateTimeValid(int ngay, int thang)
+        {
+            DateTime tempDate;
+            string date = ngay.ToString() + "/" + thang.ToString() + "/" + DateTime.Now.Year;
+            return DateTime.TryParse(date, out tempDate);
+        }
+
         public bool IsValidHolidayName(string ten)
         {
             if (ten == null || ten == "")
@@ -100,11 +110,12 @@ namespace DAL.Rows
             return true;
         }
 
-        public bool IsNameTaken(string ten)
+        public bool IsNameTaken(string ten, int ID)
         {
             try
             {
-                if (HolidayRepo.Instance.FindBy("TenDipNghiLe", ten).Count() != 0)
+                var temp = HolidayRepo.Instance.FindBy("TenDipNghiLe", ten).FirstOrDefault();
+                if (temp != null && temp.ID != ID)
                     return false;
                 else
                     return true;

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,38 +38,39 @@ namespace EzHRMApp.Views
             //{
             //    datagridEx.SetCollectionFilter(null);
             //}
-            //else
-            //{
-            //    datagridEx.SetCollectionFilter(obj =>
-            //    {
-            //        DepartmentModel department = obj as DepartmentModel;
-            //        if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && department.NgayNgungHoatDong.HasValue)
-            //        {
-            //            return false;
-            //        }
 
-            //        if (datagridEx.SearchText != "")
-            //        {
-            //            var searchText = datagridEx.SearchText;
-            //            switch (datagridEx.SearchFilter)
-            //            {
-            //                case "Name":
-            //                    return department.TenPhong.Contains(searchText);
-            //                case "Founding Date":
-            //                    return department.NgayThanhLap.ToString("dd:MM:yyyy").Contains(searchText);
-            //                case "Shutdown Date":
-            //                    if (department.NgayNgungHoatDong.HasValue)
-            //                        return department.NgayNgungHoatDong.Value.ToString("dd:MM:yyyy").Contains(searchText);
-            //                    else
-            //                        break;
-            //                case "Department Head":
-            //                    return department.TruongPhong.Contains(searchText);
-            //            }
-            //        }
+            datagridEx.SetCollectionFilter(obj =>
+            {
+                HolidayModel department = obj as HolidayModel;
+                //if ((!showResignCheckBox.IsChecked.HasValue || !showResignCheckBox.IsChecked.Value) && department.NgayNgungHoatDong.HasValue)
+                //{
+                //    return false;
+                //}
 
-            //        return true;
-            //    });
-            //}
+                if (datagridEx.SearchText != "")
+                {
+                    var searchText = datagridEx.SearchText;
+                    switch (datagridEx.SearchFilter)
+                    {
+                        case "Name":
+                            return department.TenDipNghiLe.Contains(searchText);
+                        case "Founding Date":
+                            return department.Ngay.ToString().Contains(searchText);
+                        case "Shutdown Date":
+                            return department.Thang.ToString().Contains(searchText);
+                        case "Department Head":
+                            return department.SoNgayNghi.ToString().Contains(searchText);
+                    }
+                }
+
+                return true;
+            });
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

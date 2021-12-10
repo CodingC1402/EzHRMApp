@@ -42,6 +42,7 @@ namespace ViewModel
         public override void ExecuteAdd(object param)
         {
             var newDepartment = new HolidayModel();
+            newDepartment.ID = HolidayModel.GetNextHolidayID();
             newDepartment.SoNgayNghi = 1;
             newDepartment.Ngay = 1;
             newDepartment.Thang = 1;

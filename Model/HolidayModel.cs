@@ -3,6 +3,7 @@ using DAL.Rows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Model
@@ -25,5 +26,11 @@ namespace Model
         public HolidayModel() { }
         public HolidayModel(Holiday holiday) : base(holiday) { }
         public HolidayModel(HolidayModel holidayModel) : base(holidayModel) { }
+
+        public static int GetNextHolidayID()
+        {
+            var temp = HolidayRepo.Instance.GetAll().LastOrDefault();
+            return temp == null ? 0 : temp.ID + 1;
+        }
     }
 }

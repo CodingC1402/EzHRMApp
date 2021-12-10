@@ -125,6 +125,7 @@
                         VerticalAlignment="Center"
                         Content="Number of days:" />
                     <controls:TextBoxEx
+                        PreviewTextInput="NumberValidationTextBox"
                         Grid.Row="1"
                         Grid.Column="1"
                         IsReadOnly="{Binding IsInNormalMode}"
@@ -148,6 +149,7 @@
                         VerticalAlignment="Center"
                         Content="Day:" />
                     <controls:TextBoxEx
+                        PreviewTextInput="NumberValidationTextBox"
                         Grid.Column="1"
                         IsReadOnly="{Binding IsInNormalMode}"
                         Text="{Binding CurrentHoliday.Ngay}" />
@@ -157,6 +159,7 @@
                         VerticalAlignment="Center"
                         Content="Month:" />
                     <controls:TextBoxEx
+                        PreviewTextInput="NumberValidationTextBox"
                         Grid.Row="1"
                         Grid.Column="1"
                         IsReadOnly="{Binding IsInNormalMode}"
@@ -257,36 +260,26 @@
                         Binding="{Binding TenDipNghiLe}"
                         FontWeight="Bold"
                         Header="Name">
-                        <DataGridTextColumn.CellStyle>
-                            <Style BasedOn="{StaticResource ResourceKey=DatagridExCell}" TargetType="DataGridCell">
-                                <Setter Property="Foreground" Value="{DynamicResource CancleButtonBrush}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding DaXoa}" Value="0">
-                                        <Setter Property="Foreground" Value="{DynamicResource ConfirmButtonBrush}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn
                         Width="110"
                         MinWidth="110"
                         Binding="{Binding Ngay}"
-                        Header="Salary by" />
+                        Header="Day" />
                     <DataGridTextColumn
                         Width="150"
                         MinWidth="150"
                         Binding="{Binding Thang}"
-                        Header="Hourly Wage" />
+                        Header="Month" />
                     <DataGridTextColumn
-                        Width="150"
+                        Width="*"
                         MinWidth="150"
                         Binding="{Binding SoNgayNghi}"
-                        Header="Monthly Wage" />
+                        Header="Number of holidays" />
                 </controls:DatagridEx.Columns>
             </controls:DatagridEx>
 
-            <CheckBox
+            <!--<CheckBox
                 x:Name="showResignCheckBox"
                 Margin="0,17,350,0"
                 HorizontalAlignment="Right"
@@ -294,7 +287,7 @@
                 Checked="searchChanged"
                 Content="Show delete roles"
                 IsEnabled="{Binding ElementName=datagridEx, Path=IsEnabled}"
-                Unchecked="searchChanged" />
+                Unchecked="searchChanged" />-->
         </Grid>
     </Grid>
 </UserControl>
