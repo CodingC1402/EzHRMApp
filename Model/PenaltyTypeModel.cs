@@ -10,6 +10,8 @@ namespace Model
 {
     public class PenaltyTypeModel : PenaltyType
     {
+        public bool IsSpecialType { get => TenViPham == Penalty.GoHomeEarly || TenViPham == Penalty.BeingLate || TenViPham == Penalty.Absence; }
+
         public PenaltyTypeModel() { }
         public PenaltyTypeModel(PenaltyType penaltyType) : base(penaltyType) { }
 
