@@ -13,6 +13,7 @@ namespace Model.Utils
         public static uint PayrollTypes = 8;
         public static uint AccountGroups = 16;  // digit 1
         public static uint ScheduleManagement = 32;
+        public static uint Holiday = 64;
 
         // hex digit 2 (HRM)
         public static uint Dashboard = 256;
@@ -28,6 +29,5 @@ namespace Model.Utils
 
         // hex digit 5
         public static uint UserInfo = 1048576;
-        public static uint Holiday = 2097152;
     }
 }

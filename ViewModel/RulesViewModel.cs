@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    class RulesViewModel
+    public class RulesViewModel
     {
     }
 }
