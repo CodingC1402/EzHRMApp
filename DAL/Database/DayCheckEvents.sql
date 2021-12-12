@@ -533,10 +533,18 @@ DO
             + INTERVAL SoNgayNghi - 1 DAY;
 
         IF NOT EXISTS(SELECT * FROM currentHolidays) AND coLamHomNay = 1 THEN
-            CALL UPDATE_END_BUSINESS_DAY;
+            BEGIN
+                INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+                VALUES (NOW(), 'Khong co ngay nghi le va hom nay co lam', NULL, NULL, NULL);
+                CALL UPDATE_END_BUSINESS_DAY;
+            END;
         ELSE
-            ALTER EVENT END_BUSINESS_DAY_EVENT
+            BEGIN
+               INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+                VALUES (NOW(), 'Dang co nghi le hoac hom nay khong lam', NULL, NULL, NULL);
+               ALTER EVENT END_BUSINESS_DAY_EVENT
             DISABLE;
+            END ;
         END IF;
 
         /* Insert bao cao va so gio lam cho ngay moi */
@@ -563,5 +571,98 @@ DO
                                    SoNVVangMat)
         VALUES (ngayMai, 0, 0, 0, 0, 0, 0, 0);
     END $
+
+DELIMITER ;
+
+DELIMITER $
+
+DROP PROCEDURE IF EXISTS TestSetEndDayPrepNewDay;
+CREATE PROCEDURE TestSetEndDayPrepNewDay()
+BEGIN
+    DECLARE homNay date;
+    DECLARE ngayMai date;
+    DECLARE coLamHomNay tinyint;
+
+    SET homNay = CURRENT_DATE();
+    SET ngayMai = CURRENT_DATE() + INTERVAL 1 DAY;
+    SET coLamHomNay = (
+        SELECT (
+            CASE DAYOFWEEK(homNay)
+                WHEN 2 THEN CoLamThuHai
+                WHEN 3 THEN CoLamThuBa
+                WHEN 4 THEN CoLamThuTu
+                WHEN 5 THEN CoLamThuNam
+                WHEN 6 THEN CoLamThuSau
+                WHEN 7 THEN CoLamThuBay
+                WHEN 1 THEN CoLamChuNhat
+            END
+           )
+        FROM thamso
+        WHERE ThoiDiemTao <= NOW()
+    );
+
+    DELETE FROM eventlog;
+
+    INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+    VALUES (NOW(), 'Testing SetEndDayPrepNewDay', NULL, NULL, NULL);
+
+    /* check xem cong ty co dang nghi le hay khong */
+    CREATE TEMPORARY TABLE currentHolidays
+    SELECT *
+    FROM nghile
+    WHERE homNay BETWEEN MAKEDATE(YEAR(homNay), 1)
+        + INTERVAL Thang - 1 MONTH
+        + INTERVAL Ngay - 1 DAY
+    AND MAKEDATE(YEAR(homNay), 1)
+        + INTERVAL Thang - 1 MONTH
+        + INTERVAL Ngay - 1 DAY
+        + INTERVAL SoNgayNghi - 1 DAY;
+
+    IF NOT EXISTS(SELECT * FROM currentHolidays) AND coLamHomNay = 1 THEN
+        BEGIN
+            INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+            VALUES (NOW(), 'Khong co ngay nghi le va hom nay co lam', NULL, NULL, NULL);
+            ALTER EVENT END_BUSINESS_DAY_EVENT
+            ON SCHEDULE
+                EVERY 1 DAY
+                STARTS NOW() + INTERVAL 15 SECOND
+            ENABLE;
+        END;
+    ELSE
+        BEGIN
+           INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+            VALUES (NOW(), 'Dang co nghi le hoac hom nay khong lam', NULL, NULL, NULL);
+           ALTER EVENT END_BUSINESS_DAY_EVENT
+        DISABLE;
+        END ;
+    END IF;
+
+    /* Insert bao cao va so gio lam cho ngay moi */
+    /*INSERT INTO sogiolamtrongngay (Ngay, IDNhanVien, SoGioLamTrongGio, SoGioLamNgoaiGio)
+    SELECT ngayMai, ID, 0.0, 0.0
+    FROM nhanvien
+    WHERE NgayVaoLam <= ngayMai
+    AND NgayThoiViec IS NULL;
+
+    IF (DAY(ngayMai) = 1) THEN
+    BEGIN
+        INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
+        VALUES (MONTH(ngayMai), YEAR(ngayMai), 0, 0);
+    END;
+    END IF;
+
+    INSERT INTO baocaochamcong (NgayBaoCao,
+                               SoNVDenSom,
+                               SoNVDenDungGio,
+                               SoNVDenTre,
+                               SoNVTanLamSom,
+                               SoNVTanLamDungGio,
+                               SoNVLamThemGio,
+                               SoNVVangMat)
+    VALUES (ngayMai, 0, 0, 0, 0, 0, 0, 0);*/
+
+    INSERT INTO eventlog (LogTime, Message, HomQua, GioVaoLamHomQua, GioTanLamHomQua)
+    VALUES (NOW(), 'Event ket thuc', NULL, NULL, NULL);
+END $
 
 DELIMITER ;

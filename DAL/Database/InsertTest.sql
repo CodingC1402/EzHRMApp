@@ -127,10 +127,10 @@ INSERT INTO nghiphep (IDNhanVien, NgayBatDauNghi, SoNgayNghi, LyDoNghi, CoPhep)
 VALUES ('NV00000002', CURRENT_DATE() - INTERVAL 1 DAY, 1, 'Tai nan giao thong', 1);
 
 INSERT INTO baocaochamcong (NgayBaoCao, SoNVDenSom, SoNVDenDungGio, SoNVDenTre, SoNVTanLamSom, SoNVTanLamDungGio, SoNVLamThemGio, SoNVVangMat)
-VALUES ('2021/11/15', 10, 40, 12, 0, 45, 17, 0),
-('2021/11/16', 14, 35, 13, 5, 40, 17, 5),
-('2021/11/17', 13, 42, 7, 4, 40, 18, 6),
-('2021/11/18', 13, 37, 12, 20, 25, 16, 2);
+VALUES ('2021/12/9', 10, 40, 12, 0, 45, 17, 0),
+('2021/12/10', 14, 35, 13, 5, 40, 17, 5),
+('2021/12/11', 13, 42, 7, 4, 40, 18, 6),
+('2021/12/12', 13, 37, 12, 20, 25, 16, 2);
 
 INSERT INTO baocaonhansu (Thang, Nam, SoNhanVienMoi, SoNhanVienThoiViec)
 VALUES (1, 2021, 10, 20),
@@ -142,4 +142,4 @@ VALUES (1, 2021, 10, 20),
        (7, 2021, 1, 2),
        (8, 2021, 1, 10),
        (9, 2021, 12, 1),
-       (10, 2021, 20, 1)
+       (10, 2021, 20, 1);
