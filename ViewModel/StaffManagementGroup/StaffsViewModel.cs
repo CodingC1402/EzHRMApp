@@ -311,7 +311,7 @@ namespace ViewModel
 
         public override bool CanExecuteUpdateStart(object param)
         {
-            return base.CanExecuteUpdateStart(param) && CurrentEmployee != null;
+            return base.CanExecuteUpdateStart(param) && CurrentEmployee != null && CurrentEmployee.ID != LoginInfo.Employee?.ID;
         }
 
         #region Penalty
