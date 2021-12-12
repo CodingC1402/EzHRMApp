@@ -39,6 +39,7 @@ select * from chucvu;
 select * from truluong;
 select * from luong;
 select * from nghiphep;
+select * from nghile;
 select * from sogiolamtrongngay;
 select * from baocaochamcong;
 select * from baocaonhansu;

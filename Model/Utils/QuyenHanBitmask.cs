@@ -28,5 +28,6 @@ namespace Model.Utils
 
         // hex digit 5
         public static uint UserInfo = 1048576;
+        public static uint Holiday = 2097152;
     }
 }

@@ -25,13 +25,5 @@ namespace DAL.Rows
             GioTanLamThuBay = t.GioTanLamThuBay;
             GioTanLamChuNhat = t.GioTanLamChuNhat;
         }
-
-        public override string Save(UnitOfWork uow)
-        {
-            ThoiDiemTao = DateTime.Now;
-            string res = BoolToString(TimetableRepo.Instance.Add(this, uow));
-            TimetableRepo.Instance.FindLatestTimetable();
-            return res;
-        }
     }
 }
