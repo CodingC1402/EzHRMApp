@@ -1,11 +1,13 @@
 show events;
-show create event START_BUSINESS_HOURS_EVENT;
+show create event END_BUSINESS_DAY_EVENT;
 
-ALTER EVENT START_BUSINESS_HOURS_EVENT
+ALTER EVENT SET_END_DAY_PREP_NEW_DAY_EVENT
 ON SCHEDULE
 EVERY 1 DAY
 STARTS NOW() + INTERVAL 10 SECOND
 ENABLE;
+
+CALL TestSetEndDayPrepNewDay();
 
 select * from eventlog;
 
@@ -18,31 +20,6 @@ select * from chamcong;
 select * from chucvu;
 select * from truluong;
 select * from luong;
-show events;
-show create event START_BUSINESS_HOURS_EVENT;
-
-ALTER EVENT START_BUSINESS_HOURS_EVENT
-ON SCHEDULE
-EVERY 1 DAY
-STARTS NOW() + INTERVAL 10 SECOND
-ENABLE;
-
-select * from eventlog;
-
-select * from thamso;
-select * from cacloaivipham;
-select * from thoigianbieutuan;
-select * from cachtinhluong;
-select * from nhanvien;
-select * from chamcong;
-select * from chucvu;
-select * from truluong;
-select * from luong;
-select * from nghiphep;
-select * from nghile;
-select * from sogiolamtrongngay;
-select * from baocaochamcong;
-select * from baocaonhansu;
 
 DELETE FROM sogiolamtrongngay;
 DELETE FROM nghiphep;
