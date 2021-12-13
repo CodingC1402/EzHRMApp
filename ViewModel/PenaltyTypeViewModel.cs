@@ -43,6 +43,8 @@ namespace ViewModel
                     {
                         Collections.Remove(SelectedPenalty);
                         SelectedPenalty = null;
+                        OnModeChangeBack();
+                        IsInUpdateMode = false;
                     }
                     else
                     {
@@ -60,7 +62,7 @@ namespace ViewModel
             _waitingForDeleteConfirmation = true;
             ShowConfirmation = true;
         }, param => {
-            return SelectedPenalty != null && !SelectedPenalty.IsSpecialType;
+            return SelectedPenalty != null && !SelectedPenalty.IsSpecialType && IsInUpdateMode;
         });
 
         public override void ExecuteAdd(object param)
@@ -74,6 +76,7 @@ namespace ViewModel
         {
             base.ExecuteUpdate(param);
             CurrentPenalty = new PenaltyTypeModel(_selectedPenalty);
+            DeleteCommand.RaiseCanExecuteChangeEvent();
         }
 
         public override void ExecuteConfirmAdd(object param)
@@ -120,6 +123,7 @@ namespace ViewModel
             base.OnModeChangeBack();
             CurrentPenalty = SelectedPenalty;
             NameIsReadOnly = true;
+            DeleteCommand.RaiseCanExecuteChangeEvent();
         }
 
         public override void OnGetTo()
