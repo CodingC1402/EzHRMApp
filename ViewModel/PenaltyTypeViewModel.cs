@@ -29,14 +29,6 @@ namespace ViewModel
         public bool NameIsReadOnly { get; set; } = true;
 
         private bool _waitingForDeleteConfirmation;
-        private RelayCommand<object> _deleteCommand;
-        public RelayCommand<object> DeleteCommand => _deleteCommand ??= new RelayCommand<object>(param => {
-            PopUpMessage.Instance.Message = "Are you sure you want to delete this?";
-            _waitingForDeleteConfirmation = true;
-            ShowConfirmation = true;
-        }, param => {
-            return SelectedPenalty != null && !SelectedPenalty.IsSpecialType;
-        });
 
         protected override void PopUpMessageClosed(object sender, EventArgs e)
         {
@@ -60,6 +52,16 @@ namespace ViewModel
                 }
             }
         }
+
+        #region Commands and Functions
+        private RelayCommand<object> _deleteCommand;
+        public RelayCommand<object> DeleteCommand => _deleteCommand ??= new RelayCommand<object>(param => {
+            PopUpMessage.Instance.Message = "Are you sure you want to delete this?";
+            _waitingForDeleteConfirmation = true;
+            ShowConfirmation = true;
+        }, param => {
+            return SelectedPenalty != null && !SelectedPenalty.IsSpecialType;
+        });
 
         public override void ExecuteAdd(object param)
         {
@@ -111,6 +113,7 @@ namespace ViewModel
         {
             return base.CanExecuteUpdateStart(param) && _selectedPenalty != null;
         }
+        #endregion
 
         protected override void OnModeChangeBack()
         {
