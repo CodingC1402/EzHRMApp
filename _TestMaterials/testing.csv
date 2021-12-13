@@ -1,0 +1,3 @@
+ID,Ho,Ten,CMND,NgaySinh,EmailVanPhong,EmailCaNhan,SDTVanPhong,SDTCaNhan,NgayVaoLam,NgayThoiViec,PhongBan,ChucVu,TaiKhoan
+NV00000011,Testing,Chad,111111111111,11/12/2001,mail11@m.com,mail11@m.com,9999999999,9999999999,11/12/2021,,Cleaning Department,Cleaner,
+NV00000012,Testing,Stacy,111111111111,11/12/2001,mail20@m.com,mail12@m.com,9999999999,9999999999,11/12/2021,,Cleaning Department,Cleaner,
