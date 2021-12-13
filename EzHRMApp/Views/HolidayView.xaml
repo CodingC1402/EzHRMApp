@@ -182,6 +182,24 @@
                 Grid.Row="2"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
+                <controls:ButtonEx Margin="10,5" IsEnabled="{Binding IsInCRUDMode}">
+                    <controls:ButtonEx.Style>
+                        <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
+                            <Setter Property="Command" Value="{Binding DeleteCommand}" />
+                            <Setter Property="Content" Value="Delete" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInUpdateMode}" Value="true">
+                                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                                    <Setter Property="Content" Value="Delete" />
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:ButtonEx.Style>
+                </controls:ButtonEx>
                 <controls:ButtonEx Margin="10,5">
                     <controls:ButtonEx.Style>
                         <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
