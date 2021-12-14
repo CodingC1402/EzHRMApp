@@ -114,11 +114,19 @@ namespace ViewModel
 
         public override bool CanExecuteUpdateStart(object param)
         {
-            return base.CanExecuteUpdateStart(param) && CurrentAccountGroup != null;
+            return base.CanExecuteUpdateStart(param) && CurrentAccountGroup != null && !SelectedAccountGroup.IsBossGroup;
         }
 
         private void ExecuteDelete(object param)
         {
+            var accounts = AccountModel.GetAccountGroupsOfActiveEmployees();
+            if (accounts.Contains(CurrentAccountGroup.TenNhomTaiKhoan))
+            {
+                ErrorString = "There is at least 1 active employee with this account group!";
+                HaveError = true;
+                return;
+            }
+
             CurrentAccountGroup.DaXoa = true;
             var result = CurrentAccountGroup.Save();
             if (result != "")
@@ -135,7 +143,7 @@ namespace ViewModel
 
         private bool CanExecuteDelete(object param)
         {
-            return SelectedAccountGroup != null && !IsInCRUDMode;
+            return SelectedAccountGroup != null && !IsInCRUDMode && !SelectedAccountGroup.IsBossGroup;
         }
         #endregion
 
