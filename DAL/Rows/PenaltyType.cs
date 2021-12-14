@@ -11,7 +11,6 @@ namespace DAL.Rows
         public string TenViPham { get; set; }
         public float TruLuongTheoPhanTram { get; set; }
         public float TruLuongTrucTiep { get; set; }
-        public bool IsSpecialType { get => TenViPham == Penalty.GoHomeEarly || TenViPham == Penalty.BeingLate || TenViPham == Penalty.Absence; }
 
         public PenaltyType() { }
         public PenaltyType(PenaltyType penaltyType)
@@ -27,7 +26,7 @@ namespace DAL.Rows
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    PenaltyTypeRepo.Instance.Add(this, uowNew);
+                    PenaltyTypeRepo.Instance.Add(new PenaltyType(this), uowNew);
 
                     PenaltyType penalty = PenaltyTypeRepo.Instance.FindByID(new object[] { TenViPham });
                     if (penalty != null)
@@ -39,7 +38,7 @@ namespace DAL.Rows
                 }
             }
 
-            if (PenaltyTypeRepo.Instance.Add(this, uow))
+            if (PenaltyTypeRepo.Instance.Add(new PenaltyType(this), uow))
                 return "";
             else
                 return "Failed!";
@@ -51,12 +50,12 @@ namespace DAL.Rows
             {
                 using (var uowNew = new UnitOfWork())
                 {
-                    PenaltyTypeRepo.Instance.Update(new object[] { TenViPham }, this, uowNew);
+                    PenaltyTypeRepo.Instance.Update(new object[] { TenViPham }, new PenaltyType(this), uowNew);
                     return ExecuteAndReturn(uowNew);
                 }
             }
 
-            if (PenaltyTypeRepo.Instance.Update(new object[] { TenViPham }, this, uow))
+            if (PenaltyTypeRepo.Instance.Update(new object[] { TenViPham }, new PenaltyType(this), uow))
                 return "";
             else
                 return "Failed!";

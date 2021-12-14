@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using ViewModel.Helper;
 
 namespace ViewModel
 {
@@ -35,8 +36,44 @@ namespace ViewModel
             {
                 _selectedHoliday = value;
                 CurrentHoliday = value;
+                DeleteCommand.RaiseCanExecuteChangeEvent();
             }
         }
+
+        private bool _waitingForDeleteConfirmation;
+
+        protected override void PopUpMessageClosed(object sender, EventArgs e)
+        {
+            base.PopUpMessageClosed(sender, e);
+            if (_waitingForDeleteConfirmation)
+            {
+                _waitingForDeleteConfirmation = false;
+                if (MessageResult == PopUpMessage.Result.Ok)
+                {
+                    string result = SelectedHoliday.Delete();
+                    if (result == "")
+                    {
+                        Holidays.Remove(SelectedHoliday);
+                        SelectedHoliday = null;
+                        IsInUpdateMode = false;
+                    }
+                    else
+                    {
+                        ErrorString = result;
+                        HaveError = true;
+                    }
+                }
+            }
+        }
+
+        private RelayCommand<object> _deleteCommand;
+        public RelayCommand<object> DeleteCommand => _deleteCommand ??= new RelayCommand<object>(param => {
+            PopUpMessage.Instance.Message = "Are you sure you want to delete this?";
+            _waitingForDeleteConfirmation = true;
+            ShowConfirmation = true;
+        }, param => {
+            return SelectedHoliday != null;
+        });
 
         #region Function
         public override void ExecuteAdd(object param)

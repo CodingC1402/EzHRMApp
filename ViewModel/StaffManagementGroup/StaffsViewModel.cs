@@ -188,12 +188,12 @@ namespace ViewModel
             {
                 try
                 {
-                    var employees = reader.GetRecords<Employee>();
+                    var employees = reader.GetRecords<Employee>().ToList();
                     foreach (var e in employees)
                     {
-                        var existing = Employees.FirstOrDefault(eModel => eModel.ID == e.ID 
-                        || eModel.EmailCaNhan == e.EmailCaNhan 
-                        || eModel.EmailVanPhong == e.EmailVanPhong);
+                        Employee existing = Employees.FirstOrDefault(eModel => eModel.ID == e.ID 
+                            || eModel.EmailCaNhan == e.EmailCaNhan 
+                            || eModel.EmailVanPhong == e.EmailVanPhong);
 
                         if (existing != null)
                         {
@@ -208,6 +208,29 @@ namespace ViewModel
                             return;
                         }
 
+                        existing = employees.FirstOrDefault(other => 
+                            other != e && 
+                            (other.ID == e.ID
+                            || other.EmailCaNhan == e.EmailCaNhan
+                            || other.EmailVanPhong == e.EmailVanPhong));
+
+                        if (existing != null)
+                        {
+                            if (existing.ID == e.ID)
+                                ErrorString = $"There are more than 1 employee with ID {existing.ID} in importing file";
+                            else if (existing.EmailCaNhan == e.EmailCaNhan)
+                                ErrorString = $"There are more than 1 employee with personal email {existing.EmailCaNhan} in importing file";
+                            else
+                                ErrorString = $"There are more than 1 employee with work email {existing.EmailVanPhong} in importing file";
+
+                            HaveError = true;
+                            return;
+                        }
+                    }
+                    // 2 loops so that the user doesn't have to edit the already-imported employees
+                    // out of the CSV file in case an error occurs
+                    foreach (var e in employees)
+                    {
                         var newEmployee = new EmployeeModel(e);
                         string result = newEmployee.Save(true);
                         if (result == "")
@@ -311,7 +334,7 @@ namespace ViewModel
 
         public override bool CanExecuteUpdateStart(object param)
         {
-            return base.CanExecuteUpdateStart(param) && CurrentEmployee != null;
+            return base.CanExecuteUpdateStart(param) && CurrentEmployee != null && CurrentEmployee.ID != LoginInfo.Employee?.ID;
         }
 
         #region Penalty
