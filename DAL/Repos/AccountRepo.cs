@@ -1,6 +1,7 @@
 ﻿using DAL.Others;
 using DAL.Rows;
 using MySql.Data.MySqlClient;
+using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -58,6 +59,18 @@ namespace DAL.Repos
         {
             TableName = "TAIKHOAN";
             PKColsName = new string[] { "TaiKhoan" };
+        }
+
+        public IEnumerable<string> GetAccountGroupsOfActiveEmployees()
+        {
+            var db = DatabaseConnector.Database;
+            return db.Query(TableName)
+                    .Select("NhomTaiKhoan")
+                    .WhereIn(PKColsName[0],
+                        db.Query(EmployeeRepo.Instance.TableName)
+                        .Select("TaiKhoan")
+                        .Where("NgayThoiViec", null))
+                    .Get<string>();
         }
 
         public ConnectionResult Login(string userName, SecureString hashedPassword)
