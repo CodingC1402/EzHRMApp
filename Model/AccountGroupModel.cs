@@ -28,6 +28,8 @@ namespace Model
         public bool AccountGroupsViewPermission { get; set; }
         public bool ScheduleManagementViewPermission { get; set; }
 
+        public bool IsBossGroup => TenNhomTaiKhoan == "boss";
+
         public static ObservableCollection<AccountGroupModel> LoadAll()
         {
             var list = AccountGroupRepo.Instance.GetAll();

@@ -49,6 +49,11 @@ namespace DAL.Rows
             DangLogin = account.DangLogin;
         }
 
+        public static IEnumerable<string> GetAccountGroupsOfActiveEmployees()
+        {
+            return AccountRepo.Instance.GetAccountGroupsOfActiveEmployees();
+        }
+
         public void ChangePassword(string password)
         {
             using (var sh256 = SHA256.Create())

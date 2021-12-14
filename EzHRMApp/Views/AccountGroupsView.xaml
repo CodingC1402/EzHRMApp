@@ -162,11 +162,6 @@
                 </StackPanel.Resources>
 
                 <controls:ToggleButton
-                    Command="{Binding DashboardToggleCommand}"
-                    Content="User Info View Permission"
-                    Path="{StaticResource userIcon}"
-                    Selected="{Binding CurrentAccountGroup.UserInfoViewPermission}" />
-                <controls:ToggleButton
                     Command="{Binding ScheduleToggleCommand}"
                     Content="Weekly Schedule View Permission"
                     Path="{StaticResource calendarIcon}"
