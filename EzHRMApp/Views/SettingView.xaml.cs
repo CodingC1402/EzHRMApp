@@ -24,17 +24,18 @@ namespace EzHRMApp.Views
     {
         public SettingView()
         {
+            InitializeComponent();
+
             SettingViewModel vmInstance = SettingViewModel.Instance;
+            if (vmInstance == null)
+                return;
+
             vmInstance.OnColorChanged.AddListener(ColorIndexChanged);
-            if (vmInstance.CurrentTheme >= 0)
-            {
-                ColorIndexChanged(vmInstance.CurrentTheme);
-            }
         }
 
         private void ColorIndexChanged(int index)
         {
-            ThemeHelper.SelectTheme(ThemeHelper.ThemeColor.SteelBlue);
+            ThemeHelper.SelectTheme((ThemeHelper.ThemeColor)index);
         }
     }
 }

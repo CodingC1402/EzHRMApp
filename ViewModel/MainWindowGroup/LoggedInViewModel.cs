@@ -46,7 +46,7 @@ namespace ViewModel
             ToHomeView = new NavigationCommand<HomeViewModel>(new HomeViewModel(), this, 0);
             ViewModels.Add(ToHomeView.ViewModel);
 
-            ToUserInfo = new NavigationCommand<UserInfoViewModel>(new UserInfoViewModel(), this, QuyenHanBitmask.UserInfo);
+            ToUserInfo = new NavigationCommand<UserInfoViewModel>(new UserInfoViewModel(), this, 0);
             ViewModels.Add(ToUserInfo.ViewModel);
 
             ToWeeklyScheduleView = new NavigationCommand<WeeklyScheduleViewModel>(new WeeklyScheduleViewModel(), this, QuyenHanBitmask.WeeklySchedule);

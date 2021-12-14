@@ -17,6 +17,8 @@ using System.Windows.Interop;
 using EzHRMApp.Helper;
 using WpfScreenHelper;
 using CornControls.Window;
+using ViewModel;
+using CornControls.Themes;
 
 namespace EzHRMApp
 {
@@ -29,6 +31,12 @@ namespace EzHRMApp
         {
             _offSet = new Thickness(-8);
             InitializeComponent();
+
+            SettingViewModel vmInstance = SettingViewModel.Instance;
+            if (vmInstance != null && vmInstance.CurrentTheme >= 0)
+            {
+                ThemeHelper.SelectTheme((ThemeHelper.ThemeColor)vmInstance.CurrentTheme);
+            }
         }
     }
 }

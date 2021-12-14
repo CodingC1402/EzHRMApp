@@ -160,7 +160,7 @@
                         Path="{StaticResource questionIcon}" />
                     <controls:ButtonEx
                         x:Name="settingBtn"
-                        Click="HomeButtonClicked"
+                        Click="ProgramButtonClicked"
                         Command="{Binding ToSettingView}"
                         Content="Setting"
                         Path="{StaticResource settingIcon}" />

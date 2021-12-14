@@ -17,7 +17,7 @@
     <Color x:Key="ColorAccentDark">#222b38</Color>
     <Color x:Key="ColorAccentReallyDark">#121b28</Color>
 
-    <Color x:Key="ColorLightestPanel">#313a48</Color>
+    <Color x:Key="ColorLightestPanel">#4a5059</Color>
     <Color x:Key="ColorLighterPanel">#222b38</Color>
     <Color x:Key="ColorPanel">#131c29</Color>
     <Color x:Key="ColorDarkerPanel">#0d141e</Color>

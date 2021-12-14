@@ -64,6 +64,15 @@ namespace EzHRMApp.Views
             _previousTabButton = sender as RadioButton;
         }
 
+        protected void ProgramButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (_previousTabButton != null)
+            {
+                _previousTabButton.IsChecked = false;
+                _previousTabButton = null;
+            }
+        }
+
         protected void ShowHelp(object sender, RoutedEventArgs e)
         {
 
