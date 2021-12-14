@@ -14,6 +14,14 @@ namespace DAL.Repos
         public virtual string TableName { get; protected set; }
         public virtual string[] PKColsName { get; protected set; }
 
+        public Row Row
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public IEnumerable<TRow> GetAll()
         {
             try

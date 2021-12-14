@@ -89,21 +89,21 @@
             </controls:DatagridEx.Columns>
         </controls:DatagridEx>
 
-        <controls:ButtonEx 
-            Margin="5,10,0,0"
-            Grid.Column="0"
+        <controls:ButtonEx
             Grid.Row="3"
-            VerticalAlignment="Center"
+            Grid.Column="0"
+            Margin="5,10,0,0"
             HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Command="{Binding DeleteCommand}"
             Content="Delete">
             <controls:ButtonEx.Style>
                 <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="controls:ButtonEx">
-                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}"/>
-                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}"/>
-                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}"/>
-                    <Setter Property="DisabledColor" Value="{DynamicResource CancleButtonBrush}"/>
-                    <Setter Property="DisabledOpacity" Value="0.6"/>
+                    <Setter Property="Background" Value="{DynamicResource CancleButtonBrush}" />
+                    <Setter Property="HoverColor" Value="{DynamicResource CancleButtonHoverBrush}" />
+                    <Setter Property="PressedColor" Value="{DynamicResource CancleButtonPressedBrush}" />
+                    <Setter Property="DisabledColor" Value="{DynamicResource CancleButtonBrush}" />
+                    <Setter Property="DisabledOpacity" Value="0.6" />
                 </Style>
             </controls:ButtonEx.Style>
         </controls:ButtonEx>
@@ -157,11 +157,6 @@
                                 <Setter Property="DisabledOpacity" Value="0.7" />
                                 <Setter Property="Height" Value="60" />
                             </Style.Setters>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=local:AccountGroupsView}, Path=DataContext.CurrentAccountGroup}" Value="{x:Null}">
-                                    <Setter Property="DisabledColor" Value="{DynamicResource ToggleButtonUnsetBrush}" />
-                                </DataTrigger>
-                            </Style.Triggers>
                         </Style>
                     </ResourceDictionary>
                 </StackPanel.Resources>
@@ -176,7 +171,7 @@
                     Content="Weekly Schedule View Permission"
                     Path="{StaticResource calendarIcon}"
                     Selected="{Binding CurrentAccountGroup.WeeklyScheduleViewPermission}" />
-                
+
                 <controls:ToggleButton
                     Command="{Binding DashboardToggleCommand}"
                     Content="Dashboard View Permission"
@@ -212,7 +207,7 @@
                     Content="Reports View Permission"
                     Path="{DynamicResource reportIcon}"
                     Selected="{Binding CurrentAccountGroup.ReportsViewPermission}" />
-                
+
                 <controls:ToggleButton
                     Command="{Binding PositionToggleCommand}"
                     Content="Positions View Permission"
@@ -243,7 +238,7 @@
                     Content="Schedule Management View Permission"
                     Path="{DynamicResource companyRuleIcon}"
                     Selected="{Binding CurrentAccountGroup.ScheduleManagementViewPermission}" />
-                
+
             </StackPanel>
         </ScrollViewer>
 

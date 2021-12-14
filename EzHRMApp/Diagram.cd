@@ -1,70 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="EzHRMApp.Views.AccountGroupsView" Collapsed="true">
-    <Position X="4.75" Y="2" Width="1.5" />
+  <Class Name="EzHRMApp.Views.AccountGroupsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Views\AccountGroupsView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.CheckInManagementView" Collapsed="true">
-    <Position X="4.75" Y="1" Width="1.5" />
+  <Class Name="EzHRMApp.Views.CheckInManagementView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Views\CheckInManagementView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.DailyReportsView" Collapsed="true">
-    <Position X="10" Y="1" Width="1.5" />
+  <Class Name="EzHRMApp.Views.DailyReportsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAEAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\DailyReportsView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.DashboardView" Collapsed="true">
-    <Position X="6.5" Y="1" Width="1.5" />
+  <Class Name="EzHRMApp.Views.DashboardView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Views\DashboardView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.DepartmentView" Collapsed="true">
-    <Position X="4.75" Y="3" Width="1.5" />
+  <Class Name="EzHRMApp.Views.DepartmentView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Views\DepartmentView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.EmployeePayrollManagementView" Collapsed="true">
-    <Position X="11.75" Y="1" Width="1.5" />
+  <Class Name="EzHRMApp.Views.EmployeePayrollManagementView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAoEAAAAAAAA=</HashCode>
       <FileName>Views\EmployeePayrollManagementView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.ForgotPasswordView" Collapsed="true">
-    <Position X="8.25" Y="1" Width="1.5" />
+  <Class Name="EzHRMApp.Views.ForgotPasswordView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\ForgotPasswordView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="EzHRMApp.Views.HolidayView" Collapsed="true">
-    <Position X="6.5" Y="2" Width="1.5" />
+  <Class Name="EzHRMApp.Views.HolidayView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAEAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Views\HolidayView.xaml.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.HomeView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="2" Width="1.5" />
+    <Position X="5.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\HomeView.xaml.cs</FileName>
@@ -72,7 +73,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.LeavesView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="2" Width="1.5" />
+    <Position X="7.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAEAAAAAEAAAAAAAAAAAIAEAAAAAA=</HashCode>
       <FileName>Views\LeavesView.xaml.cs</FileName>
@@ -80,7 +81,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.LoggedInView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="2" Width="1.5" />
+    <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAQAAAgAAAAAAAEAAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>Views\LoggedInView.xaml.cs</FileName>
@@ -88,7 +89,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.LoginView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="3" Width="1.5" />
+    <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAQAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\LoginView.xaml.cs</FileName>
@@ -96,7 +97,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.MonthlyReportsView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="3" Width="1.5" />
+    <Position X="4" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAEAAAAARAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\MonthlyReportsView.xaml.cs</FileName>
@@ -104,7 +105,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.PayrollTypesView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="3" Width="1.5" />
+    <Position X="5.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\PayrollTypesView.xaml.cs</FileName>
@@ -112,7 +113,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.PenaltyTypeView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="3" Width="1.5" />
+    <Position X="7.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAEAAAAAEAAAAAAAAAAAIAEAAAAAA=</HashCode>
       <FileName>Views\PenaltyTypeView.xaml.cs</FileName>
@@ -120,7 +121,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.PenaltyView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="4" Width="1.5" />
+    <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Views\PenaltyView.xaml.cs</FileName>
@@ -128,7 +129,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.ReportsView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="4" Width="1.5" />
+    <Position X="2.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\ReportsView.xaml.cs</FileName>
@@ -136,7 +137,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.RoleManagementView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="4" Width="1.5" />
+    <Position X="4" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Views\RoleManagementView.xaml.cs</FileName>
@@ -144,7 +145,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.ScheduleManagementView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="4" Width="1.5" />
+    <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\ScheduleManagementView.xaml.cs</FileName>
@@ -152,7 +153,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.StaffsView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="5" Width="1.5" />
+    <Position X="4" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gIEABQAAggAAIAAEEAAAQAEAAAAIAAACAAoAHAAACAA=</HashCode>
       <FileName>Views\StaffsView.xaml.cs</FileName>
@@ -160,7 +161,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.UserInfoView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="5" Width="1.5" />
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\UserInfoView.xaml.cs</FileName>
@@ -168,108 +169,12 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="EzHRMApp.Views.WeeklyScheduleView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="5" Width="1.5" />
+    <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\WeeklyScheduleView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="ViewModel.AccountGroupsViewModel" Collapsed="true">
-    <Position X="0.5" Y="1.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.CheckInManagementViewModel" Collapsed="true">
-    <Position X="2.25" Y="1.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.DailyReportViewModel" Collapsed="true">
-    <Position X="0.5" Y="2.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.DashboardViewModel" Collapsed="true">
-    <Position X="2.25" Y="2.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="ViewModel.DashboardViewModel.TimeSpan" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.DepartmentViewModel" Collapsed="true">
-    <Position X="0.5" Y="3" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.EmployeePayrollManagementViewModel" Collapsed="true">
-    <Position X="1.75" Y="3" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.ForgotPasswordViewModel" Collapsed="true">
-    <Position X="0.5" Y="3.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.HomeViewModel" Collapsed="true">
-    <Position X="2.25" Y="4" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.LeavesViewModel" Collapsed="true">
-    <Position X="0.5" Y="4.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.LoggedInViewModel" Collapsed="true">
-    <Position X="2.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.LoginViewModel" Collapsed="true">
-    <Position X="0.5" Y="6" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.MainViewModel" Collapsed="true">
-    <Position X="2.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.MonthlyReportViewModel" Collapsed="true">
-    <Position X="1.75" Y="6" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.PayrollTypesViewModel" Collapsed="true">
-    <Position X="0.5" Y="7" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.PenaltyTypeViewModel" Collapsed="true">
-    <Position X="2" Y="6.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.PenaltyViewModel" Collapsed="true">
-    <Position X="2.25" Y="7.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.ReportsViewModel" Collapsed="true">
-    <Position X="0.75" Y="7.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.RoleManagementViewModel" Collapsed="true">
-    <Position X="2.75" Y="8" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.ScheduleManagementViewModel" Collapsed="true">
-    <Position X="0.75" Y="8.5" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.StaffsViewModel" Collapsed="true">
-    <Position X="3.25" Y="8.75" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.UserInfoViewModel" Collapsed="true">
-    <Position X="0.5" Y="9.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="ViewModel.WeeklyScheduleViewModel" Collapsed="true">
-    <Position X="2.25" Y="9.5" Width="1.5" />
-    <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

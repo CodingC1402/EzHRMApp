@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ViewModel.HolidayViewModel" Collapsed="true">
+    <Position X="9" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAAAQBgAogAAAAAAAAABATAAAAAAAQAAAAAChAAA=</HashCode>
+      <FileName>HolidayViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.AccountGroupsViewModel" Collapsed="true">
+    <Position X="9" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAQAgAoAQXJQKgAAABI2QAAAAARAQAAAjSjAAA=</HashCode>
+      <FileName>AccountGroupsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.CheckInManagementViewModel" Collapsed="true">
+    <Position X="4.25" Y="22.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CheckInManagementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.DailyReportViewModel" Collapsed="true">
+    <Position X="9" Y="29.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAYwAAAAAAAAQIAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>DailyReportViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.DashboardViewModel" Collapsed="true">
+    <Position X="4.25" Y="23.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAIAJAAQEAAAACAADAGQQAIAEAAAgEAEQAAgAAAAAGI=</HashCode>
+      <FileName>DashboardViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.DepartmentViewModel" Collapsed="true">
+    <Position X="9" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEBUAgAoACAAECAAAQBCSABABAAABAAAICChAAA=</HashCode>
+      <FileName>StaffManagementGroup\DepartmentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.EmployeePayrollManagementViewModel" Collapsed="true">
+    <Position X="9" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQwAAACEAAAQAAAAAggIAAAAAAgAAAAEAAEAA=</HashCode>
+      <FileName>StaffManagementGroup\EmployeePayrollManagementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.ForgotPasswordViewModel" Collapsed="true">
+    <Position X="4.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEEAAIAAAggIAIAIJARAFAACiRAAACAQAQAAIYAIAA=</HashCode>
+      <FileName>MainWindowGroup\ForgotPasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.HomeViewModel" Collapsed="true">
+    <Position X="4.25" Y="24.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAQAAAgEAAARA=</HashCode>
+      <FileName>HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.LeavesViewModel" Collapsed="true">
+    <Position X="9" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQggAoQAEAAACAABBACAAAAAgAEAEAAECAAAA=</HashCode>
+      <FileName>LeavesViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.LoggedInViewModel" Collapsed="true">
+    <Position X="11" Y="15.75" Width="1.5" />
+    <InheritanceLine Type="ViewModel.Navigation.NavigationViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="14.941" />
+        <Point X="3.5" Y="15.375" />
+        <Point X="12.992" Y="15.375" />
+        <Point X="12.992" Y="16.063" />
+        <Point X="12.5" Y="16.063" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>ZKIAgEQQAAAgBBAAABEAAAAEhQAAAAAIRASCAQAAAIA=</HashCode>
+      <FileName>MainWindowGroup\LoggedInViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.LoginViewModel" Collapsed="true">
+    <Position X="4.25" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEAAQQAAAAAAAAAgAAAAYAAEAAgAAAQQAAAACAAAA=</HashCode>
+      <FileName>MainWindowGroup\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.MonthlyReportViewModel" Collapsed="true">
+    <Position X="9" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAQwAAAAAAAAQAAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>MonthlyReportViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.PayrollTypesViewModel" Collapsed="true">
+    <Position X="9" Y="25.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAARAgAoAAAAAAAAAAAACAAAAAAAQAQAAAABAAA=</HashCode>
+      <FileName>StaffManagementGroup\PayrollTypesViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.PenaltyTypeViewModel" Collapsed="true">
+    <Position X="9" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQggAoAAEAAACAACBICAAAAAAAAAABAMCAAAA=</HashCode>
+      <FileName>PenaltyTypeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.PenaltyViewModel" Collapsed="true">
+    <Position X="9" Y="23.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAAQAAAAAAEAAACAACAAAAEAIAAAQAABAAAAAAA=</HashCode>
+      <FileName>PenaltyViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.ReportsViewModel" Collapsed="true">
+    <Position X="11" Y="28.75" Width="1.5" />
+    <InheritanceLine Type="ViewModel.Navigation.NavigationViewModel" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.5" Y="14.941" />
+        <Point X="3.5" Y="15.375" />
+        <Point X="12.992" Y="15.375" />
+        <Point X="12.992" Y="29.062" />
+        <Point X="12.5" Y="29.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.RoleManagementViewModel" Collapsed="true">
+    <Position X="9" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAQAhAoAAMBQAAAAABASwFAAAAAQAAACAChRAA=</HashCode>
+      <FileName>StaffManagementGroup\RoleManagementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.ScheduleManagementViewModel" Collapsed="true">
+    <Position X="9" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEEAAAQAACoAAAAAACAAIAAwAAAAAAAQIAAAEAAAAE=</HashCode>
+      <FileName>ScheduleManagementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.StaffsViewModel" Collapsed="true">
+    <Position X="9" Y="26.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>SAEEAAgwhiAsAEkADIDAAEJICQxECYAIFBIIBECgBgM=</HashCode>
+      <FileName>StaffManagementGroup\StaffsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.UserInfoViewModel" Collapsed="true">
+    <Position X="9" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgQAgAoAAAAAAAAAAAACABEABAARAAAAIABAAA=</HashCode>
+      <FileName>UserInfoViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.WeeklyScheduleViewModel" Collapsed="true">
+    <Position X="4.25" Y="21.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>WeeklyScheduleViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.Navigation.CRUDViewModelBase" Collapsed="true">
+    <Position X="6" Y="20.25" Width="1.5" />
+    <InheritanceLine Type="ViewModel.Navigation.ViewModelBase" FixedToPoint="true">
+      <Path>
+        <Point X="4.25" Y="20.563" />
+        <Point X="6" Y="20.563" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>DAIAQCAAAgEKAAAoYYKAAAJBTAAAAAAAgAwAAGGjABA=</HashCode>
+      <FileName>Navigation\CRUDViewModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.Navigation.NavigationViewModel" Collapsed="true">
+    <Position X="2.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAQAAAAAEAAAAAACIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Navigation\NavigationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.Navigation.ViewModelBase" Collapsed="true">
+    <Position X="2.75" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAASAAAgAAAAAAAAAAAAgAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Navigation\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ViewModel.MainViewModel" Collapsed="true">
+    <Position X="4.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAQAAAAAAAAACAAAAAABAAAgABAQAAAAAAAAAA=</HashCode>
+      <FileName>MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

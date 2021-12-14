@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestProject
+namespace EzHRMApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SettingView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SettingView : UserControl
     {
-        public MainWindow()
+        public SettingView()
         {
             InitializeComponent();
         }

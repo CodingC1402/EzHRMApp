@@ -35,10 +35,6 @@
     <Color x:Key="ConfirmButtonColorPressed">#49F47c</Color>
     <Color x:Key="UpdateButtonColorPressed">#FCC953</Color>
 
-    <Color x:Key="ToggleButtonColorUnset">#6b6b6b</Color>
-    <Color x:Key="ToggleButtonColorDisabled">#548da8</Color>
-    <Color x:Key="ToggleButtonColorDisabledHighlight">#35a15e</Color>
-
     <Color x:Key="GrayFade">#d4d4d4</Color>
 
     <!--  Brushes  -->
@@ -85,9 +81,9 @@
     <SolidColorBrush x:Key="ConfirmButtonHoverBrush" Color="{DynamicResource ConfirmButtonColorHover}" />
     <SolidColorBrush x:Key="ConfirmButtonPressedBrush" Color="{DynamicResource ConfirmButtonColorPressed}" />
 
-    <SolidColorBrush x:Key="ToggleButtonDisabledBrush" Color="{DynamicResource ToggleButtonColorDisabled}"/>
-    <SolidColorBrush x:Key="ToggleButtonDisabledHighlightBrush" Color="{DynamicResource ToggleButtonColorDisabledHighlight}"/>
-    <SolidColorBrush x:Key="ToggleButtonUnsetBrush" Color="{DynamicResource ToggleButtonColorUnset}"/>
+    <SolidColorBrush x:Key="ToggleButtonDisabledBrush" Color="{DynamicResource ToggleButtonColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleButtonDisabledHighlightBrush" Color="{DynamicResource ToggleButtonColorDisabledHighlight}" />
+    <SolidColorBrush x:Key="ToggleButtonUnsetBrush" Color="{DynamicResource ToggleButtonColorUnset}" />
 
-    <SolidColorBrush x:Key="GrayFadeBrush" Color="{DynamicResource GrayFade}"/>
+    <SolidColorBrush x:Key="GrayFadeBrush" Color="{DynamicResource GrayFade}" />
 </ResourceDictionary>

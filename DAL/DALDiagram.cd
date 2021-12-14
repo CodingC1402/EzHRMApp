@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DAL.Repos.AccountRepo" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="DAL.Repos.AccountRepo.ConnectionResult">
+        <TypeIdentifier>
+          <NewMemberFileName>Repos\AccountRepo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Enum Name="DAL.Repos.AccountRepo.Privileges">
+        <TypeIdentifier>
+          <NewMemberFileName>Repos\AccountRepo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAQAAQAAAAAAA=</HashCode>
+      <FileName>Repos\AccountRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.Repo&lt;TRow&gt;" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAABAAgAAAAABAAAAAABAgIgAgAAAYAEAAA=</HashCode>
+      <FileName>Repos\Repo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Row" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Rows.Row" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAAAAAAAAAAAAACAAgEAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Rows\Row.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAL.Rows.Account" Collapsed="true">
+    <Position X="2.5" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAgIAAAAgAgAAAAUAABCIBABAAAAACAAAQAAABAAA=</HashCode>
+      <FileName>Rows\Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.AccountGroupRepo" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\AccountGroupRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.AccountGroup" Collapsed="true">
+    <Position X="4.75" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAIAAIAAAAAAAAAAABAAAAAAAAABAAAABAAAAAABAAA=</HashCode>
+      <FileName>Rows\AccountGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.AccessTokenRepo" Collapsed="true">
+    <Position X="7" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAgAAEAAAAAAABAAAAAAAAAAAAAAAAAQAQAAAAAAAA=</HashCode>
+      <FileName>Repos\AccessTokenRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.AccessToken" Collapsed="true">
+    <Position X="7" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAABAEA=</HashCode>
+      <FileName>Rows\AccessToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.CheckInRepo" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\CheckInRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.CheckIn" Collapsed="true">
+    <Position X="9.25" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAA=</HashCode>
+      <FileName>Rows\CheckIn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.CheckReport" Collapsed="true">
+    <Position X="2.5" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIAAAAAAAAgAAIAAAAAgAAQAAAAAAAAQAAAgAAA=</HashCode>
+      <FileName>Rows\CheckReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.CheckReportRepo" Collapsed="true">
+    <Position X="2.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAAAA=</HashCode>
+      <FileName>Repos\CheckReportRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.CompanyScheduleRepo" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\CompanyScheduleRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.CompanySchedule" Collapsed="true">
+    <Position X="4.75" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACIEAIAAAAAAAAAACAAAAAAAAAAAEAACAAAAAAIAAAg=</HashCode>
+      <FileName>Rows\CompanySchedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.DailyReportRepo" Collapsed="true">
+    <Position X="7" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\DailyReportRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.DailyReport" Collapsed="true">
+    <Position X="7" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QgAAAAAAAAAAAAgAAIAAAAAgAAQAAAAAAAAQAAAgAAA=</HashCode>
+      <FileName>Rows\DailyReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.DepartmentRepo" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\DepartmentRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Department" Collapsed="true">
+    <Position X="9.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAFoBAAAAAAAAAAAAAAAAAAAABQAAEAAAAACABAAA=</HashCode>
+      <FileName>Rows\Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.EmployeeRepo" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAgAAAAQAAAACAAAAA=</HashCode>
+      <FileName>Repos\EmployeeRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Employee" Collapsed="true">
+    <Position X="2.5" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABIAAIEAAAAAhIABABQEAKgEBMEAAAAAAAFAAAQBACI=</HashCode>
+      <FileName>Rows\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.HolidayRepo" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\HolidayRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Holiday" Collapsed="true">
+    <Position X="4.75" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIBAJBAAAAAgAAAAAAAAACAAAABAAAQAAAQAAABAAA=</HashCode>
+      <FileName>Rows\Holiday.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.LeaveRepo" Collapsed="true">
+    <Position X="7" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQAAAAQAAAAA=</HashCode>
+      <FileName>Repos\LeaveRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Leave" Collapsed="true">
+    <Position X="7" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIBAAAAAAAAAAABAAAAAIAMAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Rows\Leave.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.MonthlyReportRepo" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAxCAAAAAAAAA=</HashCode>
+      <FileName>Repos\MonthlyReportRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.MonthlyReport" Collapsed="true">
+    <Position X="9.25" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAACAAAAAAAAAAAAAAEAAAEA=</HashCode>
+      <FileName>Rows\MonthlyReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.PaymentMethodRepo" Collapsed="true">
+    <Position X="2.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\PaymentMethodRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.PaymentMethod" Collapsed="true">
+    <Position X="2.5" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIIAAAAAgAAAAAAAAAAAAAAAAAAAACgAAAABAAA=</HashCode>
+      <FileName>Rows\PaymentMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.RoleRepo" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\RoleRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Role" Collapsed="true">
+    <Position X="4.75" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAIAgIAECAAAAAAAIAAAQACAAAABAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Rows\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.SalaryRepo" Collapsed="true">
+    <Position X="7" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQCAAAAAAAAA=</HashCode>
+      <FileName>Repos\SalaryRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Salary" Collapsed="true">
+    <Position X="7" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQIAAAAAAAAAAAAAAAAAAAAAQCIAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Rows\Salary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.TimetableRepo" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEIAAAAA=</HashCode>
+      <FileName>Repos\TimetableRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Timetable" Collapsed="true">
+    <Position X="9.25" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAEAAAAAAAAAAAACAAAAAAAAAAAEAACAAAAAAIAAAg=</HashCode>
+      <FileName>Rows\Timetable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.VariablesRepo" Collapsed="true">
+    <Position X="4.75" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\VariablesRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.Variables" Collapsed="true">
+    <Position X="4.75" Y="12" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACIAAIAAAAIAAAAAAAAgCAABEgAAAAAEAAAACAAAgFA=</HashCode>
+      <FileName>Rows\Variables.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.WorkhoursInDayRepo" Collapsed="true">
+    <Position X="2.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Repos\WorkhoursInDayRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Rows.WorkhoursInDay" Collapsed="true">
+    <Position X="2.5" Y="12" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAJAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Rows\WorkhoursInDay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
