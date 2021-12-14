@@ -3,10 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:CornControls.CustomControl">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Style x:Key="{x:Type controls:DatePickerEx}" TargetType="{x:Type controls:DatePickerEx}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="FontFamily" Value="Time New Roman" />
@@ -81,9 +77,9 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
 
                                 <Grid.Resources>
-                                    <Style TargetType="controls:ButtonEx"/>
+                                    <Style TargetType="controls:ButtonEx" />
                                 </Grid.Resources>
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{TemplateBinding IconPad}" />
                                     <ColumnDefinition Width="*" />

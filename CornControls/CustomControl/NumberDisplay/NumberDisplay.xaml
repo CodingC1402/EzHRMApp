@@ -3,10 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:CornControls.CustomControl">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Style x:Key="{x:Type controls:NumberDisplay}" TargetType="{x:Type controls:NumberDisplay}">
         <Setter Property="Template">
             <Setter.Value>

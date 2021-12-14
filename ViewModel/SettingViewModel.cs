@@ -3,32 +3,47 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text;
+using ViewModel.Helper;
 
 namespace ViewModel
 {
     public class SettingViewModel : Navigation.ViewModelBase
     {
+        private static SettingViewModel _instance = null;
+        public static SettingViewModel Instance { get => _instance; }
+
         public override string ViewName => "Settings";
-    }
+        public ListenerEvent<int> OnColorChanged { get; private set; } = new ListenerEvent<int>();
 
-    public class Theme
-    {
-        public readonly string ThemeName;
-        public readonly Color Accent;
+        RelayCommand<int> _changeColorIndexCommand = null;
+        public RelayCommand<int> ChangeColorInexCommand => _changeColorIndexCommand ??= new RelayCommand<int>(ExecuteChangeColorIndex);
 
-        public readonly Color AccentDarker;
-        public readonly Color AccentBrighter;
+        public int _currentTheme = 0;
+        public int CurrentTheme 
+        {
+            get => _currentTheme;
+            set
+            {
+                if (_currentTheme == value)
+                    return;
 
-        public readonly Color AccentDarkest;
-        public readonly Color AccentBrightest;
+                _currentTheme = value;
+                OnColorChanged.Invoke(value);
+            }
+        }
 
-        public readonly Color AccentFaint;
+        public void ExecuteChangeColorIndex(int param)
+        {
+            if (_currentTheme < 0)
+                return;
 
-        public readonly Color BackColor;
-        public readonly Color BackColorDarker;
-        public readonly Color BackColorDarkest;
+            CurrentTheme = param;
+        }
 
-        public readonly Color ForegroundLight;
-        public readonly Color ForegroundDark;
+        // Add theme colors
+        public SettingViewModel()
+        {
+            _instance = this;
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace EzHRMApp.Views
             };
         }
 
-        protected void HomeButtonClicked(object sender, EventArgs e)
+        protected void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             if (_previousTabButton != null)
             {
@@ -58,13 +58,13 @@ namespace EzHRMApp.Views
             homeBtn.Width = 0;
         }
 
-        protected void TabButtonClicked(object sender, EventArgs e)
+        protected void TabButtonClicked(object sender, RoutedEventArgs e)
         {
             homeBtn.Width = 75;
             _previousTabButton = sender as RadioButton;
         }
 
-        protected void ShowHelp(object sender, EventArgs e)
+        protected void ShowHelp(object sender, RoutedEventArgs e)
         {
 
         }

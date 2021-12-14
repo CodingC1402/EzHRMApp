@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="DarkForegroundColor">#061826</Color>
+    <Color x:Key="LightForegroundColor">#E2E2EC</Color>
+
+    <Color x:Key="ColorBackColor">#F2F2FC</Color>
+    <Color x:Key="ColorDarkerBackColor">#E9E9F4</Color>
+    <Color x:Key="ColorDarkestBackColor">#E2E2EC</Color>
+
+    <Color x:Key="ColorCancleHover">#cf6457</Color>
+    <Color x:Key="ColorCancleMouseDown">#bc272b</Color>
+
+    <Color x:Key="ColorAccentFaint">#ffebc2</Color>
+
+    <Color x:Key="ColorAccentReallyBright">#c0a05f</Color>
+    <Color x:Key="ColorAccentBright">#a18140</Color>
+    <Color x:Key="ColorAccent">#87682a</Color>
+    <Color x:Key="ColorAccentDark">#654321</Color>
+    <Color x:Key="ColorAccentReallyDark">#4c2b15</Color>
+
+    <Color x:Key="ColorLightestPanel">#4e3524</Color>
+    <Color x:Key="ColorLighterPanel">#4c2b15</Color>
+    <Color x:Key="ColorPanel">#342013</Color>
+    <Color x:Key="ColorDarkerPanel">#251911</Color>
+</ResourceDictionary>

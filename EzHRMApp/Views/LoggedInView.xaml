@@ -67,6 +67,9 @@
         <DataTemplate DataType="{x:Type viewModel:HolidayViewModel}">
             <view:HolidayView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SettingViewModel}">
+            <view:SettingView />
+        </DataTemplate>
         <converter:ByteImageConverter x:Key="byteImageConverter" />
     </windows:UserControlWindow.Resources>
 
@@ -157,6 +160,8 @@
                         Path="{StaticResource questionIcon}" />
                     <controls:ButtonEx
                         x:Name="settingBtn"
+                        Click="HomeButtonClicked"
+                        Command="{Binding ToSettingView}"
                         Content="Setting"
                         Path="{StaticResource settingIcon}" />
                     <controls:ButtonEx
@@ -320,7 +325,7 @@
                                 Content="Positions"
                                 GroupName="TabButtons"
                                 Path="{DynamicResource suitcaseIcon}" />
-                            
+
                             <controls:RadioButtonEx
                                 Click="TabButtonClicked"
                                 Command="{Binding ToDepartmentView}"

@@ -93,6 +93,9 @@ namespace ViewModel
 
             ToHolidayView = new NavigationCommand<HolidayViewModel>(new HolidayViewModel(), this, QuyenHanBitmask.Holiday);
             ViewModels.Add(ToHolidayView.ViewModel);
+
+            ToSettingView = new NavigationCommand<SettingViewModel>(new SettingViewModel(), this, 0);
+            ViewModels.Add(ToSettingView.ViewModel);
         }
 
         public override void OnGetTo()
@@ -127,5 +130,6 @@ namespace ViewModel
         public NavigationCommand<LeavesViewModel> ToLeavesView { get; set; }
         public NavigationCommand<PenaltyTypeViewModel> ToPenaltyTypeView { get; set; }
         public NavigationCommand<HolidayViewModel> ToHolidayView { get; set; }
+        public NavigationCommand<SettingViewModel> ToSettingView { get; set; }
     }
 }

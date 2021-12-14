@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:CornControls.CustomControl.Converters">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/CornControls;component/Themes/ColorScheme.xaml" />
         <ResourceDictionary Source="RadioButtonEx/RadioButtonEx.xaml" />
         <ResourceDictionary Source="ButtonEx/ButtonEx.xaml" />
         <ResourceDictionary Source="TextBoxEx/TextBoxEx.xaml" />

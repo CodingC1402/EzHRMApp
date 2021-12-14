@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CornControls.Themes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ViewModel;
 
 namespace EzHRMApp.Views
 {
@@ -22,7 +24,17 @@ namespace EzHRMApp.Views
     {
         public SettingView()
         {
-            InitializeComponent();
+            SettingViewModel vmInstance = SettingViewModel.Instance;
+            vmInstance.OnColorChanged.AddListener(ColorIndexChanged);
+            if (vmInstance.CurrentTheme >= 0)
+            {
+                ColorIndexChanged(vmInstance.CurrentTheme);
+            }
+        }
+
+        private void ColorIndexChanged(int index)
+        {
+            ThemeHelper.SelectTheme(ThemeHelper.ThemeColor.SteelBlue);
         }
     }
 }
