@@ -233,6 +233,11 @@
                     Content="Schedule Management View Permission"
                     Path="{DynamicResource companyRuleIcon}"
                     Selected="{Binding CurrentAccountGroup.ScheduleManagementViewPermission}" />
+                <controls:ToggleButton
+                    Command="{Binding HolidayToggleCommand}"
+                    Content="Holiday Management View Permission"
+                    Path="{DynamicResource calendarIcon}"
+                    Selected="{Binding CurrentAccountGroup.HolidayViewPermission}" />
 
             </StackPanel>
         </ScrollViewer>

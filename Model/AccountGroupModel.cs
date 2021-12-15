@@ -27,6 +27,7 @@ namespace Model
         public bool PenaltyTypesViewPermission { get; set; }
         public bool AccountGroupsViewPermission { get; set; }
         public bool ScheduleManagementViewPermission { get; set; }
+        public bool HolidayViewPermission { get; set; }
 
         public bool IsBossGroup => TenNhomTaiKhoan == "boss";
 
@@ -87,6 +88,7 @@ namespace Model
             PenaltyViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Penalty);
             LeavesViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Leaves);
             ReportsViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Reports);
+            HolidayViewPermission = CheckFlag(QuyenHan, QuyenHanBitmask.Holiday);
         }
 
         private uint ConvertQuyenHanToInt()
@@ -107,6 +109,7 @@ namespace Model
             if (PenaltyTypesViewPermission) quyenHan |= QuyenHanBitmask.PenaltyTypes;
             if (ScheduleManagementViewPermission) quyenHan |= QuyenHanBitmask.ScheduleManagement;
             if (ReportsViewPermission) quyenHan |= QuyenHanBitmask.Reports;
+            if (HolidayViewPermission) quyenHan |= QuyenHanBitmask.Holiday;
 
             return quyenHan;
         }

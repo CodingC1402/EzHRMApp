@@ -157,6 +157,7 @@ namespace ViewModel
         private RelayCommand<object> _payrollCommand;
         private RelayCommand<object> _accountGroupCommand;
         private RelayCommand<object> _reportCommand;
+        private RelayCommand<object> _holidayCommand;
         private RelayCommand<object> _deleteCommand;
 
         public RelayCommand<object> DashboardToggleCommand => _dashboardCommand ??=
@@ -188,6 +189,9 @@ namespace ViewModel
 
         public RelayCommand<object> ReportToggleCommand => _reportCommand ??=
             new RelayCommand<object>(obj => CurrentAccountGroup.ReportsViewPermission = !CurrentAccountGroup.ReportsViewPermission, null);
+
+        public RelayCommand<object> HolidayToggleCommand => _holidayCommand ??=
+            new RelayCommand<object>(obj => CurrentAccountGroup.HolidayViewPermission = !CurrentAccountGroup.HolidayViewPermission, null);
 
         public RelayCommand<object> DeleteCommand => _deleteCommand ??=
             new RelayCommand<object>(ExecuteDelete, CanExecuteDelete);
