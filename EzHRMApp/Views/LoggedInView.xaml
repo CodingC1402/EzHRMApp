@@ -154,11 +154,6 @@
                         </Style>
                     </StackPanel.Resources>
                     <controls:ButtonEx
-                        x:Name="helpBtn"
-                        Click="ShowHelp"
-                        Content="Help"
-                        Path="{StaticResource questionIcon}" />
-                    <controls:ButtonEx
                         x:Name="settingBtn"
                         Click="ProgramButtonClicked"
                         Command="{Binding ToSettingView}"

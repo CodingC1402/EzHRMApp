@@ -12,14 +12,14 @@
 
     <Color x:Key="ColorAccentFaint">#C2E2EF</Color>
 
-    <Color x:Key="ColorAccentReallyBright">#0699EF</Color>
-    <Color x:Key="ColorAccentBright">#208ACF</Color>
-    <Color x:Key="ColorAccent">#0421B6</Color>
-    <Color x:Key="ColorAccentDark">#040298</Color>
-    <Color x:Key="ColorAccentReallyDark">#041738</Color>
+    <Color x:Key="ColorAccentReallyBright">#20BACF</Color>
+    <Color x:Key="ColorAccentBright">#06A9C6</Color>
+    <Color x:Key="ColorAccent">#0471A6</Color>
+    <Color x:Key="ColorAccentDark">#044278</Color>
+    <Color x:Key="ColorAccentReallyDark">#043758</Color>
 
-    <Color x:Key="ColorLightestPanel">#161886</Color>
-    <Color x:Key="ColorLighterPanel">#061856</Color>
-    <Color x:Key="ColorPanel">#060836</Color>
-    <Color x:Key="ColorDarkerPanel">#060026</Color>
+    <Color x:Key="ColorLightestPanel">#263846</Color>
+    <Color x:Key="ColorLighterPanel">#162836</Color>
+    <Color x:Key="ColorPanel">#061826</Color>
+    <Color x:Key="ColorDarkerPanel">#061016</Color>
 </ResourceDictionary>

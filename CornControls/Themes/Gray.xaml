@@ -11,9 +11,9 @@
 
     <Color x:Key="ColorAccentFaint">#b7b7b7</Color>
 
-    <Color x:Key="ColorAccentReallyBright">#606060</Color>
-    <Color x:Key="ColorAccentBright">#414141</Color>
-    <Color x:Key="ColorAccent">#383838</Color>
+    <Color x:Key="ColorAccentReallyBright">#909090</Color>
+    <Color x:Key="ColorAccentBright">#717171</Color>
+    <Color x:Key="ColorAccent">#585858</Color>
     <Color x:Key="ColorAccentDark">#2d2d2d</Color>
     <Color x:Key="ColorAccentReallyDark">#202020</Color>
 

@@ -11,10 +11,10 @@
 
     <Color x:Key="ColorAccentFaint">#dbfffc</Color>
 
-    <Color x:Key="ColorAccentReallyBright">#5eA7A0</Color>
-    <Color x:Key="ColorAccentBright">#42807f</Color>
-    <Color x:Key="ColorAccent">#194b4a</Color>
-    <Color x:Key="ColorAccentDark">#144240</Color>
+    <Color x:Key="ColorAccentReallyBright">#7eC7C0</Color>
+    <Color x:Key="ColorAccentBright">#62A09f</Color>
+    <Color x:Key="ColorAccent">#396b6a</Color>
+    <Color x:Key="ColorAccentDark">#194745</Color>
     <Color x:Key="ColorAccentReallyDark">#00201c</Color>
 
     <Color x:Key="ColorLightestPanel">#174542</Color>

@@ -57,9 +57,9 @@
 
             <Border>
                 <controls:ButtonEx
-                    Background="#383838"
-                    HoverColor="#414141"
-                    PressedColor="#606060">
+                    Background="#585858"
+                    HoverColor="#717171"
+                    PressedColor="#909090">
                     <controls:ButtonEx.CommandParameter>
                         <sys:Int32>2</sys:Int32>
                     </controls:ButtonEx.CommandParameter>
@@ -68,9 +68,9 @@
 
             <Border>
                 <controls:ButtonEx
-                    Background="#194b4a"
-                    HoverColor="#42807f"
-                    PressedColor="#5eA7A0">
+                    Background="#396b6a"
+                    HoverColor="#62A09f"
+                    PressedColor="#7eC7C0">
                     <controls:ButtonEx.CommandParameter>
                         <sys:Int32>3</sys:Int32>
                     </controls:ButtonEx.CommandParameter>
@@ -79,11 +79,44 @@
 
             <Border>
                 <controls:ButtonEx
-                    Background="#313a48"
-                    HoverColor="#49525e"
-                    PressedColor="#818a96">
+                    Background="#414a63"
+                    HoverColor="#697299"
+                    PressedColor="#818aB1">
                     <controls:ButtonEx.CommandParameter>
                         <sys:Int32>4</sys:Int32>
+                    </controls:ButtonEx.CommandParameter>
+                </controls:ButtonEx>
+            </Border>
+
+            <Border>
+                <controls:ButtonEx
+                    Background="#B61104"
+                    HoverColor="#EF4946"
+                    PressedColor="#EF6A60">
+                    <controls:ButtonEx.CommandParameter>
+                        <sys:Int32>5</sys:Int32>
+                    </controls:ButtonEx.CommandParameter>
+                </controls:ButtonEx>
+            </Border>
+
+            <Border>
+                <controls:ButtonEx
+                    Background="#04B601"
+                    HoverColor="#06CF79"
+                    PressedColor="#20CF6A">
+                    <controls:ButtonEx.CommandParameter>
+                        <sys:Int32>6</sys:Int32>
+                    </controls:ButtonEx.CommandParameter>
+                </controls:ButtonEx>
+            </Border>
+
+            <Border>
+                <controls:ButtonEx
+                    Background="#0421B6"
+                    HoverColor="#208ACF"
+                    PressedColor="#0699EF">
+                    <controls:ButtonEx.CommandParameter>
+                        <sys:Int32>7</sys:Int32>
                     </controls:ButtonEx.CommandParameter>
                 </controls:ButtonEx>
             </Border>

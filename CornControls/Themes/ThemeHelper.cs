@@ -11,11 +11,14 @@ namespace CornControls.Themes
     {
         public enum ThemeColor
         {
-            Blue,
+            Cyan,
             Brown,
             Gray,
             Teal,
-            SteelBlue
+            SteelBlue,
+            Red,
+            Green,
+            Blue
         }
 
         private static readonly string FilePath;
